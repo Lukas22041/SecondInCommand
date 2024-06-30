@@ -48,7 +48,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
             element.addSpacer(5f)
             var next = SkillWidgetElement(false, true, skill.iconPath, Color(107,175,0,255), element, 72f, 72f)
             if (previous != null) {
-                next.elementPanel.position.rightOfTop(previous, 12f)
+                next.elementPanel.position.rightOfTop(previous, 6f)
             }
             previous = next.elementPanel
         }
