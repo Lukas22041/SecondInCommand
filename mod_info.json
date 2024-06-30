@@ -1,0 +1,25 @@
+{
+    "id":"second_in_command", # For the convenience of troubleshooters, include your name and the mod name, not just an acronym.
+	"name":"Second in Command", # Displayed to the player
+	"author":"Lukas04",
+    "utility":"false",
+	"version":"1.0.0",
+	"description":"A mod that entirely reworks the games skill system. Not compatible with other skill reworks.",
+    "gameVersion": "0.97a-RC11",
+  	"jars":["jars/SecondInCommand.jar"],
+  	"modPlugin":"second_in_command.SCModPlugin",
+	  	"dependencies": [
+        {
+            "id": "lw_lazylib",
+            "name": "LazyLib",
+        },
+        {
+            "id": "MagicLib",
+            "name": "MagicLib",
+        },
+        {
+            "id": "lunalib",
+            "name": "LunaLib",
+        },
+    ],
+}

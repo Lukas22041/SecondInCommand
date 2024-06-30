@@ -1,0 +1,11 @@
+id,name,iconPath,plugin
+sc_test_skill1,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
+sc_test_skill2,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
+sc_test_skill3,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
+sc_test_skill4,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
+sc_test_skill5,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
+sc_test_skill6,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
+sc_test_skill7,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
+sc_test_skill8,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
+sc_test_skill9,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
+sc_test_skill10,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
