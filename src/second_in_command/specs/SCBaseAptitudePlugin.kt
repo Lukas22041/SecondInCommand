@@ -12,6 +12,12 @@ abstract class SCBaseAptitudePlugin() {
         sections.add(section)
     }
 
+    fun getSections() = ArrayList(sections)
+
+    fun clearSections() {
+        sections.clear()
+    }
+
     abstract fun getSpawnWeight() : Float
 
     abstract fun getOriginSkillId() : String

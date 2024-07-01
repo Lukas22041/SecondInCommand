@@ -6,7 +6,7 @@ import lunalib.lunaUI.elements.LunaElement
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 
-class SkillWidgetElement(var activated: Boolean, var canChangeState: Boolean, var iconPath: String, var color: Color, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
+class SkillWidgetElement(var id: String, var activated: Boolean, var canChangeState: Boolean, var iconPath: String, var soundId: String, var color: Color, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
 
     var sprite = Global.getSettings().getSprite(iconPath)
     var inactiveBorder = Global.getSettings().getSprite("graphics/secondInCommand/skillBorderInactive.png")
@@ -25,7 +25,7 @@ class SkillWidgetElement(var activated: Boolean, var canChangeState: Boolean, va
             playSound("ui_button_mouseover")
         }
 
-        onClick {
+        /*onClick {
             if (!activated) {
                 playSound("leadership1")
             }
@@ -33,7 +33,7 @@ class SkillWidgetElement(var activated: Boolean, var canChangeState: Boolean, va
                 playSound("ui_char_decrease_skill")
             }
             activated = !activated
-        }
+        }*/
     }
 
     override fun advance(amount: Float) {
@@ -107,7 +107,19 @@ class SkillWidgetElement(var activated: Boolean, var canChangeState: Boolean, va
         GL11.glDisable(GL11.GL_TEXTURE_2D)
         GL11.glDisable(GL11.GL_CULL_FACE)
 
-        GL11.glDisable(GL11.GL_BLEND)
+
+        if (alphaMult <= 0.8f) {
+            GL11.glEnable(GL11.GL_BLEND)
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+        } else {
+            GL11.glDisable(GL11.GL_BLEND)
+        }
+
+
+
+
+
+       // GL11.glDisable(GL11.GL_BLEND)
 
         GL11.glColor4f(backgroundColor.red / 255f,
             backgroundColor.green / 255f,
