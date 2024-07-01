@@ -3,6 +3,7 @@ package second_in_command.ui.elements
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import lunalib.lunaUI.elements.LunaElement
+import org.lwjgl.opengl.GL11
 import java.awt.Color
 
 class SkillWidgetElement(var activated: Boolean, var canChangeState: Boolean, var iconPath: String, var color: Color, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
@@ -49,12 +50,18 @@ class SkillWidgetElement(var activated: Boolean, var canChangeState: Boolean, va
     override fun render(alphaMult: Float) {
         super.render(alphaMult)
 
-        var mult = 1f
-        if (!activated) mult = 0.5f
+       /* var mult = 1f
+        if (!activated) mult = 0.5f*/
 
         sprite.setNormalBlend()
         sprite.setSize(64f, 64f)
-        sprite.alphaMult = alphaMult * mult
+        sprite.alphaMult = alphaMult
+        if (!activated) {
+            sprite.color = Color(150, 150, 150)
+        }
+        else {
+            sprite.color = Color(255, 255, 255)
+        }
         sprite.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
 
         if (activated) {
@@ -89,5 +96,26 @@ class SkillWidgetElement(var activated: Boolean, var canChangeState: Boolean, va
         sprite.setSize(64f, 64f)
         sprite.alphaMult = alphaMult * 0.5f * hoverFade
         sprite.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
+    }
+
+    override fun renderBelow(alphaMult: Float) {
+        super.renderBelow(alphaMult)
+
+        var backgroundColor = Color(0, 0, 0)
+
+        GL11.glPushMatrix()
+        GL11.glDisable(GL11.GL_TEXTURE_2D)
+        GL11.glDisable(GL11.GL_CULL_FACE)
+
+        GL11.glDisable(GL11.GL_BLEND)
+
+        GL11.glColor4f(backgroundColor.red / 255f,
+            backgroundColor.green / 255f,
+            backgroundColor.blue / 255f,
+            backgroundColor.alpha / 255f * (alphaMult * backgroundAlpha))
+
+        GL11.glRectf(x, y , x + width, y + height)
+
+        GL11.glPopMatrix()
     }
 }
