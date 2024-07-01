@@ -11,6 +11,7 @@ import second_in_command.misc.getWidth
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.AptitudeBackgroundElement
 import second_in_command.ui.elements.SCOfficerPickerElement
+import second_in_command.ui.elements.SkillSeperatorElement
 import second_in_command.ui.elements.SkillWidgetElement
 import java.awt.Color
 
@@ -101,21 +102,26 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
 
         var officerPickerElement = SCOfficerPickerElement(subelement, 96f, 96f)
 
-        var background = AptitudeBackgroundElement(Misc.getDarkPlayerColor(), subelement)
+        var background = AptitudeBackgroundElement(Color(107,175,0,255), subelement)
         background.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, -1f)
 
         if (addTest) {
             var previous: CustomPanelAPI? = null
             for (skill in SCSpecStore.getSkillSpecs()) {
                 element.addSpacer(5f)
-                var next = SkillWidgetElement(false, true, skill.iconPath, Misc.getDarkPlayerColor(), subelement, 72f, 72f)
+                var next = SkillWidgetElement(false, true, skill.iconPath, Color(107,175,0,255), subelement, 72f, 72f)
+
                 if (previous != null) {
-                    next.elementPanel.position.rightOfTop(previous, 16f)
+                    next.elementPanel.position.rightOfTop(previous, 3f)
                 }
                 if (previous == null) {
                     next.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
                 }
-                previous = next.elementPanel
+
+                var seperator = SkillSeperatorElement(Color(107,175,0,255), subelement)
+                seperator.elementPanel.position.rightOfTop(next.elementPanel, 3f)
+
+                previous = seperator.elementPanel
         }
 
 

@@ -1,11 +1,11 @@
 id,name,iconPath,plugin
-sc_test_skill1,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
-sc_test_skill2,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
-sc_test_skill3,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
-sc_test_skill4,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
-sc_test_skill5,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
-sc_test_skill6,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
-sc_test_skill7,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
-sc_test_skill8,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
-sc_test_skill9,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
-sc_test_skill10,Test Skill,graphics/secondInCommand/test/test.png,second_in_command.skills.test.TestSkill
+sc_test_skill1,Test Skill,graphics/icons/skills/weapon_drills.png,second_in_command.skills.test.TestSkill
+sc_test_skill2,Test Skill,graphics/icons/skills/coordinated_maneuvers2.png,second_in_command.skills.test.TestSkill
+sc_test_skill3,Test Skill,graphics/icons/skills/wolfpack.png,second_in_command.skills.test.TestSkill
+sc_test_skill4,Test Skill,graphics/icons/skills/crew_training.png,second_in_command.skills.test.TestSkill
+sc_test_skill5,Test Skill,graphics/icons/skills/fighter_uplink2.png,second_in_command.skills.test.TestSkill
+sc_test_skill6,Test Skill,graphics/icons/skills/carrier_command.png,second_in_command.skills.test.TestSkill
+sc_test_skill7,Test Skill,graphics/icons/skills/officer_training.png,second_in_command.skills.test.TestSkill
+sc_test_skill8,Test Skill,graphics/icons/skills/officer_management.png,second_in_command.skills.test.TestSkill
+sc_test_skill9,Test Skill,graphics/icons/skills/best_of_the_best.png,second_in_command.skills.test.TestSkill
+sc_test_skill10,Test Skill,graphics/icons/skills/space_ops.png,second_in_command.skills.test.TestSkill
