@@ -21,13 +21,13 @@ class TestAptitude : SCBaseAptitudePlugin() {
         section1.addSkill("sc_test_skill5")
         addSection(section1)
 
-        var section2 = SCAptitudeSection(true, 1, "leadership2")
+        var section2 = SCAptitudeSection(false, 1, "leadership2")
         section2.addSkill("sc_test_skill6")
         section2.addSkill("sc_test_skill7")
         section2.addSkill("sc_test_skill8")
         addSection(section2)
 
-        var section3 = SCAptitudeSection(true, 2, "leadership3")
+        var section3 = SCAptitudeSection(false, 2, "leadership3")
         section3.addSkill("sc_test_skill9")
         section3.addSkill("sc_test_skill10")
         addSection(section3)

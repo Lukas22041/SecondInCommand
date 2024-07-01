@@ -133,6 +133,10 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
         for (section in sections) {
 
             var isLastSection = sections.last() == section
+            var canOnlyChooseOne = !section.canChooseMultiple
+
+            var firstSkillThisSection: SkillWidgetElement? = null
+            var usedWidth = 0f
 
             section.previousUISections.addAll(previousSections)
             previousSections.add(section)
@@ -155,14 +159,17 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
                 var skillElement = SkillWidgetElement(skill, activated, canChangeState, skillPlugin!!.getIconPath(), section.soundId, aptitudePlugin.getColor(), subelement, 72f, 72f)
                 skillElements.add(skillElement)
                 section.activeSkillsInUI.add(skillElement)
+                usedWidth += 72f
 
-
-
+                if (firstSkillThisSection == null) {
+                    firstSkillThisSection = skillElement
+                }
 
                 if (isFirst) {
                     skillElement.elementPanel.position.rightOfTop(previous, 0f)
                 } else {
                     skillElement.elementPanel.position.rightOfTop(previous, 3f)
+                    usedWidth += 3f
                 }
 
 
@@ -171,6 +178,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
                     var seperator = SkillSeperatorElement(aptitudePlugin.getColor(), subelement)
                     seperator.elementPanel.position.rightOfTop(skillElement.elementPanel, 3f)
                     previous = seperator.elementPanel
+                    usedWidth += 3f
                 }
                 else if (!isLastSection) {
                     var gap = SkillGapElement(aptitudePlugin.getColor(), subelement)
@@ -183,6 +191,11 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
                         nextSection.uiGap = gap
                     }
 
+                }
+
+                if (canOnlyChooseOne) {
+                    var underline = SkillUnderlineElement(color, subelement, usedWidth)
+                    underline.position.belowLeft(firstSkillThisSection.elementPanel, 2f)
                 }
 
 
@@ -278,6 +291,15 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
                 }
             }
 
+            if (!section.canChooseMultiple) {
+                if (section.activeSkillsInUI.any { it.activated }) {
+                    for (skillElement in section.activeSkillsInUI) {
+                        if (!skillElement.activated) {
+                            skillElement.canChangeState = false
+                        }
+                    }
+                }
+            }
         }
     }
 
