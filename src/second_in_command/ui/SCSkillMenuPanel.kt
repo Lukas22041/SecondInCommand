@@ -8,6 +8,7 @@ import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.misc.getHeight
 import second_in_command.misc.getWidth
+import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.AptitudeBackgroundElement
 import second_in_command.ui.elements.SCOfficerPickerElement
@@ -83,29 +84,38 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
 
         subelement.addSpacer(30f)
 
-        addAptitudeRow(subelement, true)
+        addAptitudeRow(subelement, null)
 
         subelement.addSpacer(30f)
 
-        addAptitudeRow(subelement, false)
+        addAptitudeRow(subelement, null)
 
         subelement.addSpacer(30f)
 
-        addAptitudeRow(subelement, false)
+        addAptitudeRow(subelement, null)
     }
 
-    fun addAptitudeRow(targetedElelement: TooltipMakerAPI, addTest: Boolean) {
+    fun addAptitudeRow(targetedElelement: TooltipMakerAPI, officer: SCOfficer?) {
         var subpanel = Global.getSettings().createCustom(width, 96f, null)
         targetedElelement.addCustom(subpanel, 0f)
         var subelement = subpanel.createUIElement(width, 96f, false)
         subpanel.addUIElement(subelement)
 
-        var officerPickerElement = SCOfficerPickerElement(subelement, 96f, 96f)
+        var color = Misc.getDarkPlayerColor()
 
-        var background = AptitudeBackgroundElement(Color(107,175,0,255), subelement)
+        if (officer != null) {
+            color = officer.getAptitudePlugin().getColor()
+        }
+
+        var officerPickerElement = SCOfficerPickerElement(officer, color, subelement, 96f, 96f)
+        var background = AptitudeBackgroundElement(color, subelement)
         background.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, -1f)
 
-        if (addTest) {
+        if (officer == null) {
+            return
+        }
+
+        /*if (addTest) {
             var previous: CustomPanelAPI? = null
             for (skill in SCSpecStore.getSkillSpecs()) {
                 element.addSpacer(5f)
@@ -122,10 +132,8 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
                 seperator.elementPanel.position.rightOfTop(next.elementPanel, 3f)
 
                 previous = seperator.elementPanel
-        }
-
-
-       }
+            }
+        }*/
     }
 
 }

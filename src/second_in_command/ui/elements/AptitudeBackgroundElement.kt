@@ -31,7 +31,7 @@ class AptitudeBackgroundElement(var color: Color, tooltip: TooltipMakerAPI) : Lu
         GL11.glColor4f(color.red / 255f,
             color.green / 255f,
             color.blue / 255f,
-            color.alpha / 255f * (alphaMult * backgroundAlpha * 0.1f))
+            color.alpha / 255f * (alphaMult * backgroundAlpha * 0.125f))
 
         GL11.glRectf(x, y - size, x + length, y + size)
 

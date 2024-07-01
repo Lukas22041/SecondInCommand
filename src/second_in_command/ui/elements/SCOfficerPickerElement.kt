@@ -3,8 +3,10 @@ package second_in_command.ui.elements
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import lunalib.lunaUI.elements.LunaElement
+import second_in_command.specs.SCOfficer
+import java.awt.Color
 
-class SCOfficerPickerElement(tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
+class SCOfficerPickerElement(var officer: SCOfficer?, var color: Color, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
 
     var noOfficerSprite = Global.getSettings().getSprite("graphics/secondInCommand/no_officer.png")
 
@@ -14,6 +16,7 @@ class SCOfficerPickerElement(tooltip: TooltipMakerAPI, width: Float, height: Flo
     init {
         enableTransparency = true
         borderAlpha = 0.5f
+        borderColor = color
         renderBackground = false
     }
 

@@ -1,5 +1,7 @@
 package second_in_command.specs
 
+import java.awt.Color
+
 abstract class SCBaseAptitudePlugin() {
 
     lateinit var spec: SCAptitudeSpec
@@ -15,5 +17,24 @@ abstract class SCBaseAptitudePlugin() {
     abstract fun getOriginSkillId() : String
 
     abstract fun createSections()
+
+
+
+
+    fun getId() : String{
+        return spec.id
+    }
+
+    fun getCategory() : String{
+        return spec.category
+    }
+
+    open fun getName() : String {
+        return spec.name
+    }
+
+    open fun getColor() : Color{
+        return spec.color
+    }
 
 }
