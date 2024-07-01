@@ -146,11 +146,13 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
                 var isLast = skills.last() == skill
 
                 var canChangeState = true
+                var activated = false
                 if (officer.activeSkillIDs.contains(skill)) {
                     canChangeState = false
+                    activated = true
                 }
 
-                var skillElement = SkillWidgetElement(skill, false, canChangeState, skillPlugin!!.getIconPath(), section.soundId, aptitudePlugin.getColor(), subelement, 72f, 72f)
+                var skillElement = SkillWidgetElement(skill, activated, canChangeState, skillPlugin!!.getIconPath(), section.soundId, aptitudePlugin.getColor(), subelement, 72f, 72f)
                 skillElements.add(skillElement)
                 section.activeSkillsInUI.add(skillElement)
 
