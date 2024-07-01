@@ -1,12 +1,14 @@
 package second_in_command.ui
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCUtils
+import second_in_command.misc.clearChildren
 import second_in_command.misc.getHeight
 import second_in_command.misc.getWidth
 import second_in_command.specs.*
@@ -82,20 +84,32 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
 
         var officer = SCUtils.createRandomSCOfficer("sc_test_aptitude1")
 
-        addAptitudeRow(subelement, officer)
+        addAptitudeRowParent(subelement, officer)
 
         subelement.addSpacer(30f)
 
-        addAptitudeRow(subelement, null)
+        addAptitudeRowParent(subelement, null)
 
         subelement.addSpacer(30f)
 
-        addAptitudeRow(subelement, null)
+        addAptitudeRowParent(subelement, null)
     }
 
-    fun addAptitudeRow(targetedElelement: TooltipMakerAPI, officer: SCOfficer?) {
+    fun addAptitudeRowParent(targetedElelement: TooltipMakerAPI, officer: SCOfficer?) {
         var subpanel = Global.getSettings().createCustom(width, 96f, null)
         targetedElelement.addCustom(subpanel, 0f)
+        /*var subelement = subpanel.createUIElement(width, 96f, false)
+        subpanel.addUIElement(subelement)*/
+
+        recreateAptitudeRow(subpanel, officer)
+    }
+
+    fun recreateAptitudeRow(subpanelParent: CustomPanelAPI, officer: SCOfficer?) {
+        subpanelParent.clearChildren()
+
+        var subpanel = Global.getSettings().createCustom(width, 96f, null)
+        subpanel.position.inTL(0f, 0f)
+        subpanelParent.addComponent(subpanel)
         var subelement = subpanel.createUIElement(width, 96f, false)
         subpanel.addUIElement(subelement)
 
@@ -109,6 +123,9 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
         var background = AptitudeBackgroundElement(color, subelement)
         background.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, -1f)
 
+        var officerUnderline = SkillUnderlineElement(color, subelement, 96f)
+        officerUnderline.position.belowLeft(officerPickerElement.elementPanel, 2f)
+
         if (officer == null) {
             return
         }
@@ -120,7 +137,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
         var sections = aptitudePlugin.getSections()
 
         var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())
-        var originSkillElement = SkillWidgetElement(originSkill!!.id, true, false, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), subelement, 72f, 72f)
+        var originSkillElement = SkillWidgetElement(originSkill!!.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), subelement, 72f, 72f)
         originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
 
         var originGap = SkillGapElement(aptitudePlugin.getColor(), subelement)
@@ -149,14 +166,14 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
                 var isFirst = skills.first() == skill
                 var isLast = skills.last() == skill
 
-                var canChangeState = true
+                var preacquired = false
                 var activated = false
                 if (officer.activeSkillIDs.contains(skill)) {
-                    canChangeState = false
+                    preacquired = true
                     activated = true
                 }
 
-                var skillElement = SkillWidgetElement(skill, activated, canChangeState, skillPlugin!!.getIconPath(), section.soundId, aptitudePlugin.getColor(), subelement, 72f, 72f)
+                var skillElement = SkillWidgetElement(skill, activated, !preacquired, preacquired, skillPlugin!!.getIconPath(), section.soundId, aptitudePlugin.getColor(), subelement, 72f, 72f)
                 skillElements.add(skillElement)
                 section.activeSkillsInUI.add(skillElement)
                 usedWidth += 72f
@@ -216,7 +233,9 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
                 var section = getSkillsSection(skillElement.id, sections)
                 recalculateSectionRequirements(sections)
 
-                if (skillElement.canChangeState) {
+                if (skillElement.canChangeState && !skillElement.preAcquired) {
+
+                    enterEditMode(subpanelParent, officer, officerPickerElement, skillElements)
 
                     if (!skillElement.activated) {
                         skillElement.playSound(skillElement.soundId)
@@ -231,39 +250,59 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
                 }
 
                 recalculateSectionRequirements(sections)
+
+                if (officer.activeSkillIDs.count() == sections.sumOf { it.activeSkillsInUI.count { it.activated } }) {
+                   /* officerPickerElement.isInEditMode = false
+                    officerPickerElement.innerElement.clearChildren()*/
+                    exitEditMode(subpanelParent, officer, officerPickerElement)
+                }
             }
         }
-
-
 
         var levelPara = subelement.addPara("Skill Points: 1", 0f)
         levelPara.position.aboveLeft(officerPickerElement.elementPanel, 4f)
 
-
-
-        /*if (addTest) {
-            var previous: CustomPanelAPI? = null
-            for (skill in SCSpecStore.getSkillSpecs()) {
-                element.addSpacer(5f)
-                var next = SkillWidgetElement(false, true, skill.iconPath, Color(107,175,0,255), subelement, 72f, 72f)
-
-                if (previous != null) {
-                    next.elementPanel.position.rightOfTop(previous, 3f)
-                }
-                if (previous == null) {
-                    next.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
-                }
-
-                var seperator = SkillSeperatorElement(Color(107,175,0,255), subelement)
-                seperator.elementPanel.position.rightOfTop(next.elementPanel, 3f)
-
-                previous = seperator.elementPanel
-            }
-        }*/
     }
 
-    fun handleSkillAssignment(skillSpec: SCSkillSpec, skillPlugin: SCBaseSkillPlugin, element: SkillWidgetElement) {
+    fun saveSkillDataToCharacter(officer: SCOfficer, skillElements: ArrayList<SkillWidgetElement>) {
+        var activeSkills = skillElements.filter { it.activated }.map { it.id }
 
+        officer.activeSkillIDs.addAll(activeSkills)
+    }
+
+    fun enterEditMode(subpanelParent: CustomPanelAPI, offficer: SCOfficer, picker: SCOfficerPickerElement, skillElements: ArrayList<SkillWidgetElement>) {
+        if (picker.isInEditMode) return
+        picker.isInEditMode = true
+
+        picker.innerElement.addSpacer(12f)
+
+        var confirmButton = ConfirmCancelButton(picker.color, picker.innerElement, 86f, 30f).apply {
+            addText("Confirm")
+            centerText()
+
+            onClick {
+                playSound(Sounds.STORY_POINT_SPEND)
+                saveSkillDataToCharacter(offficer, skillElements)
+                exitEditMode(subpanelParent, offficer, picker)
+            }
+        }
+
+        var cancelButton = ConfirmCancelButton(picker.color, picker.innerElement, 86f, 30f).apply {
+            addText("Cancel")
+            centerText()
+
+            onClick {
+                playSound("ui_char_decrease_skill", 1f, 1f)
+                exitEditMode(subpanelParent, offficer, picker)
+            }
+        }
+
+        cancelButton.elementPanel.position.belowLeft(confirmButton.elementPanel, 12f)
+
+    }
+
+    fun exitEditMode(subpanelParent: CustomPanelAPI, offficer: SCOfficer, picker: SCOfficerPickerElement) {
+        recreateAptitudeRow(subpanelParent, offficer)
     }
 
     fun getActiveSkillCount(sections: ArrayList<SCAptitudeSection>) : Int {
@@ -279,6 +318,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
                 section.uiGap?.renderArrow = true
 
                 for (skillElement in section.activeSkillsInUI) {
+                    if (skillElement.preAcquired) continue
                     skillElement.canChangeState = true
                 }
             }
@@ -286,6 +326,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
                 section.uiGap?.renderArrow = false
 
                 for (skillElement in section.activeSkillsInUI) {
+                    if (skillElement.preAcquired) continue
                     skillElement.activated = false
                     skillElement.canChangeState = false
                 }
@@ -294,6 +335,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
             if (!section.canChooseMultiple) {
                 if (section.activeSkillsInUI.any { it.activated }) {
                     for (skillElement in section.activeSkillsInUI) {
+                        if (skillElement.preAcquired) continue
                         if (!skillElement.activated) {
                             skillElement.canChangeState = false
                         }

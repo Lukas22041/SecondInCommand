@@ -21,6 +21,10 @@ fun UIPanelAPI.getHeight() : Float  {
     return ReflectionUtils.invoke("getHeight", this) as Float
 }
 
+fun UIPanelAPI.clearChildren() {
+    ReflectionUtils.invoke("clearChildren", this)
+}
+
 fun UIComponentAPI.getParent() : UIPanelAPI?  {
     return ReflectionUtils.invoke("getParent", this) as UIPanelAPI
 }

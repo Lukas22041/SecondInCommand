@@ -5,7 +5,7 @@ import com.fs.starfarer.api.characters.PersonAPI
 class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
 
 
-    var activeSkillIDs = ArrayList<String>()
+    var activeSkillIDs = mutableSetOf<String>()
 
     fun getAptitudeSpec() : SCAptitudeSpec {
         return SCSpecStore.getAptitudeSpec(aptitudeId)!!

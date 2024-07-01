@@ -6,7 +6,7 @@ import lunalib.lunaUI.elements.LunaElement
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 
-class SkillWidgetElement(var id: String, var activated: Boolean, var canChangeState: Boolean, var iconPath: String, var soundId: String, var color: Color, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
+class SkillWidgetElement(var id: String, var activated: Boolean, var canChangeState: Boolean, var preAcquired: Boolean, var iconPath: String, var soundId: String, var color: Color, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
 
     var sprite = Global.getSettings().getSprite(iconPath)
     var inactiveBorder = Global.getSettings().getSprite("graphics/secondInCommand/skillBorderInactive.png")

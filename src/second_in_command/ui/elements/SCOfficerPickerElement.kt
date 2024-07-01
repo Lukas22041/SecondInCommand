@@ -11,6 +11,7 @@ class SCOfficerPickerElement(var officer: SCOfficer?, var color: Color, tooltip:
 
     var noOfficerSprite = Global.getSettings().getSprite("graphics/secondInCommand/no_officer.png")
     var officerSprite: SpriteAPI? = null
+    var isInEditMode = false
 
     var hoverFade = 0f
 
@@ -29,7 +30,7 @@ class SCOfficerPickerElement(var officer: SCOfficer?, var color: Color, tooltip:
     override fun advance(amount: Float) {
         super.advance(amount)
 
-        if (isHovering) {
+        if (isHovering && !isInEditMode) {
             hoverFade += 10f * amount
         } else {
             hoverFade -= 3f * amount
@@ -59,8 +60,14 @@ class SCOfficerPickerElement(var officer: SCOfficer?, var color: Color, tooltip:
             noOfficerSprite.setSize(width, height)
             noOfficerSprite.render(x, y)
         } else {
+
+            var alpha = 1f
+            if (isInEditMode) {
+                alpha = 0.3f
+            }
+
             officerSprite!!.setNormalBlend()
-            officerSprite!!.alphaMult = alphaMult * 0.7f
+            officerSprite!!.alphaMult = alphaMult * 0.7f * alpha
             officerSprite!!.setSize(width, height)
             officerSprite!!.render(x, y)
 
