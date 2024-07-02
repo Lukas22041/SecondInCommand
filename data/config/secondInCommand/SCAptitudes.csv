@@ -1,7 +1,7 @@
-id,name,category,color,plugin
-sc_test_aptitude1,Test Aptitude 1,,"107,175,0,255",second_in_command.skills.test.TestAptitude1
-sc_test_aptitude2,Test Aptitude 2,,"0,121,216,255",second_in_command.skills.test.TestAptitude2
-,,,,
-,,,,
-,,,,
-,,,,
+id,name,category,maxLevel,xpGainMult,color,plugin
+sc_test_aptitude1,Test Aptitude 1,,6,1.0,"107,175,0,255",second_in_command.skills.test.TestAptitude1
+sc_test_aptitude2,Test Aptitude 2,,6,1.0,"0,121,216,255",second_in_command.skills.test.TestAptitude2
+sc_test_aptitude3,Test Aptitude 3,,6,1.0,"175,135,0,255",second_in_command.skills.test.TestAptitude3
+,,,,,,
+,,,,,,
+,,,,,,

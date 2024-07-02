@@ -7,6 +7,7 @@ import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaExtensions.addLunaElement
 import second_in_command.SCUtils
 import second_in_command.misc.clearChildren
 import second_in_command.misc.getHeight
@@ -94,7 +95,9 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
 
         subelement.addSpacer(30f)
 
-        addAptitudeRowParent(subelement, null)
+        var officer3 = SCUtils.createRandomSCOfficer("sc_test_aptitude3")
+
+        addAptitudeRowParent(subelement, officer3)
     }
 
     fun addAptitudeRowParent(targetedElelement: TooltipMakerAPI, officer: SCOfficer?) {
@@ -122,8 +125,17 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
         }
 
         var officerPickerElement = SCOfficerPickerElement(officer, color, subelement, 96f, 96f)
+
+        var offset = 10f
+        var offsetElement = subelement.addLunaElement(0f, 0f)
+        offsetElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, -1f)
+
+
         var background = AptitudeBackgroundElement(color, subelement)
-        background.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, -1f)
+        //background.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, -1f)
+        background.elementPanel.position.belowLeft(offsetElement.elementPanel, offset)
+
+
 
         var officerUnderline = SkillUnderlineElement(color, subelement, 96f)
         officerUnderline.position.belowLeft(officerPickerElement.elementPanel, 2f)
@@ -140,7 +152,9 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
 
         var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())
         var originSkillElement = SkillWidgetElement(originSkill!!.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), subelement, 72f, 72f)
-        originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
+        //originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
+        originSkillElement.elementPanel.position.rightOfMid(background.elementPanel, 20f)
+
 
         var originGap = SkillGapElement(aptitudePlugin.getColor(), subelement)
         originGap.elementPanel.position.rightOfTop(originSkillElement.elementPanel, 0f)
@@ -223,7 +237,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
 
 
         for (section in sections) {
-            recalculateSectionRequirements(sections)
+            recalculateSectionRequirements(officer, sections, skillElements)
         }
 
         /*var count = getActiveSkillCount(skillElements)
@@ -233,7 +247,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
             skillElement.onClick {
 
                 var section = getSkillsSection(skillElement.id, sections)
-                recalculateSectionRequirements(sections)
+                recalculateSectionRequirements(officer, sections, skillElements)
 
                 if (skillElement.canChangeState && !skillElement.preAcquired) {
 
@@ -251,7 +265,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
                     skillElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
                 }
 
-                recalculateSectionRequirements(sections)
+                recalculateSectionRequirements(officer, sections, skillElements)
 
                 if (officer.activeSkillIDs.count() == sections.sumOf { it.activeSkillsInUI.count { it.activated } }) {
                    /* officerPickerElement.isInEditMode = false
@@ -261,15 +275,44 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
             }
         }
 
-        var levelPara = subelement.addPara("Skill Points: 1", 0f)
-        levelPara.position.aboveLeft(officerPickerElement.elementPanel, 4f)
+        var paraAnchorElement = subelement.addLunaElement(0f, 0f)
+        paraAnchorElement.position.aboveLeft(originSkillElement.elementPanel, 6f)
 
+        var spRemaining = calculateRemainingSP(officer, skillElements)
+
+
+        var officerPara = subelement.addPara("${officer.person.nameString} - $spRemaining SP", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "$spRemaining")
+        officerPara.position.rightOfBottom(paraAnchorElement.elementPanel, 0f)
+
+        paraAnchorElement.advance {
+            spRemaining = calculateRemainingSP(officer, skillElements)
+
+            var hlColor = Misc.getHighlightColor()
+            if (spRemaining == 0) hlColor = Misc.getGrayColor()
+
+            officerPara.text = "${officer.person.nameString} - $spRemaining SP"
+            officerPara.setHighlight("$spRemaining")
+            officerPara.setHighlightColor(hlColor)
+        }
+
+
+      /*  var spPara = subelement.addPara("- $spRemaining", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "$spRemaining")
+        spPara.position.rightOfBottom(paraAnchorElement.elementPanel, 120f)*/
+
+    }
+
+    fun calculateRemainingSP(offficer: SCOfficer, skills: ArrayList<SkillWidgetElement>) : Int {
+        var newSkills = skills.filter { !offficer.activeSkillIDs.contains(it.id) && it.activated }
+        return offficer.skillPoints - newSkills.count()
     }
 
     fun saveSkillDataToCharacter(officer: SCOfficer, skillElements: ArrayList<SkillWidgetElement>) {
         var activeSkills = skillElements.filter { it.activated }.map { it.id }
 
+        var spRemaining = calculateRemainingSP(officer, skillElements)
+
         officer.activeSkillIDs.addAll(activeSkills)
+        officer.skillPoints = spRemaining
     }
 
     fun enterEditMode(subpanelParent: CustomPanelAPI, offficer: SCOfficer, picker: SCOfficerPickerElement, skillElements: ArrayList<SkillWidgetElement>) {
@@ -311,7 +354,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
         return sections.sumOf { it.activeSkillsInUI.count { it.activated } }
     }
 
-    fun recalculateSectionRequirements(sections: ArrayList<SCAptitudeSection>) {
+    fun recalculateSectionRequirements(officer: SCOfficer, sections: ArrayList<SCAptitudeSection>, skillElements: ArrayList<SkillWidgetElement>) {
         for (section in sections) {
 
             var count = getActiveSkillCount(section.previousUISections)
@@ -343,6 +386,15 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
                         }
                     }
                 }
+            }
+
+
+        }
+
+        if (calculateRemainingSP(officer, skillElements) <= 0) {
+            for (skillElement in skillElements) {
+                if (skillElement.activated) continue
+                skillElement.canChangeState = false
             }
         }
     }

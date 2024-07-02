@@ -2,6 +2,7 @@ package second_in_command.specs
 
 import com.fs.starfarer.api.Global
 import org.apache.log4j.Level
+import org.lazywizard.lazylib.ext.json.getFloat
 import second_in_command.SCUtils
 import second_in_command.misc.loadTextureCached
 import java.awt.Color
@@ -30,13 +31,17 @@ object SCSpecStore {
             val name = row.getString("name")
             val category = row.getString("category")
 
+            val maxLevel = row.getInt("maxLevel")
+            val xpGainMult = row.getFloat("xpGainMult")
+
+
             val colorString = row.getString("color")
             val cs = colorString.split(",").map { it.trim().toInt() }
             val color = Color(cs[0], cs[1], cs[2], cs[3])
 
             val pluginPath = row.getString("plugin")
 
-            var spec = SCAptitudeSpec(id, name, category, color, pluginPath)
+            var spec = SCAptitudeSpec(id, name, category, maxLevel, xpGainMult, color, pluginPath)
             aptitudeSpecs.add(spec)
         }
 

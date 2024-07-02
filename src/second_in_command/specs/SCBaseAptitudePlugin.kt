@@ -43,4 +43,12 @@ abstract class SCBaseAptitudePlugin() {
         return spec.color
     }
 
+    open fun getMaxLevel() : Int {
+        return spec.maxLevel
+    }
+
+    open fun getXPGainMult() : Float {
+        return spec.xpGainMult
+    }
+
 }
