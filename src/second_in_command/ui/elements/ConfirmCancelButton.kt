@@ -20,6 +20,10 @@ class ConfirmCancelButton(var color: Color, tooltip: TooltipMakerAPI, width: Flo
         backgroundColor = color
 
         innerElement.setParaFont("graphics/fonts/victor14.fnt")
+
+        onHoverEnter {
+            playScrollSound()
+        }
     }
 
     override fun advance(amount: Float) {
