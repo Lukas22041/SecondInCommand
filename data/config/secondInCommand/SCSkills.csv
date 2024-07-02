@@ -9,3 +9,15 @@ sc_test_skill7,Test Skill,graphics/icons/skills/officer_training.png,second_in_c
 sc_test_skill8,Test Skill,graphics/icons/skills/officer_management.png,second_in_command.skills.test.TestSkill
 sc_test_skill9,Test Skill,graphics/icons/skills/best_of_the_best.png,second_in_command.skills.test.TestSkill
 sc_test_skill10,Test Skill,graphics/icons/skills/space_ops.png,second_in_command.skills.test.TestSkill
+,,,
+sc_test_skill11,Test Skill,graphics/icons/skills/navigation.png,second_in_command.skills.test.TestSkill
+sc_test_skill12,Test Skill,graphics/icons/skills/sensors.png,second_in_command.skills.test.TestSkill
+sc_test_skill13,Test Skill,graphics/icons/skills/gunnery_implants.png,second_in_command.skills.test.TestSkill
+sc_test_skill14,Test Skill,graphics/icons/skills/energy_weapon_mastery.png,second_in_command.skills.test.TestSkill
+sc_test_skill15,Test Skill,graphics/icons/skills/EW.png,second_in_command.skills.test.TestSkill
+sc_test_skill16,Test Skill,graphics/icons/skills/flux_dynamics.png,second_in_command.skills.test.TestSkill
+sc_test_skill17,Test Skill,graphics/icons/skills/cybernetic_augmentation.png,second_in_command.skills.test.TestSkill
+sc_test_skill18,Test Skill,graphics/icons/skills/phase_corps.png,second_in_command.skills.test.TestSkill
+sc_test_skill19,Test Skill,graphics/icons/skills/neural_link.png,second_in_command.skills.test.TestSkill
+sc_test_skill20,Test Skill,graphics/icons/skills/automated_ships.png,second_in_command.skills.test.TestSkill
+,,,

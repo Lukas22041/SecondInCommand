@@ -82,13 +82,15 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
 
         subelement.addSpacer(30f)
 
-        var officer = SCUtils.createRandomSCOfficer("sc_test_aptitude1")
+        var officer1 = SCUtils.createRandomSCOfficer("sc_test_aptitude1")
 
-        addAptitudeRowParent(subelement, officer)
+        addAptitudeRowParent(subelement, officer1)
 
         subelement.addSpacer(30f)
 
-        addAptitudeRowParent(subelement, null)
+        var officer2 = SCUtils.createRandomSCOfficer("sc_test_aptitude2")
+
+        addAptitudeRowParent(subelement, officer2)
 
         subelement.addSpacer(30f)
 

@@ -18,4 +18,6 @@ abstract class SCBaseSkillPlugin {
         return spec.name
     }
 
+    abstract fun getAffectedShips() : String
+
 }
