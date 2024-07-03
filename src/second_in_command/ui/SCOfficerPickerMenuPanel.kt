@@ -11,7 +11,7 @@ import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.*
 import second_in_command.ui.panels.PickerBackgroundPanelPlugin
 
-class OfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerElement: SCOfficerPickerElement, var subpanelParent: CustomPanelAPI, var slotId: Int) {
+class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerElement: SCOfficerPickerElement, var subpanelParent: CustomPanelAPI, var slotId: Int) {
 
     var data = SCUtils.getSCData()
 
@@ -202,6 +202,9 @@ class OfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEleme
             officerPara.setHighlight("$spRemaining", officerParaTextExtra)
             officerPara.setHighlightColors(spHighlight, Misc.getNegativeHighlightColor())
 
+            calculateSectionRequirements(officer, sections, skillElements)
+
+
         }
 
         scrollerElement.addSpacer(10f)
@@ -259,6 +262,7 @@ class OfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEleme
             menu.panel.removeComponent(popupPanel)
         }
 
+
     }
 
     fun selectOfficer(officer: SCOfficer) {
@@ -298,6 +302,19 @@ class OfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEleme
 
     fun officerAlreadySlotted(officer: SCOfficer) : Boolean {
         return data.getActiveOfficers().contains(officer)
+    }
+
+    fun getActiveSkillCount(sections: ArrayList<SCAptitudeSection>) : Int {
+        return sections.sumOf { it.activeSkillsInUI.count { it.activated } }
+    }
+
+    fun calculateSectionRequirements(officer: SCOfficer, sections: ArrayList<SCAptitudeSection>, skillElements: ArrayList<SkillWidgetElement>) {
+        for (section in sections) {
+
+            var count = getActiveSkillCount(section.previousUISections)
+
+            section.uiGap?.renderArrow = section.requiredPreviousSkills <= count
+        }
     }
 
 }

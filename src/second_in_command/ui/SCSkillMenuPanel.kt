@@ -138,7 +138,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
                 return@onClick
             }
 
-            var pickerMenu = OfficerPickerMenuPanel(menu, officerPickerElement, subpanelParent, slotId)
+            var pickerMenu = SCOfficerPickerMenuPanel(menu, officerPickerElement, subpanelParent, slotId)
             pickerMenu.init()
             officerPickerElement.playClickSound()
         }
