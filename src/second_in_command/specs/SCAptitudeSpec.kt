@@ -7,6 +7,7 @@ data class SCAptitudeSpec(
     var id: String,
     var name: String,
     var category: String,
+    var requiresDock: Boolean,
     var maxLevel: Int,
     var xpGainMult: Float,
     var color: Color,

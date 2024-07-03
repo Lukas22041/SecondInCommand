@@ -51,4 +51,8 @@ abstract class SCBaseAptitudePlugin() {
         return spec.xpGainMult
     }
 
+    open fun getRequiresDock() : Boolean {
+        return spec.requiresDock
+    }
+
 }

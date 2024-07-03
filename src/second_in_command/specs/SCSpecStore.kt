@@ -31,6 +31,8 @@ object SCSpecStore {
             val name = row.getString("name")
             val category = row.getString("category")
 
+            val requiresDock = row.getBoolean("requiresDock")
+
             val maxLevel = row.getInt("maxLevel")
             val xpGainMult = row.getFloat("xpGainMult")
 
@@ -41,7 +43,7 @@ object SCSpecStore {
 
             val pluginPath = row.getString("plugin")
 
-            var spec = SCAptitudeSpec(id, name, category, maxLevel, xpGainMult, color, pluginPath)
+            var spec = SCAptitudeSpec(id, name, category, requiresDock, maxLevel, xpGainMult, color, pluginPath)
             aptitudeSpecs.add(spec)
         }
 
