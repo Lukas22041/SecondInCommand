@@ -1,12 +1,13 @@
 package second_in_command.ui.elements
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import lunalib.lunaUI.elements.LunaElement
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 
-class AptitudeBackgroundElement(var color: Color, tooltip: TooltipMakerAPI) : LunaElement(tooltip, 0f, 0f) {
+class AptitudeBackgroundElement(var color: Color, tooltip: TooltipMakerAPI, var openedFromPicker: Boolean = false) : LunaElement(tooltip, 0f, 0f) {
 
     init {
         enableTransparency = true
@@ -28,6 +29,10 @@ class AptitudeBackgroundElement(var color: Color, tooltip: TooltipMakerAPI) : Lu
         var size = 30f
         var length = 955f
 
+        if (openedFromPicker) {
+            length -= 10f
+        }
+
         GL11.glColor4f(color.red / 255f,
             color.green / 255f,
             color.blue / 255f,
@@ -37,5 +42,9 @@ class AptitudeBackgroundElement(var color: Color, tooltip: TooltipMakerAPI) : Lu
 
         GL11.glPopMatrix()
 
+    }
+
+    override fun processInput(events: MutableList<InputEventAPI>?) {
+        //super.processInput(events) Prevent Inputs from being consumed
     }
 }

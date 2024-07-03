@@ -11,13 +11,13 @@ class ConfirmCancelButton(var color: Color, tooltip: TooltipMakerAPI, width: Flo
 
     var bounce = 0f
     var switchBounce = false
+    var blink = true
 
     init {
         enableTransparency = true
         renderBorder = false
         backgroundAlpha = 0.2f
 
-        backgroundColor = color
 
         innerElement.setParaFont("graphics/fonts/victor14.fnt")
 
@@ -29,9 +29,11 @@ class ConfirmCancelButton(var color: Color, tooltip: TooltipMakerAPI, width: Flo
     override fun advance(amount: Float) {
         super.advance(amount)
 
-        if (!switchBounce) {
+        backgroundColor = color
+
+        if (!switchBounce && blink) {
             bounce += 1.5f * amount
-        } else {
+        } else if (blink){
             bounce -= 1.5f * amount
         }
 

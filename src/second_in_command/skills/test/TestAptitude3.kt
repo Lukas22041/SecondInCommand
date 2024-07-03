@@ -14,7 +14,7 @@ class TestAptitude3 : SCBaseAptitudePlugin() {
 
     override fun createSections() {
 
-        var section1 = SCAptitudeSection(true, 0, "technology1")
+        var section1 = SCAptitudeSection(true, 0, "industry1")
         section1.addSkill("sc_test_skill22")
         section1.addSkill("sc_test_skill23")
         section1.addSkill("sc_test_skill24")
@@ -23,13 +23,13 @@ class TestAptitude3 : SCBaseAptitudePlugin() {
 
         addSection(section1)
 
-        var section2 = SCAptitudeSection(true, 3, "technology2")
+        var section2 = SCAptitudeSection(true, 3, "industry2")
         section2.addSkill("sc_test_skill27")
         section2.addSkill("sc_test_skill28")
 
         addSection(section2)
 
-        var section3 = SCAptitudeSection(true, 4, "technology3")
+        var section3 = SCAptitudeSection(true, 4, "industry3")
         section3.addSkill("sc_test_skill29")
         section3.addSkill("sc_test_skill30")
         addSection(section3)

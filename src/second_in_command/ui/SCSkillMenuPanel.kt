@@ -23,6 +23,8 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
     var width = 0f
     var height = 0f
 
+    var data = SCUtils.getSCData()
+
     fun init() {
 
         width = parent.getWidth()
@@ -83,33 +85,27 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
 
         subelement.addSpacer(30f)
 
-        var officer1 = SCUtils.createRandomSCOfficer("sc_test_aptitude1")
-
-        addAptitudeRowParent(subelement, officer1)
+        addAptitudeRowParent(subelement, data.getOfficerInSlot(0), 0)
 
         subelement.addSpacer(30f)
 
-        var officer2 = SCUtils.createRandomSCOfficer("sc_test_aptitude2")
-
-        addAptitudeRowParent(subelement, officer2)
+        addAptitudeRowParent(subelement, data.getOfficerInSlot(1), 1)
 
         subelement.addSpacer(30f)
 
-        var officer3 = SCUtils.createRandomSCOfficer("sc_test_aptitude3")
-
-        addAptitudeRowParent(subelement, officer3)
+        addAptitudeRowParent(subelement, data.getOfficerInSlot(2), 2)
     }
 
-    fun addAptitudeRowParent(targetedElelement: TooltipMakerAPI, officer: SCOfficer?) {
+    fun addAptitudeRowParent(targetedElelement: TooltipMakerAPI, officer: SCOfficer?, slotId: Int) {
         var subpanel = Global.getSettings().createCustom(width, 96f, null)
         targetedElelement.addCustom(subpanel, 0f)
         /*var subelement = subpanel.createUIElement(width, 96f, false)
         subpanel.addUIElement(subelement)*/
 
-        recreateAptitudeRow(subpanel, officer)
+        recreateAptitudeRow(subpanel, officer, slotId)
     }
 
-    fun recreateAptitudeRow(subpanelParent: CustomPanelAPI, officer: SCOfficer?) {
+    fun recreateAptitudeRow(subpanelParent: CustomPanelAPI, officer: SCOfficer?, slotId: Int) {
         subpanelParent.clearChildren()
 
         var subpanel = Global.getSettings().createCustom(width, 96f, null)
@@ -126,16 +122,40 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
 
         var officerPickerElement = SCOfficerPickerElement(officer, color, subelement, 96f, 96f)
 
+
+        var menu = this
+        officerPickerElement.onClick {
+            if (officerPickerElement.isInEditMode) {
+                //officerPickerElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
+                return@onClick
+            }
+
+            if (it.isRMBEvent) {
+                officerPickerElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
+                data.setOfficerInSlot(slotId, null)
+
+                recreateAptitudeRow(subpanelParent, null, slotId)
+                return@onClick
+            }
+
+            var pickerMenu = OfficerPickerMenuPanel(menu, officerPickerElement, subpanelParent, slotId)
+            pickerMenu.init()
+            officerPickerElement.playClickSound()
+        }
+
+        officerPickerElement.onHoverEnter {
+            if (!officerPickerElement.isInEditMode) {
+                officerPickerElement.playScrollSound()
+            }
+        }
+
         var offset = 10f
         var offsetElement = subelement.addLunaElement(0f, 0f)
         offsetElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, -1f)
 
 
         var background = AptitudeBackgroundElement(color, subelement)
-        //background.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, -1f)
         background.elementPanel.position.belowLeft(offsetElement.elementPanel, offset)
-
-
 
         var officerUnderline = SkillUnderlineElement(color, subelement, 96f)
         officerUnderline.position.belowLeft(officerPickerElement.elementPanel, 2f)
@@ -251,7 +271,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
 
                 if (skillElement.canChangeState && !skillElement.preAcquired) {
 
-                    enterEditMode(subpanelParent, officer, officerPickerElement, skillElements)
+                    enterEditMode(subpanelParent, officer, officerPickerElement, skillElements, slotId)
 
                     if (!skillElement.activated) {
                         skillElement.playSound(skillElement.soundId)
@@ -270,7 +290,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
                 if (officer.activeSkillIDs.count() == sections.sumOf { it.activeSkillsInUI.count { it.activated } }) {
                    /* officerPickerElement.isInEditMode = false
                     officerPickerElement.innerElement.clearChildren()*/
-                    exitEditMode(subpanelParent, officer, officerPickerElement)
+                    exitEditMode(subpanelParent, officer, officerPickerElement, slotId)
                 }
             }
         }
@@ -315,7 +335,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
         officer.skillPoints = spRemaining
     }
 
-    fun enterEditMode(subpanelParent: CustomPanelAPI, offficer: SCOfficer, picker: SCOfficerPickerElement, skillElements: ArrayList<SkillWidgetElement>) {
+    fun enterEditMode(subpanelParent: CustomPanelAPI, offficer: SCOfficer, picker: SCOfficerPickerElement, skillElements: ArrayList<SkillWidgetElement>, slotId: Int) {
         if (picker.isInEditMode) return
         picker.isInEditMode = true
 
@@ -328,7 +348,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
             onClick {
                 playSound(Sounds.STORY_POINT_SPEND)
                 saveSkillDataToCharacter(offficer, skillElements)
-                exitEditMode(subpanelParent, offficer, picker)
+                exitEditMode(subpanelParent, offficer, picker, slotId)
             }
         }
 
@@ -338,7 +358,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
 
             onClick {
                 playSound("ui_char_decrease_skill", 1f, 1f)
-                exitEditMode(subpanelParent, offficer, picker)
+                exitEditMode(subpanelParent, offficer, picker, slotId)
             }
         }
 
@@ -346,8 +366,8 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
 
     }
 
-    fun exitEditMode(subpanelParent: CustomPanelAPI, offficer: SCOfficer, picker: SCOfficerPickerElement) {
-        recreateAptitudeRow(subpanelParent, offficer)
+    fun exitEditMode(subpanelParent: CustomPanelAPI, offficer: SCOfficer, picker: SCOfficerPickerElement, slotId: Int) {
+        recreateAptitudeRow(subpanelParent, offficer, slotId)
     }
 
     fun getActiveSkillCount(sections: ArrayList<SCAptitudeSection>) : Int {
@@ -401,6 +421,11 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
 
     fun getSkillsSection(skillId: String, sections: ArrayList<SCAptitudeSection>) : SCAptitudeSection? {
         return sections.find { it.getSkills().contains(skillId) }
+    }
+
+
+    fun openOfficerSelector() {
+
     }
 
 }

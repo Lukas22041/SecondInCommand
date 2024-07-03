@@ -1,6 +1,7 @@
 package second_in_command.ui.elements
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import lunalib.lunaUI.elements.LunaElement
 import org.lwjgl.opengl.GL11
@@ -68,5 +69,9 @@ class SkillSeperatorElement(var color: Color, tooltip: TooltipMakerAPI) : LunaEl
 
 
 
+    }
+
+    override fun processInput(events: MutableList<InputEventAPI>?) {
+        //super.processInput(events) Prevent Inputs from being consumed
     }
 }
