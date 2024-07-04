@@ -1,6 +1,6 @@
 package second_in_command.specs
 
-import java.awt.Color
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 
 abstract class SCBaseSkillPlugin {
 
@@ -18,6 +18,8 @@ abstract class SCBaseSkillPlugin {
         return spec.name
     }
 
-    abstract fun getAffectedShips() : String
+    abstract fun getAffectsString() : String
+
+    abstract fun addTooltip(tooltip: TooltipMakerAPI)
 
 }

@@ -46,17 +46,18 @@ class SkillPanelReplacerScriptTitlescreen : EveryFrameCombatPlugin {
 
         for (child in children) {
             if (child == children[7]) {
-                child.position.inTMid(20f)
+                child.position.inTMid(140f)
                 continue
             }
             child.position.inTL(10000f, 0f)
         }
 
 
-        var scData = SCData()
 
         var dataFieldName = ReflectionUtils.getFieldsOfType(panel, PlayerCharacterData::class.java).first()
         var data = ReflectionUtils.get(dataFieldName, panel) as CharacterDataAPI
+
+        var scData = SCData(data.person)
 
         if (data.memoryWithoutUpdate.contains(SCUtils.DATA_KEY)) return
 

@@ -2,6 +2,7 @@ package second_in_command.ui
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.ui.CustomPanelAPI
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
 import second_in_command.SCData
@@ -11,6 +12,7 @@ import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.*
 import second_in_command.ui.panels.PickerBackgroundPanelPlugin
+import second_in_command.ui.tooltips.SCSkillTooltipCreator
 
 class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerElement: SCOfficerPickerElement, var subpanelParent: CustomPanelAPI, var slotId: Int, var data: SCData) {
 
@@ -75,7 +77,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
             var inner = officerElement.innerElement
             inner.addSpacer(12f)
-            var officerPickerElement = SCOfficerPickerElement(officer, aptitudePlugin.getColor(), inner, 96f, 96f)
+            var officerPickerElement = SCOfficerPickerElement(officer.person, aptitudePlugin.getColor(), inner, 96f, 96f)
             officerPickerElement.onClick { selectOfficer(officer) }
 
             var offset = 10f
@@ -95,6 +97,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
             var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())
             var originSkillElement = SkillWidgetElement(originSkill!!.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), inner, 72f, 72f)
+            inner.addTooltipTo(SCSkillTooltipCreator(originSkill.getPlugin(), aptitudePlugin, 0), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
             //originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
             originSkillElement.elementPanel.position.rightOfMid(background.elementPanel, 20f)
 
@@ -139,6 +142,10 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
                     skillElements.add(skillElement)
                     section.activeSkillsInUI.add(skillElement)
                     usedWidth += 72f
+
+                    var tooltip = SCSkillTooltipCreator(skillPlugin, aptitudePlugin, section.requiredPreviousSkills)
+                    inner.addTooltipTo(tooltip, skillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
+                    section.tooltips.add(tooltip)
 
                     if (firstSkillThisSection == null) {
                         firstSkillThisSection = skillElement
@@ -281,7 +288,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
         for (active in data.getActiveOfficers()) {
             if (active == null) continue
-            if (active == originalPickerElement.officer) continue
+            if (active.person == originalPickerElement.officer) continue
             if (active.aptitudeId == officer.aptitudeId) return true
         }
 
@@ -291,7 +298,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
     fun doesOffficerMatchCategory(officer: SCOfficer) : Boolean {
         for (active in data.getActiveOfficers()) {
             if (active == null) continue
-            if (active == originalPickerElement.officer) continue
+            if (active.person == originalPickerElement.officer) continue
             var spec = SCSpecStore.getAptitudeSpec(officer.aptitudeId)
             var activeSpec = SCSpecStore.getAptitudeSpec(active.aptitudeId)
             if (spec!!.category == "") continue
@@ -315,6 +322,8 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             var count = getActiveSkillCount(section.previousUISections)
 
             section.uiGap?.renderArrow = section.requiredPreviousSkills <= count
+            section.tooltips.forEach { it.sectionMeetsRequirements = section.requiredPreviousSkills <= count }
+
         }
     }
 

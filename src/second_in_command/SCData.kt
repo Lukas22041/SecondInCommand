@@ -1,8 +1,9 @@
 package second_in_command
 
+import com.fs.starfarer.api.characters.PersonAPI
 import second_in_command.specs.SCOfficer
 
-class SCData {
+class SCData(var player: PersonAPI) {
 
     private var officers = ArrayList<SCOfficer>()
     private var activeOfficers = ArrayList<SCOfficer?>()

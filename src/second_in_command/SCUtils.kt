@@ -11,7 +11,7 @@ object SCUtils {
     fun getSCData() : SCData {
         var data = Global.getSector().characterData.memoryWithoutUpdate.get(DATA_KEY) as SCData?
         if (data == null) {
-            data = SCData()
+            data = SCData(Global.getSector().characterData.person)
             Global.getSector().characterData.memoryWithoutUpdate.set(DATA_KEY, data)
         }
         return data

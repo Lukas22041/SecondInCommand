@@ -15,6 +15,7 @@ import second_in_command.misc.getHeight
 import second_in_command.misc.getWidth
 import second_in_command.specs.*
 import second_in_command.ui.elements.*
+import second_in_command.ui.tooltips.SCSkillTooltipCreator
 
 class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
 
@@ -46,9 +47,22 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
         element = panel.createUIElement(width, height, true)
         panel.addUIElement(element)
 
-        element.addPara("", 0f).position.inTL(20f, 5f)
+        var descriptionPanel = panel.createCustomPanel(width, height, null)
+        panel.addComponent(descriptionPanel)
+        var descriptionElement = descriptionPanel.createUIElement(width, height, false)
+        descriptionPanel.addUIElement(descriptionElement)
+        descriptionElement.position.inTL(20f, 40f)
+
+        var para = descriptionElement.addPara("The character menu allows investing skill points in to different skills of your choice.  \n" +
+                "It is separated in to two sections, one for your personal skills, and one for the skills of your executive officers. \n" +
+                "\n" +
+                "Executive officers can be found throughout the world, and all of them have an aptitude they excel at.\n" +
+                "You can assign up to three executive officers at a time, each one provides a whole row of skills to choose from. \n" +
+                "Some officers may only be re-assigned when docked at a colony. \n" +
+                "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "skill points", "executive officers", "all of them have an aptitude they excel at", "up to three")
+
+
         //element.addPara("Test Paragraph", 0f)
-        element.addSpacer(285f)
 
        /* var previous: CustomPanelAPI? = null
         for (skill in SCSpecStore.getSkillSpecs()) {
@@ -60,6 +74,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
             previous = next.elementPanel
         }*/
 
+        addPlayerAptitudePanel()
 
         addAptitudePanel()
 
@@ -69,10 +84,16 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
 
     }
 
+    fun addPlayerAptitudePanel() {
+        var playerPanel = SCPlayerAptitudePanel(this, data)
+        playerPanel.init()
+    }
+
     fun addAptitudePanel() {
 
         var subpanel = Global.getSettings().createCustom(width, height, null)
         element.addCustom(subpanel, 0f)
+        subpanel.position.inTL(20f, 285+5f+15)
         var subelement = subpanel.createUIElement(width, height, false)
         subpanel.addUIElement(subelement)
 
@@ -119,7 +140,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
             color = officer.getAptitudePlugin().getColor()
         }
 
-        var officerPickerElement = SCOfficerPickerElement(officer, color, subelement, 96f, 96f)
+        var officerPickerElement = SCOfficerPickerElement(officer?.person, color, subelement, 96f, 96f)
 
 
         var menu = this
@@ -171,6 +192,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
 
         var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())
         var originSkillElement = SkillWidgetElement(originSkill!!.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), subelement, 72f, 72f)
+        subelement.addTooltipTo(SCSkillTooltipCreator(originSkill.getPlugin(), aptitudePlugin, 0), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
         //originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
         originSkillElement.elementPanel.position.rightOfMid(background.elementPanel, 20f)
 
@@ -212,6 +234,10 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
                 skillElements.add(skillElement)
                 section.activeSkillsInUI.add(skillElement)
                 usedWidth += 72f
+
+                var tooltip = SCSkillTooltipCreator(skillPlugin, aptitudePlugin, section.requiredPreviousSkills)
+                subelement.addTooltipTo(tooltip, skillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
+                section.tooltips.add(tooltip)
 
                 if (firstSkillThisSection == null) {
                     firstSkillThisSection = skillElement
@@ -380,6 +406,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
 
             if (section.requiredPreviousSkills <= count) {
                 section.uiGap?.renderArrow = true
+                section.tooltips.forEach { it.sectionMeetsRequirements = true }
 
                 for (skillElement in section.activeSkillsInUI) {
                     if (skillElement.preAcquired) continue
@@ -388,6 +415,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
             }
             else {
                 section.uiGap?.renderArrow = false
+                section.tooltips.forEach { it.sectionMeetsRequirements = false }
 
                 for (skillElement in section.activeSkillsInUI) {
                     if (skillElement.preAcquired) continue
@@ -422,9 +450,5 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
         return sections.find { it.getSkills().contains(skillId) }
     }
 
-
-    fun openOfficerSelector() {
-
-    }
 
 }

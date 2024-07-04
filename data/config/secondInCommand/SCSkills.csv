@@ -1,4 +1,6 @@
 id,name,iconPath,plugin
+sc_combat_aptitude_skill,Piloting,graphics/icons/skills/combat.png,second_in_command.skills.test.TestSkill
+,,,
 sc_test_skill1,Test Skill,graphics/icons/skills/weapon_drills.png,second_in_command.skills.test.TestSkill
 sc_test_skill2,Test Skill,graphics/icons/skills/coordinated_maneuvers2.png,second_in_command.skills.test.TestSkill
 sc_test_skill3,Test Skill,graphics/icons/skills/wolfpack.png,second_in_command.skills.test.TestSkill
