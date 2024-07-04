@@ -1,4 +1,9 @@
  {
+	 
+	 "plugins":{		
+		"SCSkillPanelReplacerTitle":"second_in_command.scripts.SkillPanelReplacerScriptTitlescreen",
+	},	
+	 
 	"graphics":{
 		"sc_ui":{
 			"skillBorderInactive":"graphics/secondInCommand/skillBorderInactive.png",

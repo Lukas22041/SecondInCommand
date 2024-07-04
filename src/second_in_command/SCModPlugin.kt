@@ -14,5 +14,8 @@ class SCModPlugin : BaseModPlugin() {
 
     override fun onGameLoad(newGame: Boolean) {
         Global.getSector().addTransientScript(SkillPanelReplacerScript())
+
+        var data = Global.getSector().characterData
+        var test = ""
     }
 }

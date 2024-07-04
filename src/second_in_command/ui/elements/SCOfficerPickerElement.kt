@@ -4,6 +4,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.graphics.SpriteAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import lunalib.lunaUI.elements.LunaElement
+import second_in_command.SCData
 import second_in_command.specs.SCOfficer
 import java.awt.Color
 

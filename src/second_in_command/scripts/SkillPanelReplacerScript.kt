@@ -4,6 +4,7 @@ import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.campaign.CampaignState
 import com.fs.state.AppDriver
+import second_in_command.SCUtils
 import second_in_command.misc.ReflectionUtils
 import second_in_command.misc.getChildrenCopy
 import second_in_command.misc.getParent
@@ -24,7 +25,19 @@ class SkillPanelReplacerScript : EveryFrameScript {
         var state = AppDriver.getInstance().currentState
         if (state !is CampaignState) return
 
-        var core = ReflectionUtils.invoke("getCore", state) as UIPanelAPI ?: return
+        var core: UIPanelAPI? = null
+
+        var dialog = ReflectionUtils.invoke("getEncounterDialog", state)
+        if (dialog != null)
+        {
+            core = ReflectionUtils.invoke("getCoreUI", dialog) as UIPanelAPI?
+        }
+
+        if (core == null) {
+            core = ReflectionUtils.invoke("getCore", state) as UIPanelAPI?
+        }
+
+        if (core == null) return
 
         var corePanels = core.getChildrenCopy().filter { it is UIPanelAPI } as List<UIPanelAPI>
         var innerPanels = corePanels.map { it.getChildrenCopy().find { children -> ReflectionUtils.hasMethodOfName("canReassign", children) }}
@@ -33,7 +46,8 @@ class SkillPanelReplacerScript : EveryFrameScript {
 
         parent.removeComponent(panel)
 
-        var skillPanel = SCSkillMenuPanel(parent)
+        var scData = SCUtils.getSCData()
+        var skillPanel = SCSkillMenuPanel(parent, scData)
         skillPanel.init()
     }
 

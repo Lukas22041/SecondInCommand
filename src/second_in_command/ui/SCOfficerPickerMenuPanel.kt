@@ -4,6 +4,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
+import second_in_command.SCData
 import second_in_command.SCUtils
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCOfficer
@@ -11,9 +12,9 @@ import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.*
 import second_in_command.ui.panels.PickerBackgroundPanelPlugin
 
-class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerElement: SCOfficerPickerElement, var subpanelParent: CustomPanelAPI, var slotId: Int) {
+class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerElement: SCOfficerPickerElement, var subpanelParent: CustomPanelAPI, var slotId: Int, var data: SCData) {
 
-    var data = SCUtils.getSCData()
+
 
     var selectedOfficer: SCOfficer? = null
 

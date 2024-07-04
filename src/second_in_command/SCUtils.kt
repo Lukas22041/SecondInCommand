@@ -6,12 +6,13 @@ import second_in_command.specs.SCOfficer
 object SCUtils {
 
     var MOD_ID = "second_in_command"
+    var DATA_KEY = "\$sc_stored_data"
 
     fun getSCData() : SCData {
-        var data = Global.getSector().memoryWithoutUpdate.get("\$sc_stored_data") as SCData?
+        var data = Global.getSector().characterData.memoryWithoutUpdate.get(DATA_KEY) as SCData?
         if (data == null) {
             data = SCData()
-            Global.getSector().memoryWithoutUpdate.set("\$sc_stored_data", data)
+            Global.getSector().characterData.memoryWithoutUpdate.set(DATA_KEY, data)
         }
         return data
     }

@@ -8,6 +8,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
+import second_in_command.SCData
 import second_in_command.SCUtils
 import second_in_command.misc.clearChildren
 import second_in_command.misc.getHeight
@@ -15,15 +16,13 @@ import second_in_command.misc.getWidth
 import second_in_command.specs.*
 import second_in_command.ui.elements.*
 
-class SCSkillMenuPanel(var parent: UIPanelAPI) {
+class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
 
 
     lateinit var panel: CustomPanelAPI
     lateinit var element: TooltipMakerAPI
     var width = 0f
     var height = 0f
-
-    var data = SCUtils.getSCData()
 
     fun init() {
 
@@ -138,7 +137,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
                 return@onClick
             }
 
-            var pickerMenu = SCOfficerPickerMenuPanel(menu, officerPickerElement, subpanelParent, slotId)
+            var pickerMenu = SCOfficerPickerMenuPanel(menu, officerPickerElement, subpanelParent, slotId, data)
             pickerMenu.init()
             officerPickerElement.playClickSound()
         }
