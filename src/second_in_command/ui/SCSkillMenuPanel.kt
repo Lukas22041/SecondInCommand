@@ -47,8 +47,8 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
         panel.addUIElement(element)
 
         element.addPara("", 0f).position.inTL(20f, 5f)
-        element.addPara("Test Paragraph", 0f)
-        element.addSpacer(270f)
+        //element.addPara("Test Paragraph", 0f)
+        element.addSpacer(285f)
 
        /* var previous: CustomPanelAPI? = null
         for (skill in SCSpecStore.getSkillSpecs()) {

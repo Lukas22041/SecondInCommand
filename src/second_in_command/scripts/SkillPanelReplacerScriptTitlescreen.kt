@@ -46,7 +46,7 @@ class SkillPanelReplacerScriptTitlescreen : EveryFrameCombatPlugin {
 
         for (child in children) {
             if (child == children[7]) {
-                child.position.inTMid(30f)
+                child.position.inTMid(20f)
                 continue
             }
             child.position.inTL(10000f, 0f)
