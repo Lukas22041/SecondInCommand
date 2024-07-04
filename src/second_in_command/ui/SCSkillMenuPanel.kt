@@ -131,7 +131,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI) {
             }
 
             if (it.isRMBEvent) {
-                officerPickerElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
+                officerPickerElement.playSound("ui_char_decrease_skill", 1f, 1f)
                 data.setOfficerInSlot(slotId, null)
 
                 recreateAptitudeRow(subpanelParent, null, slotId)
