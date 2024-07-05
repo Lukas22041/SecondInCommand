@@ -60,6 +60,15 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
         levelUpIfNeeded()
     }
 
+    fun increaseLevel(amount: Int) {
+        for (i in 0 until amount) {
+            if (level >= getMaxLevel()) break
+            skillPoints += 1
+            level += 1
+        }
+        experiencePoints = 0f
+    }
+
     fun levelUpIfNeeded() {
         var required = getRequiredXP()
         if (experiencePoints < required) return

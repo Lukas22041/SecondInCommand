@@ -1,12 +1,9 @@
-package second_in_command.skills.test
+package second_in_command.skills.misc
 
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCBaseAptitudePlugin
 
-class TestAptitude : SCBaseAptitudePlugin() {
-    override fun getSpawnWeight(): Float {
-        return 1f
-    }
+class FakeCombatAptitude : SCBaseAptitudePlugin() {
 
     override fun getOriginSkillId(): String {
         return "sc_test_skill1"

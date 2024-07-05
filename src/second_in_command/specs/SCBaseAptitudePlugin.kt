@@ -18,8 +18,6 @@ abstract class SCBaseAptitudePlugin() {
         sections.clear()
     }
 
-    abstract fun getSpawnWeight() : Float
-
     abstract fun getOriginSkillId() : String
 
     abstract fun createSections()
@@ -55,4 +53,11 @@ abstract class SCBaseAptitudePlugin() {
         return spec.requiresDock
     }
 
+    open fun getSpawnWeight() : Float {
+        return spec.spawnWeight
+    }
+
+    open fun getDescription() : String {
+        return spec.description
+    }
 }

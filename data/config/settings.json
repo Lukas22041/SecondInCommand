@@ -3,6 +3,11 @@
 	 "plugins":{		
 		"SCSkillPanelReplacerTitle":"second_in_command.scripts.SkillPanelReplacerScriptTitlescreen",
 	},	
+	
+	"ruleCommandPackages":[
+		"second_in_command.interactions.rules",
+	],
+
 	 
 	"graphics":{
 		"sc_ui":{

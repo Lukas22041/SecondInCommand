@@ -36,14 +36,19 @@ object SCSpecStore {
             val maxLevel = row.getInt("maxLevel")
             val xpMultPerlevel = row.getFloat("xpMultPerlevel")
 
+            val spawnWeight = row.getFloat("spawnWeight")
+
+
 
             val colorString = row.getString("color")
             val cs = colorString.split(",").map { it.trim().toInt() }
             val color = Color(cs[0], cs[1], cs[2], cs[3])
 
+            val description = row.getString("description")
+
             val pluginPath = row.getString("plugin")
 
-            var spec = SCAptitudeSpec(id, name, category, requiresDock, maxLevel, xpMultPerlevel, color, pluginPath)
+            var spec = SCAptitudeSpec(id, name, category, requiresDock, maxLevel, xpMultPerlevel, spawnWeight, color, description, pluginPath)
             aptitudeSpecs.add(spec)
         }
 

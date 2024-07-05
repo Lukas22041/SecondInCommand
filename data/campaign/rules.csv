@@ -1,0 +1,12 @@
+id,trigger,conditions,script,text,options,notes
+,,,,,,
+sc_hire_officerStart,PickGreeting,$sc_hireable score:1000,"ShowPersonVisual
+SCOfficerHireDialog","After a short wait, your connection request is accepted.
+
+$personName looks you over appraisingly.
+
+""Heard you might be looking to take on some help.""",,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,

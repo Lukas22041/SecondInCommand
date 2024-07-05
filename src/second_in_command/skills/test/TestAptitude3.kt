@@ -4,9 +4,6 @@ import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCBaseAptitudePlugin
 
 class TestAptitude3 : SCBaseAptitudePlugin() {
-    override fun getSpawnWeight(): Float {
-        return 1f
-    }
 
     override fun getOriginSkillId(): String {
         return "sc_test_skill21"

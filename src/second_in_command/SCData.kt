@@ -25,7 +25,15 @@ class SCData(var player: PersonAPI) {
     }
 
     fun getOfficersInFleet() : ArrayList<SCOfficer> {
-        return officers
+        return ArrayList(officers)
+    }
+
+    fun addOfficerToFleet(officer: SCOfficer) {
+        officers.add(officer)
+    }
+
+    fun removeOfficerFromFleet(officer: SCOfficer) {
+        officers.remove(officer)
     }
 
     fun getOfficerInSlot(slotIndex: Int) : SCOfficer? {

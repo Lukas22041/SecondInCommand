@@ -10,7 +10,9 @@ data class SCAptitudeSpec(
     var requiresDock: Boolean,
     var maxLevel: Int,
     var xpMultPerlevel: Float,
+    var spawnWeight: Float,
     var color: Color,
+    var description: String,
     var pluginPath: String) {
 
     fun getPlugin() : SCBaseAptitudePlugin {
