@@ -15,6 +15,7 @@ import second_in_command.misc.getHeight
 import second_in_command.misc.getWidth
 import second_in_command.specs.*
 import second_in_command.ui.elements.*
+import second_in_command.ui.tooltips.OfficerTooltipCreator
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
 
 class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
@@ -143,6 +144,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
         var officerPickerElement = SCOfficerPickerElement(officer?.person, color, subelement, 96f, 96f)
 
 
+
         var menu = this
         officerPickerElement.onClick {
             if (officerPickerElement.isInEditMode) {
@@ -169,6 +171,8 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
             }
         }
 
+        subelement.addTooltipTo(OfficerTooltipCreator(officer), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
+
         var offset = 10f
         var offsetElement = subelement.addLunaElement(0f, 0f)
         offsetElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, -1f)
@@ -183,6 +187,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
         if (officer == null) {
             return
         }
+
 
         var aptitudePlugin = officer.getAptitudePlugin()
         aptitudePlugin.clearSections()

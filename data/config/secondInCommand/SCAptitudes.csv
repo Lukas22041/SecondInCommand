@@ -1,9 +1,11 @@
-id,name,category,requiresDock,maxLevel,xpGainMult,color,plugin
-sc_fake_combat_aptitude,Combat,,false,6,1.0,"220,94,41,255",second_in_command.skills.test.TestAptitude1
+id,name,category,requiresDock,maxLevel,xpMultPerlevel,color,plugin
+sc_fake_combat_aptitude,Piloting,,false,6,1,"220,94,41,255",second_in_command.skills.test.TestAptitude1
 ,,,,,,,
-sc_test_aptitude1,Test Aptitude 1,,false,6,1.0,"107,175,0,255",second_in_command.skills.test.TestAptitude1
-sc_test_aptitude2,Test Aptitude 2,,false,6,1.0,"0,121,216,255",second_in_command.skills.test.TestAptitude2
-sc_test_aptitude3,Test Aptitude 3,,false,6,1.0,"175,135,0,255",second_in_command.skills.test.TestAptitude3
+,,#can not use multiple aptitudes of the same category,#can only be swapped when docked,,"#Increases XP needed per level
+base*(mult^level)",,
+sc_test_aptitude1,Leadership,,false,6,1.2,"107,175,0,255",second_in_command.skills.test.TestAptitude1
+sc_test_aptitude2,Technology,,false,6,1.2,"0,121,216,255",second_in_command.skills.test.TestAptitude2
+sc_test_aptitude3,Industry,,false,6,1.2,"175,135,0,255",second_in_command.skills.test.TestAptitude3
 ,,,,,,,
 ,,,,,,,
 ,,,,,,,

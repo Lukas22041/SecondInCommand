@@ -12,6 +12,7 @@ import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.*
 import second_in_command.ui.panels.PickerBackgroundPanelPlugin
+import second_in_command.ui.tooltips.OfficerTooltipCreator
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
 
 class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerElement: SCOfficerPickerElement, var subpanelParent: CustomPanelAPI, var slotId: Int, var data: SCData) {
@@ -55,6 +56,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
                 borderColor = aptitudePlugin.getColor()
             }
 
+
             officerElement.advance {
                 if (officer == selectedOfficer) {
                     officerElement.backgroundAlpha = 0.15f
@@ -79,6 +81,8 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             inner.addSpacer(12f)
             var officerPickerElement = SCOfficerPickerElement(officer.person, aptitudePlugin.getColor(), inner, 96f, 96f)
             officerPickerElement.onClick { selectOfficer(officer) }
+
+            scrollerElement.addTooltipTo(OfficerTooltipCreator(officer), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
 
             var offset = 10f
             var offsetElement = inner.addLunaElement(0f, 0f)

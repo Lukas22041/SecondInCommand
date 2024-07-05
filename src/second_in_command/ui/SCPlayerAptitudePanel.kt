@@ -12,6 +12,8 @@ import second_in_command.misc.clearChildren
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.*
+import second_in_command.ui.tooltips.OfficerTooltipCreator
+import second_in_command.ui.tooltips.PlayerTooltipCreator
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
 
 class SCPlayerAptitudePanel(var menu: SCSkillMenuPanel, var data: SCData)  {
@@ -65,6 +67,9 @@ class SCPlayerAptitudePanel(var menu: SCSkillMenuPanel, var data: SCData)  {
                 officerPickerElement.playScrollSound()
             }
         }
+
+        subelement.addTooltipTo(PlayerTooltipCreator(player), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
+
 
         var offset = 10f
         var offsetElement = subelement.addLunaElement(0f, 0f)

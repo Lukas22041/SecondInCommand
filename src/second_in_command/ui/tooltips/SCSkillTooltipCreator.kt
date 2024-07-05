@@ -13,7 +13,7 @@ class SCSkillTooltipCreator(var skill: SCBaseSkillPlugin, var aptitude: SCBaseAp
 
 
     override fun getTooltipWidth(tooltipParam: Any?): Float {
-        return 600f
+        return 700f
     }
 
     override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
@@ -32,7 +32,9 @@ class SCSkillTooltipCreator(var skill: SCBaseSkillPlugin, var aptitude: SCBaseAp
 
         if (!sectionMeetsRequirements) {
             tooltip.addSpacer(10f)
-            tooltip.addPara("Requires atleast $requiredSkillPoints lower tier skills.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+            var addedS = ""
+            if (requiredSkillPoints >= 2) addedS = "s"
+            tooltip.addPara("Requires atleast $requiredSkillPoints lower tier skill$addedS.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
         }
 
         tooltip.addSpacer(2f)

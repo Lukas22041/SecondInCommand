@@ -9,7 +9,7 @@ data class SCAptitudeSpec(
     var category: String,
     var requiresDock: Boolean,
     var maxLevel: Int,
-    var xpGainMult: Float,
+    var xpMultPerlevel: Float,
     var color: Color,
     var pluginPath: String) {
 

@@ -1,15 +1,13 @@
 package second_in_command.misc;
 
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.loading.HullModSpecAPI;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 //From:
 //https://github.com/scardwell15/takenoprisoners/blob/main/src/takenoprisoners/utils/SkillsUtil.java
@@ -46,6 +44,35 @@ public class VanillaSkillsUtil {
         } catch (IOException | JSONException e) {
             throw new RuntimeException("Missing/bad skill " + skillId, e);
         }
+    }
+
+    public static List<HullModSpecAPI> getUnlockedHullmods(String skillId) {
+        ArrayList<HullModSpecAPI> list = new ArrayList<>();
+        List<JSONObject> groups = getEffectGroups(skillId);
+
+        for (JSONObject group : groups) {
+            try {
+                JSONArray effects = group.getJSONArray("effects");
+
+                for (int i = 0 ; i < effects.length(); i++) {
+                    JSONObject effect = effects.getJSONObject(i);
+                    String type = effect.getString("type");
+                    if (type.equals("HULLMOD_UNLOCK")) {
+                        JSONObject hullmodEntry = effect.getJSONObject("hullmods");
+                        Iterator<String> hullmodIds = hullmodEntry.keys();
+
+                        for (Iterator<String> it = hullmodIds; it.hasNext(); ) {
+                            String hullmodId = it.next();
+                            HullModSpecAPI spec = Global.getSettings().getHullModSpec(hullmodId);
+                            list.add(spec);
+                        }
+                    }
+                }
+
+            } catch (JSONException ex) {}
+        }
+
+        return list;
     }
 
     private static List<JSONObject> getEffectGroups(String skillId) {

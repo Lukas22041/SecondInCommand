@@ -1,7 +1,9 @@
 package second_in_command.misc;
 
 import com.fs.starfarer.api.characters.*;
+import com.fs.starfarer.api.combat.ShipAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Skills;
+import com.fs.starfarer.api.loading.HullModSpecAPI;
 import com.fs.starfarer.api.ui.BaseTooltipCreator;
 import com.fs.starfarer.api.ui.LabelAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
@@ -9,6 +11,8 @@ import com.fs.starfarer.api.ui.UIComponentAPI;
 import com.fs.starfarer.api.util.Misc;
 
 import java.awt.*;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,7 +39,7 @@ public class VanillaSkillTooltip extends BaseTooltipCreator {
 
     @Override
     public float getTooltipWidth(Object tooltipParam) {
-        return 650f;
+        return 800f;
     }
 
     @Override
@@ -100,6 +104,17 @@ public class VanillaSkillTooltip extends BaseTooltipCreator {
             }
         }
 
+        List<HullModSpecAPI> hullmodSpecs = VanillaSkillsUtil.getUnlockedHullmods(skill.getId());
+
+        if (!hullmodSpecs.isEmpty()) {
+            tooltip.addSpacer(10f);
+        }
+
+        for (HullModSpecAPI hullmodSpec: hullmodSpecs) {
+            tooltip.addPara("Hull mod: " + hullmodSpec.getDisplayName() + " - " + ReflectionUtils.INSTANCE.invoke("getShortDesc", hullmodSpec, new Array[]{}, false) , 0f,
+                    Misc.getTextColor(), Misc.getHighlightColor(), hullmodSpec.getDisplayName());
+        }
+
         if (!sectionMeetsRequirements) {
             tooltip.addSpacer(10f);
             tooltip.addPara("Requires atleast " + requiredSkillPoints + " lower tier skills.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor());
@@ -110,21 +125,7 @@ public class VanillaSkillTooltip extends BaseTooltipCreator {
 
     public static VanillaSkillTooltip addToTooltip(TooltipMakerAPI tooltip, PersonAPI person, SkillSpecAPI skillSpec, int requiredSkillPoints) {
         VanillaSkillTooltip element = new VanillaSkillTooltip(tooltip, person, skillSpec, requiredSkillPoints);
-        tooltip.addTooltipToPrevious(element, TooltipMakerAPI.TooltipLocation.BELOW);
+        tooltip.addTooltipToPrevious(element, TooltipMakerAPI.TooltipLocation.BELOW, false);
         return element;
-    }
-
-    private static Color getSkillTitleColor(SkillSpecAPI skill) {
-        if (skill.getGoverningAptitudeId().equals(Skills.APT_COMBAT)) {
-            return new Color(208, 124, 118);
-        } else if (skill.getGoverningAptitudeId().equals(Skills.APT_INDUSTRY)) {
-            return new Color(176, 160, 94);
-        } else if (skill.getGoverningAptitudeId().equals(Skills.APT_LEADERSHIP)) {
-            return new Color(89, 155, 80);
-        } else if (skill.getGoverningAptitudeId().equals(Skills.APT_TECHNOLOGY)) {
-            return new Color(115, 133, 208);
-        } else {
-            return skill.getGoverningAptitudeColor().brighter();
-        }
     }
 }
