@@ -171,6 +171,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
             }
         }
 
+
         subelement.addTooltipTo(OfficerTooltipCreator(officer), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
 
         var offset = 10f
@@ -192,6 +193,10 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
         var aptitudePlugin = officer.getAptitudePlugin()
         aptitudePlugin.clearSections()
         aptitudePlugin.createSections()
+
+        officerPickerElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
+        var aptitudePara = officerPickerElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
+        aptitudePara.position.inTL(officerPickerElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 1, -aptitudePara.computeTextHeight(aptitudePara.text)-5)
 
         var sections = aptitudePlugin.getSections()
 
@@ -381,6 +386,8 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
                 exitEditMode(subpanelParent, offficer, picker, slotId)
             }
         }
+        confirmButton.elementPanel.position.inTL(5f, 12f)
+
 
         var cancelButton = ConfirmCancelButton(picker.color, picker.innerElement, 86f, 30f).apply {
             addText("Cancel")

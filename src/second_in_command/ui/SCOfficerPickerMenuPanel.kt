@@ -48,7 +48,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             var aptitudePlugin = aptitudeSpec!!.getPlugin()
 
             scrollerElement.addSpacer(10f)
-            var officerElement = scrollerElement.addLunaElement(width - 10, 96f + 24).apply {
+            var officerElement = scrollerElement.addLunaElement(width - 10, 96f + 36).apply {
                 enableTransparency = true
                 backgroundAlpha = 0.025f
                 borderAlpha = 0.1f
@@ -78,9 +78,14 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
 
             var inner = officerElement.innerElement
-            inner.addSpacer(12f)
+            inner.addSpacer(24f)
+
             var officerPickerElement = SCOfficerPickerElement(officer.person, aptitudePlugin.getColor(), inner, 96f, 96f)
             officerPickerElement.onClick { selectOfficer(officer) }
+
+            officerPickerElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
+            var aptitudePara = officerPickerElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
+            aptitudePara.position.inTL(officerPickerElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 1, -aptitudePara.computeTextHeight(aptitudePara.text)-5)
 
             scrollerElement.addTooltipTo(OfficerTooltipCreator(officer), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
 

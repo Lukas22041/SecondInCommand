@@ -36,6 +36,8 @@ class SCPlayerAptitudePanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         var width = menu.width
         var height = menu.height
 
+        var aptitudePlugin = SCSpecStore.getAptitudeSpec("sc_fake_combat_aptitude")!!.getPlugin()
+
         var subelement = subpanel.createUIElement(width, height, false)
         subpanel.addUIElement(subelement)
 
@@ -67,6 +69,10 @@ class SCPlayerAptitudePanel(var menu: SCSkillMenuPanel, var data: SCData)  {
                 officerPickerElement.playScrollSound()
             }
         }
+
+        officerPickerElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
+        var aptitudePara = officerPickerElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
+        aptitudePara.position.inTL(officerPickerElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 1, -aptitudePara.computeTextHeight(aptitudePara.text)-5)
 
         subelement.addTooltipTo(PlayerTooltipCreator(player), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
 
@@ -273,6 +279,7 @@ class SCPlayerAptitudePanel(var menu: SCSkillMenuPanel, var data: SCData)  {
                 exitEditMode(subpanelParent)
             }
         }
+        confirmButton.elementPanel.position.inTL(5f, 12f)
 
         var cancelButton = ConfirmCancelButton(picker.color, picker.innerElement, 86f, 30f).apply {
             addText("Cancel")
