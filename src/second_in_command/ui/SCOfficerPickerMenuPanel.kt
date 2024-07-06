@@ -271,6 +271,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
                     for (skill in skills) {
                         skill.onDeactivation()
                     }
+                    Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
                 }
             }
 
@@ -284,6 +285,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
                 for (skill in skills) {
                     skill.onActivation()
                 }
+                Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
             }
 
 

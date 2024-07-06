@@ -8,9 +8,16 @@ data class SCSkillSpec(
     var iconPath: String,
     var pluginPath: String) {
 
-    fun getPlugin() : SCBaseSkillPlugin {
-        var plugin = Global.getSettings().scriptClassLoader.loadClass(this.pluginPath).newInstance() as SCBaseSkillPlugin
+
+    private var plugin = Global.getSettings().scriptClassLoader.loadClass(this.pluginPath).newInstance() as SCBaseSkillPlugin
+
+    init {
         plugin.spec = this
+    }
+
+    fun getPlugin() : SCBaseSkillPlugin {
+        /*var plugin = Global.getSettings().scriptClassLoader.loadClass(this.pluginPath).newInstance() as SCBaseSkillPlugin
+        plugin.spec = this*/
         return plugin
     }
 

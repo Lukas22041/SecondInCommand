@@ -167,6 +167,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
                         for (skill in skills) {
                             skill.onDeactivation()
                         }
+                        Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
                     }
                 }
 
@@ -408,6 +409,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
                     for (skill in skills) {
                         skill.onActivation()
                     }
+                    Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
                 }
             }
         }

@@ -15,12 +15,12 @@ class SCData(var player: PersonAPI) {
         activeOfficers.add(null)
 
         officers.clear()
-        officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude1"))
+       /* officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude1"))
         officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude2"))
         officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude2"))
         officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude2"))
         officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude2"))
-        officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude3"))
+        officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude3"))*/
     }
 
     fun getOfficersInFleet() : ArrayList<SCOfficer> {
@@ -49,6 +49,10 @@ class SCData(var player: PersonAPI) {
 
     fun getAllActiveSkillsPlugins() : List<SCBaseSkillPlugin> {
         return getActiveOfficers().filter { it != null }.flatMap { it!!.getActiveSkillPlugins() }
+    }
+
+    fun isSkillActive(skillId: String) : Boolean {
+        return getActiveOfficers().filter { it != null }.flatMap { it!!.activeSkillIDs }.contains(skillId)
     }
 
 }

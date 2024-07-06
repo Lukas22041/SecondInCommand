@@ -2,6 +2,7 @@ package second_in_command.specs
 
 import java.awt.Color
 
+/**Base Plugin for Aptitudes. */
 abstract class SCBaseAptitudePlugin() {
 
     lateinit var spec: SCAptitudeSpec

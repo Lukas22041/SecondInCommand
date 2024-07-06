@@ -10,7 +10,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 
 /**Base Plugin for Skills.
  * Handles similar to hullmod plugins.
- * Do not store variables in the class itself.*/
+ * Do not store variables in the class itself. It will cause leaks.*/
 abstract class SCBaseSkillPlugin {
 
     lateinit var spec: SCSkillSpec
@@ -36,6 +36,9 @@ abstract class SCBaseSkillPlugin {
     open fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI,  hullSize: HullSize?, id: String?) { }
 
     open fun advanceInCampaign(member: FleetMemberAPI?, amount: Float) { }
+
+    /**Non-ship specific campaign advance*/
+    open fun advance(amount: Float) { }
 
     open fun advanceInCombat(ship: ShipAPI?, amount: Float) { }
 

@@ -58,8 +58,7 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
     }
 
     fun addXP(xp: Float) {
-        var random = MathUtils.getRandomNumberInRange(0.95f, 1.05f)
-        experiencePoints += xp * (getXPMult() * random)
+        experiencePoints += xp * getXPMult()
 
         levelUpIfNeeded()
     }

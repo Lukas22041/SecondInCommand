@@ -277,6 +277,10 @@ class SCPlayerAptitudePanel(var menu: SCSkillMenuPanel, var data: SCData)  {
                 playSound(Sounds.STORY_POINT_SPEND)
                 saveSkillDataToCharacter(skillElements)
                 exitEditMode(subpanelParent)
+
+                if (Global.getSector().playerFleet?.fleetData != null) {
+                    Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
+                }
             }
         }
         confirmButton.elementPanel.position.inTL(5f, 12f)

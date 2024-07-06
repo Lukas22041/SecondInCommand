@@ -1,6 +1,7 @@
 package second_in_command
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.SectorAPI
 import second_in_command.specs.SCOfficer
 
 object SCUtils {
@@ -8,6 +9,7 @@ object SCUtils {
     var MOD_ID = "second_in_command"
     var DATA_KEY = "\$sc_stored_data"
 
+    @JvmStatic
     fun getSCData() : SCData {
         var data = Global.getSector().characterData.memoryWithoutUpdate.get(DATA_KEY) as SCData?
         if (data == null) {
@@ -17,14 +19,16 @@ object SCUtils {
         return data
     }
 
+    @JvmStatic
     fun createRandomSCOfficer(aptitudeId: String) : SCOfficer {
         var person = Global.getSector().playerFaction.createRandomPerson()
         var officer = SCOfficer(person, aptitudeId)
         return officer
     }
 
-
-
-
+    @JvmStatic
+    fun isSkillActive(skillId: String) : Boolean {
+        return getSCData().isSkillActive(skillId)
+    }
 
 }

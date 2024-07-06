@@ -30,6 +30,10 @@ class TestSkill : SCBaseSkillPlugin() {
         super.advanceInCampaign(member, amount)
     }
 
+    override fun advance(amount: Float) {
+        super.advance(amount)
+    }
+
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
         super.advanceInCombat(ship, amount)
     }
