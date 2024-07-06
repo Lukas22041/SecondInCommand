@@ -28,7 +28,7 @@ class AddXPToOfficersSnippet : LunaSnippet() {
 
     override fun addParameters(builder: SnippetBuilder) {
         super.addParameters(builder)
-        builder.addFloatParameter("Experience Points", "sc_xp", 1000f, 0f, 10000f)
+        builder.addFloatParameter("XP", "sc_xp", 1000f, 0f, 10000f)
     }
 
     override fun execute(parameters: MutableMap<String, Any>, output: TooltipMakerAPI) {

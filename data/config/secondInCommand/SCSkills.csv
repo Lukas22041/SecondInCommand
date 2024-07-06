@@ -1,36 +1,7 @@
 id,name,iconPath,plugin
 sc_combat_aptitude_skill,Piloting,graphics/icons/skills/combat.png,second_in_command.skills.test.TestSkill
 ,,,
-sc_test_skill1,Test Skill,graphics/icons/skills/weapon_drills.png,second_in_command.skills.test.TestSkill
-sc_test_skill2,Test Skill,graphics/icons/skills/coordinated_maneuvers2.png,second_in_command.skills.test.TestSkill
-sc_test_skill3,Test Skill,graphics/icons/skills/wolfpack.png,second_in_command.skills.test.TestSkill
-sc_test_skill4,Test Skill,graphics/icons/skills/crew_training.png,second_in_command.skills.test.TestSkill
-sc_test_skill5,Test Skill,graphics/icons/skills/fighter_uplink2.png,second_in_command.skills.test.TestSkill
-sc_test_skill6,Test Skill,graphics/icons/skills/carrier_command.png,second_in_command.skills.test.TestSkill
-sc_test_skill7,Test Skill,graphics/icons/skills/officer_training.png,second_in_command.skills.test.TestSkill
-sc_test_skill8,Test Skill,graphics/icons/skills/officer_management.png,second_in_command.skills.test.TestSkill
-sc_test_skill9,Test Skill,graphics/icons/skills/best_of_the_best.png,second_in_command.skills.test.TestSkill
-sc_test_skill10,Test Skill,graphics/icons/skills/space_ops.png,second_in_command.skills.test.TestSkill
+sc_automated_1,Automated Ships,graphics/secondInCommand/automated/skill1.png,second_in_command.skills.automated.AutomationSkill1
 ,,,
-sc_test_skill11,Test Skill,graphics/icons/skills/navigation.png,second_in_command.skills.test.TestSkill
-sc_test_skill12,Test Skill,graphics/icons/skills/sensors.png,second_in_command.skills.test.TestSkill
-sc_test_skill13,Test Skill,graphics/icons/skills/gunnery_implants.png,second_in_command.skills.test.TestSkill
-sc_test_skill14,Test Skill,graphics/icons/skills/energy_weapon_mastery.png,second_in_command.skills.test.TestSkill
-sc_test_skill15,Test Skill,graphics/icons/skills/EW.png,second_in_command.skills.test.TestSkill
-sc_test_skill16,Test Skill,graphics/icons/skills/flux_dynamics.png,second_in_command.skills.test.TestSkill
-sc_test_skill17,Test Skill,graphics/icons/skills/cybernetic_augmentation.png,second_in_command.skills.test.TestSkill
-sc_test_skill18,Test Skill,graphics/icons/skills/phase_corps.png,second_in_command.skills.test.TestSkill
-sc_test_skill19,Test Skill,graphics/icons/skills/neural_link.png,second_in_command.skills.test.TestSkill
-sc_test_skill20,Test Skill,graphics/icons/skills/automated_ships.png,second_in_command.skills.test.TestSkill
 ,,,
-sc_test_skill21,Test Skill,graphics/icons/skills/bulk_transport.png,second_in_command.skills.test.TestSkill
-sc_test_skill22,Test Skill,graphics/icons/skills/salvaging.png,second_in_command.skills.test.TestSkill
-sc_test_skill23,Test Skill,graphics/icons/skills/field_repairs.png,second_in_command.skills.test.TestSkill
-sc_test_skill24,Test Skill,graphics/icons/skills/ordnance_expert2.png,second_in_command.skills.test.TestSkill
-sc_test_skill25,Test Skill,graphics/icons/skills/polarized_armor.png,second_in_command.skills.test.TestSkill
-sc_test_skill26,Test Skill,graphics/icons/skills/containment_procedures.png,second_in_command.skills.test.TestSkill
-sc_test_skill27,Test Skill,graphics/icons/skills/makeshift_equipment.png,second_in_command.skills.test.TestSkill
-sc_test_skill28,Test Skill,graphics/icons/skills/industrial_planning.png,second_in_command.skills.test.TestSkill
-sc_test_skill29,Test Skill,graphics/icons/skills/derelict_contingent.png,second_in_command.skills.test.TestSkill
-sc_test_skill30,Test Skill,graphics/icons/skills/recovery_ops.png,second_in_command.skills.test.TestSkill
 ,,,

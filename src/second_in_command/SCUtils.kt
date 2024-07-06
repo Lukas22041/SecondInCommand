@@ -1,7 +1,6 @@
 package second_in_command
 
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.SectorAPI
 import second_in_command.specs.SCOfficer
 
 object SCUtils {
@@ -29,6 +28,29 @@ object SCUtils {
     @JvmStatic
     fun isSkillActive(skillId: String) : Boolean {
         return getSCData().isSkillActive(skillId)
+    }
+
+    @JvmStatic
+    fun computeThresholdBonus(current: Float, maxBonus: Float, maxThreshold: Float): Float {
+
+        var bonus = 0f
+        var currValue = current
+        var threshold = maxThreshold
+
+        bonus = getThresholdBasedRoundedBonus(maxBonus, currValue, threshold)
+        return bonus
+    }
+
+    private fun getThresholdBasedRoundedBonus(maxBonus: Float, value: Float, threshold: Float): Float {
+        var bonus = maxBonus * threshold / Math.max(value, threshold)
+        if (bonus > 0 && bonus < 1) bonus = 1f
+        if (maxBonus > 1f) {
+            if (bonus < maxBonus) {
+                bonus = Math.min(bonus, maxBonus - 1f)
+            }
+            bonus = Math.round(bonus).toFloat()
+        }
+        return bonus
     }
 
 }
