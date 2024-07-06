@@ -8,6 +8,9 @@ import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 
+/**Base Plugin for Skills.
+ * Handles similar to hullmod plugins.
+ * Do not store variables in the class itself.*/
 abstract class SCBaseSkillPlugin {
 
     lateinit var spec: SCSkillSpec
@@ -28,8 +31,6 @@ abstract class SCBaseSkillPlugin {
 
     abstract fun addTooltip(tooltip: TooltipMakerAPI)
 
-    open fun shouldAffectShip(spec: ShipHullSpecAPI, variant: ShipVariantAPI, hullSize: HullSize) : Boolean { return true }
-
     open fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) { }
 
     open fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI,  hullSize: HullSize?, id: String?) { }
@@ -38,7 +39,9 @@ abstract class SCBaseSkillPlugin {
 
     open fun advanceInCombat(ship: ShipAPI?, amount: Float) { }
 
-    open fun onActivation() { }
+    /**Called when the skill is acquired and if the officer is re-assigned. */
+    open fun onActivation(member: FleetMemberAPI, spec: ShipHullSpecAPI, variant: ShipVariantAPI) { }
 
-    open fun onDeactivation() { }
+    /**Called when the corrosponding officer is un-assigned */
+    open fun onDeactivation(member: FleetMemberAPI, spec: ShipHullSpecAPI, variant: ShipVariantAPI) { }
 }

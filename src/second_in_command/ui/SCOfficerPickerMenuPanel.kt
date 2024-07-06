@@ -6,7 +6,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
 import second_in_command.SCData
-import second_in_command.SCUtils
+import second_in_command.misc.baseOrModSpec
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
@@ -262,7 +262,28 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             confirmButton.playClickSound()
             menu.panel.removeComponent(popupPanel)
 
+            var previousOfficerInSlot = data.getOfficerInSlot(slotId)
+            if (previousOfficerInSlot != null) {
+                var skills = previousOfficerInSlot.getActiveSkillPlugins()
+
+                for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
+                    for (skill in skills) {
+                        skill.onDeactivation(member, member.baseOrModSpec(), member.variant)
+                    }
+                }
+            }
+
+
             data.setOfficerInSlot(slotId, selectedOfficer!!)
+
+
+
+            var skills = selectedOfficer!!.getActiveSkillPlugins()
+            for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
+                for (skill in skills) {
+                    skill.onActivation(member, member.baseOrModSpec(), member.variant)
+                }
+            }
 
             menu.recreateAptitudeRow(subpanelParent, data.getOfficerInSlot(slotId), slotId)
         }

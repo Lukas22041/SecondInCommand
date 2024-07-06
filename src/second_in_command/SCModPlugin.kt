@@ -3,6 +3,7 @@ package second_in_command
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import second_in_command.misc.VanillaSkillsUtil
+import second_in_command.scripts.ControllerHullmodAdderScript
 import second_in_command.scripts.ExecutiveOfficerCommAdder
 import second_in_command.scripts.ExecutiveOfficerSalvageSpecialGenerator
 import second_in_command.scripts.SkillPanelReplacerScript
@@ -17,6 +18,7 @@ class SCModPlugin : BaseModPlugin() {
 
     override fun onGameLoad(newGame: Boolean) {
         Global.getSector().addTransientScript(SkillPanelReplacerScript())
+        Global.getSector().addTransientScript(ControllerHullmodAdderScript())
 
         Global.getSector().addTransientListener(SCCampaignEventListener())
 

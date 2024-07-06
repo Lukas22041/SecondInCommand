@@ -1,6 +1,7 @@
 package second_in_command
 
 import com.fs.starfarer.api.characters.PersonAPI
+import second_in_command.specs.SCBaseSkillPlugin
 import second_in_command.specs.SCOfficer
 
 class SCData(var player: PersonAPI) {
@@ -46,6 +47,10 @@ class SCData(var player: PersonAPI) {
 
     fun getActiveOfficers() : ArrayList<SCOfficer?> {
         return ArrayList(activeOfficers)
+    }
+
+    fun getAllActiveSkillsPlugins() : List<SCBaseSkillPlugin> {
+        return getActiveOfficers().filter { it != null }.flatMap { it!!.getActiveSkillPlugins() }
     }
 
 }

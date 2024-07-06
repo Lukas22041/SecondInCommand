@@ -9,7 +9,7 @@ import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
 import second_in_command.SCData
-import second_in_command.SCUtils
+import second_in_command.misc.baseOrModSpec
 import second_in_command.misc.clearChildren
 import second_in_command.misc.getHeight
 import second_in_command.misc.getWidth
@@ -154,7 +154,20 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
 
             if (it.isRMBEvent) {
                 officerPickerElement.playSound("ui_char_decrease_skill", 1f, 1f)
+
+                var officerInSlot = data.getOfficerInSlot(slotId)
+                if (officerInSlot != null) {
+                    var skills = officerInSlot.getActiveSkillPlugins()
+
+                    for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
+                        for (skill in skills) {
+                            skill.onDeactivation(member, member.baseOrModSpec(), member.variant)
+                        }
+                    }
+                }
+
                 data.setOfficerInSlot(slotId, null)
+
 
                 recreateAptitudeRow(subpanelParent, null, slotId)
                 return@onClick
@@ -370,7 +383,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
         officer.skillPoints = spRemaining
     }
 
-    fun enterEditMode(subpanelParent: CustomPanelAPI, offficer: SCOfficer, picker: SCOfficerPickerElement, skillElements: ArrayList<SkillWidgetElement>, slotId: Int) {
+    fun enterEditMode(subpanelParent: CustomPanelAPI, officer: SCOfficer, picker: SCOfficerPickerElement, skillElements: ArrayList<SkillWidgetElement>, slotId: Int) {
         if (picker.isInEditMode) return
         picker.isInEditMode = true
 
@@ -382,8 +395,16 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
 
             onClick {
                 playSound(Sounds.STORY_POINT_SPEND)
-                saveSkillDataToCharacter(offficer, skillElements)
-                exitEditMode(subpanelParent, offficer, picker, slotId)
+                saveSkillDataToCharacter(officer, skillElements)
+                exitEditMode(subpanelParent, officer, picker, slotId)
+
+                var skills = officer!!.getActiveSkillPlugins()
+
+                for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
+                    for (skill in skills) {
+                        skill.onActivation(member, member.baseOrModSpec(), member.variant)
+                    }
+                }
             }
         }
         confirmButton.elementPanel.position.inTL(5f, 12f)
@@ -395,7 +416,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
 
             onClick {
                 playSound("ui_char_decrease_skill", 1f, 1f)
-                exitEditMode(subpanelParent, offficer, picker, slotId)
+                exitEditMode(subpanelParent, officer, picker, slotId)
             }
         }
 
