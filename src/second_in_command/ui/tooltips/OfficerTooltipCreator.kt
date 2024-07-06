@@ -46,7 +46,7 @@ class OfficerTooltipCreator(var officer: SCOfficer?) : BaseTooltipCreator() {
 
         var firstPara = tooltip.addPara("${officer!!.person.nameString} has experience within the ${plugin.getName()} aptitude. This aptitude has a maximum level of ${officer!!.getMaxLevel()}.", 0f,
         Misc.getTextColor(), Misc.getHighlightColor(), "")
-        firstPara.position.inTL(7.5f, 60f)
+        firstPara.position.inTL(5f, 60f)
 
         tooltip.addSpacer(10f)
 
@@ -69,6 +69,12 @@ class OfficerTooltipCreator(var officer: SCOfficer?) : BaseTooltipCreator() {
 
         tooltip.addPara("All officers gain experience from battles. Inactive officers also earn experience, but at $inactiveGain%% of the normal rate.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "gain experience from battles" ,"$inactiveGain%")
+
+
+        if (officer!!.getAptitudePlugin().getRequiresDock()) {
+            tooltip.addSpacer(10f)
+            tooltip.addPara("This officer can only be assigned and un-assigned while the fleet is docked to a colony due to the preparations required for ${officer!!.person.hisOrHer} field of work.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+        }
 
         tooltip.addSpacer(30f)
 

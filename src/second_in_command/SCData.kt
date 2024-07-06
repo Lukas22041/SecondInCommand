@@ -20,8 +20,6 @@ class SCData(var player: PersonAPI) {
         officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude2"))
         officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude2"))
         officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude2"))
-        officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude2"))
-        officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude2"))
         officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude3"))
     }
 

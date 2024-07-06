@@ -15,7 +15,7 @@ import second_in_command.ui.panels.PickerBackgroundPanelPlugin
 import second_in_command.ui.tooltips.OfficerTooltipCreator
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
 
-class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerElement: SCOfficerPickerElement, var subpanelParent: CustomPanelAPI, var slotId: Int, var data: SCData) {
+class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerElement: SCOfficerPickerElement, var subpanelParent: CustomPanelAPI, var slotId: Int, var data: SCData, var docked: Boolean) {
 
 
 
@@ -208,6 +208,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             var minusText = ""
 
             if (officerAlreadySlotted(officer)) officerParaTextExtra = "This officer is already assigned."
+            else if (!fullfillsDockRequirement(officer)) officerParaTextExtra = "This officer can only be assigned while docked at a colony."
             else if (doesOffficerMatchExistingAptitude(officer)) officerParaTextExtra = "Can't assign two officers of the same aptitude."
             else if (doesOffficerMatchCategory(officer)) officerParaTextExtra = "Can't assign two aptitudes of the same category."
 
@@ -305,13 +306,21 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
     fun selectOfficer(officer: SCOfficer) {
 
-        if (officerAlreadySlotted(officer) || doesOffficerMatchExistingAptitude(officer) || officerAlreadySlotted(officer)) {
+        if (officerAlreadySlotted(officer) || doesOffficerMatchExistingAptitude(officer) || officerAlreadySlotted(officer) || !fullfillsDockRequirement(officer)) {
             Global.getSoundPlayer().playUISound("ui_button_disabled_pressed", 1f, 1f)
             return
         }
 
         Global.getSoundPlayer().playUISound("ui_button_pressed", 1f, 1f)
         selectedOfficer = officer
+    }
+
+    fun fullfillsDockRequirement(officer: SCOfficer) : Boolean {
+
+        var requiresDock = officer.getAptitudePlugin().getRequiresDock()
+        if (!requiresDock) return true
+        else if (docked) return true
+        return false
     }
 
     fun doesOffficerMatchExistingAptitude(officer: SCOfficer) : Boolean {

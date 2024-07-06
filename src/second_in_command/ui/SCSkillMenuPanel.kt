@@ -18,7 +18,7 @@ import second_in_command.ui.elements.*
 import second_in_command.ui.tooltips.OfficerTooltipCreator
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
 
-class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
+class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boolean) {
 
 
     lateinit var panel: CustomPanelAPI
@@ -35,7 +35,6 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
         parent.addComponent(panel)
 
         recreatePanel()
-
     }
 
     fun recreatePanel() {
@@ -152,6 +151,11 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
                 return@onClick
             }
 
+            if (!docked && officer?.getAptitudePlugin()?.getRequiresDock() == true) {
+                officerPickerElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
+                return@onClick
+            }
+
             if (it.isRMBEvent) {
                 officerPickerElement.playSound("ui_char_decrease_skill", 1f, 1f)
 
@@ -173,7 +177,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData) {
                 return@onClick
             }
 
-            var pickerMenu = SCOfficerPickerMenuPanel(menu, officerPickerElement, subpanelParent, slotId, data)
+            var pickerMenu = SCOfficerPickerMenuPanel(menu, officerPickerElement, subpanelParent, slotId, data, docked)
             pickerMenu.init()
             officerPickerElement.playClickSound()
         }

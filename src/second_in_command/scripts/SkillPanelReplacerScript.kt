@@ -27,9 +27,12 @@ class SkillPanelReplacerScript : EveryFrameScript {
 
         var core: UIPanelAPI? = null
 
+        var docked = false
+
         var dialog = ReflectionUtils.invoke("getEncounterDialog", state)
         if (dialog != null)
         {
+            docked = true
             core = ReflectionUtils.invoke("getCoreUI", dialog) as UIPanelAPI?
         }
 
@@ -47,7 +50,7 @@ class SkillPanelReplacerScript : EveryFrameScript {
         parent.removeComponent(panel)
 
         var scData = SCUtils.getSCData()
-        var skillPanel = SCSkillMenuPanel(parent, scData)
+        var skillPanel = SCSkillMenuPanel(parent, scData, docked)
         skillPanel.init()
     }
 
