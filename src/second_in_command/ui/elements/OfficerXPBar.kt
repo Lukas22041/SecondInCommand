@@ -19,7 +19,7 @@ class OfficerXPBar(var currentXP: Float, var requiredXP: Float, var color: Color
 
         backgroundColor = color
 
-        innerElement.setParaFont("graphics/fonts/victor14.fnt")
+       // innerElement.setParaFont("graphics/fonts/victor14.fnt")
 
         onHoverEnter {
             playScrollSound()

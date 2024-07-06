@@ -36,7 +36,7 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
     }
 
     fun getActiveSkillPlugins() : List<SCBaseSkillPlugin> {
-        return getSkillSpecs().filter { activeSkillIDs.contains(it.id) }.map { it.getPlugin() }
+        return getSkillSpecs().filter { activeSkillIDs.contains(it.id) }.map { it.getPlugin() } + getAptitudePlugin().getOriginSkillPlugin()
     }
 
     fun getMaxLevel() : Int = getAptitudePlugin().getMaxLevel()

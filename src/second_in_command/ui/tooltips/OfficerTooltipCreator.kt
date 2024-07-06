@@ -37,7 +37,7 @@ class OfficerTooltipCreator(var officer: SCOfficer?) : BaseTooltipCreator() {
         }
 
 
-        bar.addText("Lv${officer!!.getCurrentLevel().toInt()}", plugin.getColor())
+        bar.addText("Lv ${officer!!.getCurrentLevel().toInt()}", Misc.getTextColor())
         bar.centerText()
 
         var experience = officer!!.getExperiencePoints().toInt()

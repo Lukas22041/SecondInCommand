@@ -20,6 +20,10 @@ abstract class SCBaseAptitudePlugin() {
 
     abstract fun getOriginSkillId() : String
 
+    fun getOriginSkillSpec() = SCSpecStore.getSkillSpec(getOriginSkillId())
+
+    fun getOriginSkillPlugin() = getOriginSkillSpec()!!.getPlugin()
+
     abstract fun createSections()
 
 

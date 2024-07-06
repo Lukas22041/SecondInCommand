@@ -33,7 +33,7 @@ class PlayerTooltipCreator(var player: PersonAPI) : BaseTooltipCreator() {
         }
 
 
-        bar.addText("Lv${player.stats.level}", plugin.getColor())
+        bar.addText("Lv ${player.stats.level}", Misc.getTextColor())
         bar.centerText()
 
         var experience = player.stats.xp

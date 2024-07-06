@@ -44,14 +44,14 @@ class SCControllerHullmod : BaseHullMod() {
 
         var skills = SCUtils.getSCData().getAllActiveSkillsPlugins()
         for (skill in skills) {
-            skill.applyEffectsAfterShipCreation(ship, ship!!.variant, id)
+            skill.applyEffectsAfterShipCreation(ship, ship!!.variant, "${id}_${skill.getId()}")
         }
     }
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         var skills = SCUtils.getSCData().getAllActiveSkillsPlugins()
         for (skill in skills) {
-            skill.applyEffectsBeforeShipCreation(stats, stats!!.variant, hullSize, id)
+            skill.applyEffectsBeforeShipCreation(stats, stats!!.variant, hullSize, "${id}_${skill.getId()}")
         }
     }
 
