@@ -39,9 +39,9 @@ abstract class SCBaseSkillPlugin {
 
     open fun advanceInCombat(ship: ShipAPI?, amount: Float) { }
 
-    /**Called when the skill is acquired and if the officer is re-assigned. */
-    open fun onActivation(member: FleetMemberAPI, spec: ShipHullSpecAPI, variant: ShipVariantAPI) { }
+    /**Called when the skill is acquired and if the officer is re-assigned. Also may be called in other scenarios aslong as the skill is active*/
+    open fun onActivation() { }
 
     /**Called when the corrosponding officer is un-assigned */
-    open fun onDeactivation(member: FleetMemberAPI, spec: ShipHullSpecAPI, variant: ShipVariantAPI) { }
+    open fun onDeactivation() { }
 }

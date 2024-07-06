@@ -66,6 +66,8 @@ class SkillPanelReplacerScriptTitlescreen : EveryFrameCombatPlugin {
         var skillPanel = SCSkillMenuPanel(parent, scData, false)
         skillPanel.init()
 
+
+
     }
 
     override fun renderInWorldCoords(viewport: ViewportAPI?) {

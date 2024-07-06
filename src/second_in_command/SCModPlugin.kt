@@ -3,6 +3,7 @@ package second_in_command
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import second_in_command.misc.VanillaSkillsUtil
+import second_in_command.misc.baseOrModSpec
 import second_in_command.scripts.ControllerHullmodAdderScript
 import second_in_command.scripts.ExecutiveOfficerCommAdder
 import second_in_command.scripts.ExecutiveOfficerSalvageSpecialGenerator
@@ -34,5 +35,15 @@ class SCModPlugin : BaseModPlugin() {
         super.onNewGame()
 
         ExecutiveOfficerSalvageSpecialGenerator().generate()
+    }
+
+    override fun onNewGameAfterTimePass() {
+        super.onNewGameAfterTimePass()
+
+        var skills = SCUtils.getSCData().getAllActiveSkillsPlugins()
+
+        for (skill in skills) {
+            skill.onActivation()
+        }
     }
 }

@@ -34,12 +34,12 @@ class TestSkill : SCBaseSkillPlugin() {
         super.advanceInCombat(ship, amount)
     }
 
-    override fun onActivation(member: FleetMemberAPI, spec: ShipHullSpecAPI, variant: ShipVariantAPI) {
-        super.onActivation(member, spec, variant)
+    override fun onActivation() {
+        super.onActivation()
     }
 
-    override fun onDeactivation(member: FleetMemberAPI, spec: ShipHullSpecAPI, variant: ShipVariantAPI) {
-        super.onDeactivation(member, spec, variant)
+    override fun onDeactivation() {
+        super.onDeactivation()
     }
 
 }

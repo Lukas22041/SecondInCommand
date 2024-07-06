@@ -267,9 +267,9 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             if (previousOfficerInSlot != null) {
                 var skills = previousOfficerInSlot.getActiveSkillPlugins()
 
-                for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
+                if (Global.getSector().playerFleet?.fleetData != null) {
                     for (skill in skills) {
-                        skill.onDeactivation(member, member.baseOrModSpec(), member.variant)
+                        skill.onDeactivation()
                     }
                 }
             }
@@ -279,12 +279,13 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
 
 
-            var skills = selectedOfficer!!.getActiveSkillPlugins()
-            for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
+            if (Global.getSector().playerFleet?.fleetData != null) {
+                var skills = selectedOfficer!!.getActiveSkillPlugins()
                 for (skill in skills) {
-                    skill.onActivation(member, member.baseOrModSpec(), member.variant)
+                    skill.onActivation()
                 }
             }
+
 
             menu.recreateAptitudeRow(subpanelParent, data.getOfficerInSlot(slotId), slotId)
         }

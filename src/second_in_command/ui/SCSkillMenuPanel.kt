@@ -163,9 +163,9 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
                 if (officerInSlot != null) {
                     var skills = officerInSlot.getActiveSkillPlugins()
 
-                    for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
+                    if (Global.getSector().playerFleet?.fleetData != null) {
                         for (skill in skills) {
-                            skill.onDeactivation(member, member.baseOrModSpec(), member.variant)
+                            skill.onDeactivation()
                         }
                     }
                 }
@@ -404,9 +404,9 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
 
                 var skills = officer!!.getActiveSkillPlugins()
 
-                for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
+                if (Global.getSector().playerFleet?.fleetData != null) {
                     for (skill in skills) {
-                        skill.onActivation(member, member.baseOrModSpec(), member.variant)
+                        skill.onActivation()
                     }
                 }
             }
