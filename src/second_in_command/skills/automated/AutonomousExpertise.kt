@@ -20,7 +20,7 @@ class AutonomousExpertise : SCBaseSkillPlugin() {
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("+$points additional automated points ", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("   - Additional automated points enable creating larger autonomous fleets ", 0f, Misc.getTextColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - Additional automated points enable larger autonomous fleets ", 0f, Misc.getTextColor(), Misc.getHighlightColor())
 
     }
 
