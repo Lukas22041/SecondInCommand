@@ -2,7 +2,7 @@ id,name,iconPath,plugin
 sc_combat_aptitude_skill,Piloting,graphics/icons/skills/combat.png,second_in_command.skills.misc.PlaceholderSkill
 ,,,
 sc_automated_automated_ships,Automated Ships,graphics/secondInCommand/automated/automated_ships.png,second_in_command.skills.automated.AutomatedShips
-sc_automated_overclock,Overclock,graphics/secondInCommand/automated/overclock.png,second_in_command.skills.automated.Overclock
+sc_automated_magnetic_shielding,Magnetic Shielding,graphics/secondInCommand/automated/magnetic_shielding.png,second_in_command.skills.automated.MagneticShielding
 sc_automated_self_repair,Self-Repair,graphics/secondInCommand/automated/self_repair.png,second_in_command.skills.automated.SelfRepair
 sc_automated_final_gambit,Final Gambit,graphics/secondInCommand/automated/final_gambit.png,second_in_command.skills.automated.FinalGambit
 sc_automated_electronic_warfare,Electronic Warfare,graphics/secondInCommand/automated/electronic_warfare.png,second_in_command.skills.automated.ElectronicWarfare

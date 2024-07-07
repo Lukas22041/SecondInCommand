@@ -9,12 +9,18 @@ import second_in_command.specs.SCBaseSkillPlugin
 
 class AutonomousExpertise : SCBaseSkillPlugin() {
 
+    companion object {
+        var points = 120
+    }
+
     override fun getAffectsString(): String {
         return "all automated ships"
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
+        tooltip.addPara("+$points additional automated points ", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - Additional automated points enable creating larger autonomous fleets ", 0f, Misc.getTextColor(), Misc.getHighlightColor())
 
     }
 

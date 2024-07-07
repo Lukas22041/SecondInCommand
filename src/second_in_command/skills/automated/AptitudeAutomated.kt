@@ -22,7 +22,7 @@ class AptitudeAutomated : SCBaseAptitudePlugin() {
     override fun createSections() {
 
         var section1 = SCAptitudeSection(true, 0, "technology1")
-        section1.addSkill("sc_automated_overclock")
+        section1.addSkill("sc_automated_magnetic_shielding")
         section1.addSkill("sc_automated_self_repair")
         section1.addSkill("sc_automated_final_gambit")
         section1.addSkill("sc_automated_electronic_warfare")

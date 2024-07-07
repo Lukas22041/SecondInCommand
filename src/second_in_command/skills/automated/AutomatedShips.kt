@@ -97,6 +97,7 @@ class AutomatedShips : SCBaseSkillPlugin() {
     fun getMaximumPoints() : Float {
         var points = 0f
         points += BASE_POINTS
+        if (SCUtils.isSkillActive("sc_automated_expertise")) points += AutonomousExpertise.points
         return points
     }
 
