@@ -26,6 +26,7 @@ class AptitudeAutomated : SCBaseAptitudePlugin() {
         section1.addSkill("sc_automated_self_repair")
         section1.addSkill("sc_automated_final_gambit")
         section1.addSkill("sc_automated_electronic_warfare")
+        section1.addSkill("sc_automated_specialised_equipment")
         addSection(section1)
 
         var section2 = SCAptitudeSection(true, 2, "technology3")

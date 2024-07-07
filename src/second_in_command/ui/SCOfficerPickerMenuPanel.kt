@@ -24,8 +24,8 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
     fun init() {
         var plugin = PickerBackgroundPanelPlugin(menu.panel)
 
-        var width = menu.width - 50
-        var height = menu.height - 50
+        var width = menu.width - 25
+        var height = menu.height - 25
 
         var heightCap = 70f
 

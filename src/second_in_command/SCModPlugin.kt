@@ -2,6 +2,7 @@ package second_in_command
 
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.impl.campaign.ids.Abilities
 import lunalib.lunaDebug.LunaDebug
 import second_in_command.misc.VanillaSkillsUtil
 import second_in_command.misc.baseOrModSpec
@@ -24,9 +25,20 @@ class SCModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(SkillPanelReplacerScript())
         Global.getSector().addTransientScript(ControllerHullmodAdderScript())
         Global.getSector().addTransientScript(SkillAdvancerScript())
+        Global.getSector().addTransientScript(SCNeuralJunctionScript())
 
         Global.getSector().addTransientListener(SCCampaignEventListener())
 
+        Global.getSector().registerPlugin(SCCampaignPlugin())
+
+        //Add Abilities that no longer have a skill
+        if (!Global.getSector().characterData.abilities.contains(Abilities.TRANSVERSE_JUMP)) {
+            Global.getSector().characterData.addAbility(Abilities.TRANSVERSE_JUMP)
+        }
+
+        if (!Global.getSector().characterData.abilities.contains(Abilities.GRAVITIC_SCAN)) {
+            Global.getSector().characterData.addAbility(Abilities.GRAVITIC_SCAN)
+        }
     }
 
     override fun onNewGame() {

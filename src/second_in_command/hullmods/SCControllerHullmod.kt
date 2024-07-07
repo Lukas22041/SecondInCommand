@@ -55,6 +55,13 @@ class SCControllerHullmod : BaseHullMod() {
         }
     }
 
+    override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
+        var skills = SCUtils.getSCData().getAllActiveSkillsPlugins()
+        for (skill in skills) {
+            skill.applyEffectsToFighterSpawnedByShip(fighter, ship, "${id}_${skill.getId()}")
+        }
+    }
+
     override fun advanceInCampaign(member: FleetMemberAPI?, amount: Float) {
         var skills = SCUtils.getSCData().getAllActiveSkillsPlugins()
         for (skill in skills) {

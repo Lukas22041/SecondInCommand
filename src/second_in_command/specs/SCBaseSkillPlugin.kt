@@ -35,6 +35,8 @@ abstract class SCBaseSkillPlugin {
 
     open fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI,  hullSize: HullSize?, id: String?) { }
 
+    open fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) { }
+
     open fun advanceInCampaign(member: FleetMemberAPI?, amount: Float) { }
 
     /**Non-ship specific campaign advance*/

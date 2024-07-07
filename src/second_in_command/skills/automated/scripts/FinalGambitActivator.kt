@@ -7,8 +7,6 @@ import com.fs.starfarer.api.combat.ShipCommand
 import com.fs.starfarer.api.combat.ShipwideAIFlags
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.loading.DamagingExplosionSpec
-import com.fs.starfarer.api.plugins.ShipSystemStatsScript
-import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.combat.CombatUtils
 import org.magiclib.kotlin.setAlpha
 import org.magiclib.subsystems.MagicSubsystem
@@ -17,7 +15,7 @@ import java.awt.Color
 class FinalGambitActivator(ship: ShipAPI?) : MagicSubsystem(ship) {
 
     override fun getBaseActiveDuration(): Float {
-        return 6f
+        return 4f
     }
 
     override fun getBaseOutDuration(): Float {
@@ -94,8 +92,8 @@ class FinalGambitActivator(ship: ShipAPI?) : MagicSubsystem(ship) {
         stats.hullDamageTakenMult.modifyMult("sc_final_gambit", 1 - (0.8f * effectLevel))
         stats.armorDamageTakenMult.modifyMult("sc_final_gambit", 1 - (0.8f * effectLevel))
 
-        stats.maxSpeed.modifyFlat("sc_final_gambit", 0f + (30f * effectLevel))
-        stats.maxSpeed.modifyMult("sc_final_gambit", 1f + (1.5f * effectLevel))
+        stats.maxSpeed.modifyFlat("sc_final_gambit", 0f + (50f * effectLevel))
+        stats.maxSpeed.modifyMult("sc_final_gambit", 1f + (0.5f * effectLevel))
         stats.acceleration.modifyMult("sc_final_gambit", 1f + (3f * effectLevel))
         stats.deceleration.modifyMult("sc_final_gambit", 1f + (3f * effectLevel))
 
@@ -121,6 +119,8 @@ class FinalGambitActivator(ship: ShipAPI?) : MagicSubsystem(ship) {
             }
 
             Global.getSoundPlayer().playLoop("system_burn_drive_loop", ship, 1f, 1f * effectLevel, ship.location, ship.velocity)
+
+            ship.engineController.extendFlame(this, 1f, 1f, 1f)
         }
 
         if (ship.hitpoints <= 100) {
