@@ -16,7 +16,7 @@ import second_in_command.SCUtils
 import second_in_command.specs.SCBaseSkillPlugin
 import kotlin.math.roundToInt
 
-class AutomationSkill1 : SCBaseSkillPlugin() {
+class AutomatedShips : SCBaseSkillPlugin() {
 
     var MAX_CR_BONUS = 100f
     var BASE_POINTS = 120f
@@ -70,13 +70,16 @@ class AutomationSkill1 : SCBaseSkillPlugin() {
 
 
     override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        Misc.getAllowedRecoveryTags().add(Tags.AUTOMATED_RECOVERABLE)
 
-        var automatedDP = getAutomatedPoints(Global.getSector().playerFleet.fleetData)
-        var maxPoints = getMaximumPoints()
-        var bonus = SCUtils.computeThresholdBonus(automatedDP, MAX_CR_BONUS, maxPoints)
+        if (Misc.isAutomated(stats) && !Automated.isAutomatedNoPenalty(stats)) {
+            Misc.getAllowedRecoveryTags().add(Tags.AUTOMATED_RECOVERABLE)
 
-        stats!!.maxCombatReadiness.modifyFlat(id, bonus * 0.01f, "${getName()} skill")
+            var automatedDP = getAutomatedPoints(Global.getSector().playerFleet.fleetData)
+            var maxPoints = getMaximumPoints()
+            var bonus = SCUtils.computeThresholdBonus(automatedDP, MAX_CR_BONUS, maxPoints)
+
+            stats!!.maxCombatReadiness.modifyFlat(id, bonus * 0.01f, "${getName()} skill")
+        }
     }
 
     override fun advance(amount: Float) {

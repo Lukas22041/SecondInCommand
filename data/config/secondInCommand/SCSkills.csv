@@ -1,7 +1,13 @@
 id,name,iconPath,plugin
-sc_combat_aptitude_skill,Piloting,graphics/icons/skills/combat.png,second_in_command.skills.test.TestSkill
+sc_combat_aptitude_skill,Piloting,graphics/icons/skills/combat.png,second_in_command.skills.misc.PlaceholderSkill
 ,,,
-sc_automated_1,Automated Ships,graphics/secondInCommand/automated/skill1.png,second_in_command.skills.automated.AutomationSkill1
-,,,
-,,,
-,,,
+sc_automated_automated_ships,Automated Ships,graphics/secondInCommand/automated/automated_ships.png,second_in_command.skills.automated.AutomatedShips
+sc_automated_overclock,Overclock,graphics/secondInCommand/automated/overclock.png,second_in_command.skills.automated.Overclock
+sc_automated_self_repair,Self-Repair,graphics/secondInCommand/automated/self_repair.png,second_in_command.skills.automated.SelfRepair
+sc_automated_final_gambit,Final Gambit,graphics/secondInCommand/automated/final_gambit.png,second_in_command.skills.automated.FinalGambit
+sc_automated_electronic_warfare,Electronic Warfare,graphics/secondInCommand/automated/electronic_warfare.png,second_in_command.skills.automated.ElectronicWarfare
+sc_automated_deadly_persistence,Deadly Persistence,graphics/secondInCommand/automated/deadly_persistence.png,second_in_command.skills.automated.DeadlyPersistence
+sc_automated_wide_range,Wide-Range Transmission,graphics/secondInCommand/automated/wide_range.png,second_in_command.skills.automated.WideRangeTransmission
+sc_automated_expertise,Autonomous Expertise,graphics/secondInCommand/automated/expertise.png,second_in_command.skills.automated.AutonomousExpertise
+sc_automated_limit_breaker,Limit Breaker,graphics/secondInCommand/automated/limit_breaker.png,second_in_command.skills.automated.LimitBreaker
+sc_automated_neural_junction,Neural Junction,graphics/secondInCommand/automated/neural_junction.png,second_in_command.skills.automated.NeuralJunction
