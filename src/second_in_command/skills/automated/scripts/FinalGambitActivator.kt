@@ -5,14 +5,20 @@ import com.fs.starfarer.api.combat.DamageType
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipCommand
 import com.fs.starfarer.api.combat.ShipwideAIFlags
+import com.fs.starfarer.api.combat.listeners.HullDamageAboutToBeTakenListener
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.loading.DamagingExplosionSpec
 import org.lazywizard.lazylib.combat.CombatUtils
+import org.lwjgl.util.vector.Vector2f
 import org.magiclib.kotlin.setAlpha
 import org.magiclib.subsystems.MagicSubsystem
 import java.awt.Color
 
-class FinalGambitActivator(ship: ShipAPI?) : MagicSubsystem(ship) {
+class FinalGambitActivator(ship: ShipAPI) : MagicSubsystem(ship), HullDamageAboutToBeTakenListener {
+
+    init {
+        ship.addListener(this)
+    }
 
     override fun getBaseActiveDuration(): Float {
         return 4f
@@ -32,7 +38,7 @@ class FinalGambitActivator(ship: ShipAPI?) : MagicSubsystem(ship) {
 
     override fun shouldActivateAI(amount: Float): Boolean {
 
-        if (!ship.isAlive) return false
+        /*if (!ship.isAlive) return false
         if (isIn || isActive || isOut) return false
        // if (ship.fluxTracker.isOverloaded) return false
 
@@ -59,7 +65,7 @@ class FinalGambitActivator(ship: ShipAPI?) : MagicSubsystem(ship) {
                 ship.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MOVEMENT_DEST, 1f, target.location)
                 return true
             }
-            /*var target = ship.shipTarget
+            *//*var target = ship.shipTarget
             if (target == null) {
                 var custom = ship.aiFlags.getCustom(ShipwideAIFlags.AIFlags.MANEUVER_TARGET)
                 if (custom is ShipAPI) {
@@ -69,13 +75,13 @@ class FinalGambitActivator(ship: ShipAPI?) : MagicSubsystem(ship) {
                 }
             }
             if (target != null) {
-                *//*var isInArc = Misc.isInArc(ship.facing, 90f, ship.location, target.location)
+                *//**//*var isInArc = Misc.isInArc(ship.facing, 90f, ship.location, target.location)
                 if (isInArc) {
                     return true
-                }*//*
+                }*//**//*
                 return true
-            }*/
-        }
+            }*//*
+        }*/
 
         return false
     }
@@ -88,9 +94,6 @@ class FinalGambitActivator(ship: ShipAPI?) : MagicSubsystem(ship) {
         if (!ship.isAlive) return
 
         var stats = ship.mutableStats
-
-        stats.hullDamageTakenMult.modifyMult("sc_final_gambit", 1 - (0.8f * effectLevel))
-        stats.armorDamageTakenMult.modifyMult("sc_final_gambit", 1 - (0.8f * effectLevel))
 
         stats.maxSpeed.modifyFlat("sc_final_gambit", 0f + (50f * effectLevel))
         stats.maxSpeed.modifyMult("sc_final_gambit", 1f + (0.5f * effectLevel))
@@ -114,6 +117,14 @@ class FinalGambitActivator(ship: ShipAPI?) : MagicSubsystem(ship) {
             ship.shield?.toggleOff()
 
             var target = ship.shipTarget
+
+            if (target == null) {
+                var ships = CombatUtils.getShipsWithinRange(ship.location, 2000f)
+                ships = ships.filter { it.owner != ship.owner && !it.isHulk }
+
+                target = ships.randomOrNull()
+            }
+
             if (target != null) {
                 ship.aiFlags.setFlag(ShipwideAIFlags.AIFlags.MOVEMENT_DEST, 1f, target.location)
             }
@@ -135,6 +146,8 @@ class FinalGambitActivator(ship: ShipAPI?) : MagicSubsystem(ship) {
     override fun onActivate() {
         super.onActivate()
 
+
+        ship.engineController.shipEngines.forEach { it.repair() }
         ship.fluxTracker.stopOverload()
         ship.fluxTracker.currFlux = 0f
         ship.fluxTracker.hardFlux = 0f
@@ -143,8 +156,6 @@ class FinalGambitActivator(ship: ShipAPI?) : MagicSubsystem(ship) {
 
         Global.getSoundPlayer().playSound("system_burn_drive_activate", 1f, 1f, ship.location, ship.velocity)
 
-        stats.hullDamageTakenMult.modifyMult("sc_final_gambit_start", 0.25f)
-        stats.armorDamageTakenMult.modifyMult("sc_final_gambit_start", 0.25f)
     }
 
     fun explode() {
@@ -165,6 +176,28 @@ class FinalGambitActivator(ship: ShipAPI?) : MagicSubsystem(ship) {
 
     override fun getHUDColor(): Color {
         return Color(0, 166, 175,255)
+    }
+
+
+    override fun notifyAboutToTakeHullDamage(param: Any?, ship: ShipAPI?, point: Vector2f?, damageAmount: Float): Boolean {
+
+        if (isIn || isActive ) {
+            return true
+        }
+
+        if (ship!!.hitpoints - damageAmount <= ship.maxHitpoints * 0.2f) {
+
+
+            if (!isIn && !isActive && !isOut && !isCooldown && ship.isAlive) {
+                activate()
+            }
+
+            if (!isOut) {
+                ship.hitpoints = ship.maxHitpoints * 0.2f
+                return true
+            }
+        }
+        return false
     }
 
 }

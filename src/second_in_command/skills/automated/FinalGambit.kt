@@ -18,9 +18,9 @@ class FinalGambit : SCBaseSkillPlugin() {
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("Provides the ship with the \"Final Gambit\" subsystem.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("   - Activating the subsystem toggles the burn drive and enables a strong damper field", 0f)
+        tooltip.addPara("   - Activating the subsystem toggles the burn drive and makes the ship invulnerable", 0f)
         tooltip.addPara("   - When the duration of the subsystem ends, the ship explodes with much more force and range than usual", 0f)
-        tooltip.addPara("   - The AI toggles the system below 50%% hitpoints if targets are nearby", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "50%")
+        tooltip.addPara("   - Automatically triggered if the ship is below 20%% of its maximum hitpoints", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "20%")
 
     }
 
@@ -32,8 +32,8 @@ class FinalGambit : SCBaseSkillPlugin() {
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
         if (Misc.isAutomated(ship)) {
-            var activator = FinalGambitActivator(ship)
-            MagicSubsystemsManager.addSubsystemToShip(ship!!, activator)
+            var activator = FinalGambitActivator(ship!!)
+            MagicSubsystemsManager.addSubsystemToShip(ship, activator)
         }
     }
 
