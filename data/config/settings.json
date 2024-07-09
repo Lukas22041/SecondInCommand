@@ -4,10 +4,12 @@
 		"SCSkillPanelReplacerTitle":"second_in_command.scripts.SkillPanelReplacerScriptTitlescreen",
 	},	
 	
+	
 	"ruleCommandPackages":[
 		"second_in_command.interactions.rules",
 	],
 
+	"officerMaxEliteSkills":2,
 	 
 	"graphics":{
 		"sc_ui":{

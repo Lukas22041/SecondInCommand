@@ -14,11 +14,19 @@ class TopCondition : SCBaseSkillPlugin() {
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
-
+        tooltip.addPara("+30 seconds of peak performance time for all ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - The bonus is doubled for any ship with an officer assigned to it", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "doubled")
     }
 
     override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+        var ppt = 30f
 
+        var captain = stats!!.fleetMember?.captain
+        if (captain != null && !captain.isDefault && !captain.isAICore) {
+            ppt += 30f
+        }
+
+        stats!!.peakCRDuration.modifyFlat(id, ppt)
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
