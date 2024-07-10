@@ -10,8 +10,28 @@ import second_in_command.specs.SCBaseSkillPlugin
 
 class CrewTraining : SCBaseSkillPlugin() {
 
+
+    companion object {
+        fun removeOfficersOverTheLimit() {
+            var player = Global.getSector().characterData.person
+            player.stats.officerNumber.unmodify("sc_crew_training")
+
+            var maximum = player.stats.officerNumber.modifiedValue
+
+            var fleet = Global.getSector().playerFleet
+            var shipsWithOfficers = fleet.fleetData.membersListCopy.filter { fleet.fleetData.officersCopy.map { it.person }.contains(it.captain) }.toMutableList()
+
+            while (shipsWithOfficers.count() > maximum) {
+                if (shipsWithOfficers.isEmpty()) break
+                var last = shipsWithOfficers.last()
+                last.captain = null
+                shipsWithOfficers.remove(last)
+            }
+        }
+    }
+
     override fun getAffectsString(): String {
-        return "all ships in the fleet"
+        return "fleet"
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
@@ -53,17 +73,6 @@ class CrewTraining : SCBaseSkillPlugin() {
         var player = Global.getSector().characterData.person
         player.stats.officerNumber.unmodify("sc_crew_training")
 
-        var maximum = player.stats.officerNumber.modifiedValue
-
-        var fleet = Global.getSector().playerFleet
-        var shipsWithOfficers = fleet.fleetData.membersListCopy.filter { fleet.fleetData.officersCopy.map { it.person }.contains(it.captain) }.toMutableList()
-
-        while (shipsWithOfficers.count() > maximum) {
-            if (shipsWithOfficers.isEmpty()) break
-            var last = shipsWithOfficers.last()
-            last.captain = null
-            shipsWithOfficers.remove(last)
-        }
-
+        removeOfficersOverTheLimit()
     }
 }

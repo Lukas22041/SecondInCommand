@@ -1,0 +1,2 @@
+id,name,color,description,order,effect_skill_id,sound1,sound2,sound3,sound4,sound5,sound_story,elite_overlay,elite_overlay_medium,elite_overlay_small
+sc_aptitude_inactive,Inactive,"255,255,255,255",,1,sc_aptitude_inactive,combat1,combat2,combat3,combat4,combat5,ui_char_spent_story_point_combat,graphics/icons/skills/elite_combat.png,graphics/icons/skills/elite_combat48.png,graphics/icons/skills/elite_combat32.png

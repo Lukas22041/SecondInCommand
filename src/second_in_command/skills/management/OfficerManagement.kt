@@ -1,5 +1,6 @@
 package second_in_command.skills.management
 
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
@@ -10,10 +11,13 @@ import second_in_command.specs.SCBaseSkillPlugin
 class OfficerManagement : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "all ships in the fleet"
+        return "fleet"
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
+        tooltip.addPara("+2 to maximum number of officers you're able to command", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - If this executive officer is unassigned, any officer over the limit will also be unassigned", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "5%")
+
 
     }
 
@@ -25,5 +29,18 @@ class OfficerManagement : SCBaseSkillPlugin() {
 
     }
 
+    override fun advance(amount: Float) {
+        var player = Global.getSector().characterData.person
+        player.stats.officerNumber.modifyFlat("sc_officer_management", 2f)
+    }
+
+    override fun onDeactivation() {
+        super.onDeactivation()
+
+        var player = Global.getSector().characterData.person
+        player.stats.officerNumber.unmodify("sc_officer_management")
+
+        CrewTraining.removeOfficersOverTheLimit()
+    }
 
 }

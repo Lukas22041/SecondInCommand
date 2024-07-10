@@ -1,0 +1,5 @@
+id,name,order,tier,reqPoints,reqPointsPerExtraSkill,description,author,combat officer,admiral,admin,tags,icon,
+sc_inactive,Inactive Skills,100000,1,0,,,,TRUE,,,"npc_only, ai_core_only",graphics/secondInCommand/sc_inactive_skill.png,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+sc_aptitude_inactive,,0,,,,,,,,,"npc_only, ai_core_only",graphics/icons/skills/category_combat.png,
