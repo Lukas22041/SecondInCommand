@@ -21,14 +21,6 @@ class Authority : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-
-    }
-
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
-
-    }
-
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
 
         var objectives = Global.getCombatEngine().objectives

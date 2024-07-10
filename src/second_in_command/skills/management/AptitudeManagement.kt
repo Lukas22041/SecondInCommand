@@ -11,10 +11,6 @@ import second_in_command.specs.SCBaseAptitudePlugin
 
 class AptitudeManagement : SCBaseAptitudePlugin() {
 
-    companion object {
-
-    }
-
     override fun getOriginSkillId(): String {
         return "sc_management_crew_training"
     }
@@ -40,6 +36,5 @@ class AptitudeManagement : SCBaseAptitudePlugin() {
         addSection(section3)
 
     }
-
 
 }
