@@ -100,8 +100,8 @@ class FinalGambitActivator(ship: ShipAPI) : MagicSubsystem(ship), HullDamageAbou
         stats.acceleration.modifyMult("sc_final_gambit", 1f + (3f * effectLevel))
         stats.deceleration.modifyMult("sc_final_gambit", 1f + (3f * effectLevel))
 
-        stats.turnAcceleration.modifyMult("sc_final_gambit", 1f - (0.5f * effectLevel))
-        stats.maxTurnRate.modifyMult("sc_final_gambit", 1f - (0.5f * effectLevel))
+        stats.turnAcceleration.modifyMult("sc_final_gambit", 1f - (0.2f * effectLevel))
+        stats.maxTurnRate.modifyMult("sc_final_gambit", 1f - (0.2f * effectLevel))
 
         var jitterRangeBonus = 7f * effectLevel
 

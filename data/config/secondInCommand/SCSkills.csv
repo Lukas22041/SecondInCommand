@@ -1,6 +1,7 @@
 id,name,iconPath,plugin
 sc_combat_aptitude_skill,Piloting,graphics/icons/skills/combat.png,second_in_command.skills.misc.PlaceholderSkill
 ,,,
+#Management,,,
 sc_management_crew_training,Crew Training,graphics/secondInCommand/management/crew_training.png,second_in_command.skills.management.CrewTraining
 sc_management_top_condition,Top Condition,graphics/secondInCommand/management/top_condition.png,second_in_command.skills.management.TopCondition
 sc_management_well_organized,Well Organized,graphics/secondInCommand/management/well_organized.png,second_in_command.skills.management.WellOrganized
@@ -12,11 +13,19 @@ sc_management_officer_training,Officer Training,graphics/secondInCommand/managem
 sc_management_best_of_the_best,Best of the Best,graphics/secondInCommand/management/best_of_the_best.png,second_in_command.skills.management.BestOfTheBest
 sc_management_in_good_hands,In Good Hands,graphics/secondInCommand/management/in_good_hands.png,second_in_command.skills.management.InGoodHands
 ,,,
+#Wolfpack,,,
+sc_wolfpack_wolfpack_tactics,Wolfpack Tactics,graphics/secondInCommand/wolfpack/wolfpack_tactics.png,second_in_command.skills.wolfpack.WolfpackTactics
+sc_wolfpack_quick_recovery,Quick Recovery,graphics/secondInCommand/wolfpack/quick_recovery.png,second_in_command.skills.wolfpack.QuickRecovery
+sc_wolfpack_low_profile,Low Profile,graphics/secondInCommand/wolfpack/low_profile.png,second_in_command.skills.wolfpack.LowProfile
+sc_wolfpack_coordinated_maneuvers,Coordinated Maneuvers,graphics/secondInCommand/wolfpack/coordinated_maneuvers.png,second_in_command.skills.wolfpack.CoordinatedManeuvers
+sc_wolfpack_jumpstart,Jumpstart,graphics/secondInCommand/wolfpack/jumpstart.png,second_in_command.skills.wolfpack.Jumpstart
+sc_wolfpack_trapped_prey,Trapped Prey,graphics/secondInCommand/wolfpack/trapped_prey.png,second_in_command.skills.wolfpack.TrappedPrey
+sc_wolfpack_together_as_one,Together as One,graphics/secondInCommand/wolfpack/together_as_one.png,second_in_command.skills.wolfpack.TogetherAsOne
+sc_wolfpack_leader_of_the_pack,Leader of the Pack,graphics/secondInCommand/wolfpack/leader_of_the_pack.png,second_in_command.skills.wolfpack.LeaderOfThePack
+sc_wolfpack_support_doctrine,Support Doctrine,graphics/secondInCommand/wolfpack/support_doctrine.png,second_in_command.skills.wolfpack.SupportDoctrine
+sc_wolfpack_quick_as_the_wind,Quick as the Wind,graphics/secondInCommand/wolfpack/quick_as_the_wind.png,second_in_command.skills.wolfpack.QuickAsTheWind
 ,,,
-,,,
-,,,
-,,,
-,,,
+#Automated,,,
 sc_automated_automated_ships,Automated Ships,graphics/secondInCommand/automated/automated_ships.png,second_in_command.skills.automated.AutomatedShips
 sc_automated_magnetic_shielding,Magnetic Shielding,graphics/secondInCommand/automated/magnetic_shielding.png,second_in_command.skills.automated.MagneticShielding
 sc_automated_self_repair,Self-Repair,graphics/secondInCommand/automated/self_repair.png,second_in_command.skills.automated.SelfRepair
