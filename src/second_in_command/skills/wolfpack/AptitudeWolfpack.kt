@@ -18,7 +18,7 @@ class AptitudeWolfpack : SCBaseAptitudePlugin() {
     override fun createSections() {
 
         var section1 = SCAptitudeSection(true, 0, "leadership1")
-        section1.addSkill("sc_wolfpack_quick_recovery")
+        section1.addSkill("sc_wolfpack_safe_recovery")
         section1.addSkill("sc_wolfpack_low_profile")
         section1.addSkill("sc_wolfpack_coordinated_maneuvers")
         section1.addSkill("sc_wolfpack_jumpstart")

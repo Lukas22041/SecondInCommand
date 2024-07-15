@@ -15,7 +15,7 @@ sc_management_in_good_hands,In Good Hands,graphics/secondInCommand/management/in
 ,,,
 #Wolfpack,,,
 sc_wolfpack_wolfpack_tactics,Wolfpack Tactics,graphics/secondInCommand/wolfpack/wolfpack_tactics.png,second_in_command.skills.wolfpack.WolfpackTactics
-sc_wolfpack_quick_recovery,Quick Recovery,graphics/secondInCommand/wolfpack/quick_recovery.png,second_in_command.skills.wolfpack.QuickRecovery
+sc_wolfpack_safe_recovery,Safe Recovery,graphics/secondInCommand/wolfpack/safe_recovery.png,second_in_command.skills.wolfpack.SafeRecovery
 sc_wolfpack_low_profile,Low Profile,graphics/secondInCommand/wolfpack/low_profile.png,second_in_command.skills.wolfpack.LowProfile
 sc_wolfpack_coordinated_maneuvers,Coordinated Maneuvers,graphics/secondInCommand/wolfpack/coordinated_maneuvers.png,second_in_command.skills.wolfpack.CoordinatedManeuvers
 sc_wolfpack_jumpstart,Jumpstart,graphics/secondInCommand/wolfpack/jumpstart.png,second_in_command.skills.wolfpack.Jumpstart

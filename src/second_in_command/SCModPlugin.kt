@@ -10,6 +10,7 @@ import second_in_command.misc.snippets.AddAllOfficersSnippet
 import second_in_command.misc.snippets.AddXPToOfficersSnippet
 import second_in_command.scripts.*
 import second_in_command.specs.SCSpecStore
+import java.lang.Exception
 
 class SCModPlugin : BaseModPlugin() {
 
@@ -19,6 +20,43 @@ class SCModPlugin : BaseModPlugin() {
 
         SCSpecStore.loadAptitudeSpecsFromCSV()
         SCSpecStore.loadSkillSpecsFromCSV()
+
+        checkForIncompatibilities()
+    }
+
+    fun checkForIncompatibilities() {
+        var incompatibleIds = ArrayList<String>()
+        var loadedMods = Global.getSettings().modManager.enabledModsCopy
+
+        incompatibleIds.add("pantera_ANewLevel20")
+        incompatibleIds.add("pantera_ANewLevel25")
+        incompatibleIds.add("pantera_ANewLevel30")
+        incompatibleIds.add("pantera_ANewLevel40")
+
+        incompatibleIds.add("pantera_ANewLevel20R")
+        incompatibleIds.add("pantera_ANewLevel25R")
+        incompatibleIds.add("pantera_ANewLevel30R")
+        incompatibleIds.add("pantera_ANewLevel40R")
+
+        incompatibleIds.add("QualityCaptains")
+        incompatibleIds.add("TrulyAutomatedShips")
+        incompatibleIds.add("adjustable_skill_thresholds")
+
+        var incompatibleMods = loadedMods.filter { incompatibleIds.contains(it.id) }
+
+        if (incompatibleMods.isNotEmpty()) {
+
+            var text = ""
+            text += "The \"Second-in-Command\" mod is incompatible with some of the mods shown below due to modifying the same features."
+            text+= "\n\n"
+            for (mod in incompatibleMods) {
+                text+= " - \"${mod.name}\"\n"
+            }
+            text += "\n"
+            text += "Disable those mods, or \"Second-in-Command\" to get the game launchable."
+
+            throw Exception(text)
+        }
     }
 
     override fun onGameLoad(newGame: Boolean) {
