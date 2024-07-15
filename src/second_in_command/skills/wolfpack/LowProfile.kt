@@ -39,7 +39,7 @@ class LowProfile : SCBaseSkillPlugin() {
         tooltip.addPara("Reduces the sensor profile of the fleet based on how many frigates and destroyers are in the fleet", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - The increase is between 0%%-30%% based on the amount of of frigates and destroyers in the fleet",0f, Misc.getTextColor(), Misc.getHighlightColor(), "0%","30%")
         tooltip.addPara("   - It reaches its maximum when there are 120 deployment points worth of frigates and destroyers available",0f, Misc.getTextColor(), Misc.getHighlightColor(), "120 deployment points")
-        tooltip.addPara("   - The fleet total is currently at $DP points, currently providing a $bonus%% bonus",0f, Misc.getTextColor(), Misc.getHighlightColor(), "$DP", "$bonus%")
+        tooltip.addPara("   - The fleet total is currently at $DP points, providing a $bonus%% bonus",0f, Misc.getTextColor(), Misc.getHighlightColor(), "$DP", "$bonus%")
 
     }
 

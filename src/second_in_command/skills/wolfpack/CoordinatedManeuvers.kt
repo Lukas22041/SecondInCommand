@@ -14,7 +14,7 @@ class CoordinatedManeuvers : SCBaseSkillPlugin() {
     var max = CoordinatedManeuversScript.BASE_MAXIMUM.toInt()
 
     override fun getAffectsString(): String {
-        return "all ships with officers"
+        return "all ships with officers, including flagship"
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
