@@ -1,5 +1,6 @@
 package second_in_command.skills.wolfpack
 
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
@@ -31,6 +32,16 @@ class SafeRecovery : SCBaseSkillPlugin() {
         if (!ship!!.isFrigate && !ship.isDestroyer) return
 
         if (ship.fluxTracker.isVenting) {
+
+            if (ship == Global.getCombatEngine().playerShip) {
+
+                Global.getCombatEngine().maintainStatusForPlayerShip("sc_jumpstart1", "graphics/icons/hullsys/entropy_amplifier.png",
+                    "Safe Recovery", "+30% damage resistance", false)
+
+                Global.getCombatEngine().maintainStatusForPlayerShip("sc_jumpstart2", "graphics/icons/hullsys/entropy_amplifier.png",
+                    "Safe Recovery", "+30% vent rate", false)
+            }
+
             ship.mutableStats.ventRateMult.modifyMult("sc_safe_recovery", 1.3f)
             ship.mutableStats.hullDamageTakenMult.modifyMult("sc_safe_recovery", 0.7f)
             ship.mutableStats.armorDamageTakenMult.modifyMult("sc_safe_recovery", 0.7f)
