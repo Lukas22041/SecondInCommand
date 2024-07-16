@@ -23,7 +23,7 @@ class TrappedPrey : SCBaseSkillPlugin() {
         tooltip.addPara("   - Their weapon recoil is increased by 20%%",0f, Misc.getTextColor(), Misc.getHighlightColor(), "20%")
         tooltip.addPara("   - Their maximum speed is decreased by 15%%",0f, Misc.getTextColor(), Misc.getHighlightColor(), "15%")
         tooltip.addPara("   - Their maneuvering speed is decreased by 15%%",0f, Misc.getTextColor(), Misc.getHighlightColor(), "15%")
-        tooltip.addPara("   - Their damage taken from all sources is increased by 10%%",0f, Misc.getTextColor(), Misc.getHighlightColor(), "10%")
+        tooltip.addPara("   - Their damage taken from all sources is increased by 5%%",0f, Misc.getTextColor(), Misc.getHighlightColor(), "5%")
     }
 
     override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
@@ -93,9 +93,9 @@ class TrappedPreyScript(var owner: Int) : BaseEveryFrameCombatPlugin() {
                 ship.mutableStats.turnAcceleration.modifyMult("sc_trapped_prey", 0.85f)
                 ship.mutableStats.maxTurnRate.modifyMult("sc_trapped_prey", 0.85f)
 
-                ship.mutableStats.hullDamageTakenMult.modifyMult("sc_trapped_prey", 1.1f)
-                ship.mutableStats.armorDamageTakenMult.modifyMult("sc_trapped_prey", 1.1f)
-                ship.mutableStats.shieldDamageTakenMult.modifyMult("sc_trapped_prey", 1.1f)
+                ship.mutableStats.hullDamageTakenMult.modifyMult("sc_trapped_prey", 1.05f)
+                ship.mutableStats.armorDamageTakenMult.modifyMult("sc_trapped_prey", 1.05f)
+                ship.mutableStats.shieldDamageTakenMult.modifyMult("sc_trapped_prey", 1.05f)
             }
             else {
                 ship.mutableStats.recoilDecayMult.unmodify("sc_trapped_prey")

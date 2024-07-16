@@ -19,9 +19,9 @@ class TogetherAsOne : SCBaseSkillPlugin() {
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
         tooltip.addPara("Frigates and destroyers receive increased stats when near to other allied frigates and destroyers", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("   - The radius for this effect is approximately 1000 su wide",0f, Misc.getTextColor(), Misc.getHighlightColor(), "1000")
-        tooltip.addPara("   - This effect maxes out at 5 nearby ships",0f, Misc.getTextColor(), Misc.getHighlightColor(), "5")
-        tooltip.addPara("   - Per ship they gain a 4%% increase in maximum speed, flux dissipation and all damage dealt",0f, Misc.getTextColor(), Misc.getHighlightColor(), "4%", "maximum speed", "flux dissipation", "all damage dealt")
+        tooltip.addPara("   - The radius for this effect is approximately 1200 su wide",0f, Misc.getTextColor(), Misc.getHighlightColor(), "1200")
+        tooltip.addPara("   - This effect maxes out at 6 nearby ships",0f, Misc.getTextColor(), Misc.getHighlightColor(), "6")
+        tooltip.addPara("   - Per ship they gain a 3%% increase in maximum speed, flux dissipation and all damage dealt",0f, Misc.getTextColor(), Misc.getHighlightColor(), "3%", "maximum speed", "flux dissipation", "all damage dealt")
 
     }
 
@@ -69,14 +69,14 @@ class TogetherAsOneScript(var ship: ShipAPI) : AdvanceableListener {
             if (ship.owner != ally.owner) continue
 
             if (!ally.isFrigate && !ally.isDestroyer) continue
-            if (MathUtils.getDistance(ally, ship) >= 1000) continue
+            if (MathUtils.getDistance(ally, ship) >= 1200) continue
 
             count += 1
         }
 
 
-        count = MathUtils.clamp(count, 0, 5)
-        var mod = 0.05f * count
+        count = MathUtils.clamp(count, 0, 6)
+        var mod = 0.03f * count
 
         ship.mutableStats.maxSpeed.modifyMult("sc_together_as_one", 1f + mod)
         ship.mutableStats.acceleration.modifyMult("sc_together_as_one", 1f + mod)
