@@ -28,7 +28,7 @@ class LowProfile : SCBaseSkillPlugin() {
     }
 
     fun getBonus() : Float {
-       return 0.3f * getFleetDP().levelBetween(0f, 120f)
+       return 0.3f * getFleetDP().levelBetween(0f, 240f)
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
@@ -38,7 +38,7 @@ class LowProfile : SCBaseSkillPlugin() {
 
         tooltip.addPara("Reduces the sensor profile of the fleet based on how many frigates and destroyers are in the fleet", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - The increase is between 0%%-30%% based on the amount of of frigates and destroyers in the fleet",0f, Misc.getTextColor(), Misc.getHighlightColor(), "0%","30%")
-        tooltip.addPara("   - It reaches its maximum when there are 120 deployment points worth of frigates and destroyers available",0f, Misc.getTextColor(), Misc.getHighlightColor(), "120 deployment points")
+        tooltip.addPara("   - It reaches its maximum when there are 240 deployment points worth of frigates and destroyers available",0f, Misc.getTextColor(), Misc.getHighlightColor(), "240 deployment points")
         tooltip.addPara("   - The fleet total is currently at $DP points, providing a $bonus%% bonus",0f, Misc.getTextColor(), Misc.getHighlightColor(), "$DP", "$bonus%")
 
     }

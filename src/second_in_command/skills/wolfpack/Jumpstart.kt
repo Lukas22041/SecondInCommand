@@ -16,7 +16,7 @@ class Jumpstart : SCBaseSkillPlugin() {
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Frigates and destroyers receive increased stats during the first minute of deployment", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Frigates and destroyers receive increased stats for the first minute after combat began", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - 40%% faster objective capture rate",0f, Misc.getTextColor(), Misc.getHighlightColor(), "40%")
         tooltip.addPara("   - 20%% increased max speed",0f, Misc.getTextColor(), Misc.getHighlightColor(), "20%")
         tooltip.addPara("   - 10%% more damage dealt",0f, Misc.getTextColor(), Misc.getHighlightColor(), "10%")
@@ -32,9 +32,17 @@ class Jumpstart : SCBaseSkillPlugin() {
     }
 
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
+        if (!ship!!.isFrigate && !ship.isDestroyer) return
+
         var time = Global.getCombatEngine().getTotalElapsedTime(false)
 
         if (time <= 60) {
+
+            if (ship == Global.getCombatEngine().playerShip) {
+                Global.getCombatEngine().maintainStatusForPlayerShip("sc_jumpstart", "graphics/icons/hullsys/damper_field.png",
+                    "Jumpstart", "${(60-time).toInt()} seconds remaining", false)
+            }
+
             ship!!.mutableStats.maxSpeed.modifyMult("sc_jumpstart", 1.2f)
 
             ship.mutableStats.ballisticWeaponDamageMult.modifyMult("sc_jumpstart", 1.1f)
