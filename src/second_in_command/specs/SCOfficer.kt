@@ -1,7 +1,6 @@
 package second_in_command.specs
 
 import com.fs.starfarer.api.characters.PersonAPI
-import org.lazywizard.lazylib.MathUtils
 import second_in_command.SCUtils
 
 class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
@@ -43,7 +42,7 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
 
     fun getXPMult() : Float {
         var mult = 1f
-        if (!isActive()) mult *= inactiveXPMult
+        if (!isAssigned()) mult *= inactiveXPMult
 
         return mult
     }
@@ -61,6 +60,12 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
         experiencePoints += xp * getXPMult()
 
         levelUpIfNeeded()
+    }
+
+    fun resetLevel() {
+        level = 1
+        skillPoints = 1
+        experiencePoints = 0f
     }
 
     fun increaseLevel(amount: Int) {
@@ -91,8 +96,8 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
         levelUpIfNeeded()
     }
 
-    fun isActive() : Boolean {
-        return SCUtils.getSCData().getActiveOfficers().contains(this)
+    fun isAssigned() : Boolean {
+        return SCUtils.getSCData().getAssignedOfficers().contains(this)
     }
 
 

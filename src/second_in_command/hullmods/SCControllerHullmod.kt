@@ -41,6 +41,7 @@ class SCControllerHullmod : BaseHullMod() {
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
+        if (!SCUtils.getSCData().isModEnabled) return
 
         var skills = SCUtils.getSCData().getAllActiveSkillsPlugins()
         for (skill in skills) {
@@ -49,6 +50,8 @@ class SCControllerHullmod : BaseHullMod() {
     }
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
+        if (!SCUtils.getSCData().isModEnabled) return
+
         var skills = SCUtils.getSCData().getAllActiveSkillsPlugins()
         for (skill in skills) {
             skill.applyEffectsBeforeShipCreation(stats, stats!!.variant, hullSize, "${id}_${skill.getId()}")
@@ -56,6 +59,8 @@ class SCControllerHullmod : BaseHullMod() {
     }
 
     override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
+        if (!SCUtils.getSCData().isModEnabled) return
+
         var skills = SCUtils.getSCData().getAllActiveSkillsPlugins()
         for (skill in skills) {
             skill.applyEffectsToFighterSpawnedByShip(fighter, ship, "${id}_${skill.getId()}")
@@ -63,6 +68,8 @@ class SCControllerHullmod : BaseHullMod() {
     }
 
     override fun advanceInCampaign(member: FleetMemberAPI?, amount: Float) {
+        if (!SCUtils.getSCData().isModEnabled) return
+
         var skills = SCUtils.getSCData().getAllActiveSkillsPlugins()
         for (skill in skills) {
             skill.advanceInCampaign(member, amount)
@@ -70,6 +77,8 @@ class SCControllerHullmod : BaseHullMod() {
     }
 
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
+        if (!SCUtils.getSCData().isModEnabled) return
+
         var skills = SCUtils.getSCData().getAllActiveSkillsPlugins()
         for (skill in skills) {
             skill.advanceInCombat(ship, amount)

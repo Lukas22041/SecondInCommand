@@ -220,7 +220,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
 
         var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())
         var originSkillElement = SkillWidgetElement(originSkill!!.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), subelement, 72f, 72f)
-        subelement.addTooltipTo(SCSkillTooltipCreator(originSkill.getPlugin(), aptitudePlugin, 0), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
+        subelement.addTooltipTo(SCSkillTooltipCreator(originSkill.getPlugin(), aptitudePlugin, 0, false), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
         //originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
         originSkillElement.elementPanel.position.rightOfMid(background.elementPanel, 20f)
 
@@ -263,7 +263,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
                 section.activeSkillsInUI.add(skillElement)
                 usedWidth += 72f
 
-                var tooltip = SCSkillTooltipCreator(skillPlugin, aptitudePlugin, section.requiredPreviousSkills)
+                var tooltip = SCSkillTooltipCreator(skillPlugin, aptitudePlugin, section.requiredPreviousSkills, !section.canChooseMultiple)
                 subelement.addTooltipTo(tooltip, skillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
                 section.tooltips.add(tooltip)
 

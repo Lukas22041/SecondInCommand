@@ -91,7 +91,7 @@ class SCPlayerAptitudePanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         var originSkillElement = SkillWidgetElement(originSkill!!.id, true, false, true, originSkill!!.iconPath, "leadership1", color, subelement, 72f, 72f)
         //originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
         originSkillElement.elementPanel.position.rightOfMid(background.elementPanel, 20f)
-        subelement.addTooltipTo(SCSkillTooltipCreator(originSkill.getPlugin(), SCSpecStore.getAptitudeSpec("sc_fake_combat_aptitude")!!.getPlugin(), 0), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
+        subelement.addTooltipTo(SCSkillTooltipCreator(originSkill.getPlugin(), SCSpecStore.getAptitudeSpec("sc_fake_combat_aptitude")!!.getPlugin(), 0, false), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
 
         var originGap = SkillGapElement(color, subelement)
         originGap.elementPanel.position.rightOfTop(originSkillElement.elementPanel, 0f)

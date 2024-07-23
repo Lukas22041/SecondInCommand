@@ -1,0 +1,8 @@
+{
+    "lunalib": {
+
+        #If not "", loads a custom icon for the mod in the settings menu.
+        #The image can technicly be any size, 40x40 will see no adjustment however, but any larger or smaller sizes are fine aswell, important part is to keep the width and height the same.
+        "iconPath":"graphics/icons/lunalib_icon.png", 
+    }
+}

@@ -1,0 +1,4 @@
+fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
+sc_DisableMod,Disable skill rework,Boolean,false,,"Setting this to [true] disables most features of the mod, disabling all active skills from it and restoring the base games skill screen. This however does not make the mod removeable from the safe. [New Executive Officers can still be found even if the system is disabled], and the feature can be safely re-enabled.
+
+This config mostly exists for those that wanted to try the mod, but ended up not liking the system that much. You may need to use the [""addSkillPoints""] console command to receive points you are missing out on.",,,

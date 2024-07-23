@@ -6,6 +6,8 @@ import second_in_command.specs.SCOfficer
 
 class SCData(var player: PersonAPI) {
 
+    var isModEnabled = true
+
     private var officers = ArrayList<SCOfficer>()
     private var activeOfficers = ArrayList<SCOfficer?>()
 
@@ -43,16 +45,16 @@ class SCData(var player: PersonAPI) {
         activeOfficers[slotIndex] = officer
     }
 
-    fun getActiveOfficers() : ArrayList<SCOfficer?> {
+    fun getAssignedOfficers() : ArrayList<SCOfficer?> {
         return ArrayList(activeOfficers)
     }
 
     fun getAllActiveSkillsPlugins() : List<SCBaseSkillPlugin> {
-        return getActiveOfficers().filter { it != null }.flatMap { it!!.getActiveSkillPlugins() }
+        return getAssignedOfficers().filter { it != null }.flatMap { it!!.getActiveSkillPlugins() }
     }
 
     fun isSkillActive(skillId: String) : Boolean {
-        return getActiveOfficers().filter { it != null }.flatMap { it!!.activeSkillIDs }.contains(skillId)
+        return getAssignedOfficers().filter { it != null }.flatMap { it!!.activeSkillIDs }.contains(skillId)
     }
 
 }

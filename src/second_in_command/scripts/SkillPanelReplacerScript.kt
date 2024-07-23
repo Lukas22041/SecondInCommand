@@ -1,6 +1,7 @@
 package second_in_command.scripts
 
 import com.fs.starfarer.api.EveryFrameScript
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.campaign.CampaignState
 import com.fs.state.AppDriver
@@ -22,12 +23,16 @@ class SkillPanelReplacerScript : EveryFrameScript {
 
     override fun advance(amount: Float) {
 
+        if (!Global.getSector().isPaused) return
+        if (!SCUtils.getSCData().isModEnabled) return
+
         var state = AppDriver.getInstance().currentState
         if (state !is CampaignState) return
 
         var core: UIPanelAPI? = null
 
         var docked = false
+
 
         var dialog = ReflectionUtils.invoke("getEncounterDialog", state)
         if (dialog != null)

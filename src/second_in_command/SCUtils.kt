@@ -30,6 +30,25 @@ object SCUtils {
         return getSCData().isSkillActive(skillId)
     }
 
+    fun changeOfficerAptitude(officer: SCOfficer, aptitudeId: String) {
+        if (officer.isAssigned()) {
+            var skills = officer.getActiveSkillPlugins()
+            for (skill in skills) {
+                skill.onDeactivation()
+            }
+        }
+        officer.activeSkillIDs.clear()
+        officer.resetLevel()
+        officer.aptitudeId = aptitudeId
+
+        if (officer.isAssigned()) {
+            var skills = officer.getActiveSkillPlugins()
+            for (skill in skills) {
+                skill.onActivation()
+            }
+        }
+    }
+
     @JvmStatic
     fun computeThresholdBonus(current: Float, maxBonus: Float, maxThreshold: Float): Float {
 

@@ -6,7 +6,7 @@ import com.fs.starfarer.api.util.Misc
 import second_in_command.specs.SCBaseAptitudePlugin
 import second_in_command.specs.SCBaseSkillPlugin
 
-class SCSkillTooltipCreator(var skill: SCBaseSkillPlugin, var aptitude: SCBaseAptitudePlugin, var requiredSkillPoints: Int) : BaseTooltipCreator() {
+class SCSkillTooltipCreator(var skill: SCBaseSkillPlugin, var aptitude: SCBaseAptitudePlugin, var requiredSkillPoints: Int, var pickOnlyOne: Boolean) : BaseTooltipCreator() {
 
 
     var sectionMeetsRequirements = true
@@ -30,11 +30,18 @@ class SCSkillTooltipCreator(var skill: SCBaseSkillPlugin, var aptitude: SCBaseAp
 
         skill.addTooltip(tooltip)
 
-        if (!sectionMeetsRequirements) {
+        if (!sectionMeetsRequirements || pickOnlyOne) {
             tooltip.addSpacer(10f)
+        }
+
+        if (!sectionMeetsRequirements) {
             var addedS = ""
             if (requiredSkillPoints >= 2) addedS = "s"
             tooltip.addPara("Requires atleast $requiredSkillPoints lower tier skill$addedS.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+        }
+
+        if (pickOnlyOne) {
+            tooltip.addPara("You can only pick one skill in this section.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
         }
 
         tooltip.addSpacer(2f)

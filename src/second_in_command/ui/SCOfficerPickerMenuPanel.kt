@@ -6,7 +6,6 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
 import second_in_command.SCData
-import second_in_command.misc.baseOrModSpec
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
@@ -40,7 +39,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
         var scrollerElement = scrollerPanel.createUIElement(width, height - heightCap, true)
 
         var officers = data.getOfficersInFleet()
-        var activeOfficers = data.getActiveOfficers()
+        var activeOfficers = data.getAssignedOfficers()
 
         for (officer in officers) {
 
@@ -106,7 +105,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
             var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())
             var originSkillElement = SkillWidgetElement(originSkill!!.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), inner, 72f, 72f)
-            inner.addTooltipTo(SCSkillTooltipCreator(originSkill.getPlugin(), aptitudePlugin, 0), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
+            inner.addTooltipTo(SCSkillTooltipCreator(originSkill.getPlugin(), aptitudePlugin, 0, false), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
             //originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
             originSkillElement.elementPanel.position.rightOfMid(background.elementPanel, 20f)
 
@@ -152,7 +151,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
                     section.activeSkillsInUI.add(skillElement)
                     usedWidth += 72f
 
-                    var tooltip = SCSkillTooltipCreator(skillPlugin, aptitudePlugin, section.requiredPreviousSkills)
+                    var tooltip = SCSkillTooltipCreator(skillPlugin, aptitudePlugin, section.requiredPreviousSkills, !section.canChooseMultiple)
                     inner.addTooltipTo(tooltip, skillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
                     section.tooltips.add(tooltip)
 
@@ -328,7 +327,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
     fun doesOffficerMatchExistingAptitude(officer: SCOfficer) : Boolean {
 
-        for (active in data.getActiveOfficers()) {
+        for (active in data.getAssignedOfficers()) {
             if (active == null) continue
             if (active.person == originalPickerElement.officer) continue
             if (active.aptitudeId == officer.aptitudeId) return true
@@ -338,7 +337,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
     }
 
     fun doesOffficerMatchCategory(officer: SCOfficer) : Boolean {
-        for (active in data.getActiveOfficers()) {
+        for (active in data.getAssignedOfficers()) {
             if (active == null) continue
             if (active.person == originalPickerElement.officer) continue
             var spec = SCSpecStore.getAptitudeSpec(officer.aptitudeId)
@@ -351,7 +350,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
     }
 
     fun officerAlreadySlotted(officer: SCOfficer) : Boolean {
-        return data.getActiveOfficers().contains(officer)
+        return data.getAssignedOfficers().contains(officer)
     }
 
     fun getActiveSkillCount(sections: ArrayList<SCAptitudeSection>) : Int {

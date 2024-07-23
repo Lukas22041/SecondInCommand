@@ -15,6 +15,8 @@ class SkillAdvancerScript : EveryFrameScript {
 
 
     override fun advance(amount: Float) {
+        if (!SCUtils.getSCData().isModEnabled) return
+
         for (skill in SCUtils.getSCData().getAllActiveSkillsPlugins()) {
             skill.advance(amount)
         }

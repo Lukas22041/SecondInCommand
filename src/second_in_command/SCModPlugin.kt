@@ -4,6 +4,8 @@ import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.impl.campaign.ids.Abilities
 import lunalib.lunaDebug.LunaDebug
+import lunalib.lunaSettings.LunaSettings
+import second_in_command.misc.SCSettings
 import second_in_command.misc.VanillaSkillsUtil
 import second_in_command.misc.baseOrModSpec
 import second_in_command.misc.snippets.AddAllOfficersSnippet
@@ -15,6 +17,9 @@ import java.lang.Exception
 class SCModPlugin : BaseModPlugin() {
 
     override fun onApplicationLoad() {
+
+        LunaSettings.addSettingsListener(SCSettings())
+
         LunaDebug.addSnippet(AddAllOfficersSnippet())
         LunaDebug.addSnippet(AddXPToOfficersSnippet())
 
@@ -60,6 +65,7 @@ class SCModPlugin : BaseModPlugin() {
     }
 
     override fun onGameLoad(newGame: Boolean) {
+        Global.getSector().addTransientScript(DisableConfigHandlerScript())
         Global.getSector().addTransientScript(SkillPanelReplacerScript())
         Global.getSector().addTransientScript(ControllerHullmodAdderScript())
         Global.getSector().addTransientScript(SkillAdvancerScript())
@@ -96,8 +102,10 @@ class SCModPlugin : BaseModPlugin() {
 
         var skills = SCUtils.getSCData().getAllActiveSkillsPlugins()
 
-        for (skill in skills) {
-            skill.onActivation()
+        if (SCUtils.getSCData().isModEnabled) {
+            for (skill in skills) {
+                skill.onActivation()
+            }
         }
     }
 }

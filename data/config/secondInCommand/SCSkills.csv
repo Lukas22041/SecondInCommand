@@ -1,6 +1,18 @@
 id,name,iconPath,plugin
 sc_combat_aptitude_skill,Piloting,graphics/icons/skills/combat.png,second_in_command.skills.misc.PlaceholderSkill
 ,,,
+#Tactical,,,
+sc_tactical_focused_fire,Focused Fire,graphics/secondInCommand/tactical/focused_fire.png,second_in_command.skills.tactical.FocusedFire
+sc_tactical_spotters,Spotters,graphics/secondInCommand/tactical/spotters.png,second_in_command.skills.tactical.Spotters
+sc_tactical_rapid_response,Rapid Response,graphics/secondInCommand/tactical/rapid_response.png,second_in_command.skills.tactical.RapidResponse
+sc_tactical_pristine_condition,Pristine Condition,graphics/secondInCommand/tactical/pristine_condition.png,second_in_command.skills.tactical.PristineCondition
+sc_tactical_tactical_drills,Tactical Drills,graphics/secondInCommand/tactical/tactical_drills.png,second_in_command.skills.tactical.TacticalDrills
+sc_tactical_efficient_ordnance,Efficient Ordnance,graphics/secondInCommand/tactical/efficient_ordnance.png,second_in_command.skills.tactical.EfficientOrdnance
+sc_tactical_full_throttle,Full Throttle,graphics/secondInCommand/tactical/full_throttle.png,second_in_command.skills.tactical.FullThrottle
+sc_tactical_accelerated_barrels,Accelerated Barrels,graphics/secondInCommand/tactical/accelerated_barrels.png,second_in_command.skills.tactical.AcceleratedBarrels
+sc_tactical_mass_bombardment,Mass Bombardment,graphics/secondInCommand/tactical/mass_bombardment.png,second_in_command.skills.tactical.MassBombardment
+sc_tactical_defensive_protocols,Defensive Protocols,graphics/secondInCommand/tactical/defensive_protocols.png,second_in_command.skills.tactical.DefensiveProtocols
+,,,
 #Management,,,
 sc_management_crew_training,Crew Training,graphics/secondInCommand/management/crew_training.png,second_in_command.skills.management.CrewTraining
 sc_management_top_condition,Top Condition,graphics/secondInCommand/management/top_condition.png,second_in_command.skills.management.TopCondition

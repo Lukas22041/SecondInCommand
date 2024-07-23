@@ -13,6 +13,7 @@ import com.fs.state.AppDriver
 import second_in_command.SCData
 import second_in_command.SCUtils
 import second_in_command.misc.ReflectionUtils
+import second_in_command.misc.SCSettings
 import second_in_command.misc.getChildrenCopy
 import second_in_command.ui.SCSkillMenuPanel
 
@@ -27,6 +28,10 @@ class SkillPanelReplacerScriptTitlescreen : EveryFrameCombatPlugin {
     }
 
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?) {
+
+        if (!SCSettings.isModEnabled) return
+
+
         var state = AppDriver.getInstance().currentState
         if (state !is TitleScreenState) return
 
