@@ -15,14 +15,17 @@ class TacticalDrills : SCBaseSkillPlugin() {
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
-
-        
+        tooltip.addPara("All ships have slightly improved autofire accuracy", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+5%% weapon damage for all ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
     }
 
     override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
+        stats!!.ballisticWeaponDamageMult.modifyMult(id, 1.05f)
+        stats.energyWeaponDamageMult.modifyMult(id, 1.05f)
+        stats.missileWeaponDamageMult.modifyMult(id, 1.05f)
 
-
+        stats.autofireAimAccuracy.modifyFlat(id, 0.2f)
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {

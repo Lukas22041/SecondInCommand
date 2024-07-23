@@ -15,14 +15,16 @@ class DefensiveProtocols : SCBaseSkillPlugin() {
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
+        tooltip.addPara("+5%% maximum damage reduction from armor", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% armor for damage reduction calculations only", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
         
     }
 
     override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
-
-
+        stats!!.maxArmorDamageReduction.modifyFlat(id, 0.05f)
+        stats.effectiveArmorBonus.modifyPercent(id, 10f)
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {

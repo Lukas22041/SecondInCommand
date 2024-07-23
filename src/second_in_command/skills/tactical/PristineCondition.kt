@@ -15,14 +15,18 @@ class PristineCondition : SCBaseSkillPlugin() {
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
+        tooltip.addPara("+5%% combat readiness for every s-mod on the ship (max 15%%)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
         
     }
 
     override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
+        var smods = variant.sMods.count()
+        var bonus = 0.05f * smods
+        bonus = bonus.coerceIn(0f, 0.15f)
 
-
+        stats!!.maxCombatReadiness.modifyFlat(id, bonus, "Pristine Condition")
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {

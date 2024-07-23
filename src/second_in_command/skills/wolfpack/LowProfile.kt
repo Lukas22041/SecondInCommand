@@ -57,7 +57,6 @@ class LowProfile : SCBaseSkillPlugin() {
 
     override fun onDeactivation() {
         Global.getSector().playerFleet.stats.detectedRangeMod.unmodify("sc_low_profile")
-
     }
 
 }
