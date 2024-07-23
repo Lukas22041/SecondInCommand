@@ -45,9 +45,9 @@ sc_technology_deep_dive,Deep Dive,graphics/secondInCommand/technology/deep_dive.
 sc_technology_reinforced_grid,Reinforced Grid,graphics/secondInCommand/technology/reinforced_grid.png,second_in_command.skills.technology.ReinforcedGrid
 sc_technology_phase_coil_tuning,Phase Coil Tuning,graphics/secondInCommand/technology/phase_coil_tuning.png,second_in_command.skills.technology.PhaseCoilTuning
 sc_technology_focused_lenses,Focused Lenses,graphics/secondInCommand/technology/focused_lenses.png,second_in_command.skills.technology.FocusedLenses
-sc_technology_makeshift_drones,Makeshift Drones,graphics/secondInCommand/technology/makeshift_drones.png,second_in_command.skills.technology.MakeshiftDrones
-sc_technology_neural_link,Neural Link,graphics/secondInCommand/technology/neural_link.png,second_in_command.skills.technology.NeuralLink
 sc_technology_energised,Energised,graphics/secondInCommand/technology/energised.png,second_in_command.skills.technology.Energised
+sc_technology_neural_link,Neural Link,graphics/secondInCommand/technology/neural_link.png,second_in_command.skills.technology.NeuralLink
+sc_technology_makeshift_drones,Makeshift Drones,graphics/secondInCommand/technology/makeshift_drones.png,second_in_command.skills.technology.MakeshiftDrones
 ,,,
 #Automated,,,
 sc_automated_automated_ships,Automated Ships,graphics/secondInCommand/automated/automated_ships.png,second_in_command.skills.automated.AutomatedShips

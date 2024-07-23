@@ -17,7 +17,7 @@ class AptitudeTactical : SCBaseAptitudePlugin() {
 
     override fun createSections() {
 
-        var section1 = SCAptitudeSection(true, 0, "leadership1")
+        var section1 = SCAptitudeSection(true, 0, "combat1")
         section1.addSkill("sc_tactical_spotters")
         section1.addSkill("sc_tactical_rapid_response")
         section1.addSkill("sc_tactical_pristine_condition")
@@ -25,7 +25,7 @@ class AptitudeTactical : SCBaseAptitudePlugin() {
         section1.addSkill("sc_tactical_efficient_ordnance")
         addSection(section1)
 
-        var section2 = SCAptitudeSection(true, 3, "leadership2")
+        var section2 = SCAptitudeSection(true, 3, "combat2")
         section2.addSkill("sc_tactical_full_throttle")
         section2.addSkill("sc_tactical_accelerated_barrels")
         section2.addSkill("sc_tactical_mass_bombardment")
