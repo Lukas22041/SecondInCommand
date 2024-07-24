@@ -160,6 +160,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
                 officerPickerElement.playSound("ui_char_decrease_skill", 1f, 1f)
 
                 var officerInSlot = data.getOfficerInSlot(slotId)
+                data.setOfficerInSlot(slotId, null)
                 if (officerInSlot != null) {
                     var skills = officerInSlot.getActiveSkillPlugins()
 
@@ -171,7 +172,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
                     }
                 }
 
-                data.setOfficerInSlot(slotId, null)
+                //data.setOfficerInSlot(slotId, null)
 
 
                 recreateAptitudeRow(subpanelParent, null, slotId)

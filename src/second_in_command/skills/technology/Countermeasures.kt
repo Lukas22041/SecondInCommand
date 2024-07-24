@@ -11,19 +11,23 @@ import second_in_command.specs.SCBaseSkillPlugin
 
 class Countermeasures : SCBaseSkillPlugin() {
 
+    var PER_SHIP_BONUS = 1f
+
     override fun getAffectsString(): String {
         return "all ships in the fleet"
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
-        
+        tooltip.addPara("Every deployed ship contributes ${PER_SHIP_BONUS.toInt()}%% to the ECM rating* of the fleet", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("All ships have slightly improved autofire accuracy", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
-
+        stats!!.dynamic.getMod(Stats.ELECTRONIC_WARFARE_FLAT).modifyFlat(id, PER_SHIP_BONUS)
+        stats.autofireAimAccuracy.modifyFlat(id, 0.2f)
 
     }
 

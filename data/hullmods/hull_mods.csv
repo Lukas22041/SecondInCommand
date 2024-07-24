@@ -1,3 +1,12 @@
 name,id,tier,rarity,tech/manufacturer,tags,uiTags,base value,unlocked,hidden,hiddenEverywhere,cost_frigate,cost_dest,cost_cruiser,cost_capital,script,desc,short,sModDesc,sprite
 SCSkillController,sc_skill_controller,0,,,"no_drop_salvage, restricted",,3000,FALSE,TRUE,TRUE,0,0,0,0,second_in_command.hullmods.SCControllerHullmod,,,,graphics/hullmods/generic_mod.png
 Inactive S-Mods,sc_inactive_smods,0,,,"no_drop_salvage, restricted",,3000,FALSE,TRUE,FALSE,0,0,0,0,second_in_command.hullmods.InactiveSmodsHullmod,,,,graphics/hullmods/generic_mod.png
+,,,,,,,,,,,,,,,,,,,
+#Neural Interface,neural_interface,3,,,"special, no_build_in, no_drop, no_drop_salvage",Special,10000,,,,3,6,9,15,com.fs.starfarer.api.impl.hullmods.NeuralInterface,"Links the flagship with another ship, allowing both ships to %s at the same time. As with ""transfer command"", some skill effects - such as those increasing ammo capacity, or combat readiness - do not apply to the other ship.
+
+Also enables rapid switching between the linked ships without using a shuttle pod. The transfer is instant if the combined deployment points of the ships are %s or less. The destination ship must not be under the command of an officer or an AI core.","Allows rapid switching between ships, resets system cooldown and adds a charge.",,graphics/hullmods/neural_interface.png
+#Neural Integrator,neural_integrator,,,,"special, no_build_in, no_drop, no_drop_salvage",Special,10000,,,,3,6,9,15,com.fs.starfarer.api.impl.hullmods.NeuralIntegrator,"An augmented version of Neural Interface that works with automated ships by enabling direct control of all of the ship's systems via the link and allowing both ships to %s at the same time. As with ""transfer command"", some skill effects - such as those increasing ammo capacity, or combat readiness - do not apply to the other ship.
+
+Also enables rapid switching between the linked ships without using a shuttle pod. The transfer is instant if the combined deployment points of the ships are %s or less. The destination ship must not be under the command of an officer or an AI core.
+
+The complexity of the modifications increases the ship's deployment points and supply cost to recover from deployment by %s.",Specialized Neural Interface for automated ships.,,graphics/hullmods/neural_integrator.png

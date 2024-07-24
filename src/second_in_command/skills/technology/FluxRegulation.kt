@@ -5,6 +5,7 @@ import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.impl.campaign.ids.Stats
+import com.fs.starfarer.api.impl.campaign.skills.BaseSkillEffectDescription
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.specs.SCBaseSkillPlugin
@@ -17,13 +18,22 @@ class FluxRegulation : SCBaseSkillPlugin() {
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
+        tooltip.addPara("+5 maximum flux capacitors and vents for all loadouts", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - If this officer is unassigned, capacitors and vents over the limit are removed", 0f, Misc.getTextColor(), Misc.getHighlightColor())
 
+        tooltip.addSpacer(10f)
+
+        tooltip.addPara("+10%% flux dissipation for combat ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% flux capacity for combat ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
-
+        if (BaseSkillEffectDescription.isCivilian(stats)) {
+            stats!!.fluxDissipation.modifyPercent(id, 10f)
+            stats!!.fluxDissipation.modifyPercent(id, 10f)
+        }
 
     }
 
@@ -33,6 +43,13 @@ class FluxRegulation : SCBaseSkillPlugin() {
 
     }
 
+    override fun advance(amount: Float) {
+        Global.getSector().characterData.person.stats.maxVentsBonus.modifyFlat("sc_flux_regulation", 5f)
+    }
 
+    override fun onDeactivation() {
+        Global.getSector().characterData.person.stats.maxVentsBonus.unmodify("sc_flux_regulation")
+
+    }
 
 }

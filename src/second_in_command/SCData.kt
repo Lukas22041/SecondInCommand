@@ -54,7 +54,7 @@ class SCData(var player: PersonAPI) {
     }
 
     fun isSkillActive(skillId: String) : Boolean {
-        return getAssignedOfficers().filter { it != null }.flatMap { it!!.activeSkillIDs }.contains(skillId)
+        return getAssignedOfficers().filter { it != null }.flatMap { it!!.getActiveSkillPlugins().map { it.getId() } }.contains(skillId)
     }
 
 }

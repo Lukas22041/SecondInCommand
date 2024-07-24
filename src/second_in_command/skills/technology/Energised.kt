@@ -17,13 +17,14 @@ class Energised : SCBaseSkillPlugin() {
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
+        tooltip.addPara("+100 units of increased range for all energy weapons", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
 
     }
 
     override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
-
+        stats!!.energyWeaponRangeBonus.modifyFlat(id, 100f)
 
     }
 

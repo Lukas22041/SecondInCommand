@@ -263,6 +263,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             menu.panel.removeComponent(popupPanel)
 
             var previousOfficerInSlot = data.getOfficerInSlot(slotId)
+            data.setOfficerInSlot(slotId, selectedOfficer!!)
             if (previousOfficerInSlot != null) {
                 var skills = previousOfficerInSlot.getActiveSkillPlugins()
 
@@ -275,7 +276,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             }
 
 
-            data.setOfficerInSlot(slotId, selectedOfficer!!)
+            //data.setOfficerInSlot(slotId, selectedOfficer!!)
 
 
 

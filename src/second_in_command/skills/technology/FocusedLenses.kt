@@ -1,12 +1,12 @@
 package second_in_command.skills.technology
 
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.combat.MutableShipStatsAPI
-import com.fs.starfarer.api.combat.ShipAPI
-import com.fs.starfarer.api.combat.ShipVariantAPI
+import com.fs.starfarer.api.combat.*
+import com.fs.starfarer.api.combat.listeners.DamageDealtModifier
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.lwjgl.util.vector.Vector2f
 import second_in_command.specs.SCBaseSkillPlugin
 
 class FocusedLenses : SCBaseSkillPlugin() {
@@ -17,6 +17,7 @@ class FocusedLenses : SCBaseSkillPlugin() {
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
+        tooltip.addPara("20%% of shield damage dealt by beams is converted into hard-flux", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
 
     }
@@ -29,10 +30,34 @@ class FocusedLenses : SCBaseSkillPlugin() {
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
-
+        if (!ship!!.hasListenerOfClass(FocusedLensesListener::class.java)) {
+            ship.addListener(FocusedLensesListener())
+        }
 
     }
 
 
 
+}
+
+class FocusedLensesListener : DamageDealtModifier {
+
+    override fun modifyDamageDealt(param: Any?, target: CombatEntityAPI?, damage: DamageAPI?, point: Vector2f?, shieldHit: Boolean): String? {
+        if (!shieldHit) return null
+        if (param !is BeamAPI) return null
+        if (target !is ShipAPI) return null
+        if (damage!!.isForceHardFlux) return null
+
+        var dps = damage!!.dpsDuration
+        if (dps <= 0) return null
+
+        //Apply extra damage
+        val dam = (damage.damage * damage.dpsDuration) * 0.2f
+        Global.getCombatEngine()!!.applyDamage(target, point, dam, damage.type, 0f, false, false, null)
+
+        //Reduce damage dealt
+        damage.modifier.modifyMult("sc_focused_lens", 0.8f)
+
+        return "sc_focused_lens"
+    }
 }
