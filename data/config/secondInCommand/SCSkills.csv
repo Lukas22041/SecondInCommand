@@ -37,6 +37,18 @@ sc_wolfpack_leader_of_the_pack,Leader of the Pack,graphics/secondInCommand/wolfp
 sc_wolfpack_support_doctrine,Support Doctrine,graphics/secondInCommand/wolfpack/support_doctrine.png,second_in_command.skills.wolfpack.SupportDoctrine
 sc_wolfpack_quick_as_the_wind,Quick as the Wind,graphics/secondInCommand/wolfpack/quick_as_the_wind.png,second_in_command.skills.wolfpack.QuickAsTheWind
 ,,,
+#Support,,,
+sc_support_fighter_uplink,Fighter Uplink,graphics/secondInCommand/support/fighter_uplink.png,second_in_command.skills.support.FighterUplink
+sc_support_mobile_defenses,Mobile Defenses,graphics/secondInCommand/support/mobile_defenses.png,second_in_command.skills.support.MobileDefenses
+sc_support_huntsman,Huntsman,graphics/secondInCommand/support/huntsman.png,second_in_command.skills.support.Huntsman
+sc_support_carrier_group,Carrier Group,graphics/secondInCommand/support/carrier_group.png,second_in_command.skills.support.CarrierGroup
+sc_support_distanced_support,Distanced Support,graphics/secondInCommand/support/distanced_support.png,second_in_command.skills.support.DistancedSupport
+sc_support_system_proficiency,System Proficiency,graphics/secondInCommand/support/system_proficiency.png,second_in_command.skills.support.SystemProficiency
+sc_support_swarm_deployment,Swarm Deployment,graphics/secondInCommand/support/swarm_deployment.png,second_in_command.skills.support.SwarmDeployment
+sc_support_reconfiguration,Reconfiguration,graphics/secondInCommand/support/reconfiguration.png,second_in_command.skills.support.Reconfiguration
+sc_support_advanced_maneuvers,Advanced Maneuvers,graphics/secondInCommand/support/advanced_maneuvers.png,second_in_command.skills.support.AdvancedManeuvers
+sc_support_barrage,Barrage,graphics/secondInCommand/support/barrage.png,second_in_command.skills.support.Barrage
+,,,
 #Technology,,,
 sc_technology_flux_regulation,Flux Regulation,graphics/secondInCommand/technology/flux_regulation.png,second_in_command.skills.technology.FluxRegulation
 sc_technology_countermeasures,Countermeasures,graphics/secondInCommand/technology/countermeasures.png,second_in_command.skills.technology.Countermeasures

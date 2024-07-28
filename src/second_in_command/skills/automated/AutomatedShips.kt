@@ -82,16 +82,18 @@ class AutomatedShips : SCBaseSkillPlugin() {
             tooltip.addPara("   - This skill contributes a baseline of ${dp.toInt()} points to the limit", 0f,
                 Misc.getTextColor(), Misc.getHighlightColor(), "${dp.toInt()}")
 
-            if (makeshift) {
-                tooltip.addPara("   - This is a weaker version of the \"Automated Ships\" skill from the \"Automation\" aptitude", 0f,
-                    Misc.getTextColor(), Misc.getHighlightColor(), "Automated Ships", "Automation")
-                tooltip.addPara("   - If both are active, their contributed automated points are combined", 0f,
-                    Misc.getTextColor(), Misc.getHighlightColor(), "Automated Ships", "Automation")
-            }
+
 
             tooltip.addSpacer(10f)
 
+            if (makeshift) {
+                tooltip.addPara("This is a weaker version of the \"Automated Ships\" skill from the \"Automation\" aptitude", 0f,
+                    Misc.getHighlightColor(), Misc.getHighlightColor(), "Automated Ships", "Automation")
+                tooltip.addPara("   - If both are active, their contributed automated points are combined", 0f,
+                    Misc.getTextColor(), Misc.getHighlightColor(), "Automated Ships", "Automation")
 
+                tooltip.addSpacer(10f)
+            }
 
             var label = tooltip.addPara("" +
                     "*The total \"automated ship points\" are equal to the deployment points cost of " +
