@@ -1,8 +1,10 @@
 package second_in_command
 
 import com.fs.starfarer.api.characters.PersonAPI
+import com.fs.starfarer.api.util.Misc
 import second_in_command.specs.SCBaseSkillPlugin
 import second_in_command.specs.SCOfficer
+import second_in_command.specs.SCSpecStore
 
 class SCData(var player: PersonAPI) {
 
@@ -17,6 +19,17 @@ class SCData(var player: PersonAPI) {
         activeOfficers.add(null)
 
         officers.clear()
+
+
+        //For Beta
+        var aptitudes = SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }
+        for (aptitude in aptitudes) {
+            if (aptitude.getId() == "sc_fake_combat_aptitude") continue
+
+            var officer = SCUtils.createRandomSCOfficer(aptitude.getId())
+            addOfficerToFleet(officer)
+        }
+
        /* officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude1"))
         officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude2"))
         officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude2"))

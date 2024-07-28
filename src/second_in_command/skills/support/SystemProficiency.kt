@@ -11,12 +11,14 @@ import second_in_command.specs.SCBaseSkillPlugin
 class SystemProficiency : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "all ships in the fleet"
+        return "all fighters with shipsystems"
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("If the shipsystem has charges: +1 charge", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("If the shipsystem regenerates charges: +40%% regeneration rate", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("If the shipsystem has a cooldown: -33%% cooldown", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
@@ -29,7 +31,11 @@ class SystemProficiency : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
+        var stats = fighter!!.mutableStats
 
+        stats.systemUsesBonus.modifyFlat(id, 1f)
+        stats.systemRegenBonus.modifyPercent(id, 40f)
+        stats.systemCooldownBonus.modifyMult(id, 0.666f)
     }
 
 }

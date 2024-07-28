@@ -1,9 +1,11 @@
 package second_in_command.skills.support
 
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
-import com.fs.starfarer.api.impl.campaign.skills.WolfpackTactics
+import com.fs.starfarer.api.impl.campaign.ids.HullMods
+import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.specs.SCBaseSkillPlugin
@@ -16,12 +18,19 @@ class Reconfiguration : SCBaseSkillPlugin() {
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Negates the negative side-effects of the \"Converted Hangar\" hullmod", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+
+        tooltip.addSpacer(10f)
+
+        tooltip.addPara("Hull mod: Converted Hangar - Improvised fighter bay for non-carriers", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Converted Hangar")
 
     }
 
     override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-
+        stats!!.dynamic.getMod(Stats.CONVERTED_HANGAR_NO_CREW_INCREASE).modifyFlat(id, 1f)
+        stats!!.dynamic.getMod(Stats.CONVERTED_HANGAR_NO_REARM_INCREASE).modifyFlat(id, 1f)
+        stats!!.dynamic.getMod(Stats.CONVERTED_HANGAR_NO_DP_INCREASE).modifyFlat(id, 1f)
+        stats!!.dynamic.getMod(Stats.CONVERTED_HANGAR_NO_REFIT_PENALTY).modifyFlat(id, 1f)
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
@@ -29,6 +38,15 @@ class Reconfiguration : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
+
+    }
+
+    override fun onActivation() {
+
+        var faction = Global.getSector().playerFaction
+        if (!faction.knownHullMods.contains(HullMods.CONVERTED_HANGAR)) {
+            faction.addKnownHullMod(HullMods.CONVERTED_HANGAR)
+        }
 
     }
 

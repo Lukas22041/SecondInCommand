@@ -3,6 +3,7 @@ package second_in_command.skills.support
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
+import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.impl.campaign.skills.WolfpackTactics
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
@@ -11,12 +12,13 @@ import second_in_command.specs.SCBaseSkillPlugin
 class Barrage : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "all ships in the fleet"
+        return "all fighters"
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+100%% ammo for missile weapons", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("-25%% missile weapon damage", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
 
     }
 
@@ -29,7 +31,17 @@ class Barrage : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
+        var stats = fighter!!.mutableStats
 
+        stats.missileAmmoBonus.modifyPercent(id, 100f)
+        stats.missileWeaponDamageMult.modifyMult(id, 0.75f)
+
+        for (weapon in fighter.allWeapons) {
+            if (weapon.type == WeaponAPI.WeaponType.MISSILE || weapon.type == WeaponAPI.WeaponType.COMPOSITE || weapon.type == WeaponAPI.WeaponType.SYNERGY)  {
+                weapon.maxAmmo = fighter.mutableStats.missileAmmoBonus.computeEffective(weapon.spec.maxAmmo.toFloat()).toInt()
+                weapon.resetAmmo()
+            }
+        }
     }
 
 }

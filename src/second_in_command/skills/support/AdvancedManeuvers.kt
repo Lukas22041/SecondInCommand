@@ -11,12 +11,14 @@ import second_in_command.specs.SCBaseSkillPlugin
 class AdvancedManeuvers : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "all ships in the fleet"
+        return "all fighters"
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+25%% top speed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% damage dealt", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+15%% weapon fire rate", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
@@ -29,6 +31,19 @@ class AdvancedManeuvers : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
+        var stats = fighter!!.mutableStats
+
+        stats.maxSpeed.modifyPercent(id, 25f)
+        stats.acceleration.modifyPercent(id, 20f)
+        stats.deceleration.modifyPercent(id, 20f)
+
+        stats.ballisticWeaponDamageMult.modifyMult(id, 1.1f)
+        stats.energyWeaponDamageMult.modifyMult(id, 1.1f)
+        stats.missileWeaponDamageMult.modifyMult(id, 1.1f)
+
+        stats.ballisticRoFMult.modifyMult(id, 1.15f)
+        stats.energyRoFMult.modifyMult(id, 1.15f)
+        stats.missileRoFMult.modifyMult(id, 1.15f)
 
     }
 

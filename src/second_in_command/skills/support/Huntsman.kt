@@ -11,12 +11,12 @@ import second_in_command.specs.SCBaseSkillPlugin
 class Huntsman : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "all ships in the fleet"
+        return "all fighters"
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+25%% damage against frigates", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
@@ -29,7 +29,9 @@ class Huntsman : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
+        var stats = fighter!!.mutableStats
 
+        stats.damageToFrigates.modifyPercent(id, 25f)
     }
 
 }

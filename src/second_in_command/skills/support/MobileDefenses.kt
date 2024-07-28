@@ -11,12 +11,12 @@ import second_in_command.specs.SCBaseSkillPlugin
 class MobileDefenses : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "all ships in the fleet"
+        return "all fighters"
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+50%% increased damage against fighters and missiles", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
@@ -29,7 +29,10 @@ class MobileDefenses : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
+        var stats = fighter!!.mutableStats
 
+        stats.damageToFighters.modifyPercent(id, 50f)
+        stats.damageToMissiles.modifyPercent(id, 50f)
     }
 
 }

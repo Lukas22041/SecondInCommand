@@ -11,16 +11,17 @@ import second_in_command.specs.SCBaseSkillPlugin
 class CarrierGroup : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "all ships in the fleet"
+        return "all carriers in the fleet"
     }
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+30%% faster fighter replacement rate", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+        stats!!.fighterRefitTimeMult.modifyMult(id, 0.7f)
 
     }
 
