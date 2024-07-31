@@ -55,7 +55,11 @@ class AutomatedShips : SCBaseSkillPlugin() {
             val beta = AICoreOfficerPluginImpl.BETA_MULT.roundToInt()
             val gamma = AICoreOfficerPluginImpl.GAMMA_MULT.roundToInt()
 
-            var automatedDP = getAutomatedPoints(Global.getSector().playerFleet.fleetData)
+            var automatedDP = 0f
+            if (Global.getSector()?.playerFleet?.fleetData != null) {
+                automatedDP = getAutomatedPoints(Global.getSector().playerFleet.fleetData)
+            }
+
             var maxPoints = getMaximumPoints()
             var bonus = SCUtils.computeThresholdBonus(automatedDP, MAX_CR_BONUS, maxPoints)
 
@@ -112,7 +116,11 @@ class AutomatedShips : SCBaseSkillPlugin() {
         fun applyEffects(skill: String, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
             if (Misc.isAutomated(stats) && !Automated.isAutomatedNoPenalty(stats)) {
 
-                var automatedDP = getAutomatedPoints(Global.getSector().playerFleet.fleetData)
+                var automatedDP = 0f
+                if (Global.getSector()?.playerFleet?.fleetData != null) {
+                    automatedDP = getAutomatedPoints(Global.getSector().playerFleet.fleetData)
+                }
+
                 var maxPoints = getMaximumPoints()
                 var bonus = SCUtils.computeThresholdBonus(automatedDP, MAX_CR_BONUS, maxPoints)
 

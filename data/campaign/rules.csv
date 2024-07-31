@@ -7,6 +7,27 @@ $personName looks you over appraisingly.
 
 ""Heard you might be looking to take on some help.""",,
 ,,,,,,
-,,,,,,
-,,,,,,
+"#Set Skillpoints to 0, skipping the skill screen. Make sure to restore them somewhere else",,,,,,
+sc_nex_NGCDone,NewGameOptionSelected,"$option == nex_NGCDone score:100000
+!$sc_do_not_trigger_again","SCStoreSkillpoints true
+",,,
+#sc_ngcTutorialPicked,NewGameOptionSelected,"$option == ngcTutorial  score:100000
+!$sc_do_not_trigger_again","SCStoreSkillpoints true
+",,,
+#sc_ngcSkipTutorialPicked,NewGameOptionSelected,"$option == ngcSkip  score:100000
+!$sc_do_not_trigger_again","SCStoreSkillpoints true
+",,,
+"Override Vanilla Start for now, hopefully no conflicts, but cant skip the screen otherwise",,,,,,
+ngcTutorialPicked,NewGameOptionSelected,$option == ngcTutorial,"NGCSetStartingLocation Galatia 1000 -15000
+NGCAddStandardStartingScript
+#NGCSetWithTimePass false
+SCStoreSkillpoints false
+NGCDone",,,
+ngcSkipTutorialPicked,NewGameOptionSelected,$option == ngcSkip,"$ngcSkipTutorial = true
+NGCAddCharacterPoints 1
+NGCSetStartingLocation Corvus -2500 3000
+NGCAddStandardStartingScript
+#NGCSetWithTimePass false
+SCStoreSkillpoints false
+NGCDone",,,
 ,,,,,,

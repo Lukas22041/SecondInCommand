@@ -68,7 +68,7 @@ class SkillPanelReplacerScriptTitlescreen : EveryFrameCombatPlugin {
 
         data.memoryWithoutUpdate.set(SCUtils.DATA_KEY, scData)
 
-        var skillPanel = SCSkillMenuPanel(parent, scData, false)
+        var skillPanel = SCSkillMenuPanel(parent, scData, false, true)
         skillPanel.init()
 
 

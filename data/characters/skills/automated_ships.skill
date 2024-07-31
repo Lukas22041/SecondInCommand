@@ -15,8 +15,8 @@
 			"requiredSkillLevel":1,
 			"effectBasedOnLevel":false,
 			"effects":[
-				{"type":"CHARACTER_STATS", "script":"second_in_command.misc.AutomatedShipsReplacement"},
-				{"type":"ALL_SHIPS_IN_FLEET", "script":"com.fs.starfarer.api.impl.campaign.skills.AutomatedShips$Level1"},
+				{"type":"CHARACTER_STATS", "script":"second_in_command.misc.AutomatedShipsReplacementLevel2"},
+				{"type":"ALL_SHIPS_IN_FLEET", "script":"second_in_command.misc.AutomatedShipsReplacementLevel1"},
 			]
 		},
 	],

@@ -23,6 +23,7 @@ class AptitudeTactical : SCBaseAptitudePlugin() {
         section1.addSkill("sc_tactical_pristine_condition")
         section1.addSkill("sc_tactical_tactical_drills")
         section1.addSkill("sc_tactical_efficient_ordnance")
+        //section1.addSkill("sc_tactical_superiority")
         addSection(section1)
 
         var section2 = SCAptitudeSection(true, 3, "combat2")

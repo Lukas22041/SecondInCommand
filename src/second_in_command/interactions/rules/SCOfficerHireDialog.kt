@@ -1,22 +1,28 @@
 package second_in_command.interactions.rules
 
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.InteractionDialogAPI
 import com.fs.starfarer.api.campaign.InteractionDialogPlugin
+import com.fs.starfarer.api.campaign.RuleBasedDialog
 import com.fs.starfarer.api.campaign.rules.MemoryAPI
 import com.fs.starfarer.api.characters.PersonAPI
 import com.fs.starfarer.api.combat.EngagementResultAPI
+import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity
 import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin
+import com.fs.starfarer.api.impl.campaign.rulecmd.FireAll
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCUtils
+import second_in_command.specs.SCOfficer
+import second_in_command.specs.SCSpecStore
 
 
 class SCOfficerHireDialog : BaseCommandPlugin() {
     override fun execute(ruleId: String?, dialog: InteractionDialogAPI, params: MutableList<Misc.Token>?, memoryMap: MutableMap<String, MemoryAPI>?): Boolean {
-/*
         dialog.optionPanel.clearOptions()
 
         var plugin = SCOfficerHireDialogDelegate(dialog.plugin, dialog.interactionTarget.activePerson)
         dialog.plugin = plugin
-        plugin.init(dialog)*/
+        plugin.init(dialog)
 
         return true
     }
@@ -24,21 +30,21 @@ class SCOfficerHireDialog : BaseCommandPlugin() {
 
 class SCOfficerHireDialogDelegate(var original: InteractionDialogPlugin, var person: PersonAPI) : InteractionDialogPlugin {
 
-
+    lateinit var dialog: InteractionDialogAPI
 
     override fun init(dialog: InteractionDialogAPI) {
 
-      /*  this.dialog = dialog
+        this.dialog = dialog
 
         dialog.optionPanel.clearOptions()
 
         dialog.optionPanel.addOption("\"Depends. What can you do?\"", "sc_convo_question")
 
-        dialog.optionPanel.addOption("End the conversation", "sc_convo_end")*/
+        dialog.optionPanel.addOption("End the conversation", "sc_convo_end")
     }
 
     fun returnToPrevious() {
-        /*dialog.optionPanel.clearOptions()
+        dialog.optionPanel.clearOptions()
         dialog.textPanel.addPara("End the conversation", Misc.getBasePlayerColor(), Misc.getBasePlayerColor())
         dialog.textPanel.addPara("You cut the comm-link.")
 
@@ -47,12 +53,12 @@ class SCOfficerHireDialogDelegate(var original: InteractionDialogPlugin, var per
         dialog.interactionTarget.activePerson = null
         (dialog.plugin as RuleBasedDialog).notifyActivePersonChanged()
 
-        FireAll.fire(null, dialog, memoryMap, "PopulateOptions")*/
+        FireAll.fire(null, dialog, memoryMap, "PopulateOptions")
     }
 
     override fun optionSelected(optionText: String?, optionData: Any?) {
 
-      /*  var aptitudeId = person.memoryWithoutUpdate.getString("\$sc_officer_aptitude")
+        var aptitudeId = person.memoryWithoutUpdate.getString("\$sc_officer_aptitude")
         var aptitudePlugin = SCSpecStore.getAptitudeSpec(aptitudeId)!!.getPlugin()
 
         var credits = Global.getSector().playerFleet.cargo.credits
@@ -113,7 +119,7 @@ class SCOfficerHireDialogDelegate(var original: InteractionDialogPlugin, var per
 
         if (optionData == "sc_convo_end") {
             returnToPrevious()
-        }*/
+        }
     }
 
     override fun optionMousedOver(optionText: String?, optionData: Any?) {

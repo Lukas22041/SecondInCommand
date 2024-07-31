@@ -6,7 +6,8 @@ import com.fs.starfarer.api.impl.campaign.skills.AutomatedShips;
 import com.fs.starfarer.api.util.Misc;
 import second_in_command.SCUtils;
 
-public class AutomatedShipsReplacement extends AutomatedShips.Level2 {
+
+public class AutomatedShipsReplacementLevel2 extends AutomatedShips.Level2 {
 
     @Override
     public void apply(MutableCharacterStatsAPI stats, String id, float level) {
@@ -16,7 +17,7 @@ public class AutomatedShipsReplacement extends AutomatedShips.Level2 {
         }
 
         if (!SCUtils.getSCData().isModEnabled()) {
-            super.unapply(stats, id);
+            super.apply(stats, id, level);
         }
     }
 

@@ -46,6 +46,8 @@ class SCModPlugin : BaseModPlugin() {
         incompatibleIds.add("QualityCaptains")
         incompatibleIds.add("TrulyAutomatedShips")
         incompatibleIds.add("adjustable_skill_thresholds")
+        incompatibleIds.add("ESP_Skill_Overhaul")
+
 
         var incompatibleMods = loadedMods.filter { incompatibleIds.contains(it.id) }
 

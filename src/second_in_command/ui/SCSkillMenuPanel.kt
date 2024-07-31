@@ -18,7 +18,7 @@ import second_in_command.ui.elements.*
 import second_in_command.ui.tooltips.OfficerTooltipCreator
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
 
-class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boolean) {
+class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boolean, var title: Boolean) {
 
 
     lateinit var panel: CustomPanelAPI
@@ -76,6 +76,8 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
 
         addPlayerAptitudePanel()
 
+
+
         addAptitudePanel()
 
 
@@ -103,17 +105,28 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
         }
 
 
-        subelement.addSpacer(30f)
+        if (!title) {
 
-        addAptitudeRowParent(subelement, data.getOfficerInSlot(0), 0)
+            subelement.addSpacer(30f)
 
-        subelement.addSpacer(30f)
+            addAptitudeRowParent(subelement, data.getOfficerInSlot(0), 0)
 
-        addAptitudeRowParent(subelement, data.getOfficerInSlot(1), 1)
+            subelement.addSpacer(30f)
 
-        subelement.addSpacer(30f)
+            addAptitudeRowParent(subelement, data.getOfficerInSlot(1), 1)
 
-        addAptitudeRowParent(subelement, data.getOfficerInSlot(2), 2)
+            subelement.addSpacer(30f)
+
+            addAptitudeRowParent(subelement, data.getOfficerInSlot(2), 2)
+        } else {
+
+            subelement.addSpacer(20f)
+
+            subelement.addPara("Executive Officers can only be selected in the campaign.", 0f, Misc.getTextColor(), Misc.getHighlightColor())
+        }
+
+
+
     }
 
     fun addAptitudeRowParent(targetedElelement: TooltipMakerAPI, officer: SCOfficer?, slotId: Int) {

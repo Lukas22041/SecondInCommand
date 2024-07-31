@@ -215,7 +215,8 @@ class SCPlayerAptitudePanel(var menu: SCSkillMenuPanel, var data: SCData)  {
 
                 recalculateSectionRequirements(sections, skillElements)
 
-                if (data.player.stats.skillsCopy.filter { it.level >= 2 }.map { it.skill.id }.count() == sections.sumOf { it.activeSkillsInUI.count { it.activated } }) {
+                var combatSkills = data.player.stats.skillsCopy.filter { it.level >= 2 && !it.skill.hasTag("npc_only") && !it.skill.hasTag("ai_core_only") }
+                if (combatSkills.count() == sections.sumOf { it.activeSkillsInUI.count { it.activated } }) {
                     /* officerPickerElement.isInEditMode = false
                      officerPickerElement.innerElement.clearChildren()*/
                     exitEditMode(subpanel)

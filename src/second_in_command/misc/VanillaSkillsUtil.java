@@ -85,7 +85,8 @@ public class VanillaSkillsUtil {
                 JSONObject obj = array.getJSONObject(i);
                 int level = obj.optInt("requiredSkillLevel", -1);
                 if (level > 0) {
-                    effects.add(level - 1, obj);
+                    //effects.add(level - 1, obj);
+                    effects.add(obj);
                 }
             }
             return effects;
