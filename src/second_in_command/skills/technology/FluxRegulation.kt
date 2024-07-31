@@ -30,11 +30,10 @@ class FluxRegulation : SCBaseSkillPlugin() {
 
     override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
-        if (BaseSkillEffectDescription.isCivilian(stats)) {
+        if (!BaseSkillEffectDescription.isCivilian(stats)) {
             stats!!.fluxDissipation.modifyPercent(id, 10f)
-            stats!!.fluxDissipation.modifyPercent(id, 10f)
+            stats!!.fluxCapacity.modifyPercent(id, 10f)
         }
-
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
@@ -45,10 +44,12 @@ class FluxRegulation : SCBaseSkillPlugin() {
 
     override fun advance(amount: Float) {
         Global.getSector().characterData.person.stats.maxVentsBonus.modifyFlat("sc_flux_regulation", 5f)
+        Global.getSector().characterData.person.stats.maxCapacitorsBonus.modifyFlat("sc_flux_regulation", 5f)
     }
 
     override fun onDeactivation() {
         Global.getSector().characterData.person.stats.maxVentsBonus.unmodify("sc_flux_regulation")
+        Global.getSector().characterData.person.stats.maxCapacitorsBonus.unmodify("sc_flux_regulation")
 
     }
 
