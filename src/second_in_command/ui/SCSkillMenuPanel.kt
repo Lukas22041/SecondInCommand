@@ -47,7 +47,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
         element = panel.createUIElement(width, height, true)
         panel.addUIElement(element)
 
-        var descriptionPanel = panel.createCustomPanel(width, height, null)
+    /*    var descriptionPanel = panel.createCustomPanel(width, height, null)
         panel.addComponent(descriptionPanel)
         var descriptionElement = descriptionPanel.createUIElement(width, height, false)
         descriptionPanel.addUIElement(descriptionElement)
@@ -59,7 +59,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
                 "Executive officers can be found throughout the world, and all of them have an aptitude they excel at.\n" +
                 "You can assign up to three executive officers at a time, each one provides a whole row of skills to choose from. \n" +
                 "Some officers may only be re-assigned when docked at a colony. \n" +
-                "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "skill points", "executive officers", "all of them have an aptitude they excel at", "up to three")
+                "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "skill points", "executive officers", "all of them have an aptitude they excel at", "up to three")*/
 
 
         //element.addPara("Test Paragraph", 0f)
@@ -74,8 +74,10 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
             previous = next.elementPanel
         }*/
 
-        addPlayerAptitudePanel()
+        //addPlayerAptitudePanel()
 
+        var playerPanel = SCPlayerPanel(this, data)
+        playerPanel.init()
 
 
         addAptitudePanel()
@@ -89,6 +91,8 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
     fun addPlayerAptitudePanel() {
         var playerPanel = SCPlayerAptitudePanel(this, data)
         playerPanel.init()
+
+
     }
 
     fun addAptitudePanel() {
