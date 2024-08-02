@@ -56,14 +56,15 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         skills.add("impact_mitigation")
         skills.add("damage_control")
         skills.add("field_modulation")
-        skills.add("point_defense")
         skills.add("target_analysis")
+        skills.add("systems_expertise")
+
+        skills.add("point_defense")
         skills.add("energy_weapon_mastery")
         skills.add("ballistic_mastery")
         skills.add("gunnery_implants")
         skills.add("ordnance_expert")
         skills.add("polarized_armor")
-        skills.add("systems_expertise")
         skills.add("missile_specialization")
 
         var background = PlayerAptitudeBackgroundElement(color, subelement)
