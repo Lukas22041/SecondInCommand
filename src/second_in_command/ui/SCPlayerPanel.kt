@@ -6,6 +6,7 @@ import com.fs.starfarer.api.ui.BaseTooltipCreator
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaExtensions.addLunaElement
 import lunalib.lunaUI.elements.LunaElement
 import lunalib.lunaUI.elements.LunaSpriteElement
 import second_in_command.SCData
@@ -14,6 +15,7 @@ import second_in_command.ui.elements.*
 
 class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
 
+    var skillPoints = Global.getSector().playerPerson.stats.points
 
     fun init() {
 
@@ -24,10 +26,23 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         menu.element.addCustom(subpanel, 0f)
         subpanel.position.inTL(15f, 30f)
 
-        recreatePanel(subpanel)
+        recreatePlayerPanel(subpanel)
+
     }
 
-    fun recreatePanel(subpanel: CustomPanelAPI) {
+    fun recreateAptitudePanel(subpanel: CustomPanelAPI) {
+
+        var width = menu.width
+        var height = menu.height
+
+        var subelement = subpanel.createUIElement(width, height, false)
+        subpanel.addUIElement(subelement)
+        subelement.position.inTL(300f, 0f)
+
+        subelement.addPara("Test",0f)
+    }
+
+    fun recreatePlayerPanel(subpanel: CustomPanelAPI) {
         subpanel.clearChildren()
 
         var width = menu.width
@@ -88,6 +103,10 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         //Skillpoints
         var skillBox = SkillPointsBox(subelement, 100f, 50f)
         skillBox.elementPanel.position.aboveLeft(placeholder.elementPanel, 4f)
+
+        skillBox.advance {
+            skillBox.points = skillPoints
+        }
 
         subelement.addTooltipTo(object : BaseTooltipCreator() {
             override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
@@ -240,7 +259,15 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
             }
         }, xpBar.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT )
 
+        var line = subelement.addLunaElement(2f, 240f).apply {
+            enableTransparency = true
+            renderBorder = false
+        }
 
+        line.elementPanel.position.rightOfTop(nameElement.elementPanel, 20f)
+
+
+        recreateAptitudePanel(subpanel)
     }
 
 
