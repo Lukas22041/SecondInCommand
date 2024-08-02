@@ -21,6 +21,7 @@ class PlayerXPBarElement(tooltip: TooltipMakerAPI, width: Float, height: Float) 
 
     var plugin = Global.getSettings().levelupPlugin
     var storyPerLevel = plugin.storyPointsPerLevel
+    var maxLevel = plugin.maxLevel
 
     var borderSprite = Global.getSettings().getAndLoadSprite("graphics/secondInCommand/xpBarBorder.png")
 
@@ -183,8 +184,12 @@ class PlayerXPBarElement(tooltip: TooltipMakerAPI, width: Float, height: Float) 
 
         var barLevel = getXPLevel()
 
+        //Needs to be multiplied by how much XP it doubles/quadruples, which is 4x as much at max level
+        var mult = 2f
+        if (level >= maxLevel) mult = 4f
+
         var barX = x+ width * barLevel
-        var bonusWidth = (width * bonusLevel) * 2f
+        var bonusWidth = (width * bonusLevel) * mult
 
         var maxWidth = width - (width * barLevel)
         bonusWidth = MathUtils.clamp(bonusWidth, 0f, maxWidth)
