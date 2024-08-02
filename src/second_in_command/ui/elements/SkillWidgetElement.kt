@@ -54,7 +54,7 @@ class SkillWidgetElement(var id: String, var activated: Boolean, var canChangeSt
         if (!activated) mult = 0.5f*/
 
         sprite.setNormalBlend()
-        sprite.setSize(64f, 64f)
+        sprite.setSize(width-8, height-8)
         sprite.alphaMult = alphaMult
 
         if (!canChangeState && !activated) {
@@ -71,13 +71,13 @@ class SkillWidgetElement(var id: String, var activated: Boolean, var canChangeSt
         if (activated) {
             activeBorder.setNormalBlend()
             activeBorder.color = color
-            activeBorder.setSize(72f, 72f)
+            activeBorder.setSize(width, height)
             activeBorder.alphaMult = alphaMult
             activeBorder.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
 
             activeBorder.setAdditiveBlend()
             activeBorder.color = color
-            activeBorder.setSize(72f, 72f)
+            activeBorder.setSize(width, height)
             activeBorder.alphaMult = alphaMult * 0.2f
             activeBorder.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
 
@@ -85,19 +85,19 @@ class SkillWidgetElement(var id: String, var activated: Boolean, var canChangeSt
         else {
             inactiveBorder.setNormalBlend()
             inactiveBorder.color = color
-            inactiveBorder.setSize(72f, 72f)
+            inactiveBorder.setSize(width, height)
             inactiveBorder.alphaMult = alphaMult
             inactiveBorder.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
 
             inactiveBorder.setAdditiveBlend()
             inactiveBorder.color = color
-            inactiveBorder.setSize(72f, 72f)
+            inactiveBorder.setSize(width, height)
             inactiveBorder.alphaMult = alphaMult * 0.2f
             inactiveBorder.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
         }
 
         sprite.setAdditiveBlend()
-        sprite.setSize(64f, 64f)
+        sprite.setSize(width-8, height-8)
         sprite.alphaMult = alphaMult * 0.5f * hoverFade
         sprite.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
     }

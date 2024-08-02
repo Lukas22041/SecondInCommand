@@ -7,11 +7,13 @@ import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
+import lunalib.lunaExtensions.addLunaSpriteElement
 import lunalib.lunaUI.elements.LunaElement
 import lunalib.lunaUI.elements.LunaSpriteElement
 import second_in_command.SCData
 import second_in_command.misc.VanillaSkillTooltip
 import second_in_command.misc.clearChildren
+import second_in_command.misc.loadTextureCached
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.ui.elements.*
 
@@ -26,7 +28,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
 
         var subpanel = Global.getSettings().createCustom(width, height, null)
         menu.element.addCustom(subpanel, 0f)
-        subpanel.position.inTL(15f, 20f)
+        subpanel.position.inTL(15f, 30f)
 
         recreatePlayerPanel(subpanel)
 
@@ -39,7 +41,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
 
         var subelement = subpanel.createUIElement(width, height, false)
         subpanel.addUIElement(subelement)
-        subelement.position.inTL(300f, 10f)
+        subelement.position.inTL(300f, 0f)
 
 
         var acquiredSkillsIds = data.player.stats.skillsCopy.filter { it.level >= 2 }.map { it.skill.id }
@@ -67,10 +69,18 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         var background = PlayerAptitudeBackgroundElement(color, subelement)
         background.elementPanel.position.inTL(10f, 12f)
 
+        var path = "graphics/secondInCommand/combat_icon.png"
+        Global.getSettings().loadTextureCached(path)
+        var combatIcon = SkillWidgetElement("helmsmanship", true, false, true, path, "combat2", color, subelement, 96f, 96f)
+
+        //var combatIcon = subelement.addLunaSpriteElement("graphics/secondInCommand/combat_icon.png", LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, 110f, 110f)
+        combatIcon.elementPanel.position.inTL(25f, 76f)
+
         var count = 0
         var newLineAt = 7
         var anchor = subelement.addLunaElement(0f, 0f)
-        anchor.elementPanel.position.inTL(35f, 41f)
+        //anchor.elementPanel.position.inTL(35f, 41f)
+        anchor.elementPanel.position.inTL(125f, 45f)
         var previous: CustomPanelAPI = anchor.elementPanel
         var firstSkill: CustomPanelAPI? = null
         var usedWidth = 0f
@@ -80,7 +90,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
             count += 1
             if (count == 8) {
                 var lowerAnchor = subelement.addLunaElement(0f, 0f)
-                lowerAnchor.elementPanel.position.belowLeft(anchor.elementPanel, 72f +7 + 16f)
+                lowerAnchor.elementPanel.position.belowLeft(anchor.elementPanel, 72f +7 + 8f)
                 previous = lowerAnchor.elementPanel
             }
 
@@ -98,7 +108,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
             }
 
             var skillElement = SkillWidgetElement(skill, activated, !preacquired, preacquired, skillSpec.spriteName, "combat2", color, subelement, 72f, 72f)
-            skillElement.elementPanel.position.rightOfTop(previous, 24f)
+            skillElement.elementPanel.position.rightOfTop(previous, 16f)
             previous = skillElement.elementPanel
             skillElements.add(skillElement)
 
@@ -291,10 +301,10 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         xpBar.position.belowLeft(portrait.elementPanel, 10f)
 
         subelement.addSpacer(5f)
-       /* var level = Global.getSector().playerPerson.stats.level
+        var level = Global.getSector().playerPerson.stats.level
         var levelText = "   - Level $level"
         if (level >= Global.getSettings().levelupPlugin.maxLevel) levelText += " (maximum)"
-        var levelPara = subelement.addPara("$levelText", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "$level")*/
+        var levelPara = subelement.addPara("$levelText", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "$level")
 
         subelement.addTooltipTo(object : BaseTooltipCreator() {
             override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
@@ -363,7 +373,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
 
 
         subelement.addSpacer(10f)
-
+/*
         var color = Global.getSettings().getSkillSpec("aptitude_combat").governingAptitudeColor
         var confirmButton = subelement.addLunaElement(125f, 30f).apply {
             backgroundAlpha = 0.2f
@@ -388,9 +398,9 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
             addText("Cancel")
             centerText()
         }
-        cancelButton.elementPanel.position.rightOfTop(confirmButton.elementPanel, 10f)
+        cancelButton.elementPanel.position.rightOfTop(confirmButton.elementPanel, 10f)*/
 
-        var line = subelement.addLunaElement(2f, 250f).apply {
+        var line = subelement.addLunaElement(2f, 240f).apply {
             enableTransparency = true
             renderBorder = false
         }
