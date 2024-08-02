@@ -1,6 +1,7 @@
 package second_in_command.ui
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.BaseTooltipCreator
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -21,7 +22,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
 
         var subpanel = Global.getSettings().createCustom(width, height, null)
         menu.element.addCustom(subpanel, 0f)
-        subpanel.position.inTL(15f, 25f)
+        subpanel.position.inTL(15f, 30f)
 
         recreatePanel(subpanel)
     }
@@ -39,7 +40,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         subelement.addSpacer(5f)
 
         //Name Changing
-        var nameElement = BackgroundlessTextfield(player.nameString, Misc.getBasePlayerColor(), subelement, 250f, 30f)
+        var nameElement = BackgroundlessTextfield(player.nameString, Misc.getBasePlayerColor(), subelement, 260f, 30f)
         nameElement.advance {
 
 
@@ -74,7 +75,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
             override fun getTooltipWidth(tooltipParam: Any?): Float {
                 return 175f
             }
-        }, nameElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW )
+        }, nameElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT )
 
 
         var portrait = LunaSpriteElement(player.portraitSprite, LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, subelement, 128f, 128f)
@@ -98,8 +99,8 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
                     maxSkillPoints += plugin.getPointsAtLevel(i)
                 }
 
-                tooltip!!.addPara("Learning a skill requires one skill point. The players and their officers skill points are separate. " +
-                        "This number shows the skill points the player has.", 0f, Misc.getTextColor(), Misc.getHighlightColor())
+                tooltip!!.addPara("Learning a skill requires one skill point. The player and their executive officers skill points are separate. " +
+                        "This number shows the skill points the player has.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "one")
 
                 tooltip.addSpacer(10f)
 
@@ -119,6 +120,49 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         var storyBox = StoryPointsBox(subelement, 100f, 50f)
         storyBox.elementPanel.position.belowLeft(placeholder.elementPanel, 10f)
 
+        subelement.addTooltipTo(object : BaseTooltipCreator() {
+            override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
+                var plugin = Global.getSettings().levelupPlugin
+                var spPerLevel = plugin.storyPointsPerLevel
+
+
+                tooltip!!.addPara("Using story points enables you to take actions that are in some way exceptional.",
+                    0f, Misc.getTextColor(), Misc.getStoryOptionColor(), "story points")
+
+                tooltip.addSpacer(10f)
+
+                tooltip!!.addPara("The range of effects includes making permanent modifications to ships, officer customisation, and getting dialog options that are not otherwise available," +
+                        " such as disengaging unscathed from battle you do not want.",
+                    0f, Misc.getTextColor(), Misc.getStoryOptionColor(), "")
+
+                tooltip.addSpacer(10f)
+
+                tooltip!!.addPara("You gain $spPerLevel story points over the course of each level. In addition, you will continue to gain story points after reaching the maximum level.",
+                    0f, Misc.getTextColor(), Misc.getStoryOptionColor(), "$spPerLevel")
+
+                tooltip.addSpacer(10f)
+                tooltip.addSectionHeading("Bonus Experience", Alignment.MID, 0f)
+                tooltip.addSpacer(10f)
+
+                tooltip!!.addPara("Some uses of story points grant bonus experience, which doubles your experience gain until it's used up.",
+                    0f, Misc.getTextColor(), Misc.getStoryOptionColor(), "bonus experience")
+
+                tooltip.addSpacer(10f)
+
+                tooltip!!.addPara("The less long-term or impactful the use, the more bonus experience it grants. 100%% bonus experience means \"enough to earn an extra story point\", " +
+                        "eventually compensating for the use of the story point entirely.",
+                    0f, Misc.getTextColor(), Misc.getStoryOptionColor(), "100%")
+
+                tooltip.addSpacer(10f)
+
+                tooltip!!.addPara("Some of the bonus experience is granted immediately, while the remainder is gained on reaching the maximum level.",
+                    0f, Misc.getTextColor(), Misc.getStoryOptionColor(), "")
+            }
+
+            override fun getTooltipWidth(tooltipParam: Any?): Float {
+                return 400f
+            }
+        }, storyBox.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT )
 
 
         //XPBar
@@ -130,6 +174,72 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         var levelText = "   - Level $level"
         if (level >= Global.getSettings().levelupPlugin.maxLevel) levelText += " (maximum)"
         var levelPara = subelement.addPara("$levelText", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "$level")
+
+        subelement.addTooltipTo(object : BaseTooltipCreator() {
+            override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
+                var plugin = Global.getSettings().levelupPlugin
+                var level = Global.getSector().playerPerson.stats.level
+                var maxLevel = plugin.maxLevel
+                var xp = Global.getSector().playerPerson.stats.xp
+                var spPerLevel = plugin.storyPointsPerLevel
+                var bonusXp = Global.getSector().playerPerson.stats.bonusXp
+                var extraBonusXP = Global.getSector().playerPerson.stats.deferredBonusXp
+
+
+                var xpInThisLevel = xp - plugin.getXPForLevel(level)
+                var xpForThisLevel =  plugin.getXPForLevel(level+1) - plugin.getXPForLevel(level)
+
+                var maxSkillPoints = 0
+                for (i in 1 .. plugin.maxLevel) {
+                    maxSkillPoints += plugin.getPointsAtLevel(i)
+                }
+
+                tooltip!!.addPara("Current level: $level, maximum is $maxLevel.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "$level", "$maxLevel")
+
+                tooltip.addSpacer(10f)
+
+                var xpString = Misc.getWithDGS(xpInThisLevel.toFloat())
+                var xpRequiredString = Misc.getWithDGS(xpForThisLevel.toFloat())
+
+                tooltip!!.addPara("$xpString out of $xpRequiredString experience gained towards next level.", 0f,
+                    Misc.getTextColor(), Misc.getHighlightColor(), "$xpString", "$xpRequiredString")
+
+                tooltip.addSpacer(10f)
+
+                tooltip!!.addPara("You gain an additional skill point on every 2nd level.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "2nd")
+
+                tooltip.addSpacer(10f)
+
+                tooltip!!.addPara("You gain $spPerLevel story points over the course of each level. In addition, you will continue to gain story points after reaching the maximum level.",
+                    0f, Misc.getTextColor(), Misc.getStoryOptionColor(), "$spPerLevel")
+
+                tooltip.addSpacer(10f)
+                tooltip.addSectionHeading("Bonus Experience", Alignment.MID, 0f)
+                tooltip.addSpacer(10f)
+
+                var bonusXPString = Misc.getWithDGS(bonusXp.toFloat())
+
+                tooltip!!.addPara("You have $bonusXPString bonus experience. Bonus experience doubles your experience until it's used up, and is acquired by using story points in certain ways.",
+                    0f, Misc.getTextColor(), Misc.getStoryOptionColor(), "$bonusXPString")
+
+                tooltip.addSpacer(10f)
+
+                tooltip!!.addPara("After reaching the maximum level, bonus experience quadruples your experience instead.",
+                    0f, Misc.getTextColor(), Misc.getStoryOptionColor(), "quadruples")
+
+                tooltip.addSpacer(10f)
+
+                var extraBonusXPString = Misc.getWithDGS(extraBonusXP.toFloat())
+
+                tooltip!!.addPara("You will gain $extraBonusXPString additional bonus experience on reaching the maximum level, based on your use of story points so far.",
+                    0f, Misc.getTextColor(), Misc.getStoryOptionColor(), "$extraBonusXPString")
+            }
+
+            override fun getTooltipWidth(tooltipParam: Any?): Float {
+                return 400f
+            }
+        }, xpBar.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT )
+
 
     }
 

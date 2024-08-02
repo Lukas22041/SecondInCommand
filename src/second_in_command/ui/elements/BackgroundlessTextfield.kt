@@ -123,8 +123,11 @@ class BackgroundlessTextfield(private var text: String, var textColor: Color = M
 
         var add = " "
         if (blink) add = "_"
+
+
         para = textElement!!.addPara(text + add, 0f, textColor, Misc.getHighlightColor())
-        para!!.position.inTL(width / 2 - para!!.computeTextWidth(para!!.text) / 2, height / 2 - para!!.computeTextHeight(para!!.text) / 2)
+        var spaceWidth = para!!.computeTextWidth(add)
+        para!!.position.inTL(width / 2 - para!!.computeTextWidth(para!!.text) / 2 + spaceWidth , height / 2 - para!!.computeTextHeight(para!!.text) / 2)
 
         /* if (blink)
          {
