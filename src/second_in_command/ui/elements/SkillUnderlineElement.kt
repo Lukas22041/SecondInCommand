@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
-class SkillUnderlineElement(var color: Color, tooltip: TooltipMakerAPI, width: Float) : LunaElement(tooltip, width, 2f) {
+class SkillUnderlineElement(var color: Color, var lineHeight: Float, tooltip: TooltipMakerAPI, width: Float) : LunaElement(tooltip, width, lineHeight) {
 
     init {
         enableTransparency = true

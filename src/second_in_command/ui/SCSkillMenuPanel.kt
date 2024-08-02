@@ -218,7 +218,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
         var background = AptitudeBackgroundElement(color, subelement)
         background.elementPanel.position.belowLeft(offsetElement.elementPanel, offset)
 
-        var officerUnderline = SkillUnderlineElement(color, subelement, 96f)
+        var officerUnderline = SkillUnderlineElement(color, 2f, subelement, 96f)
         officerUnderline.position.belowLeft(officerPickerElement.elementPanel, 2f)
 
         if (officer == null) {
@@ -318,7 +318,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
                 }
 
                 if (canOnlyChooseOne) {
-                    var underline = SkillUnderlineElement(color, subelement, usedWidth)
+                    var underline = SkillUnderlineElement(color, 2f, subelement, usedWidth)
                     underline.position.belowLeft(firstSkillThisSection.elementPanel, 2f)
                 }
 

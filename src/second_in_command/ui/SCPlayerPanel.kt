@@ -10,7 +10,9 @@ import lunalib.lunaExtensions.addLunaElement
 import lunalib.lunaUI.elements.LunaElement
 import lunalib.lunaUI.elements.LunaSpriteElement
 import second_in_command.SCData
+import second_in_command.misc.VanillaSkillTooltip
 import second_in_command.misc.clearChildren
+import second_in_command.specs.SCAptitudeSection
 import second_in_command.ui.elements.*
 
 class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
@@ -24,7 +26,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
 
         var subpanel = Global.getSettings().createCustom(width, height, null)
         menu.element.addCustom(subpanel, 0f)
-        subpanel.position.inTL(15f, 30f)
+        subpanel.position.inTL(15f, 20f)
 
         recreatePlayerPanel(subpanel)
 
@@ -37,10 +39,110 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
 
         var subelement = subpanel.createUIElement(width, height, false)
         subpanel.addUIElement(subelement)
-        subelement.position.inTL(300f, 0f)
+        subelement.position.inTL(300f, 10f)
 
-        subelement.addPara("Test",0f)
+
+        var acquiredSkillsIds = data.player.stats.skillsCopy.filter { it.level >= 2 }.map { it.skill.id }
+
+        var player = Global.getSector().playerPerson
+        var color = Global.getSettings().getSkillSpec("aptitude_combat").governingAptitudeColor
+        var sections = ArrayList<SCAptitudeSection>()
+
+        var skills = ArrayList<String>()
+        skills.add("helmsmanship")
+        skills.add("combat_endurance")
+        skills.add("impact_mitigation")
+        skills.add("damage_control")
+        skills.add("field_modulation")
+        skills.add("point_defense")
+        skills.add("target_analysis")
+        skills.add("energy_weapon_mastery")
+        skills.add("ballistic_mastery")
+        skills.add("gunnery_implants")
+        skills.add("ordnance_expert")
+        skills.add("polarized_armor")
+        skills.add("systems_expertise")
+        skills.add("missile_specialization")
+
+        var background = PlayerAptitudeBackgroundElement(color, subelement)
+        background.elementPanel.position.inTL(10f, 12f)
+
+        var count = 0
+        var newLineAt = 7
+        var anchor = subelement.addLunaElement(0f, 0f)
+        anchor.elementPanel.position.inTL(35f, 41f)
+        var previous: CustomPanelAPI = anchor.elementPanel
+        var firstSkill: CustomPanelAPI? = null
+        var usedWidth = 0f
+        var skillElements = ArrayList<SkillWidgetElement>()
+        for (skill in skills) {
+
+            count += 1
+            if (count == 8) {
+                var lowerAnchor = subelement.addLunaElement(0f, 0f)
+                lowerAnchor.elementPanel.position.belowLeft(anchor.elementPanel, 72f +7 + 16f)
+                previous = lowerAnchor.elementPanel
+            }
+
+
+            var skillSpec = Global.getSettings().getSkillSpec(skill)
+
+            var isFirst = skills.first() == skill
+            var isLast = skills.last() == skill
+
+            var preacquired = false
+            var activated = false
+            if (acquiredSkillsIds.contains(skill)) {
+                preacquired = true
+                activated = true
+            }
+
+            var skillElement = SkillWidgetElement(skill, activated, !preacquired, preacquired, skillSpec.spriteName, "combat2", color, subelement, 72f, 72f)
+            skillElement.elementPanel.position.rightOfTop(previous, 24f)
+            previous = skillElement.elementPanel
+            skillElements.add(skillElement)
+
+            var skillTooltip = VanillaSkillTooltip.addToTooltip(subelement, player, skillSpec, 0)
+
+            skillElement.advance {
+                if (skillElement.activated) {
+                    skillTooltip.level = 2f
+                } else {
+                    skillTooltip.level = 0f
+                }
+            }
+
+            if (count == 1) {
+                firstSkill = skillElement.elementPanel
+            }
+
+            usedWidth+=72f
+
+           /* if (count == 7) {
+                var underline = SkillUnderlineElement(color, 1f, subelement, usedWidth)
+                underline.position.belowLeft(firstSkill, 3f+8f)
+            }*/
+
+
+
+            /*if (!isLast && count != 7) {
+                var seperator = SkillSeperatorElement(color, subelement)
+                seperator.elementPanel.position.rightOfTop(skillElement.elementPanel, 6f)
+                previous = seperator.elementPanel
+                usedWidth+=7f
+            }*/
+
+        }
     }
+
+
+
+
+
+
+
+
+
 
     fun recreatePlayerPanel(subpanel: CustomPanelAPI) {
         subpanel.clearChildren()
@@ -189,10 +291,10 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         xpBar.position.belowLeft(portrait.elementPanel, 10f)
 
         subelement.addSpacer(5f)
-        var level = Global.getSector().playerPerson.stats.level
+       /* var level = Global.getSector().playerPerson.stats.level
         var levelText = "   - Level $level"
         if (level >= Global.getSettings().levelupPlugin.maxLevel) levelText += " (maximum)"
-        var levelPara = subelement.addPara("$levelText", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "$level")
+        var levelPara = subelement.addPara("$levelText", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "$level")*/
 
         subelement.addTooltipTo(object : BaseTooltipCreator() {
             override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
@@ -259,7 +361,36 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
             }
         }, xpBar.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT )
 
-        var line = subelement.addLunaElement(2f, 240f).apply {
+
+        subelement.addSpacer(10f)
+
+        var color = Global.getSettings().getSkillSpec("aptitude_combat").governingAptitudeColor
+        var confirmButton = subelement.addLunaElement(125f, 30f).apply {
+            backgroundAlpha = 0.2f
+            borderAlpha = 0.5f
+            enableTransparency = true
+            backgroundColor = color
+            borderColor = color
+
+            innerElement.setParaFont("graphics/fonts/victor14.fnt")
+            addText("Confirm")
+            centerText()
+        }
+
+        var cancelButton = subelement.addLunaElement(125f, 30f).apply {
+            backgroundAlpha = 0.2f
+            borderAlpha = 0.5f
+            enableTransparency = true
+            backgroundColor = color
+            borderColor = color
+
+            innerElement.setParaFont("graphics/fonts/victor14.fnt")
+            addText("Cancel")
+            centerText()
+        }
+        cancelButton.elementPanel.position.rightOfTop(confirmButton.elementPanel, 10f)
+
+        var line = subelement.addLunaElement(2f, 250f).apply {
             enableTransparency = true
             renderBorder = false
         }

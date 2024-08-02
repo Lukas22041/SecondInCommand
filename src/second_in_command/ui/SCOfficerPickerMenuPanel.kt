@@ -96,7 +96,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             //background.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, -1f)
             background.elementPanel.position.belowLeft(offsetElement.elementPanel, offset)
 
-            var officerUnderline = SkillUnderlineElement(aptitudePlugin.getColor(), inner, 96f)
+            var officerUnderline = SkillUnderlineElement(aptitudePlugin.getColor(), 2f, inner, 96f)
             officerUnderline.position.belowLeft(officerPickerElement.elementPanel, 2f)
 
             aptitudePlugin.clearSections()
@@ -188,7 +188,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
                     }
 
                     if (canOnlyChooseOne) {
-                        var underline = SkillUnderlineElement(aptitudePlugin.getColor(), inner, usedWidth)
+                        var underline = SkillUnderlineElement(aptitudePlugin.getColor(), 2f, inner, usedWidth)
                         underline.position.belowLeft(firstSkillThisSection.elementPanel, 2f)
                     }
 

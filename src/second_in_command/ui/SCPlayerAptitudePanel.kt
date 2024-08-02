@@ -84,7 +84,7 @@ class SCPlayerAptitudePanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         var background = AptitudeBackgroundElement(color, subelement)
         background.elementPanel.position.belowLeft(offsetElement.elementPanel, offset)
 
-        var officerUnderline = SkillUnderlineElement(color, subelement, 96f)
+        var officerUnderline = SkillUnderlineElement(color, 2f, subelement, 96f)
         officerUnderline.position.belowLeft(officerPickerElement.elementPanel, 2f)
 
         var originSkill = SCSpecStore.getSkillSpec("sc_combat_aptitude_skill")
@@ -179,7 +179,7 @@ class SCPlayerAptitudePanel(var menu: SCSkillMenuPanel, var data: SCData)  {
                 }
 
                 if (canOnlyChooseOne) {
-                    var underline = SkillUnderlineElement(color, subelement, usedWidth)
+                    var underline = SkillUnderlineElement(color, 2f, subelement, usedWidth)
                     underline.position.belowLeft(firstSkillThisSection.elementPanel, 2f)
                 }
 
