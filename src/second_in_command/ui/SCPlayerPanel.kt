@@ -80,7 +80,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         var aptitudeIconElement = CombatSkillWidgetElement("helmsmanship", true, false, true, path, "combat2", color, subelement, 96f, 96f)
 
         //var combatIcon = subelement.addLunaSpriteElement("graphics/secondInCommand/combat_icon.png", LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, 110f, 110f)
-        aptitudeIconElement.elementPanel.position.inTL(25f, 76f)
+        aptitudeIconElement.elementPanel.position.inTL(28f, 76f)
 
         aptitudeIconElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
         var aptitudePara = aptitudeIconElement.innerElement.addPara("Combat", 0f, color, color)
@@ -109,8 +109,8 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
 
                 tooltip.addSpacer(10f)
 
-                tooltip!!.addPara("All skills except for \"System Expertise\" and \"Missile Specialisation\" require just 1 skill point. The skills just mentioned require 2.", 0f,
-                    Misc.getTextColor(), Misc.getHighlightColor(), "System Expertise", "Missile Specialisation", "1", "2")
+                tooltip!!.addPara("All skills except for \"System Expertise\" and \"Missile Specialization\" require just 1 skill point. The skills just mentioned require 2.", 0f,
+                    Misc.getTextColor(), Misc.getHighlightColor(), "System Expertise", "Missile Specialization", "1", "2")
 
                 tooltip.addSpacer(10f)
 
@@ -141,7 +141,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         var newLineAt = 7
         var anchor = subelement.addLunaElement(0f, 0f)
         //anchor.elementPanel.position.inTL(35f, 41f)
-        anchor.elementPanel.position.inTL(125f, 45f)
+        anchor.elementPanel.position.inTL(128f, 45f)
         var previous: CustomPanelAPI = anchor.elementPanel
         var firstSkill: CustomPanelAPI? = null
         var usedWidth = 0f
