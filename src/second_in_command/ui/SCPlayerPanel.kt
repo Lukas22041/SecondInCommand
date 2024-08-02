@@ -1,15 +1,16 @@
 package second_in_command.ui
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.BaseTooltipCreator
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
-import lunalib.lunaExtensions.addLunaSpriteElement
 import lunalib.lunaUI.elements.LunaElement
 import lunalib.lunaUI.elements.LunaSpriteElement
+import org.lwjgl.input.Keyboard
 import second_in_command.SCData
 import second_in_command.misc.VanillaSkillTooltip
 import second_in_command.misc.clearChildren
@@ -20,6 +21,7 @@ import second_in_command.ui.elements.*
 class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
 
     var skillPoints = Global.getSector().playerPerson.stats.points
+    var startSkillPoints = Global.getSector().playerPerson.stats.points
 
     fun init() {
 
@@ -70,12 +72,70 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         var background = PlayerAptitudeBackgroundElement(color, subelement)
         background.elementPanel.position.inTL(10f, 12f)
 
+
+
+        //Aptitude Icon
         var path = "graphics/secondInCommand/combat_icon.png"
         Global.getSettings().loadTextureCached(path)
-        var combatIcon = SkillWidgetElement("helmsmanship", true, false, true, path, "combat2", color, subelement, 96f, 96f)
+        var aptitudeIconElement = CombatSkillWidgetElement("helmsmanship", true, false, true, path, "combat2", color, subelement, 96f, 96f)
 
         //var combatIcon = subelement.addLunaSpriteElement("graphics/secondInCommand/combat_icon.png", LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, 110f, 110f)
-        combatIcon.elementPanel.position.inTL(25f, 76f)
+        aptitudeIconElement.elementPanel.position.inTL(25f, 76f)
+
+        aptitudeIconElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
+        var aptitudePara = aptitudeIconElement.innerElement.addPara("Combat", 0f, color, color)
+        aptitudePara.position.inTL(aptitudeIconElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 , -aptitudePara.computeTextHeight(aptitudePara.text)-5)
+
+        var combatSkillUnderline = SkillUnderlineElement(color, 2f, subelement, 96f)
+        combatSkillUnderline.position.belowLeft(aptitudeIconElement.elementPanel, 2f)
+
+        subelement.addTooltipTo(object : BaseTooltipCreator() {
+            override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
+                var plugin = Global.getSettings().levelupPlugin
+                var maxLevel = plugin.maxLevel
+                var maxSkillPoints = 0
+                var storyPoins = Global.getSector().playerPerson.stats.storyPoints
+                for (i in 1 .. plugin.maxLevel) {
+                    maxSkillPoints += plugin.getPointsAtLevel(i)
+                }
+
+                tooltip!!.addPara("This section of skills are the players own set of in-combat skills. You can use your own skill points to acquire them in any order. All player skills are elite by default.", 0f,
+                    Misc.getTextColor(), Misc.getHighlightColor(), "skill points", "in any order", "elite")
+
+                tooltip.addSpacer(10f)
+
+                tooltip!!.addPara("You gain 1 skill point for every 2nd level. In total, $maxSkillPoints skill points will be available after you reach the maximum level of $maxLevel.",
+                    0f, Misc.getTextColor(), Misc.getHighlightColor(), "1", "2nd", "$maxSkillPoints", "$maxLevel")
+
+                tooltip.addSpacer(10f)
+
+                tooltip!!.addPara("All skills except for \"System Expertise\" and \"Missile Specialisation\" require just 1 skill point. The skills just mentioned require 2.", 0f,
+                    Misc.getTextColor(), Misc.getHighlightColor(), "System Expertise", "Missile Specialisation", "1", "2")
+
+                tooltip.addSpacer(10f)
+
+                var extra = ""
+                if (storyPoins == 0) {
+                    extra = "You do not have enough story points do so right now."
+                }
+                if (aptitudeIconElement.isInEditMode) {
+                    extra = "Does not work while editing your active skills."
+                }
+
+                var label = tooltip!!.addPara("You can refund all combat skills by pressing \"R\" while hovering over this icon. This costs a story point to do. $extra", 0f,
+                    Misc.getTextColor(), Misc.getHighlightColor(), "")
+
+                label.setHighlight("R", "story point", extra)
+                label.setHighlightColors(Misc.getHighlightColor(), Misc.getStoryOptionColor(), Misc.getNegativeHighlightColor())
+
+            }
+
+            override fun getTooltipWidth(tooltipParam: Any?): Float {
+                return 400f
+            }
+        }, aptitudeIconElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT )
+
+
 
         var count = 0
         var newLineAt = 7
@@ -113,7 +173,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
             previous = skillElement.elementPanel
             skillElements.add(skillElement)
 
-            var skillTooltip = VanillaSkillTooltip.addToTooltip(subelement, player, skillSpec, 0)
+            var skillTooltip = VanillaSkillTooltip.addToTooltip(subelement, player, skillSpec, getSkillPointCost(skill))
 
             skillElement.advance {
                 if (skillElement.activated) {
@@ -144,18 +204,164 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
             }*/
 
         }
+
+        for (skillElement in skillElements) {
+
+            skillElement.onClick {
+                if (!skillElement.preAcquired && skillElement.canChangeState) {
+                    enterEditMode(subpanel, aptitudeIconElement, skillElements)
+
+                    if (!skillElement.activated) {
+                        skillElement.playSound(skillElement.soundId)
+                    }
+                    else {
+                        skillElement.playSound("ui_char_decrease_skill")
+                    }
+
+                    skillElement.activated = !skillElement.activated
+                } else {
+                    skillElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
+                }
+
+                var points = getCurrentSkillPointsUsed(skillElements)
+                if (points == 0) {
+                    exitEditMode(subpanel)
+                }
+            }
+
+            skillElement.advance {
+                var available = skillPoints
+                var cost = getSkillPointCost(skillElement.id)
+                if (!skillElement.preAcquired && !skillElement.activated && cost > available) {
+                    skillElement.canChangeState = false
+                } else if (!skillElement.preAcquired) {
+                    skillElement.canChangeState = true
+                }
+            }
+
+        }
+
+        aptitudeIconElement.advance {
+            skillPoints = startSkillPoints - getCurrentSkillPointsUsed(skillElements)
+        }
+
+        aptitudeIconElement.onInput {events ->
+            if (aptitudeIconElement.isHovering) {
+                for (event in events!!) {
+                    if (event.isConsumed) continue
+                    if (event.isKeyDownEvent && event.eventValue == Keyboard.KEY_R) {
+                        event.consume()
+
+                        if (!aptitudeIconElement.isInEditMode) {
+                            resetSkills(subpanel, aptitudeIconElement, skillElements)
+                        }
+
+                        break
+                    }
+                }
+            }
+        }
+    }
+
+    fun resetSkills(subpanel: CustomPanelAPI, aptitudeIcon: CombatSkillWidgetElement, skillElements: ArrayList<SkillWidgetElement>) {
+        var active = skillElements.filter { it.activated }
+        var count = active.count()
+
+        var storyPoints = Global.getSector().playerPerson.stats.storyPoints
+        if (count == 0 || storyPoints == 0) {
+            aptitudeIcon.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
+            return
+        }
+
+        var combinedPoints = 0f
+        for (skillElement in active) {
+            combinedPoints += getSkillPointCost(skillElement.id)
+            Global.getSector().playerPerson.stats.setSkillLevel(skillElement.id, 0f)
+        }
+
+        Global.getSector().playerPerson.stats.points += combinedPoints.toInt()
+        Global.getSector().playerPerson.stats.storyPoints -= 1
+
+        Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
+
+        aptitudeIcon.playSound(Sounds.STORY_POINT_SPEND)
+
+        recreatePlayerPanel(subpanel)
+    }
+
+    fun enterEditMode(subpanel: CustomPanelAPI, aptitudeIcon: CombatSkillWidgetElement, skillElements: ArrayList<SkillWidgetElement>) {
+        if (aptitudeIcon.isInEditMode) return
+        aptitudeIcon.isInEditMode = true
+
+        aptitudeIcon.innerElement.addSpacer(12f)
+
+        var confirmButton = ConfirmCancelButton(aptitudeIcon.color, aptitudeIcon.innerElement, 82f, 30f).apply {
+            addText("Confirm")
+            centerText()
+
+            onClick {
+                playSound(Sounds.STORY_POINT_SPEND)
+                saveSkillDataToCharacter(skillElements)
+                exitEditMode(subpanel)
+
+                if (Global.getSector().playerFleet?.fleetData != null) {
+                    Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
+                }
+            }
+        }
+        confirmButton.elementPanel.position.inTL(7f, 12f)
+
+        var cancelButton = ConfirmCancelButton(aptitudeIcon.color, aptitudeIcon.innerElement, 82f, 30f).apply {
+            addText("Cancel")
+            centerText()
+
+            onClick {
+                playSound("ui_char_decrease_skill", 1f, 1f)
+                exitEditMode(subpanel)
+            }
+        }
+
+        cancelButton.elementPanel.position.belowLeft(confirmButton.elementPanel, 12f)
+    }
+
+    fun exitEditMode(subpanel: CustomPanelAPI) {
+        recreatePlayerPanel(subpanel)
+    }
+
+    fun saveSkillDataToCharacter(skillElements: ArrayList<SkillWidgetElement>) {
+        var activeSkills = skillElements.filter { it.activated }.map { it.id }
+
+        var spCost = getCurrentSkillPointsUsed(skillElements)
+        var stats = data.player.stats
+
+        for (active in activeSkills) {
+            stats.setSkillLevel(active, 2f)
+        }
+
+        stats.points -= spCost
+    }
+
+    fun getSkillPointCost(skillId: String) : Int {
+        if (skillId == "systems_expertise" || skillId == "missile_specialization") return 2
+        return 1
+    }
+
+    fun getCurrentSkillPointsUsed(skillElements: List<SkillWidgetElement>) : Int {
+        var points = 0
+        for (element in skillElements) {
+            if (!element.preAcquired && element.activated) {
+                points += getSkillPointCost(element.id)
+            }
+        }
+        return points
     }
 
 
-
-
-
-
-
-
-
-
     fun recreatePlayerPanel(subpanel: CustomPanelAPI) {
+
+        skillPoints = Global.getSector().playerPerson.stats.points
+        startSkillPoints = Global.getSector().playerPerson.stats.points
+
         subpanel.clearChildren()
 
         var width = menu.width
@@ -203,7 +409,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
             override fun getTooltipWidth(tooltipParam: Any?): Float {
                 return 175f
             }
-        }, nameElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT )
+        }, nameElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
 
 
         var portrait = LunaSpriteElement(player.portraitSprite, LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, subelement, 128f, 128f)

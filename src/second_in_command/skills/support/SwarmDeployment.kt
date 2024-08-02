@@ -18,7 +18,7 @@ class SwarmDeployment : SCBaseSkillPlugin() {
 
     override fun addTooltip(tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("Fighter wings with at least three fighters gain an additional fighter in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Fighter wings with at least four fighters gain an additional fighter in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
@@ -41,7 +41,7 @@ class SwarmDeployment : SCBaseSkillPlugin() {
 
         for (bay in ship.launchBaysCopy) {
             if (bay.wing == null) continue
-            if (bay.wing.spec.numFighters <= 2) continue
+            if (bay.wing.spec.numFighters <= 3) continue
             if (alreadyUsed.contains(bay)) continue
 
            /* val rate = Math.max(minRate, bay.currRate - cost)

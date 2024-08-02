@@ -30,6 +30,7 @@ class SkillPointsBox(tooltip: TooltipMakerAPI, width: Float, height: Float) : Lu
     }
 
     override fun advance(amount: Float) {
+        super.advance(amount)
 
         if (isHovering) {
             textPara.setColor(textColor.brighter())

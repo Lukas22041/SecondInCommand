@@ -22,4 +22,12 @@
             "name": "LunaLib",
         },
     ],
+	"replace":[
+		"data/characters/skills/automated_ships.skill",
+		"data/characters/skills/combat_endurance.skill",
+		"data/characters/skills/energy_weapon_mastery.skill",
+		"data/characters/skills/gunnery_implants.skill",
+		"data/characters/skills/ordnance_expert.skill",
+		"data/characters/skills/polarized_armor.skill",
+	],
 }

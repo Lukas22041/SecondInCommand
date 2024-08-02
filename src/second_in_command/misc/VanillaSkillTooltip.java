@@ -28,7 +28,6 @@ public class VanillaSkillTooltip extends BaseTooltipCreator {
     public int requiredSkillPoints;
     public boolean sectionMeetsRequirements = true;
 
-
     public VanillaSkillTooltip(TooltipMakerAPI tooltip, PersonAPI person, SkillSpecAPI skillSpec, int requiredSkillPoints) {
         this.tooltip = tooltip;
         this.person = person;
@@ -115,9 +114,9 @@ public class VanillaSkillTooltip extends BaseTooltipCreator {
                     Misc.getTextColor(), Misc.getHighlightColor(), hullmodSpec.getDisplayName());
         }
 
-        if (!sectionMeetsRequirements) {
+        if (requiredSkillPoints >= 2) {
             tooltip.addSpacer(10f);
-            tooltip.addPara("Requires atleast " + requiredSkillPoints + " lower tier skills.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor());
+            tooltip.addPara("Requires " + requiredSkillPoints + " skill points.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor());
         }
 
         tooltip.addSpacer(2f);
