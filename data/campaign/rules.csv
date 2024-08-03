@@ -26,6 +26,12 @@ SCStoreSkillpoints false
 NGCDone",,,
 ,,,,,,
 #Encounter,,,,,,
-sc_FleetEncounter,BeginFleetEncounter,!$player.sc_fleet_encountered,"$player.sc_fleet_encountered = true 0
+sc_FleetEncounter,BeginFleetEncounter,!$player.sc_fleet_encountered score:1000000,"$player.sc_fleet_encountered = true 0
 FireBest BeginFleetEncounter
-",Test SC Text,,
+FireAll SCFleetEncounterScript
+",,,
+sc_FleetEncounterScript,SCFleetEncounterScript,,,Test SC Text,,
+,,,,,,
+#sc_fleet_info,DialogOptionSelected,"SCIsFleetInteraction 
+$option == INIT score:10000000",,Test SC Text 2,,
+,,,,,,

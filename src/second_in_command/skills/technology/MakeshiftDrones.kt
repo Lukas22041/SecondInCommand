@@ -40,7 +40,7 @@ class MakeshiftDrones : SCBaseSkillPlugin() {
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
-        if (!isAutomatedActive(data.fleet)) {
+        if (!isAutomatedActive(data.fleet) && data.isPlayer) {
             AutomatedShips.applyEffects(data, getName(), stats, variant, hullSize, id)
         }
 

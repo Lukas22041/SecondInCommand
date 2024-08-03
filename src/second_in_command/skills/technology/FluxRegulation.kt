@@ -43,13 +43,13 @@ class FluxRegulation : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-        Global.getSector().characterData.person.stats.maxVentsBonus.modifyFlat("sc_flux_regulation", 5f)
-        Global.getSector().characterData.person.stats.maxCapacitorsBonus.modifyFlat("sc_flux_regulation", 5f)
+        data.commander.stats.maxVentsBonus.modifyFlat("sc_flux_regulation", 5f)
+        data.commander.stats.maxCapacitorsBonus.modifyFlat("sc_flux_regulation", 5f)
     }
 
     override fun onDeactivation(data: SCData) {
-        Global.getSector().characterData.person.stats.maxVentsBonus.unmodify("sc_flux_regulation")
-        Global.getSector().characterData.person.stats.maxCapacitorsBonus.unmodify("sc_flux_regulation")
+        data.commander.stats.maxVentsBonus.unmodify("sc_flux_regulation")
+        data.commander.stats.maxCapacitorsBonus.unmodify("sc_flux_regulation")
 
     }
 

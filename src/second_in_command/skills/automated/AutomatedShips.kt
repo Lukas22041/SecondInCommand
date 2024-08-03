@@ -53,6 +53,14 @@ class AutomatedShips : SCBaseSkillPlugin() {
         }
 
         fun createTooltip(data: SCData, tooltip: TooltipMakerAPI, dp: Float, makeshift: Boolean) {
+
+            if (data.isNPC) {
+
+                tooltip.addPara("This fleet is capable of fielding automated ships", 0f)
+
+                return
+            }
+
             val alpha = AICoreOfficerPluginImpl.ALPHA_MULT.roundToInt()
             val beta = AICoreOfficerPluginImpl.BETA_MULT.roundToInt()
             val gamma = AICoreOfficerPluginImpl.GAMMA_MULT.roundToInt()
@@ -152,7 +160,10 @@ class AutomatedShips : SCBaseSkillPlugin() {
 
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?,variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        applyEffects(data, getName(), stats, variant, hullSize, id)
+
+        if (data.isPlayer) {
+            applyEffects(data, getName(), stats, variant, hullSize, id)
+        }
 
     }
 
