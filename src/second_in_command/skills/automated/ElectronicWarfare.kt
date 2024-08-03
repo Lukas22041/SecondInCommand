@@ -36,11 +36,7 @@ class ElectronicWarfare : SCBaseSkillPlugin() {
         "$max%")
     }
 
-    override fun applyEffectsBeforeShipCreation(data: SCData,
-                                                stats: MutableShipStatsAPI?,
-                                                variant: ShipVariantAPI,
-                                                hullSize: ShipAPI.HullSize?,
-                                                id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
         if (Misc.isAutomated(stats)) {
 
             stats!!.dynamic.getMod(Stats.ELECTRONIC_WARFARE_FLAT).modifyFlat(id, PER_SHIP_BONUS)

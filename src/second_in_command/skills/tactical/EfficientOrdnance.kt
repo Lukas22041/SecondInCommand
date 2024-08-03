@@ -23,11 +23,8 @@ class EfficientOrdnance : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsBeforeShipCreation(data: SCData,
-                                                stats: MutableShipStatsAPI?,
-                                                variant: ShipVariantAPI,
-                                                hullSize: ShipAPI.HullSize?,
-                                                id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+
         val cStats = BaseSkillEffectDescription.getCommanderStats(stats)
         val flux = FLUX_PER_OP * stats!!.variant.computeWeaponOPCost(cStats)
         stats.fluxDissipation.modifyFlat(id, flux)

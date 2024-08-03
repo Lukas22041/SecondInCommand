@@ -19,11 +19,7 @@ class WellOrganized : SCBaseSkillPlugin() {
         tooltip.addPara("+25%% reduced crew loss during deployment", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
     }
 
-    override fun applyEffectsBeforeShipCreation(data: SCData,
-                                                stats: MutableShipStatsAPI?,
-                                                variant: ShipVariantAPI,
-                                                hullSize: ShipAPI.HullSize?,
-                                                id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
         stats!!.minCrewMod.modifyMult(id, 0.75f)
         stats.crewLossMult.modifyMult(id, 0.75f)
     }

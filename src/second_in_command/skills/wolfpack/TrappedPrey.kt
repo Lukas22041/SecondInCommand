@@ -24,11 +24,7 @@ class TrappedPrey : SCBaseSkillPlugin() {
         tooltip.addPara("   - Their damage taken from all sources is increased by 5%%",0f, Misc.getTextColor(), Misc.getHighlightColor(), "5%")
     }
 
-    override fun applyEffectsBeforeShipCreation(data: SCData,
-                                                stats: MutableShipStatsAPI?,
-                                                variant: ShipVariantAPI,
-                                                hullSize: ShipAPI.HullSize?,
-                                                id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
     }
 

@@ -29,11 +29,7 @@ class DeadlyPersistence : SCBaseSkillPlugin() {
         tooltip.addPara("*The effect can stack with others of the same kind, two of them would add up to a minimum of 20%%", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "20%")
     }
 
-    override fun applyEffectsBeforeShipCreation(data: SCData,
-                                                stats: MutableShipStatsAPI?,
-                                                variant: ShipVariantAPI,
-                                                hullSize: ShipAPI.HullSize?,
-                                                id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
         if (Misc.isAutomated(stats)) {
             stats!!.zeroFluxMinimumFluxLevel.modifyFlat(id, ZERO_FLUX_MIN)
             stats.ventRateMult.modifyPercent(id, VENT_RATE)

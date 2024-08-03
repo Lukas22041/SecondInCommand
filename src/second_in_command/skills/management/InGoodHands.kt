@@ -25,11 +25,7 @@ class InGoodHands : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsBeforeShipCreation(data: SCData,
-                                                stats: MutableShipStatsAPI?,
-                                                variant: ShipVariantAPI,
-                                                hullSize: ShipAPI.HullSize?,
-                                                id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
         var captain = stats!!.fleetMember?.captain ?: return
 
         if (captain.isDefault || captain.isAICore) return

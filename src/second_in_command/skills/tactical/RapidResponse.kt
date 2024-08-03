@@ -22,11 +22,7 @@ class RapidResponse : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsBeforeShipCreation(data: SCData,
-                                                stats: MutableShipStatsAPI?,
-                                                variant: ShipVariantAPI,
-                                                hullSize: ShipAPI.HullSize?,
-                                                id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
         if (stats!!.maxBurnLevel.modifiedValue < 9) {
             stats!!.maxBurnLevel.modifyFlat(id,1f)

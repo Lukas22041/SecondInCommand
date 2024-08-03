@@ -26,11 +26,7 @@ class SelfRepair : SCBaseSkillPlugin() {
         tooltip.addPara("+30%% ship repair rate outside of combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
     }
 
-    override fun applyEffectsBeforeShipCreation(data: SCData,
-                                                stats: MutableShipStatsAPI?,
-                                                variant: ShipVariantAPI,
-                                                hullSize: ShipAPI.HullSize?,
-                                                id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
         if (Misc.isAutomated(stats)) {
             stats!!.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat(id, HullRestoration.RECOVERY_PROB)
             stats.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, DMOD_CHANCE_MULT)

@@ -24,11 +24,7 @@ class MagneticShielding : SCBaseSkillPlugin() {
         tooltip.addPara("+25%% emp damage resistance in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
     }
 
-    override fun applyEffectsBeforeShipCreation(data: SCData,
-                                                stats: MutableShipStatsAPI?,
-                                                variant: ShipVariantAPI,
-                                                hullSize: ShipAPI.HullSize?,
-                                                id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
         if (Misc.isAutomated(stats)) {
             stats!!.dynamic.getStat(Stats.CORONA_EFFECT_MULT).modifyMult(id, HAZARD_MULT)
             stats.empDamageTakenMult.modifyMult(id, EMP_DAMAGE_TAKEN_MULT)

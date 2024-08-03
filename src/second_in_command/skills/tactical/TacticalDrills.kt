@@ -20,11 +20,7 @@ class TacticalDrills : SCBaseSkillPlugin() {
         tooltip.addPara("+5%% weapon damage for all ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
     }
 
-    override fun applyEffectsBeforeShipCreation(data: SCData,
-                                                stats: MutableShipStatsAPI?,
-                                                variant: ShipVariantAPI,
-                                                hullSize: ShipAPI.HullSize?,
-                                                id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
         stats!!.ballisticWeaponDamageMult.modifyMult(id, 1.05f)
         stats.energyWeaponDamageMult.modifyMult(id, 1.05f)

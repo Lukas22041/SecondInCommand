@@ -22,11 +22,7 @@ class DefensiveProtocols : SCBaseSkillPlugin() {
         
     }
 
-    override fun applyEffectsBeforeShipCreation(data: SCData,
-                                                stats: MutableShipStatsAPI?,
-                                                variant: ShipVariantAPI,
-                                                hullSize: ShipAPI.HullSize?,
-                                                id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
         stats!!.maxArmorDamageReduction.modifyFlat(id, 0.05f)
         stats.effectiveArmorBonus.modifyPercent(id, 10f)

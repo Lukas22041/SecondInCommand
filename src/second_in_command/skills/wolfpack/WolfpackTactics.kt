@@ -32,11 +32,7 @@ class WolfpackTactics : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsBeforeShipCreation(data: SCData,
-                                                stats: MutableShipStatsAPI?,
-                                                variant: ShipVariantAPI,
-                                                hullSize: ShipAPI.HullSize?,
-                                                id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
         if (hullSize == ShipAPI.HullSize.FRIGATE) {
             stats!!.damageToDestroyers.modifyPercent(id,DAMAGE_TO_LARGER_BONUS)
             stats!!.damageToCruisers.modifyPercent(id, DAMAGE_TO_LARGER_BONUS)

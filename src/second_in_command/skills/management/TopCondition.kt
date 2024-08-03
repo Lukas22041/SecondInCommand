@@ -19,11 +19,7 @@ class TopCondition : SCBaseSkillPlugin() {
         tooltip.addPara("   - The bonus is doubled for any ship with an officer assigned to it", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "doubled")
     }
 
-    override fun applyEffectsBeforeShipCreation(data: SCData,
-                                                stats: MutableShipStatsAPI?,
-                                                variant: ShipVariantAPI,
-                                                hullSize: ShipAPI.HullSize?,
-                                                id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
         var ppt = 30f
 
         var captain = stats!!.fleetMember?.captain

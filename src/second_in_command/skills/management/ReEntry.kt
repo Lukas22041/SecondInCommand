@@ -21,11 +21,7 @@ class ReEntry : SCBaseSkillPlugin() {
         tooltip.addPara("   - The increase in speed is nullified the moment its weapons are in range of a hostile ship", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "75")
     }
 
-    override fun applyEffectsBeforeShipCreation(data: SCData,
-                                                stats: MutableShipStatsAPI?,
-                                                variant: ShipVariantAPI,
-                                                hullSize: ShipAPI.HullSize?,
-                                                id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
     }
 

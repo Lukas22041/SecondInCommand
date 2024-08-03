@@ -24,11 +24,7 @@ class FocusedFire : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsBeforeShipCreation(data: SCData,
-                                                stats: MutableShipStatsAPI?,
-                                                variant: ShipVariantAPI,
-                                                hullSize: ShipAPI.HullSize?,
-                                                id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
         stats!!.recoilDecayMult.modifyMult(id, 1.2f)
         stats.recoilPerShotMult.modifyMult(id, 0.8f)
         stats.maxRecoilMult.modifyMult(id, 0.8f)
