@@ -48,6 +48,8 @@ object SCUtils {
         return getPlayerData().isSkillActive(skillId)
     }*/
 
+
+
     fun changeOfficerAptitude(fleet: CampaignFleetAPI, officer: SCOfficer, aptitudeId: String) {
         var data = getFleetData(fleet)
 

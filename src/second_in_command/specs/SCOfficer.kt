@@ -1,6 +1,7 @@
 package second_in_command.specs
 
 import com.fs.starfarer.api.characters.PersonAPI
+import second_in_command.SCData
 import second_in_command.SCUtils
 import second_in_command.misc.SCSettings
 
@@ -16,6 +17,8 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
     var skillPoints = 1
     private var experiencePoints: Float = 0f
     private var level: Int = 1
+
+    var data: SCData? = null
 
     fun getAptitudeSpec() : SCAptitudeSpec {
         return SCSpecStore.getAptitudeSpec(aptitudeId)!!
@@ -99,7 +102,7 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
     }
 
     fun isAssigned() : Boolean {
-        return SCUtils.getPlayerData().getAssignedOfficers().contains(this)
+        return data?.getAssignedOfficers()?.contains(this) ?: false
     }
 
 

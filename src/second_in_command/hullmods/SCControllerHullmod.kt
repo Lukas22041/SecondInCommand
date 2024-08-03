@@ -38,11 +38,11 @@ class SCControllerHullmod : BaseHullMod() {
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
-        var member = ship?.fleetMember ?: return
+        var member = ship?.mutableStats?.fleetMember ?: return
         var fleet = member.fleetData?.fleet ?: return
         var data = SCUtils.getFleetData(fleet)
 
-        var skills = SCUtils.getPlayerData().getAllActiveSkillsPlugins()
+        var skills = SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()
         for (skill in skills) {
             skill.applyEffectsAfterShipCreation(data, ship, ship!!.variant, "${id}_${skill.getId()}")
         }
@@ -53,18 +53,18 @@ class SCControllerHullmod : BaseHullMod() {
         var fleet = member.fleetData?.fleet ?: return
         var data = SCUtils.getFleetData(fleet)
 
-        var skills = SCUtils.getPlayerData().getAllActiveSkillsPlugins()
+        var skills = SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()
         for (skill in skills) {
             skill.applyEffectsBeforeShipCreation(data, stats, stats!!.variant, hullSize, "${id}_${skill.getId()}")
         }
     }
 
     override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
-        var member = ship?.fleetMember ?: return
+        var member = ship?.mutableStats?.fleetMember ?: return
         var fleet = member.fleetData?.fleet ?: return
         var data = SCUtils.getFleetData(fleet)
 
-        var skills = SCUtils.getPlayerData().getAllActiveSkillsPlugins()
+        var skills = SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()
         for (skill in skills) {
             skill.applyEffectsToFighterSpawnedByShip(data, fighter, ship, "${id}_${skill.getId()}")
         }
@@ -74,7 +74,7 @@ class SCControllerHullmod : BaseHullMod() {
         var fleet = member?.fleetData?.fleet ?: return
         var data = SCUtils.getFleetData(fleet)
 
-        var skills = SCUtils.getPlayerData().getAllActiveSkillsPlugins()
+        var skills = SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()
         for (skill in skills) {
             skill.advanceInCampaign(data, member, amount)
         }
@@ -85,7 +85,7 @@ class SCControllerHullmod : BaseHullMod() {
         var fleet = member.fleetData?.fleet ?: return
         var data = SCUtils.getFleetData(fleet)
 
-        var skills = SCUtils.getPlayerData().getAllActiveSkillsPlugins()
+        var skills = SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()
         for (skill in skills) {
             skill.advanceInCombat(data, ship, amount)
         }

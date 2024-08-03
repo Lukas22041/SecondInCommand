@@ -1,6 +1,7 @@
 package second_in_command.skills.wolfpack
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
@@ -16,8 +17,7 @@ class LowProfile : SCBaseSkillPlugin() {
         return "all ships in the fleet"
     }
 
-    fun getFleetDP() : Float {
-        var fleet = Global.getSector().playerFleet
+    fun getFleetDP(fleet: CampaignFleetAPI) : Float {
 
         var DP = 0f
         for (member in fleet.fleetData.membersListCopy) {
@@ -27,14 +27,14 @@ class LowProfile : SCBaseSkillPlugin() {
         return DP
     }
 
-    fun getBonus() : Float {
-       return 0.3f * getFleetDP().levelBetween(0f, 240f)
+    fun getBonus(fleet: CampaignFleetAPI) : Float {
+       return 0.3f * getFleetDP(fleet).levelBetween(0f, 240f)
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        var DP = getFleetDP().toInt()
-        var bonus = (getBonus() * 100).toInt()
+        var DP = getFleetDP(data.fleet).toInt()
+        var bonus = (getBonus(data.fleet) * 100).toInt()
 
         tooltip.addPara("Reduces the sensor profile of the fleet based on how many frigates and destroyers are in the fleet", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - The increase is between 0%%-30%% based on the amount of of frigates and destroyers in the fleet",0f, Misc.getTextColor(), Misc.getHighlightColor(), "0%","30%")
@@ -48,7 +48,7 @@ class LowProfile : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-        Global.getSector().playerFleet.stats.detectedRangeMod.modifyMult("sc_low_profile", 1f-getBonus(), "Low profile")
+        data.fleet.stats.detectedRangeMod.modifyMult("sc_low_profile", 1f-getBonus(data.fleet), "Low profile")
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
@@ -56,7 +56,7 @@ class LowProfile : SCBaseSkillPlugin() {
     }
 
     override fun onDeactivation(data: SCData) {
-        Global.getSector().playerFleet.stats.detectedRangeMod.unmodify("sc_low_profile")
+       data.fleet.stats.detectedRangeMod.unmodify("sc_low_profile")
     }
 
 }

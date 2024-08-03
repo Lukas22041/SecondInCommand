@@ -65,15 +65,15 @@ class CrewTraining : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-        var player = Global.getSector().characterData.person
-        player.stats.officerNumber.modifyFlat("sc_crew_training", 2f)
+        data.commander.stats.officerNumber.modifyFlat("sc_crew_training", 2f)
     }
 
 
     override fun onDeactivation(data: SCData) {
-        var player = Global.getSector().characterData.person
-        player.stats.officerNumber.unmodify("sc_crew_training")
+        data.commander.stats.officerNumber.unmodify("sc_crew_training")
 
-        removeOfficersOverTheLimit()
+        if (!data.isNPC) {
+            removeOfficersOverTheLimit()
+        }
     }
 }

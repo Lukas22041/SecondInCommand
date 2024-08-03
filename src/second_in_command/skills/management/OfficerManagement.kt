@@ -31,16 +31,17 @@ class OfficerManagement : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-        var player = Global.getSector().characterData.person
-        player.stats.officerNumber.modifyFlat("sc_officer_management", 2f)
+        data.commander.stats.officerNumber.modifyFlat("sc_officer_management", 2f)
     }
 
     override fun onDeactivation(data: SCData) {
 
-        var player = Global.getSector().characterData.person
-        player.stats.officerNumber.unmodify("sc_officer_management")
+        data.commander.stats.officerNumber.unmodify("sc_officer_management")
 
-        CrewTraining.removeOfficersOverTheLimit()
+        if (!data.isNPC) {
+            CrewTraining.removeOfficersOverTheLimit()
+        }
+
     }
 
 }

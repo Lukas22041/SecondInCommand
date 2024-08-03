@@ -35,75 +35,77 @@ class OfficerTraining : SCBaseSkillPlugin() {
 
     override fun advance(data: SCData, amount: Float) {
 
-        Global.getSector().characterData.person.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).modifyFlat("sc_officer_training", 2f)
+        data.commander.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).modifyFlat("sc_officer_training", 2f)
 
     }
 
 
     override fun onActivation(data: SCData) {
 
-        Global.getSector().characterData.person.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).modifyFlat("sc_officer_training", 2f)
+        data.commander.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).modifyFlat("sc_officer_training", 2f)
 
-        var officers = Global.getSector().playerFleet.fleetData.officersCopy.map { it.person }
-        for (officer in officers) {
+        if (!data.isNPC) {
+            var officers = Global.getSector().playerFleet.fleetData.officersCopy.map { it.person }
+            for (officer in officers) {
 
 
-            var map = officer.memoryWithoutUpdate.get("\$sc_officer_training_inactive") as HashMap<String, Float>? ?: continue
+                var map = officer.memoryWithoutUpdate.get("\$sc_officer_training_inactive") as HashMap<String, Float>? ?: continue
 
-            for ((skill, level) in map) {
-                officer.stats.setSkillLevel(skill, level)
+                for ((skill, level) in map) {
+                    officer.stats.setSkillLevel(skill, level)
+                }
+
+                officer.memoryWithoutUpdate.set("\$sc_officer_training_inactive", null)
+
+                officer.stats.setSkillLevel("sc_inactive", 0f)
             }
-
-            officer.memoryWithoutUpdate.set("\$sc_officer_training_inactive", null)
-
-            officer.stats.setSkillLevel("sc_inactive", 0f)
         }
+
+
 
     }
 
     override fun onDeactivation(data: SCData) {
 
-        Global.getSector().characterData.person.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).unmodify("sc_officer_training")
+        data.commander.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).unmodify("sc_officer_training")
 
-        var maxLevel = Global.getSector().characterData.person.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).computeEffective(Global.getSettings().getFloat("officerMaxLevel"))
+        if (!data.isNPC) {
+            var maxLevel = Global.getSector().characterData.person.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).computeEffective(Global.getSettings().getFloat("officerMaxLevel"))
 
-        var officers = Global.getSector().playerFleet.fleetData.officersCopy.map { it.person }
-        for (officer in officers) {
+            var officers = Global.getSector().playerFleet.fleetData.officersCopy.map { it.person }
+            for (officer in officers) {
 
-            var anyRemoved = false
+                var anyRemoved = false
 
-            if (officer.memoryWithoutUpdate.contains(MemFlags.OFFICER_MAX_LEVEL)) continue
+                if (officer.memoryWithoutUpdate.contains(MemFlags.OFFICER_MAX_LEVEL)) continue
 
-            var map = HashMap<String, Float>()
+                var map = HashMap<String, Float>()
 
-            var stats = officer.stats
+                var stats = officer.stats
 
-            var skills = officer.stats.skillsCopy
-            var filtered = skills.filter { it.level > 0f && !it.skill.isAptitudeEffect }.toMutableList()
+                var skills = officer.stats.skillsCopy
+                var filtered = skills.filter { it.level > 0f && !it.skill.isAptitudeEffect }.toMutableList()
 
-            filtered = filtered.filter { !it.skill.hasTag("npc_only") && !it.skill.hasTag("player_only") && !it.skill.hasTag("ai_core_only")}.toMutableList()
+                filtered = filtered.filter { !it.skill.hasTag("npc_only") && !it.skill.hasTag("player_only") && !it.skill.hasTag("ai_core_only")}.toMutableList()
 
-            while (filtered.count() > maxLevel) {
-                if (filtered.isEmpty()) break
-                anyRemoved = true
+                while (filtered.count() > maxLevel) {
+                    if (filtered.isEmpty()) break
+                    anyRemoved = true
 
-                var last = filtered.last()
-                filtered.remove(last)
+                    var last = filtered.last()
+                    filtered.remove(last)
 
-                map.put(last.skill.id, last.level)
+                    map.put(last.skill.id, last.level)
 
-                last.level = 0f
-            }
+                    last.level = 0f
+                }
 
-            officer.memoryWithoutUpdate.set("\$sc_officer_training_inactive", map)
+                officer.memoryWithoutUpdate.set("\$sc_officer_training_inactive", map)
 
-            if (anyRemoved) {
-                officer.stats.setSkillLevel("sc_inactive", 1f)
+                if (anyRemoved) {
+                    officer.stats.setSkillLevel("sc_inactive", 1f)
+                }
             }
         }
-
-
     }
-
-
 }

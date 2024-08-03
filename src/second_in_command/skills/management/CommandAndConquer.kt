@@ -28,27 +28,26 @@ class CommandAndConquer : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
-        var player = Global.getSector().characterData.person
-        player.stats.commandPoints.modifyFlat("sc_command_and_conquer", 3f)
-        player.stats.dynamic.getMod(Stats.COMMAND_POINT_RATE_FLAT).modifyFlat("sc_command_and_conquer", 0.5f)
+        data.commander.stats.commandPoints.modifyFlat("sc_command_and_conquer", 3f)
+        data.commander.stats.dynamic.getMod(Stats.COMMAND_POINT_RATE_FLAT).modifyFlat("sc_command_and_conquer", 0.5f)
 
 
     }
 
     override fun advance(data: SCData, amount: Float) {
 
-        var player = Global.getSector().characterData.person
-        player.stats.commandPoints.modifyFlat("sc_command_and_conquer", 3f)
-        player.stats.dynamic.getMod(Stats.COMMAND_POINT_RATE_FLAT).modifyFlat("sc_command_and_conquer", 0.5f)
+
+        data.commander.stats.commandPoints.modifyFlat("sc_command_and_conquer", 3f)
+        data.commander.stats.dynamic.getMod(Stats.COMMAND_POINT_RATE_FLAT).modifyFlat("sc_command_and_conquer", 0.5f)
 
 
     }
 
     override fun onDeactivation(data: SCData) {
 
-        var player = Global.getSector().characterData.person
-        player.stats.commandPoints.unmodify("sc_command_and_conquer")
-        player.stats.dynamic.getMod(Stats.COMMAND_POINT_RATE_FLAT).unmodify("sc_command_and_conquer")
+
+        data.commander.stats.commandPoints.unmodify("sc_command_and_conquer")
+        data.commander.stats.dynamic.getMod(Stats.COMMAND_POINT_RATE_FLAT).unmodify("sc_command_and_conquer")
     }
 
 }

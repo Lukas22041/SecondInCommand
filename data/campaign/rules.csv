@@ -25,3 +25,7 @@ NGCAddStandardStartingScript
 SCStoreSkillpoints false
 NGCDone",,,
 ,,,,,,
+#Encounter,,,,,,
+sc_FleetEncounter,BeginFleetEncounter,!$player.sc_fleet_encountered,"$player.sc_fleet_encountered = true 0
+FireBest BeginFleetEncounter
+",Test SC Text,,

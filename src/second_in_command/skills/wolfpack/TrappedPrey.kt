@@ -29,9 +29,10 @@ class TrappedPrey : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
-        if (!Global.getCombatEngine().customData.containsKey("sc_added_trapped_prey")) {
-            Global.getCombatEngine().customData.set("sc_added_trapped_prey", true)
-            Global.getCombatEngine().addPlugin(TrappedPreyScript(/*ship!!.owner*/0))
+        var owner = ship!!.owner
+        if (!Global.getCombatEngine().customData.containsKey("sc_added_trapped_prey_$owner")) {
+            Global.getCombatEngine().customData.set("sc_added_trapped_prey_$owner", true)
+            Global.getCombatEngine().addPlugin(TrappedPreyScript(/*ship!!.owner*/owner))
         }
     }
 

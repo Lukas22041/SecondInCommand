@@ -38,55 +38,58 @@ class BestOfTheBest : SCBaseSkillPlugin() {
 
     override fun onActivation(data: SCData) {
 
-        for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
-            var stats = member.stats
-            var variant = member.variant
+        if (!data.isNPC) {
+            for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
+                var stats = member.stats
+                var variant = member.variant
 
-            stats!!.dynamic.getMod(Stats.MAX_PERMANENT_HULLMODS_MOD).modifyFlat("sc_best_of_the_best", 1f)
+                stats!!.dynamic.getMod(Stats.MAX_PERMANENT_HULLMODS_MOD).modifyFlat("sc_best_of_the_best", 1f)
 
 
-            for (tag in ArrayList(variant.tags)) {
-                if (tag.startsWith("sc_inactive_smods_")) {
-                    var hmodId = tag.replace("sc_inactive_smods_", "")
+                for (tag in ArrayList(variant.tags)) {
+                    if (tag.startsWith("sc_inactive_smods_")) {
+                        var hmodId = tag.replace("sc_inactive_smods_", "")
 
-                    variant.addPermaMod(hmodId, true)
-                    variant.removeTag(tag)
+                        variant.addPermaMod(hmodId, true)
+                        variant.removeTag(tag)
+                    }
                 }
-            }
 
-            variant.removePermaMod("sc_inactive_smods")
+                variant.removePermaMod("sc_inactive_smods")
+            }
         }
+
+
     }
 
     override fun onDeactivation(data: SCData) {
 
-        var base = Global.getSettings().getFloat("maxPermanentHullmods")
+        if (!data.isNPC) {
+            var base = Global.getSettings().getFloat("maxPermanentHullmods")
 
-        for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
-            var stats = member.stats
-            stats!!.dynamic.getMod(Stats.MAX_PERMANENT_HULLMODS_MOD).unmodify("sc_best_of_the_best")
+            for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
+                var stats = member.stats
+                stats!!.dynamic.getMod(Stats.MAX_PERMANENT_HULLMODS_MOD).unmodify("sc_best_of_the_best")
 
-            var maxSmods = stats.dynamic.getMod(Stats.MAX_PERMANENT_HULLMODS_MOD).computeEffective(base)
+                var maxSmods = stats.dynamic.getMod(Stats.MAX_PERMANENT_HULLMODS_MOD).computeEffective(base)
 
-            var variant = member.variant
+                var variant = member.variant
 
-            var any = false
-            while (variant.sMods.count() > maxSmods) {
-                var last = variant.sMods.lastOrNull() ?: break
-                any = true
-                variant.removePermaMod(last)
-                variant.removeMod(last)
+                var any = false
+                while (variant.sMods.count() > maxSmods) {
+                    var last = variant.sMods.lastOrNull() ?: break
+                    any = true
+                    variant.removePermaMod(last)
+                    variant.removeMod(last)
 
-                variant.addTag("sc_inactive_smods_$last")
+                    variant.addTag("sc_inactive_smods_$last")
+                }
+
+                if (any) {
+                    variant.addPermaMod("sc_inactive_smods")
+                }
+
             }
-
-            if (any) {
-                variant.addPermaMod("sc_inactive_smods")
-            }
-
         }
-
     }
-
-
 }
