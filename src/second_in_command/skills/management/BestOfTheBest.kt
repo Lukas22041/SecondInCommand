@@ -5,9 +5,9 @@ import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.impl.campaign.ids.Stats
-import com.fs.starfarer.api.impl.campaign.skills.BestOfTheBest
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
 class BestOfTheBest : SCBaseSkillPlugin() {
@@ -16,7 +16,7 @@ class BestOfTheBest : SCBaseSkillPlugin() {
         return "all ships in the fleet"
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("Able to build 1 more permanent hullmod* in to ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - If this officer is unassigned, s-mods over the limit are made inactive", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
@@ -28,15 +28,19 @@ class BestOfTheBest : SCBaseSkillPlugin() {
                 "", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "${Misc.MAX_PERMA_MODS}")
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData,
+                                                stats: MutableShipStatsAPI?,
+                                                variant: ShipVariantAPI,
+                                                hullSize: ShipAPI.HullSize?,
+                                                id: String?) {
         stats!!.dynamic.getMod(Stats.MAX_PERMANENT_HULLMODS_MOD).modifyFlat("sc_best_of_the_best", 1f)
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
     }
 
-    override fun onActivation() {
+    override fun onActivation(data: SCData) {
 
         for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
             var stats = member.stats
@@ -58,7 +62,7 @@ class BestOfTheBest : SCBaseSkillPlugin() {
         }
     }
 
-    override fun onDeactivation() {
+    override fun onDeactivation(data: SCData) {
 
         var base = Global.getSettings().getFloat("maxPermanentHullmods")
 

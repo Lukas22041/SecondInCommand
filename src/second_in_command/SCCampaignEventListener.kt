@@ -1,6 +1,5 @@
 package second_in_command
 
-import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import org.lazywizard.lazylib.MathUtils
 import second_in_command.misc.baseOrModSpec
@@ -17,7 +16,7 @@ class SCCampaignEventListener : BaseCampaignEventListener(false) {
 
         var level = totalFP.toFloat().levelBetween(0f, 400f)
 
-        var data = SCUtils.getSCData()
+        var data = SCUtils.getPlayerData()
 
         for (officer in data.getOfficersInFleet()) {
             var xp = MathUtils.getRandomNumberInRange(2000f, 2500f)

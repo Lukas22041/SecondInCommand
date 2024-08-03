@@ -9,6 +9,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.skills.NeuralLinkScript
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
 class NeuralLink : SCBaseSkillPlugin() {
@@ -17,7 +18,7 @@ class NeuralLink : SCBaseSkillPlugin() {
         return "ships with the Neural interface hullmod"
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         val control = Global.getSettings().getControlStringForEnumName(NeuralLinkScript.TRANSFER_CONTROL)
         val desc = Global.getSettings().getControlDescriptionForEnumName(NeuralLinkScript.TRANSFER_CONTROL)
@@ -36,13 +37,17 @@ class NeuralLink : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData,
+                                                stats: MutableShipStatsAPI?,
+                                                variant: ShipVariantAPI,
+                                                hullSize: ShipAPI.HullSize?,
+                                                id: String?) {
 
 
 
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
 
 
@@ -50,7 +55,7 @@ class NeuralLink : SCBaseSkillPlugin() {
 
 
 
-    override fun onActivation() {
+    override fun onActivation(data: SCData) {
         var faction = Global.getSector().playerFaction
         if (!faction.knownHullMods.contains(HullMods.NEURAL_INTEGRATOR)) {
             faction.addKnownHullMod(HullMods.NEURAL_INTEGRATOR)
@@ -63,11 +68,11 @@ class NeuralLink : SCBaseSkillPlugin() {
     }
 
     //In case vanilla neural link deactivates it
-    override fun advance(amount: Float) {
+    override fun advance(data: SCData, amount: Float) {
         Global.getSector().characterData.person.stats.dynamic.getMod(Stats.HAS_NEURAL_LINK).modifyFlat("sc_neural_link", 1f)
     }
 
-    override fun onDeactivation() {
+    override fun onDeactivation(data: SCData) {
         Global.getSector().characterData.person.stats.dynamic.getMod(Stats.HAS_NEURAL_LINK).unmodify("sc_neural_link")
     }
 

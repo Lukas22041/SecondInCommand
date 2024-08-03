@@ -110,7 +110,7 @@ class SCOfficerHireDialogDelegate(var original: InteractionDialogPlugin, var per
             AddRemoveCommodity.addCreditsLossText(cost.toInt(), dialog.textPanel)
             dialog.textPanel.addParagraph("${person.nameString} (level ${scOfficer.getCurrentLevel()}) has joined your fleet",  Misc.getPositiveHighlightColor())
 
-            SCUtils.getSCData().addOfficerToFleet(scOfficer)
+            SCUtils.getPlayerData().addOfficerToFleet(scOfficer)
 
             dialog.interactionTarget.market.commDirectory.removePerson(person)
 

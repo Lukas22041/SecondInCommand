@@ -1,6 +1,7 @@
 package second_in_command
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import second_in_command.specs.SCOfficer
 
 object SCUtils {
@@ -9,11 +10,20 @@ object SCUtils {
     var DATA_KEY = "\$sc_stored_data"
 
     @JvmStatic
-    fun getSCData() : SCData {
-        var data = Global.getSector().characterData.memoryWithoutUpdate.get(DATA_KEY) as SCData?
+    fun getPlayerData() : SCData {
+        var data = Global.getSector().playerFleet.memoryWithoutUpdate.get(DATA_KEY) as SCData?
         if (data == null) {
-            data = SCData(Global.getSector().characterData.person)
-            Global.getSector().characterData.memoryWithoutUpdate.set(DATA_KEY, data)
+            data = SCData(Global.getSector().playerFleet)
+            Global.getSector().playerFleet.memoryWithoutUpdate.set(DATA_KEY, data)
+        }
+        return data
+    }
+
+    fun getFleetData(fleet: CampaignFleetAPI) : SCData{
+        var data = fleet.memoryWithoutUpdate.get(DATA_KEY) as SCData?
+        if (data == null) {
+            data = SCData(fleet)
+            fleet.memoryWithoutUpdate.set(DATA_KEY, data)
         }
         return data
     }
@@ -25,16 +35,18 @@ object SCUtils {
         return officer
     }
 
-    @JvmStatic
+    /*@JvmStatic
     fun isSkillActive(skillId: String) : Boolean {
-        return getSCData().isSkillActive(skillId)
-    }
+        return getPlayerData().isSkillActive(skillId)
+    }*/
 
-    fun changeOfficerAptitude(officer: SCOfficer, aptitudeId: String) {
+    fun changeOfficerAptitude(fleet: CampaignFleetAPI, officer: SCOfficer, aptitudeId: String) {
+        var data = getFleetData(fleet)
+
         if (officer.isAssigned()) {
             var skills = officer.getActiveSkillPlugins()
             for (skill in skills) {
-                skill.onDeactivation()
+                skill.onDeactivation(data)
             }
         }
         officer.activeSkillIDs.clear()
@@ -44,7 +56,7 @@ object SCUtils {
         if (officer.isAssigned()) {
             var skills = officer.getActiveSkillPlugins()
             for (skill in skills) {
-                skill.onActivation()
+                skill.onActivation(data)
             }
         }
     }
@@ -60,6 +72,7 @@ object SCUtils {
         return bonus
     }
 
+    @JvmStatic
     private fun getThresholdBasedRoundedBonus(maxBonus: Float, value: Float, threshold: Float): Float {
         var bonus = maxBonus * threshold / Math.max(value, threshold)
         if (bonus > 0 && bonus < 1) bonus = 1f

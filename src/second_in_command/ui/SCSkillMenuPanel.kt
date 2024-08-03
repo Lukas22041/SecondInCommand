@@ -9,7 +9,6 @@ import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
 import second_in_command.SCData
-import second_in_command.misc.baseOrModSpec
 import second_in_command.misc.clearChildren
 import second_in_command.misc.getHeight
 import second_in_command.misc.getWidth
@@ -88,12 +87,6 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
 
     }
 
-    fun addPlayerAptitudePanel() {
-        var playerPanel = SCPlayerAptitudePanel(this, data)
-        playerPanel.init()
-
-
-    }
 
     fun addAptitudePanel() {
 
@@ -183,7 +176,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
 
                     if (Global.getSector().playerFleet?.fleetData != null) {
                         for (skill in skills) {
-                            skill.onDeactivation()
+                            skill.onDeactivation(data)
                         }
                         Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
                     }
@@ -238,7 +231,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
 
         var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())
         var originSkillElement = SkillWidgetElement(originSkill!!.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), subelement, 72f, 72f)
-        subelement.addTooltipTo(SCSkillTooltipCreator(originSkill.getPlugin(), aptitudePlugin, 0, false), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
+        subelement.addTooltipTo(SCSkillTooltipCreator(data, originSkill.getPlugin(), aptitudePlugin, 0, false), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
         //originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
         originSkillElement.elementPanel.position.rightOfMid(background.elementPanel, 20f)
 
@@ -281,7 +274,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
                 section.activeSkillsInUI.add(skillElement)
                 usedWidth += 72f
 
-                var tooltip = SCSkillTooltipCreator(skillPlugin, aptitudePlugin, section.requiredPreviousSkills, !section.canChooseMultiple)
+                var tooltip = SCSkillTooltipCreator(data, skillPlugin, aptitudePlugin, section.requiredPreviousSkills, !section.canChooseMultiple)
                 subelement.addTooltipTo(tooltip, skillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
                 section.tooltips.add(tooltip)
 
@@ -425,7 +418,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
 
                 if (Global.getSector().playerFleet?.fleetData != null) {
                     for (skill in skills) {
-                        skill.onActivation()
+                        skill.onActivation(data)
                     }
                     Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
                 }

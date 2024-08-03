@@ -6,6 +6,7 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCData
 import second_in_command.misc.levelBetween
 import second_in_command.specs.SCBaseSkillPlugin
 
@@ -30,7 +31,7 @@ class Spotters : SCBaseSkillPlugin() {
         return 0.2f * getFleetDP().levelBetween(0f, 120f)
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("All frigates gain an additional 1000 units of in-combat vision range", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - This makes them able to reveal opponents from further distances",0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
@@ -47,23 +48,27 @@ class Spotters : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData,
+                                                stats: MutableShipStatsAPI?,
+                                                variant: ShipVariantAPI,
+                                                hullSize: ShipAPI.HullSize?,
+                                                id: String?) {
         if (hullSize == ShipAPI.HullSize.FRIGATE) {
             stats!!.sightRadiusMod.modifyFlat(id, 1000f)
         }
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
 
 
     }
 
-    override fun advance(amount: Float) {
+    override fun advance(data: SCData, amount: Float) {
         Global.getSector().playerFleet.stats.sensorRangeMod.modifyMult("sc_spotters", 1f+getBonus(), "Spotters")
     }
 
-    override fun onDeactivation() {
+    override fun onDeactivation(data: SCData) {
         Global.getSector().playerFleet.stats.sensorRangeMod.unmodify("sc_spotters")
     }
 }

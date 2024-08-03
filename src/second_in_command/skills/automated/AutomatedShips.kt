@@ -2,6 +2,7 @@ package second_in_command.skills.automated
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.AICoreOfficerPlugin
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.FleetDataAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
@@ -12,6 +13,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.hullmods.Automated
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCData
 import second_in_command.SCUtils
 import second_in_command.skills.technology.MakeshiftDrones
 import second_in_command.specs.SCBaseSkillPlugin
@@ -24,12 +26,12 @@ class AutomatedShips : SCBaseSkillPlugin() {
         var MAX_CR_BONUS = 100f
         var BASE_POINTS = 120f
 
-        fun getMaximumPoints() : Float {
+        fun getMaximumPoints(fleet: CampaignFleetAPI) : Float {
             var points = 0f
-            if (SCUtils.isSkillActive("sc_automated_automated_ships")) points += BASE_POINTS
-            if (SCUtils.isSkillActive("sc_technology_makeshift_drones")) points += MakeshiftDrones.BASE_POINTS
-            if (SCUtils.isSkillActive("sc_automated_specialised_equipment")) points += SpecialisedEquipment.points
-            if (SCUtils.isSkillActive("sc_automated_expertise")) points += AutonomousExpertise.points
+            if (SCUtils.getFleetData(fleet).isSkillActive("sc_automated_automated_ships")) points += BASE_POINTS
+            if (SCUtils.getFleetData(fleet).isSkillActive("sc_technology_makeshift_drones")) points += MakeshiftDrones.BASE_POINTS
+            if (SCUtils.getFleetData(fleet).isSkillActive("sc_automated_specialised_equipment")) points += SpecialisedEquipment.points
+            if (SCUtils.getFleetData(fleet).isSkillActive("sc_automated_expertise")) points += AutonomousExpertise.points
             return points
         }
 
@@ -50,7 +52,7 @@ class AutomatedShips : SCBaseSkillPlugin() {
             return Math.round(points).toFloat()
         }
 
-        fun createTooltip(tooltip: TooltipMakerAPI, dp: Float, makeshift: Boolean) {
+        fun createTooltip(data: SCData, tooltip: TooltipMakerAPI, dp: Float, makeshift: Boolean) {
             val alpha = AICoreOfficerPluginImpl.ALPHA_MULT.roundToInt()
             val beta = AICoreOfficerPluginImpl.BETA_MULT.roundToInt()
             val gamma = AICoreOfficerPluginImpl.GAMMA_MULT.roundToInt()
@@ -60,7 +62,7 @@ class AutomatedShips : SCBaseSkillPlugin() {
                 automatedDP = getAutomatedPoints(Global.getSector().playerFleet.fleetData)
             }
 
-            var maxPoints = getMaximumPoints()
+            var maxPoints = getMaximumPoints(data.fleet)
             var bonus = SCUtils.computeThresholdBonus(automatedDP, MAX_CR_BONUS, maxPoints)
 
             tooltip.addPara("Enables the recovery of some automated ships, such as derelict drones", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
@@ -71,7 +73,7 @@ class AutomatedShips : SCBaseSkillPlugin() {
             tooltip.addPara("+${bonus.toInt()}%% combat readiness (maximum ${MAX_CR_BONUS.toInt()}%%); offsets built-in 100%% penalty", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
 
-            if (!isAnyAutoSkillActive()) {
+            if (!isAnyAutoSkillActive(data.fleet)) {
                 maxPoints = dp
             }
 
@@ -113,7 +115,7 @@ class AutomatedShips : SCBaseSkillPlugin() {
         }
 
 
-        fun applyEffects(skill: String, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+        fun applyEffects(data: SCData, skill: String, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
             if (Misc.isAutomated(stats) && !Automated.isAutomatedNoPenalty(stats)) {
 
                 var automatedDP = 0f
@@ -121,17 +123,17 @@ class AutomatedShips : SCBaseSkillPlugin() {
                     automatedDP = getAutomatedPoints(Global.getSector().playerFleet.fleetData)
                 }
 
-                var maxPoints = getMaximumPoints()
+                var maxPoints = getMaximumPoints(data.fleet)
                 var bonus = SCUtils.computeThresholdBonus(automatedDP, MAX_CR_BONUS, maxPoints)
 
                 stats!!.maxCombatReadiness.modifyFlat(id, bonus * 0.01f, "${skill} skill")
             }
         }
 
-        fun isAnyAutoSkillActive() : Boolean {
+        fun isAnyAutoSkillActive(fleet: CampaignFleetAPI) : Boolean {
 
-            var auto = SCUtils.isSkillActive("sc_automated_automated_ships")
-            var makeshift = SCUtils.isSkillActive("sc_technology_makeshift_drones")
+            var auto = SCUtils.getFleetData(fleet).isSkillActive("sc_automated_automated_ships")
+            var makeshift = SCUtils.getFleetData(fleet).isSkillActive("sc_technology_makeshift_drones")
 
             return auto || makeshift
         }
@@ -142,29 +144,33 @@ class AutomatedShips : SCBaseSkillPlugin() {
         return "all automated ships"
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        AutomatedShips.createTooltip(tooltip, BASE_POINTS, false)
-
-    }
-
-
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        applyEffects(getName(), stats, variant, hullSize, id)
+        AutomatedShips.createTooltip(data, tooltip, BASE_POINTS, false)
 
     }
 
-    override fun advance(amount: Float) {
-        Misc.getAllowedRecoveryTags().add(Tags.AUTOMATED_RECOVERABLE)
+
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?,variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+        applyEffects(data, getName(), stats, variant, hullSize, id)
+
     }
 
-    override fun onActivation() {
-        Misc.getAllowedRecoveryTags().add(Tags.AUTOMATED_RECOVERABLE)
+    override fun advance(data: SCData, amount: Float) {
+        if (!data.isNPC) {
+            Misc.getAllowedRecoveryTags().add(Tags.AUTOMATED_RECOVERABLE)
+        }
     }
 
-    override fun onDeactivation() {
+    override fun onActivation(data: SCData) {
+        if (!data.isNPC) {
+            Misc.getAllowedRecoveryTags().add(Tags.AUTOMATED_RECOVERABLE)
+        }
+    }
 
-        if (!isAnyAutoSkillActive()) {
+    override fun onDeactivation(data: SCData) {
+
+        if (!isAnyAutoSkillActive(data.fleet) && !data.isNPC) {
             Misc.getAllowedRecoveryTags().remove(Tags.AUTOMATED_RECOVERABLE)
         }
 

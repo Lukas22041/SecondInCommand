@@ -2,14 +2,12 @@ package second_in_command.skills.wolfpack
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
-import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
-import org.lazywizard.lazylib.combat.AIUtils
-import org.lazywizard.lazylib.combat.CombatUtils
+import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
 class TrappedPrey : SCBaseSkillPlugin() {
@@ -18,7 +16,7 @@ class TrappedPrey : SCBaseSkillPlugin() {
         return "opposing ships"
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
         tooltip.addPara("Opposing ships surrounded by at least 2 frigates or destroyers without nearby allies gain several debuffs", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - Their weapon recoil is increased by 20%%",0f, Misc.getTextColor(), Misc.getHighlightColor(), "20%")
         tooltip.addPara("   - Their maximum speed is decreased by 15%%",0f, Misc.getTextColor(), Misc.getHighlightColor(), "15%")
@@ -26,18 +24,22 @@ class TrappedPrey : SCBaseSkillPlugin() {
         tooltip.addPara("   - Their damage taken from all sources is increased by 5%%",0f, Misc.getTextColor(), Misc.getHighlightColor(), "5%")
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData,
+                                                stats: MutableShipStatsAPI?,
+                                                variant: ShipVariantAPI,
+                                                hullSize: ShipAPI.HullSize?,
+                                                id: String?) {
 
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
         if (!Global.getCombatEngine().customData.containsKey("sc_added_trapped_prey")) {
             Global.getCombatEngine().customData.set("sc_added_trapped_prey", true)
             Global.getCombatEngine().addPlugin(TrappedPreyScript(/*ship!!.owner*/0))
         }
     }
 
-    override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
+    override fun advanceInCombat(data: SCData, ship: ShipAPI?, amount: Float) {
 
     }
 }

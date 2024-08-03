@@ -24,7 +24,6 @@ class SkillPanelReplacerScript : EveryFrameScript {
     override fun advance(amount: Float) {
 
         if (!Global.getSector().isPaused) return
-        if (!SCUtils.getSCData().isModEnabled) return
 
         var state = AppDriver.getInstance().currentState
         if (state !is CampaignState) return
@@ -54,7 +53,7 @@ class SkillPanelReplacerScript : EveryFrameScript {
 
         parent.removeComponent(panel)
 
-        var scData = SCUtils.getSCData()
+        var scData = SCUtils.getPlayerData()
         var skillPanel = SCSkillMenuPanel(parent, scData, docked, false)
         skillPanel.init()
     }

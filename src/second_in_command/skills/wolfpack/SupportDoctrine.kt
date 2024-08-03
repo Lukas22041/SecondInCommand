@@ -9,6 +9,7 @@ import com.fs.starfarer.api.impl.campaign.skills.*
 import com.fs.starfarer.api.impl.campaign.skills.SupportDoctrine
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
 class SupportDoctrine : SCBaseSkillPlugin() {
@@ -20,13 +21,17 @@ class SupportDoctrine : SCBaseSkillPlugin() {
         return "all ships without officers"
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
         tooltip.addPara("Gain non-elite Helmsmanship, Damage Control, Combat Endurance, and Ordnance Expertise", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("Deployment point cost reduced by 20%% or 10, whichever is less", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData,
+                                                stats: MutableShipStatsAPI?,
+                                                variant: ShipVariantAPI,
+                                                hullSize: ShipAPI.HullSize?,
+                                                id: String?) {
         var member = stats!!.fleetMember ?: return
         if (member.captain == null || member.captain.isDefault) {
 
@@ -54,7 +59,7 @@ class SupportDoctrine : SCBaseSkillPlugin() {
         }
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
     }
 

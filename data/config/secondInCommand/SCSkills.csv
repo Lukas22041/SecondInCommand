@@ -1,5 +1,4 @@
 id,name,iconPath,plugin
-sc_combat_aptitude_skill,Piloting,graphics/icons/skills/combat.png,second_in_command.skills.misc.PlaceholderSkill
 ,,,
 #Tactical,,,
 sc_tactical_focused_fire,Focused Fire,graphics/secondInCommand/tactical/focused_fire.png,second_in_command.skills.tactical.FocusedFire

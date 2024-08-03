@@ -5,12 +5,9 @@ import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
-import com.fs.starfarer.api.impl.campaign.ids.HullMods
-import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCUtils
-import second_in_command.misc.baseOrModSpec
 
 class SCControllerHullmod : BaseHullMod() {
 
@@ -41,47 +38,56 @@ class SCControllerHullmod : BaseHullMod() {
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
-        if (!SCUtils.getSCData().isModEnabled) return
+        var member = ship?.fleetMember ?: return
+        var fleet = member.fleetData?.fleet ?: return
+        var data = SCUtils.getFleetData(fleet)
 
-        var skills = SCUtils.getSCData().getAllActiveSkillsPlugins()
+        var skills = SCUtils.getPlayerData().getAllActiveSkillsPlugins()
         for (skill in skills) {
-            skill.applyEffectsAfterShipCreation(ship, ship!!.variant, "${id}_${skill.getId()}")
+            skill.applyEffectsAfterShipCreation(data, ship, ship!!.variant, "${id}_${skill.getId()}")
         }
     }
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
-        if (!SCUtils.getSCData().isModEnabled) return
+        var member = stats?.fleetMember ?: return
+        var fleet = member.fleetData?.fleet ?: return
+        var data = SCUtils.getFleetData(fleet)
 
-        var skills = SCUtils.getSCData().getAllActiveSkillsPlugins()
+        var skills = SCUtils.getPlayerData().getAllActiveSkillsPlugins()
         for (skill in skills) {
-            skill.applyEffectsBeforeShipCreation(stats, stats!!.variant, hullSize, "${id}_${skill.getId()}")
+            skill.applyEffectsBeforeShipCreation(data, stats, stats!!.variant, hullSize, "${id}_${skill.getId()}")
         }
     }
 
     override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
-        if (!SCUtils.getSCData().isModEnabled) return
+        var member = ship?.fleetMember ?: return
+        var fleet = member.fleetData?.fleet ?: return
+        var data = SCUtils.getFleetData(fleet)
 
-        var skills = SCUtils.getSCData().getAllActiveSkillsPlugins()
+        var skills = SCUtils.getPlayerData().getAllActiveSkillsPlugins()
         for (skill in skills) {
-            skill.applyEffectsToFighterSpawnedByShip(fighter, ship, "${id}_${skill.getId()}")
+            skill.applyEffectsToFighterSpawnedByShip(data, fighter, ship, "${id}_${skill.getId()}")
         }
     }
 
     override fun advanceInCampaign(member: FleetMemberAPI?, amount: Float) {
-        if (!SCUtils.getSCData().isModEnabled) return
+        var fleet = member?.fleetData?.fleet ?: return
+        var data = SCUtils.getFleetData(fleet)
 
-        var skills = SCUtils.getSCData().getAllActiveSkillsPlugins()
+        var skills = SCUtils.getPlayerData().getAllActiveSkillsPlugins()
         for (skill in skills) {
-            skill.advanceInCampaign(member, amount)
+            skill.advanceInCampaign(data, member, amount)
         }
     }
 
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
-        if (!SCUtils.getSCData().isModEnabled) return
+        var member = ship?.fleetMember ?: return
+        var fleet = member.fleetData?.fleet ?: return
+        var data = SCUtils.getFleetData(fleet)
 
-        var skills = SCUtils.getSCData().getAllActiveSkillsPlugins()
+        var skills = SCUtils.getPlayerData().getAllActiveSkillsPlugins()
         for (skill in skills) {
-            skill.advanceInCombat(ship, amount)
+            skill.advanceInCombat(data, ship, amount)
         }
     }
 }

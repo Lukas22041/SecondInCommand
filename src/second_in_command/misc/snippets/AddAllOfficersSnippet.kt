@@ -2,11 +2,9 @@ package second_in_command.misc.snippets
 
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import com.fs.starfarer.api.util.WeightedRandomPicker
 import lunalib.lunaDebug.LunaSnippet
 import lunalib.lunaDebug.SnippetBuilder
 import second_in_command.SCUtils
-import second_in_command.specs.SCAptitudeSpec
 import second_in_command.specs.SCSpecStore
 
 class AddAllOfficersSnippet : LunaSnippet() {
@@ -33,7 +31,7 @@ class AddAllOfficersSnippet : LunaSnippet() {
     override fun execute(parameters: MutableMap<String, Any>?, output: TooltipMakerAPI) {
         super.execute(parameters, output)
 
-        var data = SCUtils.getSCData()
+        var data = SCUtils.getPlayerData()
         var aptitudes = SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }
 
         for (aptitude in aptitudes) {

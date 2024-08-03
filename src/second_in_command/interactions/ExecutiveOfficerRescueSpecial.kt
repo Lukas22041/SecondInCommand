@@ -53,7 +53,7 @@ class ExecutiveOfficerRescueSpecialInteraction(var officer: SCOfficer) : BaseSal
             tooltip.addPara("\"${plugin.getDescription()}\"", 0f)
             text.addTooltip()
 
-            SCUtils.getSCData().addOfficerToFleet(officer)
+            SCUtils.getPlayerData().addOfficerToFleet(officer)
 
             isDone = true
             setShowAgain(false)

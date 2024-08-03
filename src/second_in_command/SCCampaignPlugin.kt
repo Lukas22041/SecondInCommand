@@ -18,7 +18,7 @@ class SCCampaignPlugin : BaseCampaignPlugin() {
 
     override fun pickAICoreOfficerPlugin(commodityId: String?): PluginPick<AICoreOfficerPlugin>? {
 
-        if (commodityId == "sc_neural_junction" && SCUtils.isSkillActive("sc_automated_neural_junction")) {
+        if (commodityId == "sc_neural_junction" && SCUtils.getPlayerData().isSkillActive("sc_automated_neural_junction")) {
             return PluginPick<AICoreOfficerPlugin>(object : BaseAICoreOfficerPluginImpl() {
                 override fun createPerson(aiCoreId: String?, factionId: String?, random: Random?): PersonAPI {
                     var player = Global.getSector().playerPerson

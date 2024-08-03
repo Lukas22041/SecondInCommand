@@ -1,41 +1,59 @@
 package second_in_command
 
-import com.fs.starfarer.api.characters.PersonAPI
+import com.fs.starfarer.api.EveryFrameScript
+import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.campaign.FleetInflater
+import com.fs.starfarer.api.campaign.listeners.FleetInflationListener
+import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
 import second_in_command.specs.SCBaseSkillPlugin
 import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
 
-class SCData(var player: PersonAPI) {
+class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript {
 
-    var isModEnabled = true
+
+    var isNPC = false
+    var faction = fleet.faction
 
     private var officers = ArrayList<SCOfficer>()
     private var activeOfficers = ArrayList<SCOfficer?>()
 
     init {
+
+        //So that the fleet itself can advance its skills.
+        fleet.addScript(this)
+
+
         activeOfficers.add(null)
         activeOfficers.add(null)
         activeOfficers.add(null)
+
 
         officers.clear()
 
+        isNPC = fleet != Global.getSector().playerFleet
 
-        //For Beta
-        var aptitudes = SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }
-        for (aptitude in aptitudes) {
-            if (aptitude.getId() == "sc_fake_combat_aptitude") continue
+        if (!isNPC) {
+            //For Beta
+            var aptitudes = SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }
+            for (aptitude in aptitudes) {
+                if (aptitude.getId() == "sc_fake_combat_aptitude") continue
 
-            var officer = SCUtils.createRandomSCOfficer(aptitude.getId())
-            addOfficerToFleet(officer)
+                var officer = SCUtils.createRandomSCOfficer(aptitude.getId())
+                addOfficerToFleet(officer)
+            }
         }
+        else {
+            generateNPCOfficers()
+        }
+    }
 
-       /* officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude1"))
-        officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude2"))
-        officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude2"))
-        officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude2"))
-        officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude2"))
-        officers.add(SCUtils.createRandomSCOfficer("sc_test_aptitude3"))*/
+    fun generateNPCOfficers() {
+
+        //Generate portraits & name based on faction
+
     }
 
     fun getOfficersInFleet() : ArrayList<SCOfficer> {
@@ -69,5 +87,26 @@ class SCData(var player: PersonAPI) {
     fun isSkillActive(skillId: String) : Boolean {
         return getAssignedOfficers().filter { it != null }.flatMap { it!!.getActiveSkillPlugins().map { it.getId() } }.contains(skillId)
     }
+
+
+    override fun isDone(): Boolean {
+        return false
+    }
+
+
+    override fun runWhilePaused(): Boolean {
+        return true
+    }
+
+
+    override fun advance(amount: Float) {
+
+        for (skill in getAllActiveSkillsPlugins()) {
+            skill.advance(this, amount)
+        }
+
+    }
+
+
 
 }

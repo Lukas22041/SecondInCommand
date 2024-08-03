@@ -11,12 +11,6 @@ $personName looks you over appraisingly.
 sc_nex_NGCDone,NewGameOptionSelected,"$option == nex_NGCDone score:100000
 !$sc_do_not_trigger_again","SCStoreSkillpoints true
 ",,,
-#sc_ngcTutorialPicked,NewGameOptionSelected,"$option == ngcTutorial  score:100000
-!$sc_do_not_trigger_again","SCStoreSkillpoints true
-",,,
-#sc_ngcSkipTutorialPicked,NewGameOptionSelected,"$option == ngcSkip  score:100000
-!$sc_do_not_trigger_again","SCStoreSkillpoints true
-",,,
 "Override Vanilla Start for now, hopefully no conflicts, but cant skip the screen otherwise",,,,,,
 ngcTutorialPicked,NewGameOptionSelected,$option == ngcTutorial,"NGCSetStartingLocation Galatia 1000 -15000
 NGCAddStandardStartingScript

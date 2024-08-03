@@ -97,7 +97,7 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
     }
 
     fun isAssigned() : Boolean {
-        return SCUtils.getSCData().getAssignedOfficers().contains(this)
+        return SCUtils.getPlayerData().getAssignedOfficers().contains(this)
     }
 
 

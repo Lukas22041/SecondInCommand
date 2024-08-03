@@ -7,6 +7,7 @@ import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
 class Jumpstart : SCBaseSkillPlugin() {
@@ -15,7 +16,7 @@ class Jumpstart : SCBaseSkillPlugin() {
         return "all frigates and destroyers"
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
         tooltip.addPara("Frigates and destroyers receive increased stats for the first minute after combat began", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - 50%% faster objective capture rate",0f, Misc.getTextColor(), Misc.getHighlightColor(), "50%")
         tooltip.addPara("   - 20%% increased max speed",0f, Misc.getTextColor(), Misc.getHighlightColor(), "20%")
@@ -23,15 +24,19 @@ class Jumpstart : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData,
+                                                stats: MutableShipStatsAPI?,
+                                                variant: ShipVariantAPI,
+                                                hullSize: ShipAPI.HullSize?,
+                                                id: String?) {
 
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
     }
 
-    override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
+    override fun advanceInCombat(data: SCData, ship: ShipAPI?, amount: Float) {
         if (!ship!!.isFrigate && !ship.isDestroyer) return
 
         var time = Global.getCombatEngine().getTotalElapsedTime(false)

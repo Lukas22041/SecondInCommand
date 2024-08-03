@@ -6,9 +6,9 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Stats
-import com.fs.starfarer.api.impl.campaign.skills.OfficerTraining
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
 class OfficerTraining : SCBaseSkillPlugin() {
@@ -17,7 +17,7 @@ class OfficerTraining : SCBaseSkillPlugin() {
         return "fleet"
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
         tooltip.addPara("+2 to maximum level of officers under your command", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - If this executive officer is unassigned, any officer over the level limit will have some skills made inactive", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
         tooltip.addPara("   - Inactive skills can be restored by re-assigning this officer", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
@@ -25,25 +25,22 @@ class OfficerTraining : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI,  hullSize: ShipAPI.HullSize?, id: String?) {
 
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
     }
 
-    override fun advance(amount: Float) {
-        super.advance(amount)
-
+    override fun advance(data: SCData, amount: Float) {
 
         Global.getSector().characterData.person.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).modifyFlat("sc_officer_training", 2f)
 
     }
 
 
-    override fun onActivation() {
-        super.onActivation()
+    override fun onActivation(data: SCData) {
 
         Global.getSector().characterData.person.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).modifyFlat("sc_officer_training", 2f)
 
@@ -64,8 +61,7 @@ class OfficerTraining : SCBaseSkillPlugin() {
 
     }
 
-    override fun onDeactivation() {
-        super.onDeactivation()
+    override fun onDeactivation(data: SCData) {
 
         Global.getSector().characterData.person.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).unmodify("sc_officer_training")
 

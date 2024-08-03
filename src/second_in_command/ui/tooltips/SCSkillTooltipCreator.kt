@@ -3,10 +3,11 @@ package second_in_command.ui.tooltips
 import com.fs.starfarer.api.ui.BaseTooltipCreator
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCData
 import second_in_command.specs.SCBaseAptitudePlugin
 import second_in_command.specs.SCBaseSkillPlugin
 
-class SCSkillTooltipCreator(var skill: SCBaseSkillPlugin, var aptitude: SCBaseAptitudePlugin, var requiredSkillPoints: Int, var pickOnlyOne: Boolean) : BaseTooltipCreator() {
+class SCSkillTooltipCreator(var data: SCData, var skill: SCBaseSkillPlugin, var aptitude: SCBaseAptitudePlugin, var requiredSkillPoints: Int, var pickOnlyOne: Boolean) : BaseTooltipCreator() {
 
 
     var sectionMeetsRequirements = true
@@ -28,7 +29,7 @@ class SCSkillTooltipCreator(var skill: SCBaseSkillPlugin, var aptitude: SCBaseAp
         tooltip.addPara("Affects: $affectsString", 0f, Misc.getGrayColor(), Misc.getBasePlayerColor(), affectsString)
         tooltip.addSpacer(10f)
 
-        skill.addTooltip(tooltip)
+        skill.addTooltip(data, tooltip)
 
         if (!sectionMeetsRequirements || pickOnlyOne) {
             tooltip.addSpacer(10f)

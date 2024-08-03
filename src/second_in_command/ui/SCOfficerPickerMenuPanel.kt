@@ -105,7 +105,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
             var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())
             var originSkillElement = SkillWidgetElement(originSkill!!.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), inner, 72f, 72f)
-            inner.addTooltipTo(SCSkillTooltipCreator(originSkill.getPlugin(), aptitudePlugin, 0, false), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
+            inner.addTooltipTo(SCSkillTooltipCreator(data, originSkill.getPlugin(), aptitudePlugin, 0, false), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
             //originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
             originSkillElement.elementPanel.position.rightOfMid(background.elementPanel, 20f)
 
@@ -151,7 +151,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
                     section.activeSkillsInUI.add(skillElement)
                     usedWidth += 72f
 
-                    var tooltip = SCSkillTooltipCreator(skillPlugin, aptitudePlugin, section.requiredPreviousSkills, !section.canChooseMultiple)
+                    var tooltip = SCSkillTooltipCreator(data, skillPlugin, aptitudePlugin, section.requiredPreviousSkills, !section.canChooseMultiple)
                     inner.addTooltipTo(tooltip, skillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
                     section.tooltips.add(tooltip)
 
@@ -269,7 +269,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
                 if (Global.getSector().playerFleet?.fleetData != null) {
                     for (skill in skills) {
-                        skill.onDeactivation()
+                        skill.onDeactivation(data)
                     }
                     Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
                 }
@@ -283,7 +283,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             if (Global.getSector().playerFleet?.fleetData != null) {
                 var skills = selectedOfficer!!.getActiveSkillPlugins()
                 for (skill in skills) {
-                    skill.onActivation()
+                    skill.onActivation(data)
                 }
                 Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
             }

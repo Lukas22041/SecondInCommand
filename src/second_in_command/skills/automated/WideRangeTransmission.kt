@@ -8,6 +8,7 @@ import com.fs.starfarer.api.combat.WeaponAPI
 import com.fs.starfarer.api.impl.campaign.ids.Skills
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCData
 import second_in_command.misc.randomAndRemove
 import second_in_command.specs.SCBaseSkillPlugin
 
@@ -17,7 +18,7 @@ class WideRangeTransmission : SCBaseSkillPlugin() {
         return "all fighters deployed from automated ships"
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("Deployed fighters now gain a copy of their mother-ships core", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - Those copies can hold at most 4 of the cores original skills", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "4")
@@ -26,7 +27,7 @@ class WideRangeTransmission : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
+    override fun applyEffectsToFighterSpawnedByShip(data: SCData, fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
         if (Misc.isAutomated(ship)) {
             var core = ship!!.captain
             if (core == null || core.isDefault) return
@@ -62,13 +63,17 @@ class WideRangeTransmission : SCBaseSkillPlugin() {
         }
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData,
+                                                stats: MutableShipStatsAPI?,
+                                                variant: ShipVariantAPI,
+                                                hullSize: ShipAPI.HullSize?,
+                                                id: String?) {
         if (Misc.isAutomated(stats)) {
 
         }
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
         if (Misc.isAutomated(ship)) {
 
         }

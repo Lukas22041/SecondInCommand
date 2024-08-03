@@ -6,6 +6,7 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
 class CrewTraining : SCBaseSkillPlugin() {
@@ -34,7 +35,7 @@ class CrewTraining : SCBaseSkillPlugin() {
         return "fleet"
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("+10%% maximum combat readiness for all ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - The bonus is increased by 5%% for any ship with an officer assigned to it", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "5%")
@@ -47,7 +48,11 @@ class CrewTraining : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData,
+                                                stats: MutableShipStatsAPI?,
+                                                variant: ShipVariantAPI,
+                                                hullSize: ShipAPI.HullSize?,
+                                                id: String?) {
         var cr = 0.10f
 
         var captain = stats!!.fleetMember?.captain
@@ -59,17 +64,17 @@ class CrewTraining : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
     }
 
-    override fun advance(amount: Float) {
+    override fun advance(data: SCData, amount: Float) {
         var player = Global.getSector().characterData.person
         player.stats.officerNumber.modifyFlat("sc_crew_training", 2f)
     }
 
 
-    override fun onDeactivation() {
+    override fun onDeactivation(data: SCData) {
         var player = Global.getSector().characterData.person
         player.stats.officerNumber.unmodify("sc_crew_training")
 

@@ -7,6 +7,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.skills.ElectronicWarfareScript
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
 class ElectronicWarfare : SCBaseSkillPlugin() {
@@ -20,7 +21,7 @@ class ElectronicWarfare : SCBaseSkillPlugin() {
         return "all automated ships"
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("Every deployed ship contributes $PER_SHIP_BONUS%% to the ECM rating* of the fleet", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("Combat objectives are captured much more quickly and from longer range", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
@@ -35,7 +36,11 @@ class ElectronicWarfare : SCBaseSkillPlugin() {
         "$max%")
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData,
+                                                stats: MutableShipStatsAPI?,
+                                                variant: ShipVariantAPI,
+                                                hullSize: ShipAPI.HullSize?,
+                                                id: String?) {
         if (Misc.isAutomated(stats)) {
 
             stats!!.dynamic.getMod(Stats.ELECTRONIC_WARFARE_FLAT).modifyFlat(id, PER_SHIP_BONUS)
@@ -45,7 +50,7 @@ class ElectronicWarfare : SCBaseSkillPlugin() {
         }
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
         if (Misc.isAutomated(ship)) {
 
         }

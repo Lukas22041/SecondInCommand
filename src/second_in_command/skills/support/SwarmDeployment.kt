@@ -5,9 +5,9 @@ import com.fs.starfarer.api.combat.FighterLaunchBayAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
-import com.fs.starfarer.api.impl.combat.ReserveWingStats
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
 class SwarmDeployment : SCBaseSkillPlugin() {
@@ -16,17 +16,21 @@ class SwarmDeployment : SCBaseSkillPlugin() {
         return "all fighter wings"
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("Fighter wings with at least four fighters gain an additional fighter in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData,
+                                                stats: MutableShipStatsAPI?,
+                                                variant: ShipVariantAPI,
+                                                hullSize: ShipAPI.HullSize?,
+                                                id: String?) {
 
     }
 
-    override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
+    override fun advanceInCombat(data: SCData, ship: ShipAPI?, amount: Float) {
 
         var alreadyUsed = ship!!.customData.get("sc_swarm_deployment_used") as ArrayList<FighterLaunchBayAPI>?
         if (alreadyUsed == null) {
@@ -63,12 +67,12 @@ class SwarmDeployment : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
 
     }
 
-    override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
+    override fun applyEffectsToFighterSpawnedByShip(data: SCData, fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
 
     }
 

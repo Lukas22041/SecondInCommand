@@ -5,8 +5,8 @@ import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
-import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCData
 import second_in_command.misc.levelBetween
 import second_in_command.specs.SCBaseSkillPlugin
 
@@ -31,7 +31,7 @@ class LowProfile : SCBaseSkillPlugin() {
        return 0.3f * getFleetDP().levelBetween(0f, 240f)
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         var DP = getFleetDP().toInt()
         var bonus = (getBonus() * 100).toInt()
@@ -43,19 +43,23 @@ class LowProfile : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData,
+                                                stats: MutableShipStatsAPI?,
+                                                variant: ShipVariantAPI,
+                                                hullSize: ShipAPI.HullSize?,
+                                                id: String?) {
 
     }
 
-    override fun advance(amount: Float) {
+    override fun advance(data: SCData, amount: Float) {
         Global.getSector().playerFleet.stats.detectedRangeMod.modifyMult("sc_low_profile", 1f-getBonus(), "Low profile")
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
     }
 
-    override fun onDeactivation() {
+    override fun onDeactivation(data: SCData) {
         Global.getSector().playerFleet.stats.detectedRangeMod.unmodify("sc_low_profile")
     }
 

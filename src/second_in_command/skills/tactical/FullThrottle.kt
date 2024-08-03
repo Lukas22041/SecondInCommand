@@ -5,6 +5,7 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
 class FullThrottle : SCBaseSkillPlugin() {
@@ -16,7 +17,7 @@ class FullThrottle : SCBaseSkillPlugin() {
         return "all ships in the fleet"
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("The zero-flux-boost can trigger as long as the ship is below 10%% of its flux capacity*", 0f, Misc.getHighlightColor(), Misc.getHighlightColor(), )
         tooltip.addPara("+20 speed while the zero-flux-boost is active ", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
@@ -27,7 +28,11 @@ class FullThrottle : SCBaseSkillPlugin() {
         
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData,
+                                                stats: MutableShipStatsAPI?,
+                                                variant: ShipVariantAPI,
+                                                hullSize: ShipAPI.HullSize?,
+                                                id: String?) {
 
         stats!!.zeroFluxMinimumFluxLevel.modifyFlat(id, ZERO_FLUX_MIN)
         stats!!.zeroFluxSpeedBoost.modifyFlat(id, ZERO_FLUX_BOOST)
@@ -35,7 +40,7 @@ class FullThrottle : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
 
 

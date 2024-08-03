@@ -5,6 +5,7 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
 class QuickAsTheWind : SCBaseSkillPlugin() {
@@ -13,7 +14,7 @@ class QuickAsTheWind : SCBaseSkillPlugin() {
         return "all ships in the fleet"
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
        /* tooltip.addPara("Frigates and destroyers have much faster recovery of their shipsystem", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - 33%% reduced shipsystem cooldown",0f, Misc.getTextColor(), Misc.getHighlightColor(), "33%")
         tooltip.addPara("   - 33%% increased shipsystem charge regeneration",0f, Misc.getTextColor(), Misc.getHighlightColor(), "33%")*/
@@ -25,7 +26,11 @@ class QuickAsTheWind : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData,
+                                                stats: MutableShipStatsAPI?,
+                                                variant: ShipVariantAPI,
+                                                hullSize: ShipAPI.HullSize?,
+                                                id: String?) {
 
 
         var bonus = when(hullSize) {
@@ -48,7 +53,7 @@ class QuickAsTheWind : SCBaseSkillPlugin() {
         stats.energyAmmoRegenMult.modifyPercent(id, 25f)
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
     }
 

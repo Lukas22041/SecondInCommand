@@ -1,5 +1,7 @@
 package second_in_command.misc;
 
+import com.fs.starfarer.api.GameState;
+import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.characters.MutableCharacterStatsAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.skills.AutomatedShips;
@@ -11,26 +13,29 @@ public class AutomatedShipsReplacementLevel2 extends AutomatedShips.Level2 {
 
     @Override
     public void apply(MutableCharacterStatsAPI stats, String id, float level) {
+        if (Global.getCurrentState() == GameState.TITLE) return;
 
-        if (second_in_command.skills.automated.AutomatedShips.Companion.isAnyAutoSkillActive()) {
+        if (second_in_command.skills.automated.AutomatedShips.Companion.isAnyAutoSkillActive(SCUtils.getPlayerData().getFleet())) {
             Misc.getAllowedRecoveryTags().add(Tags.AUTOMATED_RECOVERABLE);
         }
 
-        if (!SCUtils.getSCData().isModEnabled()) {
+        /*if (!SCUtils.getPlayerData().isModEnabled()) {
             super.apply(stats, id, level);
-        }
+        }*/
     }
 
 
     @Override
     public void unapply(MutableCharacterStatsAPI stats, String id) {
 
-        if (second_in_command.skills.automated.AutomatedShips.Companion.isAnyAutoSkillActive()) {
+        if (Global.getCurrentState() == GameState.TITLE) return;
+
+        if (second_in_command.skills.automated.AutomatedShips.Companion.isAnyAutoSkillActive(SCUtils.getPlayerData().getFleet())) {
             Misc.getAllowedRecoveryTags().add(Tags.AUTOMATED_RECOVERABLE);
         }
 
-        if (!SCUtils.getSCData().isModEnabled()) {
+        /*if (!SCUtils.getPlayerData().isModEnabled()) {
             super.unapply(stats, id);
-        }
+        }*/
     }
 }

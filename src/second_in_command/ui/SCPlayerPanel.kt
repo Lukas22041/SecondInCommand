@@ -46,7 +46,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         subelement.position.inTL(300f, 0f)
 
 
-        var acquiredSkillsIds = data.player.stats.skillsCopy.filter { it.level >= 2 }.map { it.skill.id }
+        var acquiredSkillsIds = Global.getSector().playerPerson.stats.skillsCopy.filter { it.level >= 2 }.map { it.skill.id }
 
         var player = Global.getSector().playerPerson
         var color = Global.getSettings().getSkillSpec("aptitude_combat").governingAptitudeColor
@@ -332,7 +332,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         var activeSkills = skillElements.filter { it.activated }.map { it.id }
 
         var spCost = getCurrentSkillPointsUsed(skillElements)
-        var stats = data.player.stats
+        var stats = Global.getSector().playerPerson.stats
 
         for (active in activeSkills) {
             stats.setSkillLevel(active, 2f)

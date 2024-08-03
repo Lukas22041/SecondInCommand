@@ -6,7 +6,7 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import second_in_command.misc.baseOrModSpec
+import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
 class RapidResponse : SCBaseSkillPlugin() {
@@ -15,32 +15,36 @@ class RapidResponse : SCBaseSkillPlugin() {
         return "all ships in the fleet"
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("+1 increased maximum burn for ships with less than 9 burn speed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+15%% maneuverability for the fleet outside of combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData,
+                                                stats: MutableShipStatsAPI?,
+                                                variant: ShipVariantAPI,
+                                                hullSize: ShipAPI.HullSize?,
+                                                id: String?) {
 
         if (stats!!.maxBurnLevel.modifiedValue < 9) {
             stats!!.maxBurnLevel.modifyFlat(id,1f)
         }
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
 
 
     }
 
-    override fun advance(amount: Float) {
+    override fun advance(data: SCData, amount: Float) {
         Global.getSector().playerFleet.stats.accelerationMult.modifyMult("sc_rapid_response", 1.15f, "Rapid Response")
 
     }
 
-    override fun onDeactivation() {
+    override fun onDeactivation(data: SCData) {
         Global.getSector().playerFleet.stats.accelerationMult.unmodify("sc_rapid_response")
 
     }

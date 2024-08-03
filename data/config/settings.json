@@ -1,7 +1,7 @@
  {
 	 
 	 "plugins":{		
-		"SCSkillPanelReplacerTitle":"second_in_command.scripts.SkillPanelReplacerScriptTitlescreen",
+		#"SCSkillPanelReplacerTitle":"second_in_command.scripts.SkillPanelReplacerScriptTitlescreen",
 	},	
 	
 	

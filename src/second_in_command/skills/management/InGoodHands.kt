@@ -4,9 +4,9 @@ import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.impl.campaign.ids.Stats
-import com.fs.starfarer.api.impl.campaign.skills.SupportDoctrine
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCData
 import second_in_command.misc.levelBetween
 import second_in_command.specs.SCBaseSkillPlugin
 
@@ -16,7 +16,7 @@ class InGoodHands : SCBaseSkillPlugin() {
         return "all ships with officers"
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("Ships with officers have a reduction in deployment points cost", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - The cost reduction is between 0%%-15%% of the ships total, based on officer level", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "0%", "15%")
@@ -25,7 +25,11 @@ class InGoodHands : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData,
+                                                stats: MutableShipStatsAPI?,
+                                                variant: ShipVariantAPI,
+                                                hullSize: ShipAPI.HullSize?,
+                                                id: String?) {
         var captain = stats!!.fleetMember?.captain ?: return
 
         if (captain.isDefault || captain.isAICore) return
@@ -41,7 +45,7 @@ class InGoodHands : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
     }
 

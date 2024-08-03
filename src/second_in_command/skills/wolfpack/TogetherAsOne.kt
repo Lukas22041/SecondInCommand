@@ -9,6 +9,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.lazylib.MathUtils
+import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
 class TogetherAsOne : SCBaseSkillPlugin() {
@@ -17,7 +18,7 @@ class TogetherAsOne : SCBaseSkillPlugin() {
         return "all frigates and destroyers"
     }
 
-    override fun addTooltip(tooltip: TooltipMakerAPI) {
+    override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
         tooltip.addPara("Frigates and destroyers receive increased stats when near to other allied frigates and destroyers", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - The radius for this effect is approximately 1200 su wide",0f, Misc.getTextColor(), Misc.getHighlightColor(), "1200")
         tooltip.addPara("   - This effect maxes out at 6 nearby ships",0f, Misc.getTextColor(), Misc.getHighlightColor(), "6")
@@ -25,11 +26,15 @@ class TogetherAsOne : SCBaseSkillPlugin() {
 
     }
 
-    override fun applyEffectsBeforeShipCreation(stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData,
+                                                stats: MutableShipStatsAPI?,
+                                                variant: ShipVariantAPI,
+                                                hullSize: ShipAPI.HullSize?,
+                                                id: String?) {
 
     }
 
-    override fun applyEffectsAfterShipCreation(ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
+    override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
         if (!ship!!.hasListenerOfClass(TogetherAsOneScript::class.java) && (ship.hullSize == ShipAPI.HullSize.FRIGATE || ship.hullSize == ShipAPI.HullSize.DESTROYER)) {
             ship.addListener(TogetherAsOneScript(ship))
         }
