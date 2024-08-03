@@ -14,6 +14,7 @@ public class AutomatedShipsReplacementLevel2 extends AutomatedShips.Level2 {
     @Override
     public void apply(MutableCharacterStatsAPI stats, String id, float level) {
         if (Global.getCurrentState() == GameState.TITLE) return;
+        if (Global.getSector().getPlayerFleet() == null) return;
 
         if (second_in_command.skills.automated.AutomatedShips.Companion.isAnyAutoSkillActive(SCUtils.getPlayerData().getFleet())) {
             Misc.getAllowedRecoveryTags().add(Tags.AUTOMATED_RECOVERABLE);
@@ -29,6 +30,7 @@ public class AutomatedShipsReplacementLevel2 extends AutomatedShips.Level2 {
     public void unapply(MutableCharacterStatsAPI stats, String id) {
 
         if (Global.getCurrentState() == GameState.TITLE) return;
+        if (Global.getSector().getPlayerFleet() == null) return;
 
         if (second_in_command.skills.automated.AutomatedShips.Companion.isAnyAutoSkillActive(SCUtils.getPlayerData().getFleet())) {
             Misc.getAllowedRecoveryTags().add(Tags.AUTOMATED_RECOVERABLE);

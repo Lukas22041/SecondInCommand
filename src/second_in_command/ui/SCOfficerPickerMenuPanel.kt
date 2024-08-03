@@ -264,7 +264,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
             var previousOfficerInSlot = data.getOfficerInSlot(slotId)
             data.setOfficerInSlot(slotId, selectedOfficer!!)
-            if (previousOfficerInSlot != null) {
+          /*  if (previousOfficerInSlot != null) {
                 var skills = previousOfficerInSlot.getActiveSkillPlugins()
 
                 if (Global.getSector().playerFleet?.fleetData != null) {
@@ -273,20 +273,20 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
                     }
                     Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
                 }
-            }
+            }*/
 
 
             //data.setOfficerInSlot(slotId, selectedOfficer!!)
 
 
 
-            if (Global.getSector().playerFleet?.fleetData != null) {
+          /*  if (Global.getSector().playerFleet?.fleetData != null) {
                 var skills = selectedOfficer!!.getActiveSkillPlugins()
                 for (skill in skills) {
                     skill.onActivation(data)
                 }
                 Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
-            }
+            }*/
 
 
             menu.recreateAptitudeRow(subpanelParent, data.getOfficerInSlot(slotId), slotId)

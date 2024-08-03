@@ -42,6 +42,10 @@ class OfficerTooltipCreator(var officer: SCOfficer?) : BaseTooltipCreator() {
 
         var experience = officer!!.getExperiencePoints().toInt()
         var experienceNeeded = officer!!.getRequiredXP().toInt() - experience
+
+        var experienceString = Misc.getWithDGS(experience.toFloat())
+        var experienceNeededString = Misc.getWithDGS(experienceNeeded.toFloat())
+
         var inactiveGain = (SCOfficer.inactiveXPMult * 100).toInt()
 
         var firstPara = tooltip.addPara("${officer!!.person.nameString} has experience within the ${plugin.getName()} aptitude. This aptitude has a maximum level of ${officer!!.getMaxLevel()}.", 0f,
@@ -59,8 +63,8 @@ class OfficerTooltipCreator(var officer: SCOfficer?) : BaseTooltipCreator() {
             tooltip.addPara("${officer!!.person.heOrShe.capitalize()} has reached ${officer!!.person.hisOrHer} maximum level.", 0f)
         } else {
             tooltip.addPara("${officer!!.person.heOrShe.capitalize()} is currently at level ${officer!!.getCurrentLevel()}. " +
-                    "${officer!!.person.heOrShe.capitalize()} has $experience experience points and requires $experienceNeeded more to level up.", 0f,
-                Misc.getTextColor(), Misc.getHighlightColor(), "${officer!!.getCurrentLevel()}", "$experience", "$experienceNeeded")
+                    "${officer!!.person.heOrShe.capitalize()} has $experienceString experience points and requires $experienceNeededString more to level up.", 0f,
+                Misc.getTextColor(), Misc.getHighlightColor(), "${officer!!.getCurrentLevel()}", "$experienceString", "$experienceNeededString")
         }
 
 

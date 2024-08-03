@@ -1,28 +1,44 @@
 package second_in_command
 
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
-import org.lazywizard.lazylib.MathUtils
-import second_in_command.misc.baseOrModSpec
-import second_in_command.misc.levelBetween
+import com.fs.starfarer.api.impl.campaign.FleetEncounterContext
 
 class SCCampaignEventListener : BaseCampaignEventListener(false) {
 
 
     override fun reportEncounterLootGenerated(plugin: FleetEncounterContextPlugin?, loot: CargoAPI?) {
-        super.reportEncounterLootGenerated(plugin, loot)
+        if (plugin !is FleetEncounterContext) return
 
-        var defeated = plugin!!.loserData.destroyedInLastEngagement + plugin.loserData.disabledInLastEngagement
-        var totalFP = defeated.sumOf { it.baseOrModSpec().fleetPoints }
 
-        var level = totalFP.toFloat().levelBetween(0f, 400f)
 
-        var data = SCUtils.getPlayerData()
+        //Largely copied from FleetEncounterContext
+        if (plugin.battle.isPlayerSide(plugin.battle.getSideFor(plugin.winner))) {
 
-        for (officer in data.getOfficersInFleet()) {
-            var xp = MathUtils.getRandomNumberInRange(2000f, 2500f)
-            officer.addXP(xp * level)
+
+
+            var fpTotal = 0
+            for (data in plugin.loserData.ownCasualties) {
+                var fp = data.member.fleetPointCost.toFloat()
+                fp *= 1f + data.member.captain.stats.level / 5f
+                fpTotal += fp.toInt()
+            }
+
+            var xp = fpTotal.toFloat() * 250f
+            xp *= 2f
+
+            val difficultyMult = Math.max(1f, plugin.difficulty)
+            xp *= difficultyMult
+
+            xp *= plugin.computePlayerContribFraction()
+
+            xp *= Global.getSettings().getFloat("xpGainMult")
+
+            for (officer in SCUtils.getPlayerData().getOfficersInFleet()) {
+                officer.addXP(xp)
+            }
+
         }
-
 
     }
 }

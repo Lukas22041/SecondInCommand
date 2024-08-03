@@ -2,6 +2,7 @@ package second_in_command
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.campaign.FactionAPI
 import second_in_command.specs.SCOfficer
 
 object SCUtils {
@@ -31,6 +32,13 @@ object SCUtils {
     @JvmStatic
     fun createRandomSCOfficer(aptitudeId: String) : SCOfficer {
         var person = Global.getSector().playerFaction.createRandomPerson()
+        var officer = SCOfficer(person, aptitudeId)
+        return officer
+    }
+
+    @JvmStatic
+    fun createRandomSCOfficer(aptitudeId: String, faction: FactionAPI) : SCOfficer {
+        var person = faction.createRandomPerson()
         var officer = SCOfficer(person, aptitudeId)
         return officer
     }

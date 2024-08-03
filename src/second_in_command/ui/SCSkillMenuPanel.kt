@@ -171,7 +171,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
 
                 var officerInSlot = data.getOfficerInSlot(slotId)
                 data.setOfficerInSlot(slotId, null)
-                if (officerInSlot != null) {
+               /* if (officerInSlot != null) {
                     var skills = officerInSlot.getActiveSkillPlugins()
 
                     if (Global.getSector().playerFleet?.fleetData != null) {
@@ -180,7 +180,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
                         }
                         Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
                     }
-                }
+                }*/
 
                 //data.setOfficerInSlot(slotId, null)
 

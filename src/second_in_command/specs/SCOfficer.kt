@@ -2,6 +2,7 @@ package second_in_command.specs
 
 import com.fs.starfarer.api.characters.PersonAPI
 import second_in_command.SCUtils
+import second_in_command.misc.SCSettings
 
 class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
 
@@ -38,10 +39,11 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
         return getSkillSpecs().filter { activeSkillIDs.contains(it.id) }.map { it.getPlugin() } + getAptitudePlugin().getOriginSkillPlugin()
     }
 
-    fun getMaxLevel() : Int = getAptitudePlugin().getMaxLevel()
+    fun getMaxLevel() : Int = SCSettings.maxLevel
 
     fun getXPMult() : Float {
         var mult = 1f
+        mult *= SCSettings.baseXpGainMult
         if (!isAssigned()) mult *= inactiveXPMult
 
         return mult
@@ -52,8 +54,8 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
     fun getCurrentLevel() = level
 
     fun getRequiredXP() : Float {
-        var mult = Math.pow(getAptitudePlugin().getXPRequiredPerLevelMult().toDouble(), level.toDouble()).toFloat()
-        return baseXPPerLevel * mult
+        var required = SCSettings.xpPerLevel.getOrNull(level) ?: 0f
+        return required
     }
 
     fun addXP(xp: Float) {

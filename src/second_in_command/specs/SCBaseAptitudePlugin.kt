@@ -46,13 +46,7 @@ abstract class SCBaseAptitudePlugin() {
         return spec.color
     }
 
-    open fun getMaxLevel() : Int {
-        return spec.maxLevel
-    }
 
-    open fun getXPRequiredPerLevelMult() : Float {
-        return spec.xpMultPerlevel
-    }
 
     open fun getRequiresDock() : Boolean {
         return spec.requiresDock

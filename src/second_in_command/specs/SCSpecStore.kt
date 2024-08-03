@@ -33,9 +33,6 @@ object SCSpecStore {
 
             val requiresDock = row.getBoolean("requiresDock")
 
-            val maxLevel = row.getInt("maxLevel")
-            val xpMultPerlevel = row.getFloat("xpMultPerlevel")
-
             val spawnWeight = row.getFloat("spawnWeight")
 
 
@@ -48,7 +45,7 @@ object SCSpecStore {
 
             val pluginPath = row.getString("plugin")
 
-            var spec = SCAptitudeSpec(id, name, category, requiresDock, maxLevel, xpMultPerlevel, spawnWeight, color, description, pluginPath)
+            var spec = SCAptitudeSpec(id, name, category, requiresDock, spawnWeight, color, description, pluginPath)
             aptitudeSpecs.add(spec)
         }
 

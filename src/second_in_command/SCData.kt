@@ -11,8 +11,8 @@ import second_in_command.specs.SCBaseSkillPlugin
 import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
 
+//Per Fleet Data
 class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript {
-
 
     var isNPC = false
     var faction = fleet.faction
@@ -51,6 +51,8 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript {
     }
 
     fun generateNPCOfficers() {
+        var person = SCUtils.createRandomSCOfficer("sc_tactical", faction)
+        setOfficerInSlot(0, person)
 
         //Generate portraits & name based on faction
 
@@ -73,7 +75,25 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript {
     }
 
     fun setOfficerInSlot(slotIndex: Int, officer: SCOfficer?) {
+        var officerInSlot = getOfficerInSlot(slotIndex)
         activeOfficers[slotIndex] = officer
+
+        if (officerInSlot != null) {
+            var skills = officerInSlot.getActiveSkillPlugins()
+
+            for (skill in skills) {
+                skill.onDeactivation(this)
+            }
+            fleet.fleetData.membersListCopy.forEach { it.updateStats() }
+        }
+
+        if (officer != null) {
+            var skills = officer.getActiveSkillPlugins()
+            for (skill in skills) {
+                skill.onActivation(this)
+            }
+            fleet.fleetData.membersListCopy.forEach { it.updateStats() }
+        }
     }
 
     fun getAssignedOfficers() : ArrayList<SCOfficer?> {
