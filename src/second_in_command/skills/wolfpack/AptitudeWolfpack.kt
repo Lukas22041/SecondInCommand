@@ -43,7 +43,7 @@ class AptitudeWolfpack : SCBaseAptitudePlugin() {
         var level = smallcraft.count().toFloat().levelBetween(0f, fleet.fleetData.membersListCopy.count().toFloat())
 
         if (level >= 0.3) {
-            mult = 1f
+            mult = 0.75f
         }
 
         if (level >= 0.5) {

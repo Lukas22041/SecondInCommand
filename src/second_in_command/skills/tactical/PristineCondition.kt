@@ -5,6 +5,7 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.MathUtils
 import second_in_command.SCData
 import second_in_command.SCUtils.addOrCheckTag
 import second_in_command.specs.SCBaseSkillPlugin
@@ -30,8 +31,9 @@ class PristineCondition : SCBaseSkillPlugin() {
 
         stats!!.maxCombatReadiness.modifyFlat(id, bonus, "Pristine Condition")
 
-        if (data.isNPC && !variant.addOrCheckTag("sc_crew_training")) {
+        if (data.isNPC && !variant.addOrCheckTag("sc_pristine_condition")) {
             stats.fleetMember.repairTracker.cr += bonus
+            stats.fleetMember.repairTracker.cr = MathUtils.clamp(stats.fleetMember.repairTracker.cr, 0f, 1f)
         }
     }
 

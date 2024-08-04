@@ -6,6 +6,7 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.MathUtils
 import second_in_command.SCData
 import second_in_command.SCUtils.addOrCheckTag
 import second_in_command.specs.SCBaseSkillPlugin
@@ -61,6 +62,7 @@ class CrewTraining : SCBaseSkillPlugin() {
 
         if (data.isNPC && !variant.addOrCheckTag("sc_crew_training")) {
             stats.fleetMember.repairTracker.cr += cr
+            stats.fleetMember.repairTracker.cr = MathUtils.clamp(stats.fleetMember.repairTracker.cr, 0f, 1f)
         }
     }
 
