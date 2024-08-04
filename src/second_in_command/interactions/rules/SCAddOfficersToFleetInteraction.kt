@@ -66,6 +66,10 @@ class SCAddOfficersToFleetInteraction : BaseCommandPlugin() {
                 officerPickerElement.playScrollSound()
             }
 
+            officerPickerElement.onClick {
+                officerPickerElement.playClickSound()
+            }
+
             var paraElement = element.addLunaElement(100f, 20f).apply {
                 renderBorder = false
                 renderBackground = false
@@ -111,8 +115,8 @@ class SCAddOfficersToFleetInteraction : BaseCommandPlugin() {
 
                 var skillElement = SkillWidgetElement(skill.getId(), true, false, true, skill.getIconPath(), "", aptitudePlugin.getColor(), element, 58f, 58f)
 
-                originSkillElement.onClick {
-                    originSkillElement.playClickSound()
+                skillElement.onClick {
+                    skillElement.playClickSound()
                 }
 
                 var tooltip = SCSkillTooltipCreator(data, skill, aptitudePlugin, 0, false)

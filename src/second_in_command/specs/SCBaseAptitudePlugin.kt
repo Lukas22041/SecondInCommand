@@ -49,12 +49,6 @@ abstract class SCBaseAptitudePlugin() {
         return spec.color
     }
 
-
-
-    open fun getRequiresDock() : Boolean {
-        return spec.requiresDock
-    }
-
     open fun getSpawnWeight() : Float {
         return spec.spawnWeight
     }

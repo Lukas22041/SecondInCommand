@@ -4,9 +4,10 @@ import com.fs.starfarer.api.ui.BaseTooltipCreator
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.specs.SCOfficer
+import second_in_command.ui.SCSkillMenuPanel
 import second_in_command.ui.elements.OfficerXPBar
 
-class OfficerTooltipCreator(var officer: SCOfficer?) : BaseTooltipCreator() {
+class OfficerTooltipCreator(var officer: SCOfficer?, var isAtColony: Boolean) : BaseTooltipCreator() {
 
 
 
@@ -29,8 +30,13 @@ class OfficerTooltipCreator(var officer: SCOfficer?) : BaseTooltipCreator() {
 
             tooltip.addSpacer(10f)
 
+            addCRWarning(tooltip)
+
+            tooltip.addSpacer(10f)
+
             tooltip!!.addPara("Left-click to select an executive officer to assign. Right-click to un-assign officers.",
                 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Left-click", "Right-click")
+
 
             return
         }
@@ -84,16 +90,36 @@ class OfficerTooltipCreator(var officer: SCOfficer?) : BaseTooltipCreator() {
         tooltip.addPara("All officers gain experience from battles. Inactive officers also earn experience, but at $inactiveGain%% of the normal rate.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "gain experience from battles" ,"$inactiveGain%")
 
+        tooltip.addSpacer(10f)
 
-        if (officer!!.getAptitudePlugin().getRequiresDock()) {
-            tooltip.addSpacer(10f)
-            tooltip.addPara("This officer can only be assigned and un-assigned while the fleet is docked to a colony due to the preparations required for ${officer!!.person.hisOrHer} field of work.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
-        }
+        addCRWarning(tooltip)
+
+        /* if (officer!!.getAptitudePlugin().getRequiresDock()) {
+             tooltip.addSpacer(10f)
+             tooltip.addPara("This officer can only be assigned and un-assigned while the fleet is docked to a colony due to the preparations required for ${officer!!.person.hisOrHer} field of work.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+         }*/
 
         tooltip.addSpacer(30f)
 
     }
 
+    fun addCRWarning(tooltip: TooltipMakerAPI) {
+
+        var colonyText = "You are currently in range of a colony."
+        var colonyColor = Misc.getPositiveHighlightColor()
+        var penalty = (SCSkillMenuPanel.crCost * 100f).toInt()
+
+        if (!isAtColony) {
+            colonyText = "You are not in range of a colony."
+            colonyColor = Misc.getNegativeHighlightColor()
+        }
+
+        var colonyLabel = tooltip.addPara("Replacing or un-assigning an officer while you are not close or docked to a non-hostile colony applies a $penalty%% reduction in combat readiness across the entire fleet. $colonyText",
+            0f, Misc.getTextColor(), Misc.getHighlightColor())
+
+        colonyLabel.setHighlight("non-hostile colony", "$penalty%", "combat readiness", colonyText)
+        colonyLabel.setHighlightColors(Misc.getHighlightColor(), Misc.getNegativeHighlightColor(), Misc.getHighlightColor(), colonyColor)
+    }
 
 
 }

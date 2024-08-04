@@ -1,11 +1,13 @@
 package second_in_command.skills.management
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.magiclib.kotlin.isAutomated
 import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
@@ -42,6 +44,11 @@ class OfficerManagement : SCBaseSkillPlugin() {
             CrewTraining.removeOfficersOverTheLimit()
         }
 
+    }
+
+    override fun getNPCSpawnWeight(fleet: CampaignFleetAPI): Float {
+        if (fleet.flagship?.isAutomated() == true) return 0f
+        return super.getNPCSpawnWeight(fleet)
     }
 
 }

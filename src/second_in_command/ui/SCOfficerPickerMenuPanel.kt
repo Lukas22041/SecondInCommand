@@ -14,7 +14,7 @@ import second_in_command.ui.panels.PickerBackgroundPanelPlugin
 import second_in_command.ui.tooltips.OfficerTooltipCreator
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
 
-class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerElement: SCOfficerPickerElement, var subpanelParent: CustomPanelAPI, var slotId: Int, var data: SCData, var docked: Boolean) {
+class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerElement: SCOfficerPickerElement, var subpanelParent: CustomPanelAPI, var slotId: Int, var data: SCData, var isAtColony: Boolean) {
 
 
 
@@ -86,7 +86,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             var aptitudePara = officerPickerElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
             aptitudePara.position.inTL(officerPickerElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 1, -aptitudePara.computeTextHeight(aptitudePara.text)-5)
 
-            scrollerElement.addTooltipTo(OfficerTooltipCreator(officer), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
+            scrollerElement.addTooltipTo(OfficerTooltipCreator(officer, isAtColony), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
 
             var offset = 10f
             var offsetElement = inner.addLunaElement(0f, 0f)
@@ -207,7 +207,6 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             var minusText = ""
 
             if (officerAlreadySlotted(officer)) officerParaTextExtra = "This officer is already assigned."
-            else if (!fullfillsDockRequirement(officer)) officerParaTextExtra = "This officer can only be assigned while docked at a colony."
             else if (doesOffficerMatchExistingAptitude(officer)) officerParaTextExtra = "Can't assign two officers of the same aptitude."
             else if (doesOffficerMatchCategory(officer)) officerParaTextExtra = "Can't assign two aptitudes of the same category."
 
@@ -262,6 +261,8 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             confirmButton.playClickSound()
             menu.panel.removeComponent(popupPanel)
 
+            menu.checkToApplyCRPenalty()
+
             var previousOfficerInSlot = data.getOfficerInSlot(slotId)
             data.setOfficerInSlot(slotId, selectedOfficer!!)
           /*  if (previousOfficerInSlot != null) {
@@ -309,7 +310,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
     fun selectOfficer(officer: SCOfficer) {
 
-        if (officerAlreadySlotted(officer) || doesOffficerMatchExistingAptitude(officer) || officerAlreadySlotted(officer) || !fullfillsDockRequirement(officer)) {
+        if (officerAlreadySlotted(officer) || doesOffficerMatchExistingAptitude(officer) || officerAlreadySlotted(officer)) {
             Global.getSoundPlayer().playUISound("ui_button_disabled_pressed", 1f, 1f)
             return
         }
@@ -318,13 +319,6 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
         selectedOfficer = officer
     }
 
-    fun fullfillsDockRequirement(officer: SCOfficer) : Boolean {
-
-        var requiresDock = officer.getAptitudePlugin().getRequiresDock()
-        if (!requiresDock) return true
-        else if (docked) return true
-        return false
-    }
 
     fun doesOffficerMatchExistingAptitude(officer: SCOfficer) : Boolean {
 

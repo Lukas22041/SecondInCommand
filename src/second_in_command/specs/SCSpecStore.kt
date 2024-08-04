@@ -31,7 +31,6 @@ object SCSpecStore {
             val name = row.getString("name")
             val category = row.getString("category")
 
-            val requiresDock = row.getBoolean("requiresDock")
 
             val spawnWeight = row.getFloat("spawnWeight")
 
@@ -45,7 +44,7 @@ object SCSpecStore {
 
             val pluginPath = row.getString("plugin")
 
-            var spec = SCAptitudeSpec(id, name, category, requiresDock, spawnWeight, color, description, pluginPath)
+            var spec = SCAptitudeSpec(id, name, category, spawnWeight, color, description, pluginPath)
             aptitudeSpecs.add(spec)
         }
 

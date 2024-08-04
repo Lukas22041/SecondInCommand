@@ -7,7 +7,6 @@ data class SCAptitudeSpec(
     var id: String,
     var name: String,
     var category: String,
-    var requiresDock: Boolean,
     var spawnWeight: Float,
     var color: Color,
     var description: String,

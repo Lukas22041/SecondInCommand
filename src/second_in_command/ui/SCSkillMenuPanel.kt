@@ -1,6 +1,8 @@
 package second_in_command.ui
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.RepLevel
+import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.CustomPanelAPI
@@ -8,6 +10,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
+import org.lazywizard.lazylib.MathUtils
 import second_in_command.SCData
 import second_in_command.misc.clearChildren
 import second_in_command.misc.getHeight
@@ -17,15 +20,52 @@ import second_in_command.ui.elements.*
 import second_in_command.ui.tooltips.OfficerTooltipCreator
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
 
-class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boolean, var title: Boolean) {
+class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Boolean) {
 
 
     lateinit var panel: CustomPanelAPI
     lateinit var element: TooltipMakerAPI
     var width = 0f
     var height = 0f
+    var isAtColony = false
+
+    companion object {
+        var crCost = 0.20f
+    }
 
     fun init() {
+
+        var interaction = Global.getSector().campaignUI.currentInteractionDialog
+        if (interaction != null && interaction.interactionTarget != null) {
+            var interactionMarket = interaction.interactionTarget.market
+            if (interactionMarket != null && !interactionMarket.isPlanetConditionMarketOnly) {
+                var faction = interactionMarket.faction
+                if (faction.relToPlayer.isAtWorst(RepLevel.INHOSPITABLE)) {
+                    isAtColony = true
+                }
+            }
+        }
+
+        if (!isAtColony) {
+            var fleet = Global.getSector().playerFleet
+            var system = fleet?.containingLocation
+
+            if (system != null) {
+                var allowedDistance = 1000f
+
+                var markets = system.customEntities.map { it.market } + system.planets.map { it.market }
+                markets = markets.filter { it != null && !it.isPlanetConditionMarketOnly && it.faction != null && it.primaryEntity != null }
+                markets = markets.filter {  it.faction.relToPlayer.isAtWorst(RepLevel.INHOSPITABLE) &&
+                        MathUtils.getDistance(it.primaryEntity.location, fleet.location) <= allowedDistance }
+
+                if (markets.isNotEmpty()) {
+                    isAtColony = true
+                }
+            }
+
+        }
+
+
 
         width = parent.getWidth()
         height = parent.getHeight()
@@ -161,35 +201,39 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
                 return@onClick
             }
 
-            if (!docked && officer?.getAptitudePlugin()?.getRequiresDock() == true) {
+            /*if (!docked && officer?.getAptitudePlugin()?.getRequiresDock() == true) {
                 officerPickerElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
                 return@onClick
-            }
+            }*/
 
             if (it.isRMBEvent) {
-                officerPickerElement.playSound("ui_char_decrease_skill", 1f, 1f)
 
-                var officerInSlot = data.getOfficerInSlot(slotId)
-                data.setOfficerInSlot(slotId, null)
-               /* if (officerInSlot != null) {
-                    var skills = officerInSlot.getActiveSkillPlugins()
+                if (data.getOfficerInSlot(slotId) != null) {
+                    officerPickerElement.playSound("ui_char_decrease_skill", 1f, 1f)
 
-                    if (Global.getSector().playerFleet?.fleetData != null) {
-                        for (skill in skills) {
-                            skill.onDeactivation(data)
-                        }
-                        Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
-                    }
-                }*/
+                    var officerInSlot = data.getOfficerInSlot(slotId)
+                    data.setOfficerInSlot(slotId, null)
+                    /* if (officerInSlot != null) {
+                         var skills = officerInSlot.getActiveSkillPlugins()
 
-                //data.setOfficerInSlot(slotId, null)
+                         if (Global.getSector().playerFleet?.fleetData != null) {
+                             for (skill in skills) {
+                                 skill.onDeactivation(data)
+                             }
+                             Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
+                         }
+                     }*/
 
+                    //data.setOfficerInSlot(slotId, null)
 
-                recreateAptitudeRow(subpanelParent, null, slotId)
+                    checkToApplyCRPenalty()
+                    recreateAptitudeRow(subpanelParent, null, slotId)
+                }
+
                 return@onClick
             }
 
-            var pickerMenu = SCOfficerPickerMenuPanel(menu, officerPickerElement, subpanelParent, slotId, data, docked)
+            var pickerMenu = SCOfficerPickerMenuPanel(menu, officerPickerElement, subpanelParent, slotId, data, isAtColony)
             pickerMenu.init()
             officerPickerElement.playClickSound()
         }
@@ -201,7 +245,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
         }
 
 
-        subelement.addTooltipTo(OfficerTooltipCreator(officer), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
+        subelement.addTooltipTo(OfficerTooltipCreator(officer, isAtColony), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
 
         var offset = 10f
         var offsetElement = subelement.addLunaElement(0f, 0f)
@@ -500,5 +544,19 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var docked: Boo
         return sections.find { it.getSkills().contains(skillId) }
     }
 
+
+    fun checkToApplyCRPenalty() {
+        if (!isAtColony) {
+            for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
+                member.repairTracker.cr -= crCost
+                member.repairTracker.cr = MathUtils.clamp(member.repairTracker.cr, 0.1f, 1f)
+            }
+
+            var cost = (crCost * 100).toInt()
+
+            Global.getSector().campaignUI.messageDisplay.addMessage("Applied a $cost% penalty to all ships combat-readiness due to changing officers outside of the range of a colony.",
+            Misc.getBasePlayerColor(), "$cost%", Misc.getHighlightColor(), )
+        }
+    }
 
 }

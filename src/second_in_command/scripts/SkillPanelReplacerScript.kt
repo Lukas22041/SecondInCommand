@@ -54,7 +54,7 @@ class SkillPanelReplacerScript : EveryFrameScript {
         parent.removeComponent(panel)
 
         var scData = SCUtils.getPlayerData()
-        var skillPanel = SCSkillMenuPanel(parent, scData, docked, false)
+        var skillPanel = SCSkillMenuPanel(parent, scData, false)
         skillPanel.init()
     }
 
