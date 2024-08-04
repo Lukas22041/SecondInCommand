@@ -7,6 +7,7 @@ data class SCSkillSpec(
     var name: String,
     var iconPath: String,
     var npcSpawnWeight: Float,
+    var order: Int,
     var pluginPath: String) {
 
 

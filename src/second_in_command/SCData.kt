@@ -6,6 +6,7 @@ import com.fs.starfarer.api.campaign.BattleAPI
 import com.fs.starfarer.api.campaign.CampaignEventListener
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.listeners.FleetEventListener
+import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
 import second_in_command.misc.NPCOfficerGenerator
 import second_in_command.specs.SCBaseSkillPlugin
@@ -24,6 +25,7 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
     private var activeOfficers = ArrayList<SCOfficer?>()
 
     init {
+
 
         //So that the fleet itself can advance its skills.
         fleet.addScript(this)
@@ -61,6 +63,10 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
 
             generateNPCOfficers()
         }
+
+
+        //Moved here, away from the inflator, in case this class only got created on interaction
+        applyControllerHullmod()
     }
 
     fun getActiveOfficers() = activeOfficers.filterNotNull()
@@ -189,5 +195,27 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
 
     }
 
+    fun applyControllerHullmod() {
+        if (fleet.fleetData?.membersListCopy == null) return
+        for (member in fleet.fleetData.membersListCopy) {
+            if (!member.variant.hasHullMod("sc_skill_controller")) {
+                if (member.variant.source != VariantSource.REFIT) {
+                    var variant = member.variant.clone();
+                    variant.originalVariant = null;
+                    variant.hullVariantId = Misc.genUID()
+                    variant.source = VariantSource.REFIT
+                    member.setVariant(variant, false, true)
+                }
+
+                member.variant.addMod("sc_skill_controller")
+
+                var moduleSlots = member.variant.moduleSlots
+                for (slot in moduleSlots) {
+                    var module = member.variant.getModuleVariant(slot)
+                    module.addMod("sc_skill_controller")
+                }
+            }
+        }
+    }
 
 }

@@ -4,10 +4,14 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
+import com.fs.starfarer.api.plugins.OfficerLevelupPlugin
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.magiclib.kotlin.getSalvageSeed
 import second_in_command.SCData
+import second_in_command.SCUtils.addAndCheckTag
 import second_in_command.specs.SCBaseSkillPlugin
+import java.util.*
 
 class LimitBreaker : SCBaseSkillPlugin() {
 
@@ -35,42 +39,88 @@ class LimitBreaker : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-        for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
-            var core = member.captain ?: continue
 
-            if (core.isDefault) continue
-            if (!core.isAICore) continue
+        if (data.isPlayer) {
+            for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
+                var core = member.captain ?: continue
 
-            if (core.memoryWithoutUpdate.get("\$sc_limit_break_level") == true) return
+                if (core.isDefault) continue
+                if (!core.isAICore) continue
 
-            core.stats.level += 1
-            core.memoryWithoutUpdate.set("\$sc_limit_break_level", true)
+                if (core.memoryWithoutUpdate.get("\$sc_limit_break_level") == true) return
+
+                core.stats.level += 1
+                core.memoryWithoutUpdate.set("\$sc_limit_break_level", true)
+            }
         }
+
+
     }
 
-    override fun onDeactivation(data: SCData) {
-        for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
-            var core = member.captain ?: continue
-            if (core.isDefault) continue
-            if (!core.isAICore) continue
+    override fun onActivation(data: SCData) {
 
-            if (core.memoryWithoutUpdate.get("\$sc_limit_break_level") == false) continue
+        //Provide NPC cores with additional lv
+        if (data.isNPC && !data.fleet.addAndCheckTag("sc_limit_breaker_update")) {
+            var levels = 1
 
-            core.stats.level -= 1
-            core.memoryWithoutUpdate.set("\$sc_limit_break_level", false)
+            var membersWithAICores = data.fleet.fleetData.membersListCopy
+                .filter { (it.captain != null && !it.captain.isDefault) && it.captain.isAICore }.toMutableList() //Also filter out flagship, just to be save for some unique bounties
 
-            var skills = core.stats.skillsCopy
-            var filtered = skills.filter { it.level > 0f && !it.skill.isAptitudeEffect }.toMutableList()
+            //Filter out certain unique characters
+            membersWithAICores.filter { !Global.getSector().importantPeople.containsPerson(it.captain) }
 
-            if (filtered.count() <= core.stats.level) continue
+            //Do not increase the level multiple times
+            membersWithAICores.filter { !it.captain.hasTag("sc_limit_breaker_update") }
 
-            filtered = skills.filter {!it.skill.hasTag("npc_only") && !it.skill.hasTag("player_only") && !it.skill.hasTag("ai_core_only")}.toMutableList()
+            val plugin = Global.getSettings().getPlugin("officerLevelUp") as OfficerLevelupPlugin
+            for (member in membersWithAICores) {
+                var core = member.captain
+                core.addTag("sc_limit_breaker_update")
 
-            if (filtered.isEmpty()) continue
-            var last = filtered.last()
-            core.stats.setSkillLevel(last.skill.id, 0f)
+                for (level in 0 until levels) {
+                    core.stats.level += 1
+
+                    var skills = plugin.pickLevelupSkills(core, Random(data.fleet.getSalvageSeed()))
+                    if (skills.isNotEmpty()) {
+                        var pick = skills.random()
+                        core.stats.setSkillLevel(pick, 2f)
+                    }
+                }
+            }
 
         }
+
+    }
+
+
+    override fun onDeactivation(data: SCData) {
+
+        if (data.isPlayer) {
+            for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
+                var core = member.captain ?: continue
+                if (core.isDefault) continue
+                if (!core.isAICore) continue
+
+                if (core.memoryWithoutUpdate.get("\$sc_limit_break_level") == false) continue
+
+                core.stats.level -= 1
+                core.memoryWithoutUpdate.set("\$sc_limit_break_level", false)
+
+                var skills = core.stats.skillsCopy
+                var filtered = skills.filter { it.level > 0f && !it.skill.isAptitudeEffect }.toMutableList()
+
+                if (filtered.count() <= core.stats.level) continue
+
+                filtered = skills.filter {!it.skill.hasTag("npc_only") && !it.skill.hasTag("player_only") && !it.skill.hasTag("ai_core_only")}.toMutableList()
+
+                if (filtered.isEmpty()) continue
+                var last = filtered.last()
+                core.stats.setSkillLevel(last.skill.id, 0f)
+
+            }
+        }
+
+
     }
 
 }

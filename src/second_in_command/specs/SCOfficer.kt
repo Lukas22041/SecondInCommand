@@ -2,7 +2,6 @@ package second_in_command.specs
 
 import com.fs.starfarer.api.characters.PersonAPI
 import second_in_command.SCData
-import second_in_command.SCUtils
 import second_in_command.misc.SCSettings
 
 class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
@@ -50,16 +49,24 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
     }
 
     fun getActiveSkillPlugins() : List<SCBaseSkillPlugin> {
-        return getSkillSpecs().filter { activeSkillIDs.contains(it.id) }.map { it.getPlugin() } + getAptitudePlugin().getOriginSkillPlugin()
+        //Changed as this made the origin skill apply last
+        //return getSkillSpecs().filter { activeSkillIDs.contains(it.id) }.map { it.getPlugin() } + getAptitudePlugin().getOriginSkillPlugin()
+
+        var list = mutableListOf<SCBaseSkillPlugin>()
+        list.add(getAptitudePlugin().getOriginSkillPlugin())
+        list.addAll(getSkillSpecs().filter { activeSkillIDs.contains(it.id) }.map { it.getPlugin() })
+
+
+        return list
     }
 
     fun getMaxLevel() : Int = SCSettings.maxLevel
 
     fun getXPMult() : Float {
         var mult = 1f
-        mult *= SCSettings.baseXpGainMult
+        mult *= 0.5f //Default reduction in XP, shouldnt be the same as the players gain
+        mult *= SCSettings.xpGainMult
         if (!isAssigned()) mult *= inactiveXPMult
-
         return mult
     }
 

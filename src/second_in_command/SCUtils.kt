@@ -31,6 +31,10 @@ object SCUtils {
         return data
     }
 
+    fun hasFleetData(fleet: CampaignFleetAPI) : Boolean {
+        return fleet.memoryWithoutUpdate.get(DATA_KEY) as SCData? != null
+    }
+
     @JvmStatic
     fun createRandomSCOfficer(aptitudeId: String) : SCOfficer {
         var person = Global.getSector().playerFaction.createRandomPerson()
@@ -52,7 +56,14 @@ object SCUtils {
 
 
 
-    fun ShipVariantAPI.addOrCheckTag(tag: String) : Boolean {
+    fun ShipVariantAPI.addAndCheckTag(tag: String) : Boolean {
+        if (this.hasTag(tag)) return true
+
+        this.addTag(tag)
+        return false
+    }
+
+    fun CampaignFleetAPI.addAndCheckTag(tag: String) : Boolean {
         if (this.hasTag(tag)) return true
 
         this.addTag(tag)

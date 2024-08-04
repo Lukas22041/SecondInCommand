@@ -54,8 +54,10 @@ object SCSpecStore {
     fun loadSkillSpecsFromCSV() {
         var CSV = Global.getSettings().getMergedSpreadsheetDataForMod("id", "data/config/secondInCommand/SCSkills.csv", SCUtils.MOD_ID)
 
+        var order = 0
         for (index in 0 until  CSV.length())
         {
+            order++
             val row = CSV.getJSONObject(index)
 
             val id = row.getString("id")
@@ -72,7 +74,7 @@ object SCSpecStore {
 
             val pluginPath = row.getString("plugin")
 
-            var spec = SCSkillSpec(id, name, iconPath, npcSpawnWeight, pluginPath)
+            var spec = SCSkillSpec(id, name, iconPath, npcSpawnWeight, order, pluginPath)
             skillSpecs.add(spec)
         }
 

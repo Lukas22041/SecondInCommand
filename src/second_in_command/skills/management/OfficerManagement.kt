@@ -5,10 +5,14 @@ import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
+import com.fs.starfarer.api.impl.campaign.events.OfficerManagerEvent
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.MathUtils
 import org.magiclib.kotlin.isAutomated
 import second_in_command.SCData
+import second_in_command.SCUtils.addAndCheckTag
+import second_in_command.misc.randomAndRemove
 import second_in_command.specs.SCBaseSkillPlugin
 
 class OfficerManagement : SCBaseSkillPlugin() {
@@ -34,6 +38,29 @@ class OfficerManagement : SCBaseSkillPlugin() {
 
     override fun advance(data: SCData, amount: Float) {
         data.commander.stats.officerNumber.modifyFlat("sc_officer_management", 2f)
+    }
+
+    override fun onActivation(data: SCData) {
+
+        //Add additional officers
+        if (data.isNPC && !data.fleet.addAndCheckTag("sc_officer_management_update")) {
+            var count = 2
+            var membersWithoutOfficers = data.fleet.fleetData.membersListCopy
+                .filter { (it.captain == null || it.captain.isDefault) && !it.isAutomated() }.toMutableList()
+
+
+            for (i in 0 until 2) {
+                //var officer = data.fleet.faction.createRandomPerson()
+                var level = MathUtils.getRandomNumberInRange(2, 5)
+                var officer = OfficerManagerEvent.createOfficer(data.faction, level)
+
+                if (membersWithoutOfficers.isNotEmpty()) {
+                    var pick = membersWithoutOfficers.randomAndRemove()
+                    pick.captain = officer
+                }
+            }
+        }
+
     }
 
     override fun onDeactivation(data: SCData) {

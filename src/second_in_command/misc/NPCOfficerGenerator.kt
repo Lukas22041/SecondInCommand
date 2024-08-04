@@ -34,7 +34,7 @@ object NPCOfficerGenerator {
 
         if (isOmega) combatFP += 100f
         if (hasSupercap) combatFP += 80f
-        //if (isAutomated) combatFP += 40f
+        if (isAutomated) combatFP += 20f
         //if (isStation) combatFP += 40f
 
         var divide = MathUtils.getRandomNumberInRange(20f, 22f)
@@ -136,11 +136,18 @@ object NPCOfficerGenerator {
         var slotId = 0
         for (officer in officers) {
 
+
+            officer.activeSkillIDs = officer.activeSkillIDs.sortedBy { SCSpecStore.getSkillSpec(it)!!.order }.toMutableSet()
+
             data.addOfficerToFleet(officer)
             data.setOfficerInSlot(slotId, officer)
 
             slotId += 1
+
+
         }
+
+
 
     }
 

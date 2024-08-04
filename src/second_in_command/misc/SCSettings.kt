@@ -8,7 +8,6 @@ class SCSettings : LunaSettingsListener {
 
 
     companion object {
-        var isModEnabled = true
 
         var maxLevel = 5
         var xpPerLevel = listOf<Float>(
@@ -24,7 +23,8 @@ class SCSettings : LunaSettingsListener {
             450000f, //LV3
             1350000f, //LV4
         )
-        var baseXpGainMult = 0.5f
+        var canNPCsSpawnWithSkills = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_canNPCsSpawnWithSkills")!!
+        var xpGainMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_officerXPMult")!!
     }
 
     init {
@@ -38,7 +38,8 @@ class SCSettings : LunaSettingsListener {
     }
 
     fun applySettings() {
-        isModEnabled = !LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_DisableMod")!!
+        canNPCsSpawnWithSkills = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_canNPCsSpawnWithSkills")!!
+        xpGainMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_officerXPMult")!!
     }
 
 

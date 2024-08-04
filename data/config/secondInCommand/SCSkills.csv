@@ -22,8 +22,8 @@ sc_management_re_entry,Re-Entry,graphics/secondInCommand/management/re_entry.png
 sc_management_command_and_conquer,Command and Conquer,graphics/secondInCommand/management/command_and_conquer.png,1,second_in_command.skills.management.CommandAndConquer
 sc_management_officer_management,Officer Management,graphics/secondInCommand/management/officer_management.png,1.5,second_in_command.skills.management.OfficerManagement
 sc_management_officer_training,Officer Training,graphics/secondInCommand/management/officer_training.png,1.5,second_in_command.skills.management.OfficerTraining
-sc_management_best_of_the_best,Best of the Best,graphics/secondInCommand/management/best_of_the_best.png,2,second_in_command.skills.management.BestOfTheBest
-sc_management_in_good_hands,In Good Hands,graphics/secondInCommand/management/in_good_hands.png,2,second_in_command.skills.management.InGoodHands
+sc_management_best_of_the_best,Best of the Best,graphics/secondInCommand/management/best_of_the_best.png,,second_in_command.skills.management.BestOfTheBest
+sc_management_in_good_hands,In Good Hands,graphics/secondInCommand/management/in_good_hands.png,2.5,second_in_command.skills.management.InGoodHands
 ,,,,
 #Wolfpack,,,,
 sc_wolfpack_wolfpack_tactics,Wolfpack Tactics,graphics/secondInCommand/wolfpack/wolfpack_tactics.png,1,second_in_command.skills.wolfpack.WolfpackTactics
@@ -71,7 +71,7 @@ sc_automated_specialised_equipment,Specialised Equipment,graphics/secondInComman
 sc_automated_deadly_persistence,Deadly Persistence,graphics/secondInCommand/automated/deadly_persistence.png,1.5,second_in_command.skills.automated.DeadlyPersistence
 sc_automated_wide_range,Wide-Range Transmission,graphics/secondInCommand/automated/wide_range.png,1.5,second_in_command.skills.automated.WideRangeTransmission
 sc_automated_expertise,Autonomous Expertise,graphics/secondInCommand/automated/expertise.png,,second_in_command.skills.automated.AutonomousExpertise
-sc_automated_limit_breaker,Limit Breaker,graphics/secondInCommand/automated/limit_breaker.png,1.5,second_in_command.skills.automated.LimitBreaker
+sc_automated_limit_breaker,Limit Breaker,graphics/secondInCommand/automated/limit_breaker.png,2.5,second_in_command.skills.automated.LimitBreaker
 sc_automated_neural_junction,Neural Junction,graphics/secondInCommand/automated/neural_junction.png,,second_in_command.skills.automated.NeuralJunction
 ,,,,
 ,,,,

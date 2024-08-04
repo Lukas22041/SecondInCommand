@@ -1,15 +1,22 @@
 package second_in_command.skills.management
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Stats
+import com.fs.starfarer.api.plugins.OfficerLevelupPlugin
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.magiclib.kotlin.getSalvageSeed
+import org.magiclib.kotlin.isAutomated
 import second_in_command.SCData
+import second_in_command.SCUtils.addAndCheckTag
 import second_in_command.specs.SCBaseSkillPlugin
+import java.util.*
+import kotlin.collections.HashMap
 
 class OfficerTraining : SCBaseSkillPlugin() {
 
@@ -61,6 +68,37 @@ class OfficerTraining : SCBaseSkillPlugin() {
             }
         }
 
+        //Increase officer levels and give skills
+        if (data.isNPC && !data.fleet.addAndCheckTag("sc_officer_training_update")) {
+            var levels = 2
+
+            var membersWithOfficers = data.fleet.fleetData.membersListCopy
+                .filter { (it.captain != null && !it.captain.isDefault) && !it.isAutomated() /*&& !it.isFlagship*/}.toMutableList() //Also filter out flagship, just to be save for some unique bounties
+
+            //Filter out certain unique characters
+            membersWithOfficers.filter { !Global.getSector().importantPeople.containsPerson(it.captain) }
+
+            //Do not increase the level multiple times
+            membersWithOfficers.filter { !it.captain.hasTag("sc_officer_training_increased_lv") }
+
+            val plugin = Global.getSettings().getPlugin("officerLevelUp") as OfficerLevelupPlugin
+            for (member in membersWithOfficers) {
+                var captain = member.captain
+                captain.addTag("sc_officer_training_increased_lv")
+
+                for (level in 0 until levels) {
+                    captain.stats.level += 1
+
+                    var skills = plugin.pickLevelupSkills(captain, Random(data.fleet.getSalvageSeed()))
+                    if (skills.isNotEmpty()) {
+                        var pick = skills.random()
+                        captain.stats.increaseSkill(pick)
+                    }
+                }
+            }
+
+        }
+
 
 
     }
@@ -107,5 +145,10 @@ class OfficerTraining : SCBaseSkillPlugin() {
                 }
             }
         }
+    }
+
+    override fun getNPCSpawnWeight(fleet: CampaignFleetAPI): Float {
+        if (fleet.flagship?.isAutomated() == true) return 0f
+        return super.getNPCSpawnWeight(fleet)
     }
 }

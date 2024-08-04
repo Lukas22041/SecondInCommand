@@ -11,6 +11,7 @@ import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
 import org.magiclib.kotlin.isAutomated
 import second_in_command.SCUtils
+import second_in_command.misc.SCSettings
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.*
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
@@ -21,6 +22,9 @@ class SCAddOfficersToFleetInteraction : BaseCommandPlugin() {
         var fleet = dialog!!.interactionTarget
         //May not work for defender fleets? unsure.
         if (fleet !is CampaignFleetAPI) return true
+
+        if (!SCSettings.canNPCsSpawnWithSkills && !SCUtils.hasFleetData(fleet)) return true
+
 
         var data = SCUtils.getFleetData(fleet)
 
