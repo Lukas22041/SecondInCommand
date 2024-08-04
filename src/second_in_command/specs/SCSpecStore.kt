@@ -64,9 +64,16 @@ object SCSpecStore {
             val name = row.getString("name")
             val iconPath = row.getString("iconPath")
             Global.getSettings().loadTextureCached(iconPath)
+
+            val npcSpawnWeightString = row.getString("npcSpawnWeight")
+            var npcSpawnWeight = 0f
+            if (npcSpawnWeightString != "") npcSpawnWeight = npcSpawnWeightString.toFloat()
+
+
+
             val pluginPath = row.getString("plugin")
 
-            var spec = SCSkillSpec(id, name, iconPath, pluginPath)
+            var spec = SCSkillSpec(id, name, iconPath, npcSpawnWeight, pluginPath)
             skillSpecs.add(spec)
         }
 

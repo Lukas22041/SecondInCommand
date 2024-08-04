@@ -5,11 +5,9 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.BattleAPI
 import com.fs.starfarer.api.campaign.CampaignEventListener
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
-import com.fs.starfarer.api.campaign.FleetInflater
 import com.fs.starfarer.api.campaign.listeners.FleetEventListener
-import com.fs.starfarer.api.campaign.listeners.FleetInflationListener
-import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
+import second_in_command.misc.NPCOfficerGenerator
 import second_in_command.specs.SCBaseSkillPlugin
 import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
@@ -56,18 +54,50 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
             }
         }
         else {
+
+            //Condition here to check for which fleets not to spawn officers for, i.e ziggurat or other boss ships
+
+
+
             generateNPCOfficers()
         }
     }
 
+    fun getActiveOfficers() = activeOfficers.filterNotNull()
+
     fun generateNPCOfficers() {
-        var person = SCUtils.createRandomSCOfficer("sc_tactical", faction)
-        addOfficerToFleet(person)
-        setOfficerInSlot(0, person)
+
+        NPCOfficerGenerator.generateForFleet(this, fleet)
+
+       /* var officer1 = SCUtils.createRandomSCOfficer("sc_tactical", faction)
+        addOfficerToFleet(officer1)
+        officer1.addSkill("sc_tactical_spotters")
+        officer1.addSkill("sc_tactical_rapid_response")
+        officer1.addSkill("sc_tactical_pristine_condition")
+        setOfficerInSlot(0, officer1)
+
+        var officer2 = SCUtils.createRandomSCOfficer("sc_wolfpack", faction)
+        addOfficerToFleet(officer2)
+        officer2.addSkill("sc_wolfpack_safe_recovery")
+        officer2.addSkill("sc_wolfpack_low_profile")
+        officer2.addSkill("sc_wolfpack_coordinated_maneuvers")
+        officer2.addSkill("sc_wolfpack_jumpstart")
+        officer2.addSkill("sc_wolfpack_trapped_prey")
+        setOfficerInSlot(1, officer2)
+
+        var officer3 = SCUtils.createRandomSCOfficer("sc_support", faction)
+        addOfficerToFleet(officer3)
+        officer3.addSkill("sc_support_huntsman")
+        setOfficerInSlot(2, officer3)*/
 
         //Generate portraits & name based on faction
 
+
+
     }
+
+
+
 
     fun getOfficersInFleet() : ArrayList<SCOfficer> {
         return ArrayList(officers)

@@ -1,80 +1,80 @@
-id,name,iconPath,plugin
-,,,
-#Tactical,,,
-sc_tactical_focused_fire,Focused Fire,graphics/secondInCommand/tactical/focused_fire.png,second_in_command.skills.tactical.FocusedFire
-sc_tactical_spotters,Spotters,graphics/secondInCommand/tactical/spotters.png,second_in_command.skills.tactical.Spotters
-sc_tactical_rapid_response,Rapid Response,graphics/secondInCommand/tactical/rapid_response.png,second_in_command.skills.tactical.RapidResponse
-sc_tactical_pristine_condition,Pristine Condition,graphics/secondInCommand/tactical/pristine_condition.png,second_in_command.skills.tactical.PristineCondition
-sc_tactical_tactical_drills,Tactical Drills,graphics/secondInCommand/tactical/tactical_drills.png,second_in_command.skills.tactical.TacticalDrills
-sc_tactical_efficient_ordnance,Efficient Ordnance,graphics/secondInCommand/tactical/efficient_ordnance.png,second_in_command.skills.tactical.EfficientOrdnance
-#sc_tactical_superiority,Superiority,graphics/secondInCommand/tactical/superiority.png,second_in_command.skills.tactical.Superiority
-sc_tactical_full_throttle,Full Throttle,graphics/secondInCommand/tactical/full_throttle.png,second_in_command.skills.tactical.FullThrottle
-sc_tactical_accelerated_barrels,Accelerated Barrels,graphics/secondInCommand/tactical/accelerated_barrels.png,second_in_command.skills.tactical.AcceleratedBarrels
-sc_tactical_mass_bombardment,Mass Bombardment,graphics/secondInCommand/tactical/mass_bombardment.png,second_in_command.skills.tactical.MassBombardment
-sc_tactical_defensive_protocols,Defensive Protocols,graphics/secondInCommand/tactical/defensive_protocols.png,second_in_command.skills.tactical.DefensiveProtocols
-,,,
-#Management,,,
-sc_management_crew_training,Crew Training,graphics/secondInCommand/management/crew_training.png,second_in_command.skills.management.CrewTraining
-sc_management_top_condition,Top Condition,graphics/secondInCommand/management/top_condition.png,second_in_command.skills.management.TopCondition
-sc_management_well_organized,Well Organized,graphics/secondInCommand/management/well_organized.png,second_in_command.skills.management.WellOrganized
-sc_management_authority,Authority,graphics/secondInCommand/management/authority.png,second_in_command.skills.management.Authority
-sc_management_re_entry,Re-Entry,graphics/secondInCommand/management/re_entry.png,second_in_command.skills.management.ReEntry
-sc_management_command_and_conquer,Command and Conquer,graphics/secondInCommand/management/command_and_conquer.png,second_in_command.skills.management.CommandAndConquer
-sc_management_officer_management,Officer Management,graphics/secondInCommand/management/officer_management.png,second_in_command.skills.management.OfficerManagement
-sc_management_officer_training,Officer Training,graphics/secondInCommand/management/officer_training.png,second_in_command.skills.management.OfficerTraining
-sc_management_best_of_the_best,Best of the Best,graphics/secondInCommand/management/best_of_the_best.png,second_in_command.skills.management.BestOfTheBest
-sc_management_in_good_hands,In Good Hands,graphics/secondInCommand/management/in_good_hands.png,second_in_command.skills.management.InGoodHands
-,,,
-#Wolfpack,,,
-sc_wolfpack_wolfpack_tactics,Wolfpack Tactics,graphics/secondInCommand/wolfpack/wolfpack_tactics.png,second_in_command.skills.wolfpack.WolfpackTactics
-sc_wolfpack_safe_recovery,Safe Recovery,graphics/secondInCommand/wolfpack/safe_recovery.png,second_in_command.skills.wolfpack.SafeRecovery
-sc_wolfpack_low_profile,Low Profile,graphics/secondInCommand/wolfpack/low_profile.png,second_in_command.skills.wolfpack.LowProfile
-sc_wolfpack_coordinated_maneuvers,Coordinated Maneuvers,graphics/secondInCommand/wolfpack/coordinated_maneuvers.png,second_in_command.skills.wolfpack.CoordinatedManeuvers
-sc_wolfpack_jumpstart,Jumpstart,graphics/secondInCommand/wolfpack/jumpstart.png,second_in_command.skills.wolfpack.Jumpstart
-sc_wolfpack_trapped_prey,Trapped Prey,graphics/secondInCommand/wolfpack/trapped_prey.png,second_in_command.skills.wolfpack.TrappedPrey
-sc_wolfpack_together_as_one,Together as One,graphics/secondInCommand/wolfpack/together_as_one.png,second_in_command.skills.wolfpack.TogetherAsOne
-sc_wolfpack_leader_of_the_pack,Leader of the Pack,graphics/secondInCommand/wolfpack/leader_of_the_pack.png,second_in_command.skills.wolfpack.LeaderOfThePack
-sc_wolfpack_support_doctrine,Support Doctrine,graphics/secondInCommand/wolfpack/support_doctrine.png,second_in_command.skills.wolfpack.SupportDoctrine
-sc_wolfpack_quick_as_the_wind,Quick as the Wind,graphics/secondInCommand/wolfpack/quick_as_the_wind.png,second_in_command.skills.wolfpack.QuickAsTheWind
-,,,
-#Support,,,
-sc_support_fighter_uplink,Fighter Uplink,graphics/secondInCommand/support/fighter_uplink.png,second_in_command.skills.support.FighterUplink
-sc_support_mobile_defenses,Mobile Defenses,graphics/secondInCommand/support/mobile_defenses.png,second_in_command.skills.support.MobileDefenses
-sc_support_huntsman,Huntsman,graphics/secondInCommand/support/huntsman.png,second_in_command.skills.support.Huntsman
-sc_support_carrier_group,Carrier Group,graphics/secondInCommand/support/carrier_group.png,second_in_command.skills.support.CarrierGroup
-sc_support_distanced_support,Distanced Support,graphics/secondInCommand/support/distanced_support.png,second_in_command.skills.support.DistancedSupport
-sc_support_system_proficiency,System Proficiency,graphics/secondInCommand/support/system_proficiency.png,second_in_command.skills.support.SystemProficiency
-sc_support_swarm_deployment,Swarm Deployment,graphics/secondInCommand/support/swarm_deployment.png,second_in_command.skills.support.SwarmDeployment
-sc_support_reconfiguration,Reconfiguration,graphics/secondInCommand/support/reconfiguration.png,second_in_command.skills.support.Reconfiguration
-sc_support_advanced_maneuvers,Advanced Maneuvers,graphics/secondInCommand/support/advanced_maneuvers.png,second_in_command.skills.support.AdvancedManeuvers
-sc_support_barrage,Barrage,graphics/secondInCommand/support/barrage.png,second_in_command.skills.support.Barrage
-,,,
-#Technology,,,
-sc_technology_flux_regulation,Flux Regulation,graphics/secondInCommand/technology/flux_regulation.png,second_in_command.skills.technology.FluxRegulation
-sc_technology_countermeasures,Countermeasures,graphics/secondInCommand/technology/countermeasures.png,second_in_command.skills.technology.Countermeasures
-sc_technology_optimised_shields,Optimised Shields,graphics/secondInCommand/technology/optimised_shields.png,second_in_command.skills.technology.OptimisedShields
-sc_technology_deep_dive,Deep Dive,graphics/secondInCommand/technology/deep_dive.png,second_in_command.skills.technology.DeepDive
-sc_technology_reinforced_grid,Reinforced Grid,graphics/secondInCommand/technology/reinforced_grid.png,second_in_command.skills.technology.ReinforcedGrid
-sc_technology_phase_coil_tuning,Phase Coil Tuning,graphics/secondInCommand/technology/phase_coil_tuning.png,second_in_command.skills.technology.PhaseCoilTuning
-sc_technology_focused_lenses,Focused Lenses,graphics/secondInCommand/technology/focused_lenses.png,second_in_command.skills.technology.FocusedLenses
-sc_technology_energised,Energised,graphics/secondInCommand/technology/energised.png,second_in_command.skills.technology.Energised
-sc_technology_neural_link,Neural Link,graphics/secondInCommand/technology/neural_link.png,second_in_command.skills.technology.NeuralLink
-sc_technology_makeshift_drones,Makeshift Drones,graphics/secondInCommand/technology/makeshift_drones.png,second_in_command.skills.technology.MakeshiftDrones
-,,,
-#Automated,,,
-sc_automated_automated_ships,Automated Ships,graphics/secondInCommand/automated/automated_ships.png,second_in_command.skills.automated.AutomatedShips
-sc_automated_magnetic_shielding,Magnetic Shielding,graphics/secondInCommand/automated/magnetic_shielding.png,second_in_command.skills.automated.MagneticShielding
-sc_automated_self_repair,Self-Repair,graphics/secondInCommand/automated/self_repair.png,second_in_command.skills.automated.SelfRepair
-sc_automated_final_gambit,Final Gambit,graphics/secondInCommand/automated/final_gambit.png,second_in_command.skills.automated.FinalGambit
-sc_automated_electronic_warfare,Electronic Warfare,graphics/secondInCommand/automated/electronic_warfare.png,second_in_command.skills.automated.ElectronicWarfare
-sc_automated_specialised_equipment,Specialised Equipment,graphics/secondInCommand/automated/specialised_equipment.png,second_in_command.skills.automated.SpecialisedEquipment
-sc_automated_deadly_persistence,Deadly Persistence,graphics/secondInCommand/automated/deadly_persistence.png,second_in_command.skills.automated.DeadlyPersistence
-sc_automated_wide_range,Wide-Range Transmission,graphics/secondInCommand/automated/wide_range.png,second_in_command.skills.automated.WideRangeTransmission
-sc_automated_expertise,Autonomous Expertise,graphics/secondInCommand/automated/expertise.png,second_in_command.skills.automated.AutonomousExpertise
-sc_automated_limit_breaker,Limit Breaker,graphics/secondInCommand/automated/limit_breaker.png,second_in_command.skills.automated.LimitBreaker
-sc_automated_neural_junction,Neural Junction,graphics/secondInCommand/automated/neural_junction.png,second_in_command.skills.automated.NeuralJunction
-,,,
-,,,
-,,,
-,,,
-,,,
+id,name,iconPath,npcSpawnWeight,plugin
+,,,,
+#Tactical,,,,
+sc_tactical_focused_fire,Focused Fire,graphics/secondInCommand/tactical/focused_fire.png,1,second_in_command.skills.tactical.FocusedFire
+sc_tactical_spotters,Spotters,graphics/secondInCommand/tactical/spotters.png,1,second_in_command.skills.tactical.Spotters
+sc_tactical_rapid_response,Rapid Response,graphics/secondInCommand/tactical/rapid_response.png,1,second_in_command.skills.tactical.RapidResponse
+sc_tactical_pristine_condition,Pristine Condition,graphics/secondInCommand/tactical/pristine_condition.png,1,second_in_command.skills.tactical.PristineCondition
+sc_tactical_tactical_drills,Tactical Drills,graphics/secondInCommand/tactical/tactical_drills.png,1,second_in_command.skills.tactical.TacticalDrills
+sc_tactical_efficient_ordnance,Efficient Ordnance,graphics/secondInCommand/tactical/efficient_ordnance.png,1,second_in_command.skills.tactical.EfficientOrdnance
+#sc_tactical_superiority,Superiority,graphics/secondInCommand/tactical/superiority.png,1,second_in_command.skills.tactical.Superiority
+sc_tactical_full_throttle,Full Throttle,graphics/secondInCommand/tactical/full_throttle.png,1.5,second_in_command.skills.tactical.FullThrottle
+sc_tactical_accelerated_barrels,Accelerated Barrels,graphics/secondInCommand/tactical/accelerated_barrels.png,1.5,second_in_command.skills.tactical.AcceleratedBarrels
+sc_tactical_mass_bombardment,Mass Bombardment,graphics/secondInCommand/tactical/mass_bombardment.png,1.5,second_in_command.skills.tactical.MassBombardment
+sc_tactical_defensive_protocols,Defensive Protocols,graphics/secondInCommand/tactical/defensive_protocols.png,1.5,second_in_command.skills.tactical.DefensiveProtocols
+,,,,
+#Management,,,,
+sc_management_crew_training,Crew Training,graphics/secondInCommand/management/crew_training.png,1,second_in_command.skills.management.CrewTraining
+sc_management_top_condition,Top Condition,graphics/secondInCommand/management/top_condition.png,1,second_in_command.skills.management.TopCondition
+sc_management_well_organized,Well Organized,graphics/secondInCommand/management/well_organized.png,1,second_in_command.skills.management.WellOrganized
+sc_management_authority,Authority,graphics/secondInCommand/management/authority.png,1,second_in_command.skills.management.Authority
+sc_management_re_entry,Re-Entry,graphics/secondInCommand/management/re_entry.png,1,second_in_command.skills.management.ReEntry
+sc_management_command_and_conquer,Command and Conquer,graphics/secondInCommand/management/command_and_conquer.png,1,second_in_command.skills.management.CommandAndConquer
+sc_management_officer_management,Officer Management,graphics/secondInCommand/management/officer_management.png,1.5,second_in_command.skills.management.OfficerManagement
+sc_management_officer_training,Officer Training,graphics/secondInCommand/management/officer_training.png,1.5,second_in_command.skills.management.OfficerTraining
+sc_management_best_of_the_best,Best of the Best,graphics/secondInCommand/management/best_of_the_best.png,2,second_in_command.skills.management.BestOfTheBest
+sc_management_in_good_hands,In Good Hands,graphics/secondInCommand/management/in_good_hands.png,2,second_in_command.skills.management.InGoodHands
+,,,,
+#Wolfpack,,,,
+sc_wolfpack_wolfpack_tactics,Wolfpack Tactics,graphics/secondInCommand/wolfpack/wolfpack_tactics.png,1,second_in_command.skills.wolfpack.WolfpackTactics
+sc_wolfpack_safe_recovery,Safe Recovery,graphics/secondInCommand/wolfpack/safe_recovery.png,1,second_in_command.skills.wolfpack.SafeRecovery
+sc_wolfpack_low_profile,Low Profile,graphics/secondInCommand/wolfpack/low_profile.png,1,second_in_command.skills.wolfpack.LowProfile
+sc_wolfpack_coordinated_maneuvers,Coordinated Maneuvers,graphics/secondInCommand/wolfpack/coordinated_maneuvers.png,1,second_in_command.skills.wolfpack.CoordinatedManeuvers
+sc_wolfpack_jumpstart,Jumpstart,graphics/secondInCommand/wolfpack/jumpstart.png,1,second_in_command.skills.wolfpack.Jumpstart
+sc_wolfpack_trapped_prey,Trapped Prey,graphics/secondInCommand/wolfpack/trapped_prey.png,1,second_in_command.skills.wolfpack.TrappedPrey
+sc_wolfpack_together_as_one,Together as One,graphics/secondInCommand/wolfpack/together_as_one.png,1,second_in_command.skills.wolfpack.TogetherAsOne
+sc_wolfpack_leader_of_the_pack,Leader of the Pack,graphics/secondInCommand/wolfpack/leader_of_the_pack.png,1,second_in_command.skills.wolfpack.LeaderOfThePack
+sc_wolfpack_support_doctrine,Support Doctrine,graphics/secondInCommand/wolfpack/support_doctrine.png,2,second_in_command.skills.wolfpack.SupportDoctrine
+sc_wolfpack_quick_as_the_wind,Quick as the Wind,graphics/secondInCommand/wolfpack/quick_as_the_wind.png,2,second_in_command.skills.wolfpack.QuickAsTheWind
+,,,,
+#Support,,,,
+sc_support_fighter_uplink,Fighter Uplink,graphics/secondInCommand/support/fighter_uplink.png,1,second_in_command.skills.support.FighterUplink
+sc_support_mobile_defenses,Mobile Defenses,graphics/secondInCommand/support/mobile_defenses.png,1,second_in_command.skills.support.MobileDefenses
+sc_support_huntsman,Huntsman,graphics/secondInCommand/support/huntsman.png,1,second_in_command.skills.support.Huntsman
+sc_support_carrier_group,Carrier Group,graphics/secondInCommand/support/carrier_group.png,1,second_in_command.skills.support.CarrierGroup
+sc_support_distanced_support,Distanced Support,graphics/secondInCommand/support/distanced_support.png,1,second_in_command.skills.support.DistancedSupport
+sc_support_system_proficiency,System Proficiency,graphics/secondInCommand/support/system_proficiency.png,1,second_in_command.skills.support.SystemProficiency
+sc_support_swarm_deployment,Swarm Deployment,graphics/secondInCommand/support/swarm_deployment.png,1,second_in_command.skills.support.SwarmDeployment
+sc_support_reconfiguration,Reconfiguration,graphics/secondInCommand/support/reconfiguration.png,,second_in_command.skills.support.Reconfiguration
+sc_support_advanced_maneuvers,Advanced Maneuvers,graphics/secondInCommand/support/advanced_maneuvers.png,2,second_in_command.skills.support.AdvancedManeuvers
+sc_support_barrage,Barrage,graphics/secondInCommand/support/barrage.png,2,second_in_command.skills.support.Barrage
+,,,,
+#Technology,,,,
+sc_technology_flux_regulation,Flux Regulation,graphics/secondInCommand/technology/flux_regulation.png,1,second_in_command.skills.technology.FluxRegulation
+sc_technology_countermeasures,Countermeasures,graphics/secondInCommand/technology/countermeasures.png,1,second_in_command.skills.technology.Countermeasures
+sc_technology_optimised_shields,Optimised Shields,graphics/secondInCommand/technology/optimised_shields.png,1,second_in_command.skills.technology.OptimisedShields
+sc_technology_deep_dive,Deep Dive,graphics/secondInCommand/technology/deep_dive.png,1,second_in_command.skills.technology.DeepDive
+sc_technology_reinforced_grid,Reinforced Grid,graphics/secondInCommand/technology/reinforced_grid.png,1,second_in_command.skills.technology.ReinforcedGrid
+sc_technology_phase_coil_tuning,Phase Coil Tuning,graphics/secondInCommand/technology/phase_coil_tuning.png,1,second_in_command.skills.technology.PhaseCoilTuning
+sc_technology_focused_lenses,Focused Lenses,graphics/secondInCommand/technology/focused_lenses.png,1,second_in_command.skills.technology.FocusedLenses
+sc_technology_energised,Energised,graphics/secondInCommand/technology/energised.png,1,second_in_command.skills.technology.Energised
+sc_technology_neural_link,Neural Link,graphics/secondInCommand/technology/neural_link.png,,second_in_command.skills.technology.NeuralLink
+sc_technology_makeshift_drones,Makeshift Drones,graphics/secondInCommand/technology/makeshift_drones.png,,second_in_command.skills.technology.MakeshiftDrones
+,,,,
+#Automated,,,,
+sc_automated_automated_ships,Automated Ships,graphics/secondInCommand/automated/automated_ships.png,1,second_in_command.skills.automated.AutomatedShips
+sc_automated_magnetic_shielding,Magnetic Shielding,graphics/secondInCommand/automated/magnetic_shielding.png,1,second_in_command.skills.automated.MagneticShielding
+sc_automated_self_repair,Self-Repair,graphics/secondInCommand/automated/self_repair.png,1,second_in_command.skills.automated.SelfRepair
+sc_automated_final_gambit,Final Gambit,graphics/secondInCommand/automated/final_gambit.png,0.15,second_in_command.skills.automated.FinalGambit
+sc_automated_electronic_warfare,Electronic Warfare,graphics/secondInCommand/automated/electronic_warfare.png,1,second_in_command.skills.automated.ElectronicWarfare
+sc_automated_specialised_equipment,Specialised Equipment,graphics/secondInCommand/automated/specialised_equipment.png,,second_in_command.skills.automated.SpecialisedEquipment
+sc_automated_deadly_persistence,Deadly Persistence,graphics/secondInCommand/automated/deadly_persistence.png,1.5,second_in_command.skills.automated.DeadlyPersistence
+sc_automated_wide_range,Wide-Range Transmission,graphics/secondInCommand/automated/wide_range.png,1.5,second_in_command.skills.automated.WideRangeTransmission
+sc_automated_expertise,Autonomous Expertise,graphics/secondInCommand/automated/expertise.png,,second_in_command.skills.automated.AutonomousExpertise
+sc_automated_limit_breaker,Limit Breaker,graphics/secondInCommand/automated/limit_breaker.png,1.5,second_in_command.skills.automated.LimitBreaker
+sc_automated_neural_junction,Neural Junction,graphics/secondInCommand/automated/neural_junction.png,,second_in_command.skills.automated.NeuralJunction
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,

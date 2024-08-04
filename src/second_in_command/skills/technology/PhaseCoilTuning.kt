@@ -1,5 +1,6 @@
 package second_in_command.skills.technology
 
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
@@ -39,6 +40,11 @@ class PhaseCoilTuning : SCBaseSkillPlugin() {
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
 
+    }
+
+    override fun getNPCSpawnWeight(fleet: CampaignFleetAPI): Float {
+        if (fleet.fleetData.membersListCopy.any { it.baseOrModSpec().isPhase }) return super.getNPCSpawnWeight(fleet)
+        return 0f
     }
 
 }

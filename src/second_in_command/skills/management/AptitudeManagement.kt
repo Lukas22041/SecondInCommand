@@ -1,11 +1,7 @@
 package second_in_command.skills.management
 
-import com.fs.starfarer.api.campaign.AICoreOfficerPlugin
-import com.fs.starfarer.api.campaign.FleetDataAPI
-import com.fs.starfarer.api.characters.MutableCharacterStatsAPI
-import com.fs.starfarer.api.impl.campaign.skills.BaseSkillEffectDescription
-import com.fs.starfarer.api.impl.hullmods.Automated
-import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import second_in_command.SCData
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCBaseAptitudePlugin
 
@@ -35,6 +31,10 @@ class AptitudeManagement : SCBaseAptitudePlugin() {
         section3.addSkill("sc_management_in_good_hands")
         addSection(section3)
 
+    }
+
+    override fun getNPCSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
+        return 1f
     }
 
 }

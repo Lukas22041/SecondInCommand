@@ -30,7 +30,7 @@ sc_FleetEncounter,BeginFleetEncounter,!$player.sc_fleet_encountered score:100000
 FireBest BeginFleetEncounter
 FireAll SCFleetEncounterScript
 ",,,
-sc_FleetEncounterScript,SCFleetEncounterScript,,,Test SC Text,,
+sc_FleetEncounterScript,SCFleetEncounterScript,,SCAddOfficersToFleetInteraction,,,
 ,,,,,,
 #sc_fleet_info,DialogOptionSelected,"SCIsFleetInteraction 
 $option == INIT score:10000000",,Test SC Text 2,,

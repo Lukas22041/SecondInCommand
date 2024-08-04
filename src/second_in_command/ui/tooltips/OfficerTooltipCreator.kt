@@ -19,7 +19,17 @@ class OfficerTooltipCreator(var officer: SCOfficer?) : BaseTooltipCreator() {
 
         if (officer == null) {
 
-            tooltip!!.addPara("Left-click on an empty portrait to select an executive officer to assign. Right-click to un-assign officers.",
+            tooltip!!.addPara("This slot can be used to assign an Executive Officer. Executive officers provide a selection of skills based on their aptitude. Only the skills from assigned officers are active.",
+                0f, Misc.getTextColor(), Misc.getHighlightColor(), "Executive Officer", "Only the skills from assigned officers are active")
+
+            tooltip.addSpacer(10f)
+
+            tooltip!!.addPara("Executive Officers can occasionally be hired from a colonies comm-directory. They also sometimes appear in cryo-pods found during exploration.",
+                0f, Misc.getTextColor(), Misc.getHighlightColor(), "comm-directory", "cryo-pods")
+
+            tooltip.addSpacer(10f)
+
+            tooltip!!.addPara("Left-click to select an executive officer to assign. Right-click to un-assign officers.",
                 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Left-click", "Right-click")
 
             return

@@ -1,11 +1,8 @@
 package second_in_command.skills.wolfpack
 
-import com.fs.starfarer.api.campaign.AICoreOfficerPlugin
-import com.fs.starfarer.api.campaign.FleetDataAPI
-import com.fs.starfarer.api.characters.MutableCharacterStatsAPI
-import com.fs.starfarer.api.impl.campaign.skills.BaseSkillEffectDescription
-import com.fs.starfarer.api.impl.hullmods.Automated
-import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import second_in_command.SCData
+import second_in_command.misc.levelBetween
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCBaseAptitudePlugin
 
@@ -35,6 +32,29 @@ class AptitudeWolfpack : SCBaseAptitudePlugin() {
         section3.addSkill("sc_wolfpack_quick_as_the_wind")
         addSection(section3)
 
+    }
+
+    override fun getNPCSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
+        var mult = 0.25f
+        var smallcraft = fleet.fleetData.membersListCopy.filter { it.isFrigate || it.isDestroyer }
+
+        if (smallcraft.isEmpty()) return 0f
+
+        var level = smallcraft.count().toFloat().levelBetween(0f, fleet.fleetData.membersListCopy.count().toFloat())
+
+        if (level >= 0.3) {
+            mult = 1f
+        }
+
+        if (level >= 0.5) {
+            mult = 1.25f
+        }
+
+        if (level >= 0.75) {
+            mult = 3f
+        }
+
+        return mult
     }
 
 }

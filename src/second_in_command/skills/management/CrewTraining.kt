@@ -56,7 +56,9 @@ class CrewTraining : SCBaseSkillPlugin() {
             cr += 0.05f
         }
 
-        stats!!.maxCombatReadiness.modifyFlat(id, cr, "Crew Training")
+        stats!!.maxCombatReadiness.modifyFlat("sc_crew_training", cr, "Crew Training")
+
+
 
     }
 
@@ -68,6 +70,26 @@ class CrewTraining : SCBaseSkillPlugin() {
         data.commander.stats.officerNumber.modifyFlat("sc_crew_training", 2f)
     }
 
+    override fun onActivation(data: SCData) {
+
+        //Put CR at max
+        if (data.isNPC) {
+            for (member in data.fleet.fleetData.membersListCopy) {
+
+                var stats = member.stats ?: continue
+
+                var cr = 0.10f
+
+                var captain = stats!!.fleetMember?.captain
+                if (captain != null && !captain.isDefault && !captain.isAICore) {
+                    cr += 0.05f
+                }
+
+                stats!!.maxCombatReadiness.modifyFlat("sc_crew_training", cr, "Crew Training")
+                member.repairTracker.cr += cr
+            }
+        }
+    }
 
     override fun onDeactivation(data: SCData) {
         data.commander.stats.officerNumber.unmodify("sc_crew_training")

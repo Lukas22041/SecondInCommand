@@ -56,7 +56,7 @@ class AutomatedShips : SCBaseSkillPlugin() {
 
             if (data.isNPC) {
 
-                tooltip.addPara("This fleet is capable of fielding automated ships", 0f)
+                tooltip.addPara("This fleet is capable of fielding automated ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
                 return
             }

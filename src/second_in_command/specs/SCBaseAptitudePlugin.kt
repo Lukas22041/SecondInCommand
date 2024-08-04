@@ -1,5 +1,7 @@
 package second_in_command.specs
 
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import second_in_command.SCData
 import java.awt.Color
 
 /**Base Plugin for Aptitudes. */
@@ -27,6 +29,7 @@ abstract class SCBaseAptitudePlugin() {
 
     abstract fun createSections()
 
+    abstract fun getNPCSpawnWeight(data: SCData, fleet: CampaignFleetAPI) : Float
 
 
 

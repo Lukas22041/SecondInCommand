@@ -1,11 +1,7 @@
 package second_in_command.skills.support
 
-import com.fs.starfarer.api.campaign.AICoreOfficerPlugin
-import com.fs.starfarer.api.campaign.FleetDataAPI
-import com.fs.starfarer.api.characters.MutableCharacterStatsAPI
-import com.fs.starfarer.api.impl.campaign.skills.BaseSkillEffectDescription
-import com.fs.starfarer.api.impl.hullmods.Automated
-import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import second_in_command.SCData
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCBaseAptitudePlugin
 
@@ -33,6 +29,13 @@ class AptitudeSupport : SCBaseAptitudePlugin() {
         addSection(section2)
 
 
+    }
+
+    override fun getNPCSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
+
+        var mult = 0.25f
+        if (data.fleet.fleetData.membersListCopy.any { it.isCarrier || it.numFlightDecks >= 1 }) mult = 1.5f
+        return mult
     }
 
 }

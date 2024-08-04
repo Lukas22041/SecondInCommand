@@ -30,6 +30,17 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
 
 
 
+    fun addSkill(skillId: String) {
+        activeSkillIDs.add(skillId)
+
+        if (data != null && isAssigned()) {
+            var plugin = SCSpecStore.getSkillSpec(skillId)!!.getPlugin()
+            plugin.onActivation(data!!)
+        }
+    }
+
+
+
     fun getSkillSpecs() : List<SCSkillSpec> {
         return activeSkillIDs.map { SCSpecStore.getSkillSpec(it)!! }
     }

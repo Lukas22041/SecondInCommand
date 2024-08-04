@@ -1,5 +1,6 @@
 package second_in_command.specs
 
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipAPI.HullSize
@@ -25,6 +26,10 @@ abstract class SCBaseSkillPlugin {
 
     open fun getName() : String {
         return spec.name
+    }
+
+    open fun getNPCSpawnWeight(fleet: CampaignFleetAPI) : Float {
+        return spec.npcSpawnWeight
     }
 
     abstract fun getAffectsString() : String

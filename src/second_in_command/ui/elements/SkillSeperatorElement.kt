@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11
 import org.magiclib.kotlin.setAlpha
 import java.awt.Color
 
-class SkillSeperatorElement(var color: Color, tooltip: TooltipMakerAPI) : LunaElement(tooltip, 1f, 0f) {
+class SkillSeperatorElement(var color: Color, tooltip: TooltipMakerAPI, var heightOverride: Float = 72f) : LunaElement(tooltip, 1f, 0f) {
 
     init {
         enableTransparency = true
@@ -25,7 +25,7 @@ class SkillSeperatorElement(var color: Color, tooltip: TooltipMakerAPI) : LunaEl
         GL11.glEnable(GL11.GL_BLEND)
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
 
-        var realHeight = 72f
+        var realHeight = heightOverride
         var curPos = y - realHeight
         var segments = 30
         var alphaPerSegment = 255f * 2 / segments
