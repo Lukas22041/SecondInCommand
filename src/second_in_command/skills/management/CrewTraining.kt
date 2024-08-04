@@ -7,6 +7,7 @@ import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
+import second_in_command.SCUtils.addOrCheckTag
 import second_in_command.specs.SCBaseSkillPlugin
 
 class CrewTraining : SCBaseSkillPlugin() {
@@ -58,8 +59,9 @@ class CrewTraining : SCBaseSkillPlugin() {
 
         stats!!.maxCombatReadiness.modifyFlat("sc_crew_training", cr, "Crew Training")
 
-
-
+        if (data.isNPC && !variant.addOrCheckTag("sc_crew_training")) {
+            stats.fleetMember.repairTracker.cr += cr
+        }
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
@@ -73,7 +75,7 @@ class CrewTraining : SCBaseSkillPlugin() {
     override fun onActivation(data: SCData) {
 
         //Put CR at max
-        if (data.isNPC) {
+      /*  if (data.isNPC) {
             for (member in data.fleet.fleetData.membersListCopy) {
 
                 var stats = member.stats ?: continue
@@ -88,7 +90,7 @@ class CrewTraining : SCBaseSkillPlugin() {
                 stats!!.maxCombatReadiness.modifyFlat("sc_crew_training", cr, "Crew Training")
                 member.repairTracker.cr += cr
             }
-        }
+        }*/
     }
 
     override fun onDeactivation(data: SCData) {

@@ -6,6 +6,7 @@ import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
+import second_in_command.SCUtils.addOrCheckTag
 import second_in_command.specs.SCBaseSkillPlugin
 
 class PristineCondition : SCBaseSkillPlugin() {
@@ -28,6 +29,10 @@ class PristineCondition : SCBaseSkillPlugin() {
         bonus = bonus.coerceIn(0f, 0.15f)
 
         stats!!.maxCombatReadiness.modifyFlat(id, bonus, "Pristine Condition")
+
+        if (data.isNPC && !variant.addOrCheckTag("sc_crew_training")) {
+            stats.fleetMember.repairTracker.cr += bonus
+        }
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {

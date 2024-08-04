@@ -3,6 +3,7 @@ package second_in_command
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.FactionAPI
+import com.fs.starfarer.api.combat.ShipVariantAPI
 import second_in_command.specs.SCOfficer
 
 object SCUtils {
@@ -19,6 +20,7 @@ object SCUtils {
         }
         return data
     }
+
 
     fun getFleetData(fleet: CampaignFleetAPI) : SCData{
         var data = fleet.memoryWithoutUpdate.get(DATA_KEY) as SCData?
@@ -48,6 +50,14 @@ object SCUtils {
         return getPlayerData().isSkillActive(skillId)
     }*/
 
+
+
+    fun ShipVariantAPI.addOrCheckTag(tag: String) : Boolean {
+        if (this.hasTag(tag)) return true
+
+        this.addTag(tag)
+        return false
+    }
 
 
     fun changeOfficerAptitude(fleet: CampaignFleetAPI, officer: SCOfficer, aptitudeId: String) {
