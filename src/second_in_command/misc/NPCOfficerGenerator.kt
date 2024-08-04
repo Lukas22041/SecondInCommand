@@ -34,7 +34,7 @@ object NPCOfficerGenerator {
 
         if (isOmega) combatFP += 100f
         if (hasSupercap) combatFP += 80f
-        if (isAutomated) combatFP += 40f
+        //if (isAutomated) combatFP += 40f
         //if (isStation) combatFP += 40f
 
         var divide = MathUtils.getRandomNumberInRange(20f, 22f)

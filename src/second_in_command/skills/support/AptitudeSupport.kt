@@ -2,6 +2,7 @@ package second_in_command.skills.support
 
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import second_in_command.SCData
+import second_in_command.misc.levelBetween
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCBaseAptitudePlugin
 
@@ -32,9 +33,25 @@ class AptitudeSupport : SCBaseAptitudePlugin() {
     }
 
     override fun getNPCSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
-
         var mult = 0.25f
-        if (data.fleet.fleetData.membersListCopy.any { it.isCarrier || it.numFlightDecks >= 1 }) mult = 1.5f
+        var carriers = fleet.fleetData.membersListCopy.filter { it.isCarrier || it.numFlightDecks >= 1 }
+
+        if (carriers.isEmpty()) return 0f
+
+        var level = carriers.count().toFloat().levelBetween(0f, fleet.fleetData.membersListCopy.count().toFloat())
+
+        if (level >= 0.2) {
+            mult = 1f
+        }
+
+        if (level >= 0.5) {
+            mult = 2f
+        }
+
+        if (level >= 0.7) {
+            mult = 5f
+        }
+
         return mult
     }
 
