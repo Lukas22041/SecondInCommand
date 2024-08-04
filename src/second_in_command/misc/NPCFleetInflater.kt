@@ -13,6 +13,7 @@ class NPCFleetInflater : FleetInflationListener {
         if (fleet != Global.getSector().playerFleet) {
             if (SCSettings.canNPCsSpawnWithSkills) {
                 //Create Data if the fleet has none yet
+
                 var data = SCUtils.getFleetData(fleet)
             }
         }

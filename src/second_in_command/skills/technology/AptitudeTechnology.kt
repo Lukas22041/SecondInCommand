@@ -1,6 +1,7 @@
 package second_in_command.skills.technology
 
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import org.magiclib.kotlin.isAutomated
 import second_in_command.SCData
 import second_in_command.misc.baseOrModSpec
 import second_in_command.specs.SCAptitudeSection
@@ -36,6 +37,8 @@ class AptitudeTechnology : SCBaseAptitudePlugin() {
     }
 
     override fun getNPCSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
+        if (fleet.flagship?.baseOrModSpec()?.baseHullId == "ziggurat") return Float.MAX_VALUE
+
         var mult = 1f
 
         if (fleet.fleetData.membersListCopy.any { it.baseOrModSpec().isPhase }) mult += 0.5f

@@ -17,6 +17,7 @@ object SCUtils {
         if (data == null) {
             data = SCData(Global.getSector().playerFleet)
             Global.getSector().playerFleet.memoryWithoutUpdate.set(DATA_KEY, data)
+            data!!.init()
         }
         return data
     }
@@ -27,6 +28,7 @@ object SCUtils {
         if (data == null) {
             data = SCData(fleet)
             fleet.memoryWithoutUpdate.set(DATA_KEY, data)
+            data!!.init() //Move init to after the data has been assigned to the fleet key, otherwise it can cause some infinite loops
         }
         return data
     }

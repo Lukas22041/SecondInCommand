@@ -27,12 +27,18 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
     init {
 
 
+    }
+
+    fun init() {
+
         //So that the fleet itself can advance its skills.
         fleet.addScript(this)
 
         if (commander == null) {
             commander = faction.createRandomPerson()
         }
+
+
 
         activeOfficers.add(null)
         activeOfficers.add(null)

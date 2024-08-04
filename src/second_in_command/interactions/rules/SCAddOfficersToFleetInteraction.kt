@@ -11,7 +11,9 @@ import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
 import org.magiclib.kotlin.isAutomated
 import second_in_command.SCUtils
+import second_in_command.misc.NPCOfficerGenerator
 import second_in_command.misc.SCSettings
+import second_in_command.misc.baseOrModSpec
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.*
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
@@ -25,19 +27,24 @@ class SCAddOfficersToFleetInteraction : BaseCommandPlugin() {
 
         if (!SCSettings.canNPCsSpawnWithSkills && !SCUtils.hasFleetData(fleet)) return true
 
+        var members = fleet.fleetData.membersListCopy
+        var flagship = fleet.flagship
+        var automated = flagship?.isAutomated() ?: false
+        var isBoss = NPCOfficerGenerator.isBossFleet(fleet)
+
+
 
         var data = SCUtils.getFleetData(fleet)
 
         var officers = data.getActiveOfficers()
         if (officers.isEmpty()) return true
 
-
-        var members = fleet.fleetData.membersListCopy
-        var automated = fleet.flagship?.isAutomated() ?: false
-
         //add different text here if automated
 
-        if (!automated) {
+        if (isBoss) {
+            dialog.textPanel.addPara("The opposing anomaly appears to make use of the following skills:", Misc.getTextColor(), Misc.getHighlightColor(), "anomaly", "skills")
+        }
+        else if (!automated) {
             dialog.textPanel.addPara("The opposing fleet has the following executive officers active within their command: ", Misc.getTextColor(), Misc.getHighlightColor(), "executive officers")
         } else {
             dialog.textPanel.addPara("The opposing fleets commanding core has the following subroutines, which replicate the roles of executive officers: ", Misc.getTextColor(), Misc.getHighlightColor(), "executive officers")
@@ -109,10 +116,18 @@ class SCAddOfficersToFleetInteraction : BaseCommandPlugin() {
             originGap.elementPanel.position.rightOfTop(originSkillElement.elementPanel, 0f)
             originGap.renderArrow = true*/
 
-            var seperator = SkillSeperatorElement(aptitudePlugin.getColor(), element, 58f)
-            seperator.elementPanel.position.rightOfTop(originSkillElement.elementPanel, 3f)
 
-            var previous: CustomPanelAPI = seperator.elementPanel
+
+
+
+            var previous: CustomPanelAPI = originSkillElement.elementPanel
+
+            if (activeWithoutOrigin.isNotEmpty()) {
+                var seperator = SkillSeperatorElement(aptitudePlugin.getColor(), element, 58f)
+                seperator.elementPanel.position.rightOfTop(originSkillElement.elementPanel, 3f)
+                previous = seperator.elementPanel
+            }
+
             for (skill in activeWithoutOrigin) {
                 var isFirst = activeWithoutOrigin.first() == skill
                 var isLast = activeWithoutOrigin.last() == skill

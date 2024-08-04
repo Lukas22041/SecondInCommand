@@ -14,6 +14,16 @@ import second_in_command.specs.SCSpecStore
 
 object NPCOfficerGenerator {
 
+    fun isBossFleet(fleet: CampaignFleetAPI) : Boolean {
+        var flagship = fleet.flagship
+        var bossShips = listOf("ziggurat", "tesseract", "hmi_spookyboi_base", "rat_genesis")
+        var isBoss = false
+        if (flagship != null) {
+            if (bossShips.contains(flagship.baseOrModSpec().baseHullId)) isBoss = true
+        }
+        return isBoss
+    }
+
     fun generateForFleet(data: SCData, fleet: CampaignFleetAPI) {
 
         generateRandom(data, fleet)
@@ -23,16 +33,21 @@ object NPCOfficerGenerator {
 
     fun generateRandom(data: SCData, fleet: CampaignFleetAPI) {
 
+        var flagship = fleet.flagship
         var isOmega = fleet.faction.id == Factions.OMEGA
         var hasSupercap = fleet.fleetData.membersListCopy.find { it.deploymentPointsCost >= 70 } != null
-        var isAutomated = fleet.flagship?.isAutomated() ?: false
+        var isAutomated = flagship?.isAutomated() ?: false
+
+        var isBoss = isBossFleet(fleet)
+
         //var isStation = fleet.isStationMode
 
         var combatFP = fleet.fleetData.membersListCopy.filter { !it.isCivilian }.sumOf { it.fleetPointCost }.toFloat()
         var nonCombatFP = fleet.fleetData.membersListCopy.filter { it.isCivilian }.sumOf { it.fleetPointCost }.toFloat() * 0.2f
         combatFP += nonCombatFP
 
-        if (isOmega) combatFP += 100f
+        if (isBoss) combatFP += 120f
+        if (isOmega) combatFP += 80f
         if (hasSupercap) combatFP += 80f
         if (isAutomated) combatFP += 20f
         //if (isStation) combatFP += 40f
@@ -77,6 +92,11 @@ object NPCOfficerGenerator {
         var officers = ArrayList<SCOfficer>()
         for (aptitude in aptitudes) {
             var officer = SCUtils.createRandomSCOfficer(aptitude.getId(), fleet.faction)
+
+            if (isBoss || isAutomated) {
+                officer.person.portraitSprite = flagship.captain.portraitSprite
+            }
+
             officers.add(officer)
         }
 

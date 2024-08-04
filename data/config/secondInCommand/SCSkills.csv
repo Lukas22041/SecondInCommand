@@ -53,9 +53,9 @@ sc_support_barrage,Barrage,graphics/secondInCommand/support/barrage.png,2,second
 sc_technology_flux_regulation,Flux Regulation,graphics/secondInCommand/technology/flux_regulation.png,1,second_in_command.skills.technology.FluxRegulation
 sc_technology_countermeasures,Countermeasures,graphics/secondInCommand/technology/countermeasures.png,1,second_in_command.skills.technology.Countermeasures
 sc_technology_optimised_shields,Optimised Shields,graphics/secondInCommand/technology/optimised_shields.png,1,second_in_command.skills.technology.OptimisedShields
-sc_technology_deep_dive,Deep Dive,graphics/secondInCommand/technology/deep_dive.png,1,second_in_command.skills.technology.DeepDive
+sc_technology_deep_dive,Deep Dive,graphics/secondInCommand/technology/deep_dive.png,2,second_in_command.skills.technology.DeepDive
 sc_technology_reinforced_grid,Reinforced Grid,graphics/secondInCommand/technology/reinforced_grid.png,1,second_in_command.skills.technology.ReinforcedGrid
-sc_technology_phase_coil_tuning,Phase Coil Tuning,graphics/secondInCommand/technology/phase_coil_tuning.png,1,second_in_command.skills.technology.PhaseCoilTuning
+sc_technology_phase_coil_tuning,Phase Coil Tuning,graphics/secondInCommand/technology/phase_coil_tuning.png,2,second_in_command.skills.technology.PhaseCoilTuning
 sc_technology_focused_lenses,Focused Lenses,graphics/secondInCommand/technology/focused_lenses.png,1,second_in_command.skills.technology.FocusedLenses
 sc_technology_energised,Energised,graphics/secondInCommand/technology/energised.png,1,second_in_command.skills.technology.Energised
 sc_technology_neural_link,Neural Link,graphics/secondInCommand/technology/neural_link.png,,second_in_command.skills.technology.NeuralLink
