@@ -61,6 +61,19 @@ sc_technology_energised,Energised,graphics/secondInCommand/technology/energised.
 sc_technology_neural_link,Neural Link,graphics/secondInCommand/technology/neural_link.png,,second_in_command.skills.technology.NeuralLink
 sc_technology_makeshift_drones,Makeshift Drones,graphics/secondInCommand/technology/makeshift_drones.png,,second_in_command.skills.technology.MakeshiftDrones
 ,,,,
+#Piracy,,,,
+sc_piracy_generous_donation,Generous Donation,graphics/secondInCommand/piracy/generous_donation.png,1,second_in_command.skills.piracy.GenerousDonation
+sc_piracy_innovative_salvage_procedure,Innovative Salvage Procedure,graphics/secondInCommand/piracy/innovative_salvage_procedure.png,0.33,second_in_command.skills.piracy.InnovativeSalvageProcedure
+sc_piracy_low_grade_deployment,Low-grade Deployment,graphics/secondInCommand/piracy/low_grade_deployment.png,0.33,second_in_command.skills.piracy.LowgradeDeployment
+sc_piracy_ambush,Ambush,graphics/secondInCommand/piracy/ambush.png,1,second_in_command.skills.piracy.Ambush
+sc_piracy_stockpile,Stockpile,graphics/secondInCommand/piracy/stockpile.png,0.33,second_in_command.skills.piracy.Stockpile
+sc_piracy_improvised_raids,Improvised Raids,graphics/secondInCommand/piracy/improvised_raids.png,0.33,second_in_command.skills.piracy.ImprovisedRaids
+sc_piracy_hunting_grounds,Hunting Grounds,graphics/secondInCommand/piracy/hunting_grounds.png,1,second_in_command.skills.piracy.HuntingGrounds
+sc_piracy_all_out,All-Out,graphics/secondInCommand/piracy/all_out.png,1,second_in_command.skills.piracy.AllOut
+sc_piracy_steadfast,Steadfast,graphics/secondInCommand/piracy/steadfast.png,1,second_in_command.skills.piracy.Steadfast
+sc_piracy_provisional_replacements,Provisional Replacements,graphics/secondInCommand/piracy/provisional_replacements.png,1,second_in_command.skills.piracy.ProvisionalReplacements
+,,,,
+,,,,
 #Automated,,,,
 sc_automated_automated_ships,Automated Ships,graphics/secondInCommand/automated/automated_ships.png,1,second_in_command.skills.automated.AutomatedShips
 sc_automated_magnetic_shielding,Magnetic Shielding,graphics/secondInCommand/automated/magnetic_shielding.png,1,second_in_command.skills.automated.MagneticShielding

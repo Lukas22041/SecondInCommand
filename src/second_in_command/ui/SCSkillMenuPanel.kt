@@ -280,6 +280,10 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
         originSkillElement.elementPanel.position.rightOfMid(background.elementPanel, 20f)
 
 
+        originSkillElement.onClick {
+            originSkillElement.playClickSound()
+        }
+
         var originGap = SkillGapElement(aptitudePlugin.getColor(), subelement)
         originGap.elementPanel.position.rightOfTop(originSkillElement.elementPanel, 0f)
         originGap.renderArrow = true
