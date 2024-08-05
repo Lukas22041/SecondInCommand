@@ -25,7 +25,7 @@ class ExecutiveOfficerSalvageSpecialGenerator {
 
         var entitiesWithPods = entitiesInSector.filter { isSalvagePod(it) }
 
-        var maximum = (entitiesWithPods.count() * 0.5f).toInt()
+        var maximum = (entitiesWithPods.count() * 0.65f).toInt()
 
         var suitableEntities = entitiesInSector.filter { entity -> isSuitable(entity) }
         suitableEntities = suitableEntities.shuffled()
@@ -45,7 +45,7 @@ class ExecutiveOfficerSalvageSpecialGenerator {
             var officer = Global.getSector().playerFaction.createRandomPerson()
             var scOfficer = SCOfficer(officer, pick.id)
 
-            scOfficer.increaseLevel(MathUtils.getRandomNumberInRange(2, 4))
+            scOfficer.increaseLevel(MathUtils.getRandomNumberInRange(2, 3))
 
             var special = ExecutiveOfficerRescueSpecial(scOfficer)
             entity.setSalvageSpecial(special)

@@ -10,10 +10,16 @@ import com.fs.starfarer.api.combat.EngagementResultAPI
 import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity
 import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin
 import com.fs.starfarer.api.impl.campaign.rulecmd.FireAll
+import com.fs.starfarer.api.ui.CustomPanelAPI
+import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import lunalib.lunaExtensions.addLunaElement
 import second_in_command.SCUtils
+import second_in_command.specs.SCBaseSkillPlugin
 import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
+import second_in_command.ui.elements.*
+import second_in_command.ui.tooltips.SCSkillTooltipCreator
 
 
 class SCOfficerHireDialog : BaseCommandPlugin() {
@@ -31,6 +37,8 @@ class SCOfficerHireDialog : BaseCommandPlugin() {
 class SCOfficerHireDialogDelegate(var original: InteractionDialogPlugin, var person: PersonAPI) : InteractionDialogPlugin {
 
     lateinit var dialog: InteractionDialogAPI
+
+
 
     override fun init(dialog: InteractionDialogAPI) {
 
@@ -71,22 +79,19 @@ class SCOfficerHireDialogDelegate(var original: InteractionDialogPlugin, var per
 
             dialog.textPanel.addPara("You ask ${person.nameString} some questions to establish where his skills lie.")
 
+            var scOfficer = SCOfficer(person, aptitudeId)
 
-            var tooltip = dialog.textPanel.beginTooltip()
-            tooltip.addPara("Aptitude: ${aptitudePlugin.getName()}", 0f, Misc.getTextColor(), aptitudePlugin.getColor(), "${aptitudePlugin.getName()}")
 
-            tooltip.addSpacer(10f)
+            SCUtils.showSkillOverview(dialog, scOfficer)
 
-            tooltip.addPara("\"${aptitudePlugin.getDescription()}\"", 0f)
-
-            tooltip.addSpacer(5f)
-
-            dialog.textPanel.addTooltip()
+            dialog.textPanel.addPara("\"This is only an overview of what my kind of talent is capable of. At the start only the first skill will be active, but " +
+                    "generally i will be able field the potential of 6 of those skills after i integrated myself in to your fleets workflow.",
+                Misc.getTextColor(), Misc.getHighlightColor(), "6")
 
             var costString = Misc.getDGSCredits(cost)
             var creditsString = Misc.getDGSCredits(credits.get())
 
-            dialog.textPanel.addPara("\"I'l expect a transaction of $costString credits, we can decide on the details of a monthly pay at a later date. " +
+            dialog.textPanel.addPara("I'l expect a transaction of $costString credits, we can decide on the details of a monthly pay at a later date. " +
                     "Once the transfer is complete, i can be ready to board within the hour.\"", Misc.getTextColor(), Misc.getHighlightColor(), "$costString")
 
             dialog.textPanel.addPara("You have $creditsString credits available.", Misc.getTextColor(), Misc.getHighlightColor(), "$creditsString")

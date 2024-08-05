@@ -53,7 +53,4 @@ abstract class SCBaseAptitudePlugin() {
         return spec.spawnWeight
     }
 
-    open fun getDescription() : String {
-        return spec.description
-    }
 }

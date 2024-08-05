@@ -42,16 +42,22 @@ class ExecutiveOfficerRescueSpecialInteraction(var officer: SCOfficer) : BaseSal
             text.addParagraph("${officer.person.nameString} (level ${officer.getCurrentLevel()}) has joined your fleet",  Misc.getPositiveHighlightColor())
             text.setFontInsignia()
 
-            text.addPara("${officer.person.heOrShe} continues by elaborating on his management skills, hoping they may be of use to you.", Misc.getTextColor(), plugin.getColor(), "${plugin.getName()}")
+            text.addPara("${officer.person.heOrShe.capitalize()} continues by elaborating on his skills, hoping they may be of use to you.", Misc.getTextColor(), plugin.getColor(), "${plugin.getName()}")
 
-            var tooltip = text.beginTooltip()
+         /*   var tooltip = text.beginTooltip()
 
             tooltip.addPara("Aptitude: ${plugin.getName()}", 0f, Misc.getTextColor(), plugin.getColor(), "${plugin.getName()}")
 
             tooltip.addSpacer(10f)
 
             tooltip.addPara("\"${plugin.getDescription()}\"", 0f)
-            text.addTooltip()
+            text.addTooltip()*/
+
+            SCUtils.showSkillOverview(dialog, officer)
+
+            dialog.textPanel.addPara("\"This is only an overview of what my kind of talent is capable of. At the start only the first skill will be active, but " +
+                    "generally i will be able field the potential of 6 of those skills after i integrated myself in to your fleets workflow.\"",
+                Misc.getTextColor(), Misc.getHighlightColor(), "6")
 
             SCUtils.getPlayerData().addOfficerToFleet(officer)
 

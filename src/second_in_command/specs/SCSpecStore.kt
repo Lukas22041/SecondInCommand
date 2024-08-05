@@ -40,11 +40,9 @@ object SCSpecStore {
             val cs = colorString.split(",").map { it.trim().toInt() }
             val color = Color(cs[0], cs[1], cs[2], cs[3])
 
-            val description = row.getString("description")
-
             val pluginPath = row.getString("plugin")
 
-            var spec = SCAptitudeSpec(id, name, category, spawnWeight, color, description, pluginPath)
+            var spec = SCAptitudeSpec(id, name, category, spawnWeight, color, pluginPath)
             aptitudeSpecs.add(spec)
         }
 

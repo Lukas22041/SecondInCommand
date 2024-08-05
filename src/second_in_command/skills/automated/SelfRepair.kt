@@ -28,7 +28,7 @@ class SelfRepair : SCBaseSkillPlugin() {
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
         if (Misc.isAutomated(stats)) {
-            stats!!.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat(id, HullRestoration.RECOVERY_PROB)
+            stats!!.dynamic.getMod(Stats.INDIVIDUAL_SHIP_RECOVERY_MOD).modifyFlat(id, HullRestoration.RECOVERY_PROB)
             stats.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, DMOD_CHANCE_MULT)
 
             stats.repairRatePercentPerDay.modifyPercent(id, REPAIR_RATE_BONUS)

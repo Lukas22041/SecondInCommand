@@ -1,9 +1,9 @@
-id,name,category,spawnWeight,color,description,plugin
-,,,,,,
-,,#can not use multiple aptitudes of the same category,,,#Shown for interactions where you acquire an officer.,
-sc_tactical,Tactical,tactical,1.0,"230,181,2,255","The tactical aptitude handles different situations mostly within combat deployment, providing different ways on how to use most ships in the fleet.",second_in_command.skills.tactical.AptitudeTactical
-sc_management,Management,management,1.0,"107,175,0,255","An aptitude for the general handling of your fleet, enabling multiple improvements to all parts of the fleet and improving your officers across the board.",second_in_command.skills.management.AptitudeManagement
-sc_wolfpack,Smallcraft,wolfpack,1.0,"203, 230, 2,255","The wolfpack aptitude fields skills related to the deployment of smaller craft, specificly those deployed in masses rathern than a more balanced group of hullsizes.",second_in_command.skills.wolfpack.AptitudeWolfpack
-sc_support,Support,support,1.0,"2, 230, 139,255","An aptitude dedicated to the management of carriers within the fleet, providing different ways on how to field them in battle.",second_in_command.skills.support.AptitudeSupport
-sc_technology,Technical,technology,1.0,"0,121,216,255","The technical  aptitude provides skills for the more abstract parts of ships, be that shields, phasecloaks and the inner-workings of energy weapons.",second_in_command.skills.technology.AptitudeTechnology
-sc_automated,Automation,automated_ships,1.0,"0, 166, 175,255",An aptitude that allows for the recovery and deployment of automated ships. The skills within the aptitude act to further increase the fleets capability to use autonomous drones.,second_in_command.skills.automated.AptitudeAutomated
+id,name,category,spawnWeight,color,plugin
+,,,,,
+,,#can not use multiple aptitudes of the same category,,,
+sc_tactical,Tactical,tactical,1.0,"230,181,2,255",second_in_command.skills.tactical.AptitudeTactical
+sc_management,Management,management,1.0,"107,175,0,255",second_in_command.skills.management.AptitudeManagement
+sc_wolfpack,Smallcraft,wolfpack,1.0,"203, 230, 2,255",second_in_command.skills.wolfpack.AptitudeWolfpack
+sc_support,Support,support,1.0,"2, 230, 139,255",second_in_command.skills.support.AptitudeSupport
+sc_technology,Technical,technology,1.0,"0,121,216,255",second_in_command.skills.technology.AptitudeTechnology
+sc_automated,Automation,automated_ships,1.0,"0, 166, 175,255",second_in_command.skills.automated.AptitudeAutomated
