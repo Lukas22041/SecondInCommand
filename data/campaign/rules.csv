@@ -35,3 +35,8 @@ sc_FleetEncounterScript,SCFleetEncounterScript,,SCAddOfficersToFleetInteraction,
 #sc_fleet_info,DialogOptionSelected,"SCIsFleetInteraction 
 $option == INIT score:10000000",,Test SC Text 2,,
 ,,,,,,
+,,,,,,
+sc_startingBarEvent,AddBarEvents,"!$market.isHidden
+!$global.sc_selectedStart
+","AddBarEvent scBarStart ""Talk to the person selling officer contracts"" ""Someone is trying to sell several contracts regarding some officers"" highlight",,,
+sc_startingBarEventStart,DialogOptionSelected,$option == scBarStart,SCStartBarEventDialog,,,

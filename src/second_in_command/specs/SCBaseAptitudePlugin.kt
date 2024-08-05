@@ -53,4 +53,8 @@ abstract class SCBaseAptitudePlugin() {
         return spec.spawnWeight
     }
 
+    fun getTags() : List<String> {
+        return spec.tags
+    }
+
 }

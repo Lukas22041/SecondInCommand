@@ -1,9 +1,9 @@
-id,name,category,spawnWeight,color,plugin
-,,,,,
-,,#can not use multiple aptitudes of the same category,,,
-sc_tactical,Tactical,tactical,1.0,"230,181,2,255",second_in_command.skills.tactical.AptitudeTactical
-sc_management,Management,management,1.0,"107,175,0,255",second_in_command.skills.management.AptitudeManagement
-sc_wolfpack,Smallcraft,wolfpack,1.0,"203, 230, 2,255",second_in_command.skills.wolfpack.AptitudeWolfpack
-sc_support,Support,support,1.0,"2, 230, 139,255",second_in_command.skills.support.AptitudeSupport
-sc_technology,Technical,technology,1.0,"0,121,216,255",second_in_command.skills.technology.AptitudeTechnology
-sc_automated,Automation,automated_ships,1.0,"0, 166, 175,255",second_in_command.skills.automated.AptitudeAutomated
+id,name,category,spawnWeight,color,tags,plugin
+,,#can not use multiple aptitudes of the same category,,,,
+sc_tactical,Tactical,tactical,1.0,"230,181,2,255","startingOption,",second_in_command.skills.tactical.AptitudeTactical
+sc_management,Management,management,1.0,"107,175,0,255","startingOption,",second_in_command.skills.management.AptitudeManagement
+sc_wolfpack,Smallcraft,wolfpack,1.0,"203, 230, 2,255","startingOption,",second_in_command.skills.wolfpack.AptitudeWolfpack
+sc_support,Support,support,1.0,"2, 230, 139,255","startingOption,",second_in_command.skills.support.AptitudeSupport
+sc_technology,Technical,technology,1.0,"0,121,216,255","startingOption,",second_in_command.skills.technology.AptitudeTechnology
+sc_automated,Automation,automated_ships,1.0,"0, 166, 175,255","startingOption,",second_in_command.skills.automated.AptitudeAutomated
+,,,,,,

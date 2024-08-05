@@ -45,7 +45,7 @@ class ExecutiveOfficerSalvageSpecialGenerator {
             var officer = Global.getSector().playerFaction.createRandomPerson()
             var scOfficer = SCOfficer(officer, pick.id)
 
-            scOfficer.increaseLevel(MathUtils.getRandomNumberInRange(2, 3))
+            scOfficer.increaseLevel(MathUtils.getRandomNumberInRange(1, 2))
 
             var special = ExecutiveOfficerRescueSpecial(scOfficer)
             entity.setSalvageSpecial(special)

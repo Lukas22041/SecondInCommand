@@ -9,6 +9,7 @@ data class SCAptitudeSpec(
     var category: String,
     var spawnWeight: Float,
     var color: Color,
+    var tags: List<String>,
     var pluginPath: String) {
 
     fun getPlugin() : SCBaseAptitudePlugin {
