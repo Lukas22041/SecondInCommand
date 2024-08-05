@@ -55,7 +55,7 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
             //For Beta
            /* var aptitudes = SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }
             for (aptitude in aptitudes) {
-                if (aptitude.getId() == "sc_fake_combat_aptitude") continue
+                if (aptitude.getId(<<) == "sc_fake_combat_aptitude") continue
 
                 var officer = SCUtils.createRandomSCOfficer(aptitude.getId())
                 addOfficerToFleet(officer)
