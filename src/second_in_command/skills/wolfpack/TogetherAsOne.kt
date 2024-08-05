@@ -77,9 +77,10 @@ class TogetherAsOneScript(var ship: ShipAPI) : AdvanceableListener {
 
 
         count = MathUtils.clamp(count, 0, 6)
-        var mod = 0.03f * count
+        //var mod = 0.03f * count
+        var mod = 3f * count
 
-        ship.mutableStats.maxSpeed.modifyMult("sc_together_as_one", 1f + mod)
+        /*ship.mutableStats.maxSpeed.modifyMult("sc_together_as_one", 1f + mod)
         ship.mutableStats.acceleration.modifyMult("sc_together_as_one", 1f + mod)
         ship.mutableStats.deceleration.modifyMult("sc_together_as_one", 1f + mod)
 
@@ -87,7 +88,17 @@ class TogetherAsOneScript(var ship: ShipAPI) : AdvanceableListener {
 
         ship.mutableStats.ballisticWeaponDamageMult.modifyMult("sc_together_as_one", 1f + mod)
         ship.mutableStats.energyWeaponDamageMult.modifyMult("sc_together_as_one", 1f + mod)
-        ship.mutableStats.missileWeaponDamageMult.modifyMult("sc_together_as_one", 1f + mod)
+        ship.mutableStats.missileWeaponDamageMult.modifyMult("sc_together_as_one", 1f + mod)*/
+
+        ship.mutableStats.maxSpeed.modifyPercent("sc_together_as_one", mod)
+        ship.mutableStats.acceleration.modifyPercent("sc_together_as_one", mod)
+        ship.mutableStats.deceleration.modifyPercent("sc_together_as_one", mod)
+
+        ship.mutableStats.fluxDissipation.modifyPercent("sc_together_as_one", mod)
+
+        ship.mutableStats.ballisticWeaponDamageMult.modifyPercent("sc_together_as_one", mod)
+        ship.mutableStats.energyWeaponDamageMult.modifyPercent("sc_together_as_one", mod)
+        ship.mutableStats.missileWeaponDamageMult.modifyPercent("sc_together_as_one", mod)
 
 
         recentCount = count

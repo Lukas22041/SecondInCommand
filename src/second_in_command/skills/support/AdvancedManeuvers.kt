@@ -37,13 +37,13 @@ class AdvancedManeuvers : SCBaseSkillPlugin() {
         stats.acceleration.modifyPercent(id, 20f)
         stats.deceleration.modifyPercent(id, 20f)
 
-        stats.ballisticWeaponDamageMult.modifyMult(id, 1.1f)
-        stats.energyWeaponDamageMult.modifyMult(id, 1.1f)
-        stats.missileWeaponDamageMult.modifyMult(id, 1.1f)
+        stats.ballisticWeaponDamageMult.modifyPercent(id, 10f)
+        stats.energyWeaponDamageMult.modifyPercent(id, 10f)
+        stats.missileWeaponDamageMult.modifyPercent(id, 10f)
 
-        stats.ballisticRoFMult.modifyMult(id, 1.15f)
-        stats.energyRoFMult.modifyMult(id, 1.15f)
-        stats.missileRoFMult.modifyMult(id, 1.15f)
+        stats.ballisticRoFMult.modifyPercent(id, 15f)
+        stats.energyRoFMult.modifyPercent(id, 15f)
+        stats.missileRoFMult.modifyPercent(id, 15f)
 
     }
 

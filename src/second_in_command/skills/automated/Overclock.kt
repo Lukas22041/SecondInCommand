@@ -24,7 +24,7 @@ class Overclock : SCBaseSkillPlugin() {
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
         if (Misc.isAutomated(stats)) {
-            stats!!.energyWeaponDamageMult.modifyMult(id, 1.15f)
+            stats!!.energyWeaponDamageMult.modifyPercent(id, 15f)
         }
     }
 

@@ -43,7 +43,7 @@ class SafeRecovery : SCBaseSkillPlugin() {
                     "Safe Recovery", "+30% vent rate", false)
             }
 
-            ship.mutableStats.ventRateMult.modifyMult("sc_safe_recovery", 1.3f)
+            ship.mutableStats.ventRateMult.modifyPercent("sc_safe_recovery", 30f)
             ship.mutableStats.hullDamageTakenMult.modifyMult("sc_safe_recovery", 0.7f)
             ship.mutableStats.armorDamageTakenMult.modifyMult("sc_safe_recovery", 0.7f)
         }

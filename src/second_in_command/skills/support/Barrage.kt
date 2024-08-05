@@ -18,7 +18,7 @@ class Barrage : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("+100%% ammo for missile weapons", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("-25%% missile weapon damage", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+        tooltip.addPara("-33%% missile weapon damage", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
 
     }
 
@@ -34,7 +34,7 @@ class Barrage : SCBaseSkillPlugin() {
         var stats = fighter!!.mutableStats
 
         stats.missileAmmoBonus.modifyPercent(id, 100f)
-        stats.missileWeaponDamageMult.modifyMult(id, 0.75f)
+        stats.missileWeaponDamageMult.modifyMult(id, 0.666f)
 
         for (weapon in fighter.allWeapons) {
             if (weapon.type == WeaponAPI.WeaponType.MISSILE || weapon.type == WeaponAPI.WeaponType.COMPOSITE || weapon.type == WeaponAPI.WeaponType.SYNERGY)  {

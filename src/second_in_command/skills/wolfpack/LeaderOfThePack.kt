@@ -79,9 +79,9 @@ class LeaderOfThePackScript(var ship: ShipAPI) : AdvanceableListener {
             ship.mutableStats.armorDamageTakenMult.modifyMult("sc_leader_of_the_pack", 0.85f)
             ship.mutableStats.shieldDamageTakenMult.modifyMult("sc_leader_of_the_pack", 0.85f)
 
-            ship.mutableStats.ballisticWeaponRangeBonus.modifyMult("sc_leader_of_the_pack", 1.1f)
-            ship.mutableStats.energyWeaponRangeBonus.modifyMult("sc_leader_of_the_pack", 1.1f)
-            ship.mutableStats.missileWeaponRangeBonus.modifyMult("sc_leader_of_the_pack", 1.1f)
+            ship.mutableStats.ballisticWeaponRangeBonus.modifyPercent("sc_leader_of_the_pack", 10f)
+            ship.mutableStats.energyWeaponRangeBonus.modifyPercent("sc_leader_of_the_pack", 10f)
+            ship.mutableStats.missileWeaponRangeBonus.modifyPercent("sc_leader_of_the_pack", 10f)
 
         } else {
             ship.mutableStats.hullDamageTakenMult.unmodify("sc_leader_of_the_pack")

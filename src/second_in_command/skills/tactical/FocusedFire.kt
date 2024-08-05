@@ -29,7 +29,7 @@ class FocusedFire : SCBaseSkillPlugin() {
         stats.recoilPerShotMult.modifyMult(id, 0.8f)
         stats.maxRecoilMult.modifyMult(id, 0.8f)
 
-        stats.projectileSpeedMult.modifyMult(id, 1.15f)
+        stats.projectileSpeedMult.modifyPercent(id, 15f)
 
         stats.autofireAimAccuracy.modifyFlat(id, 0.2f)
 

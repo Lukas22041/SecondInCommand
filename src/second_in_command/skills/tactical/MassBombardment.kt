@@ -26,10 +26,10 @@ class MassBombardment : SCBaseSkillPlugin() {
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
-        stats!!.missileRoFMult.modifyMult(id, 1.3f)
-        stats!!.missileAmmoBonus.modifyMult(id, 1.4f)
-        stats!!.missileAmmoRegenMult.modifyMult(id, 1.4f)
-        stats!!.missileWeaponDamageMult.modifyMult(id, 0.75f)
+        stats!!.missileRoFMult.modifyPercent(id, 30f)
+        stats!!.missileAmmoBonus.modifyPercent(id, 40f)
+        stats!!.missileAmmoRegenMult.modifyPercent(id, 40f)
+        stats!!.missileWeaponDamageMult.modifyPercent(id, 0.75f)
 
     }
 

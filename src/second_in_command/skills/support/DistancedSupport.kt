@@ -22,7 +22,7 @@ class DistancedSupport : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        stats!!.fighterWingRange.modifyMult(id, 1.4f)
+        stats!!.fighterWingRange.modifyPercent(id, 40f)
 
     }
 

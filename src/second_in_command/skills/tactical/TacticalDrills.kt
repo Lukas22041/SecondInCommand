@@ -22,9 +22,9 @@ class TacticalDrills : SCBaseSkillPlugin() {
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
-        stats!!.ballisticWeaponDamageMult.modifyMult(id, 1.05f)
-        stats.energyWeaponDamageMult.modifyMult(id, 1.05f)
-        stats.missileWeaponDamageMult.modifyMult(id, 1.05f)
+        stats!!.ballisticWeaponDamageMult.modifyPercent(id, 5f)
+        stats.energyWeaponDamageMult.modifyPercent(id, 5f)
+        stats.missileWeaponDamageMult.modifyPercent(id, 5f)
 
         stats.autofireAimAccuracy.modifyFlat(id, 0.2f)
     }

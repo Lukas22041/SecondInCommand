@@ -23,8 +23,8 @@ class AcceleratedBarrels : SCBaseSkillPlugin() {
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
-        stats!!.ballisticRoFMult.modifyMult(id, 1.1f)
-        stats.energyRoFMult.modifyMult(id, 1.1f)
+        stats!!.ballisticRoFMult.modifyPercent(id, 10f)
+        stats.energyRoFMult.modifyPercent(id, 10f)
 
         stats!!.ballisticWeaponFluxCostMod.modifyMult(id, 0.9f)
         stats!!.energyWeaponFluxCostMod.modifyMult(id, 0.9f)

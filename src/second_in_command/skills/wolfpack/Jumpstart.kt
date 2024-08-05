@@ -44,7 +44,7 @@ class Jumpstart : SCBaseSkillPlugin() {
                     "Jumpstart", "${(60-time).toInt()} seconds remaining", false)
             }
 
-            ship!!.mutableStats.maxSpeed.modifyMult("sc_jumpstart", 1.2f)
+            ship!!.mutableStats.maxSpeed.modifyPercent("sc_jumpstart", 20f)
 
            /* ship.mutableStats.ballisticWeaponDamageMult.modifyMult("sc_jumpstart", 1.1f)
             ship.mutableStats.energyWeaponDamageMult.modifyMult("sc_jumpstart", 1.1f)
