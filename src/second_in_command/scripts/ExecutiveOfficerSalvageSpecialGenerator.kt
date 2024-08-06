@@ -31,14 +31,17 @@ class ExecutiveOfficerSalvageSpecialGenerator {
         suitableEntities = suitableEntities.shuffled()
 
 
-        var aptitudes = SCSpecStore.getAptitudeSpecs()
-        var picker = WeightedRandomPicker<SCAptitudeSpec>()
-        aptitudes.forEach { picker.add(it, it.getPlugin().getSpawnWeight()) }
+
 
         var count = 0
         for (entity in suitableEntities) {
             count+=1
             if (count >= maximum) break
+
+
+            var aptitudes = SCSpecStore.getAptitudeSpecs()
+            var picker = WeightedRandomPicker<SCAptitudeSpec>()
+            aptitudes.forEach { picker.add(it, it.getPlugin().getCryopodSpawnWeight(entity.starSystem)) }
 
             var pick = picker.pick()
 

@@ -40,7 +40,7 @@ class AptitudeAutomated : SCBaseAptitudePlugin() {
 
     }
 
-    override fun getNPCSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
+    override fun getNPCFleetSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
         if (fleet.flagship?.isAutomated() == true) return Float.MAX_VALUE
 
         if (fleet.fleetData.membersListCopy.any { it.isAutomated() }) return 3f

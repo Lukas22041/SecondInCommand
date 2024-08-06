@@ -33,14 +33,16 @@ class ExecutiveOfficerCommAdder : EconomyTickListener {
 
         previousPeople.clear()
 
-        var aptitudes = SCSpecStore.getAptitudeSpecs()
-        var picker = WeightedRandomPicker<SCAptitudeSpec>()
-        aptitudes.forEach { picker.add(it, it.getPlugin().getSpawnWeight()) }
+
 
         //var chance = 0.5f
         var chance = 0.6f
         for (market in markets) {
             if (Random().nextFloat() >= chance) continue
+
+            var aptitudes = SCSpecStore.getAptitudeSpecs()
+            var picker = WeightedRandomPicker<SCAptitudeSpec>()
+            aptitudes.forEach { picker.add(it, it.getPlugin().getMarketSpawnweight(market)) }
 
             var pick = picker.pick()
 

@@ -1,6 +1,8 @@
 package second_in_command.specs
 
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.campaign.StarSystemAPI
+import com.fs.starfarer.api.campaign.econ.MarketAPI
 import second_in_command.SCData
 import java.awt.Color
 
@@ -29,9 +31,15 @@ abstract class SCBaseAptitudePlugin() {
 
     abstract fun createSections()
 
-    abstract fun getNPCSpawnWeight(data: SCData, fleet: CampaignFleetAPI) : Float
+    abstract fun getNPCFleetSpawnWeight(data: SCData, fleet: CampaignFleetAPI) : Float
 
+    open fun getMarketSpawnweight(market: MarketAPI) : Float {
+        return spec.spawnWeight
+    }
 
+    open fun getCryopodSpawnWeight(system: StarSystemAPI) : Float {
+        return spec.spawnWeight
+    }
 
     fun getId() : String{
         return spec.id
@@ -47,10 +55,6 @@ abstract class SCBaseAptitudePlugin() {
 
     open fun getColor() : Color{
         return spec.color
-    }
-
-    open fun getSpawnWeight() : Float {
-        return spec.spawnWeight
     }
 
     fun getTags() : List<String> {

@@ -34,7 +34,7 @@ class AptitudeWolfpack : SCBaseAptitudePlugin() {
 
     }
 
-    override fun getNPCSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
+    override fun getNPCFleetSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
         var mult = 0.25f
         var smallcraft = fleet.fleetData.membersListCopy.filter { it.isFrigate || it.isDestroyer }
 

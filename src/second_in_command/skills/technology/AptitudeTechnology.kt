@@ -36,7 +36,7 @@ class AptitudeTechnology : SCBaseAptitudePlugin() {
 
     }
 
-    override fun getNPCSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
+    override fun getNPCFleetSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
         if (fleet.flagship?.baseOrModSpec()?.baseHullId == "ziggurat") return Float.MAX_VALUE
 
         var mult = 1f

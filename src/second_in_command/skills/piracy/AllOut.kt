@@ -16,13 +16,18 @@ class AllOut : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+20%% ammunition capacity for weapons that use ammunition", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+20%% ammunition recharge rate for weapons that use ammunition", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
+        stats!!.energyAmmoBonus.modifyPercent(id, 20f)
+        stats!!.ballisticAmmoBonus.modifyPercent(id, 20f)
 
+        stats.energyAmmoRegenMult.modifyPercent(id, 20f)
+        stats.ballisticAmmoRegenMult.modifyPercent(id, 20f)
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {

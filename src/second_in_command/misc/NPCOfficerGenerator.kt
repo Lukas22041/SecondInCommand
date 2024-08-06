@@ -83,7 +83,7 @@ object NPCOfficerGenerator {
 
         var aptitudePicker = WeightedRandomPicker<SCBaseAptitudePlugin>()
         for (aptitude in SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }) {
-            aptitudePicker.add(aptitude, aptitude.getNPCSpawnWeight(data, fleet))
+            aptitudePicker.add(aptitude, aptitude.getNPCFleetSpawnWeight(data, fleet))
         }
 
         var aptitudes = ArrayList<SCBaseAptitudePlugin>()

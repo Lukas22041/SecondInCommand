@@ -36,7 +36,7 @@ class RapidResponse : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-        Global.getSector().playerFleet.stats.accelerationMult.modifyMult("sc_rapid_response", 1.15f, "Rapid Response")
+        Global.getSector().playerFleet.stats.accelerationMult.modifyPercent("sc_rapid_response", 15f, "Rapid Response")
 
     }
 

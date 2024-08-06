@@ -32,7 +32,7 @@ class AptitudeSupport : SCBaseAptitudePlugin() {
 
     }
 
-    override fun getNPCSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
+    override fun getNPCFleetSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
         var mult = 0.25f
         var carriers = fleet.fleetData.membersListCopy.filter { it.isCarrier || it.numFlightDecks >= 1 }
 

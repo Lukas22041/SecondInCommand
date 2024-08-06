@@ -63,8 +63,9 @@ sc_technology_makeshift_drones,Makeshift Drones,graphics/secondInCommand/technol
 ,,,,
 #Piracy,,,,
 sc_piracy_generous_donation,Generous Donation,graphics/secondInCommand/piracy/generous_donation.png,1,second_in_command.skills.piracy.GenerousDonation
-sc_piracy_innovative_salvage_procedure,Innovative Salvage Procedure,graphics/secondInCommand/piracy/innovative_salvage_procedure.png,0.33,second_in_command.skills.piracy.InnovativeSalvageProcedure
+sc_piracy_legitimate_salvage,Legitimate Salvage ,graphics/secondInCommand/piracy/legitimate_salvage.png,0.33,second_in_command.skills.piracy.LegitimateSalvage
 sc_piracy_low_grade_deployment,Low-grade Deployment,graphics/secondInCommand/piracy/low_grade_deployment.png,0.33,second_in_command.skills.piracy.LowgradeDeployment
+sc_piracy_outmanoeuvred,Outmanoeuvred,graphics/secondInCommand/piracy/outmanoeuvred.png,1,second_in_command.skills.piracy.Outmanoeuvred
 sc_piracy_ambush,Ambush,graphics/secondInCommand/piracy/ambush.png,1,second_in_command.skills.piracy.Ambush
 sc_piracy_stockpile,Stockpile,graphics/secondInCommand/piracy/stockpile.png,0.33,second_in_command.skills.piracy.Stockpile
 sc_piracy_improvised_raids,Improvised Raids,graphics/secondInCommand/piracy/improvised_raids.png,0.33,second_in_command.skills.piracy.ImprovisedRaids

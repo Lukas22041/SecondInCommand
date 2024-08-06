@@ -1,6 +1,7 @@
 package second_in_command.skills.piracy
 
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.campaign.Faction
 import org.magiclib.kotlin.isAutomated
@@ -19,8 +20,9 @@ class AptitudePiracy : SCBaseAptitudePlugin() {
     override fun createSections() {
 
         var section1 = SCAptitudeSection(true, 0, "technology1")
-        section1.addSkill("sc_piracy_innovative_salvage_procedure")
+        section1.addSkill("sc_piracy_legitimate_salvage")
         section1.addSkill("sc_piracy_low_grade_deployment")
+        section1.addSkill("sc_piracy_outmanoeuvred")
         section1.addSkill("sc_piracy_ambush")
         section1.addSkill("sc_piracy_stockpile")
         section1.addSkill("sc_piracy_improvised_raids")
@@ -37,7 +39,13 @@ class AptitudePiracy : SCBaseAptitudePlugin() {
 
     }
 
-    override fun getNPCSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
+    override fun getMarketSpawnweight(market: MarketAPI): Float {
+        var weight = spec.spawnWeight
+        if (market.faction.isPirateFaction()) weight += 2f
+        return weight
+    }
+
+    override fun getNPCFleetSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
         if (fleet.faction.id == Factions.PIRATES) return Float.MAX_VALUE
         if (fleet.faction.isPirateFaction()) return 2f
         return 0.33f
