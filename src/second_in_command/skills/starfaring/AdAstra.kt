@@ -3,6 +3,7 @@ package second_in_command.skills.starfaring
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
+import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
@@ -23,7 +24,8 @@ class AdAstra : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-
+        stats!!.fuelUseMod.modifyMult(id, 0.7f)
+        stats.dynamic.getStat(Stats.CORONA_EFFECT_MULT).modifyMult(id, 0.7f)
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
@@ -31,7 +33,9 @@ class AdAstra : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-
+        if (data.fleet.isInHyperspace) {
+            data.fleet.stats.addTemporaryModFlat(0.1f, "sc_ad_astra", "Ad Astra", 2f, data.fleet.stats.fleetwideMaxBurnMod)
+        }
     }
 
     override fun onActivation(data: SCData) {

@@ -8,7 +8,7 @@ import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
-class ReactiveBurn : SCBaseSkillPlugin() {
+class EmergencyOrder : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
         return "fleet"
@@ -16,7 +16,7 @@ class ReactiveBurn : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("The maneuverability penalty from the \"Sustained Burn\" is much reduced.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 

@@ -43,7 +43,7 @@ object SCUtils {
         return data
     }
 
-
+    @JvmStatic
     fun getFleetData(fleet: CampaignFleetAPI) : SCData{
         var data = fleet.memoryWithoutUpdate.get(FLEET_DATA_KEY) as SCData?
         if (data == null) {
@@ -58,6 +58,7 @@ object SCUtils {
         return data
     }
 
+    @JvmStatic
     fun hasFleetData(fleet: CampaignFleetAPI) : Boolean {
         return fleet.memoryWithoutUpdate.get(FLEET_DATA_KEY) as SCData? != null
     }
@@ -97,7 +98,7 @@ object SCUtils {
         return false
     }
 
-
+    @JvmStatic
     fun changeOfficerAptitude(fleet: CampaignFleetAPI, officer: SCOfficer, aptitudeId: String) {
         var data = getFleetData(fleet)
 
