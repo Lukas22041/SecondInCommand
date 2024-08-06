@@ -151,6 +151,18 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
         }
     }
 
+    fun setOfficerInEmptySlotIfAvailable(officer: SCOfficer) {
+        if (getOfficerInSlot(0) == null) {
+            setOfficerInSlot(0, officer)
+        }
+        else if (getOfficerInSlot(1) == null) {
+            setOfficerInSlot(1, officer)
+        }
+        else if (getOfficerInSlot(2) == null) {
+            setOfficerInSlot(2, officer)
+        }
+    }
+
     fun getAssignedOfficers() : ArrayList<SCOfficer?> {
         return ArrayList(activeOfficers)
     }

@@ -3,6 +3,8 @@ package second_in_command.specs
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.StarSystemAPI
 import com.fs.starfarer.api.campaign.econ.MarketAPI
+import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.campaign.Faction
 import second_in_command.SCData
 import java.awt.Color
 

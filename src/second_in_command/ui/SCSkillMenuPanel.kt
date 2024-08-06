@@ -267,10 +267,20 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
         aptitudePlugin.clearSections()
         aptitudePlugin.createSections()
 
-        officerPickerElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
+        var paraElement = subelement.addLunaElement(100f, 20f).apply {
+            renderBorder = false
+            renderBackground = false
+        }
+        paraElement.position.aboveLeft(officerPickerElement.elementPanel, 0f)
+
+        paraElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
+        var aptitudePara = paraElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
+        aptitudePara.position.inTL(paraElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 3, paraElement.height  -aptitudePara.computeTextHeight(aptitudePara.text)-5)
+
+      /*  officerPickerElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
         var aptitudePara = officerPickerElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
         aptitudePara.position.inTL(officerPickerElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 1, -aptitudePara.computeTextHeight(aptitudePara.text)-5)
-
+*/
         var sections = aptitudePlugin.getSections()
 
         var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())

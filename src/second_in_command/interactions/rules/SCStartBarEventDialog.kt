@@ -96,9 +96,7 @@ class SCStartBarEventDialogDelegate(var original: InteractionDialogPlugin) : Int
         textPanel.addPara("You can find out more about your new officer in the \"Character\" tab of your tri-pad.", Misc.getGrayColor(), Misc.getHighlightColor(), "Character")
 
         data.addOfficerToFleet(officer)
-        if (data.getOfficerInSlot(0) == null) {
-            data.setOfficerInSlot(0, officer)
-        }
+        data.setOfficerInEmptySlotIfAvailable(officer)
 
 
         optionPanel.addOption("Return to the bar", "LEAVE")
@@ -238,9 +236,23 @@ class SCBarDelegatePanel(var plugin: SCStartBarEventDialogDelegate, var officers
                 selectedOfficer = officer
             }
 
+            var paraElement = inner.addLunaElement(100f, 20f).apply {
+                renderBorder = false
+                renderBackground = false
+            }
+            paraElement.elementPanel.position.aboveMid(officerPickerElement.elementPanel, 0f)
+
+            paraElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
+            var aptitudePara = paraElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
+            aptitudePara.position.inTL(paraElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 1, paraElement.height  -aptitudePara.computeTextHeight(aptitudePara.text)-5)
+
+
+/*
+
             officerPickerElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
             var aptitudePara = officerPickerElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
             aptitudePara.position.inTL(officerPickerElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 1, -aptitudePara.computeTextHeight(aptitudePara.text)-5)
+*/
 
             var offset = 10f
             var offsetElement = inner.addLunaElement(0f, 0f)
