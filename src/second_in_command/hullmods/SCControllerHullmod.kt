@@ -27,11 +27,11 @@ class SCControllerHullmod : BaseHullMod() {
 
                     member.variant.addMod("sc_skill_controller")
 
-                    var moduleSlots = member.variant.moduleSlots
+                    /*var moduleSlots = member.variant.moduleSlots
                     for (slot in moduleSlots) {
                         var module = member.variant.getModuleVariant(slot)
                         module.addMod("sc_skill_controller")
-                    }
+                    }*/
                 }
             }
         }
@@ -40,6 +40,7 @@ class SCControllerHullmod : BaseHullMod() {
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
         var member = ship?.mutableStats?.fleetMember ?: return
         var fleet = member.fleetData?.fleet ?: return
+        var fleetData = fleet.fleetData ?: return //Have to do this, as during deserialisation fleetData can be null, causing save corruptions
         var data = SCUtils.getFleetData(fleet)
 
         var skills = SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()
@@ -51,6 +52,7 @@ class SCControllerHullmod : BaseHullMod() {
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         var member = stats?.fleetMember ?: return
         var fleet = member.fleetData?.fleet ?: return
+        var fleetData = fleet.fleetData ?: return //Have to do this, as during deserialisation fleetData can be null, causing save corruptions
         var data = SCUtils.getFleetData(fleet)
 
         var skills = SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()
@@ -62,6 +64,7 @@ class SCControllerHullmod : BaseHullMod() {
     override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
         var member = ship?.mutableStats?.fleetMember ?: return
         var fleet = member.fleetData?.fleet ?: return
+        var fleetData = fleet.fleetData ?: return //Have to do this, as during deserialisation fleetData can be null, causing save corruptions
         var data = SCUtils.getFleetData(fleet)
 
         var skills = SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()
@@ -72,6 +75,7 @@ class SCControllerHullmod : BaseHullMod() {
 
     override fun advanceInCampaign(member: FleetMemberAPI?, amount: Float) {
         var fleet = member?.fleetData?.fleet ?: return
+        var fleetData = fleet.fleetData ?: return //Have to do this, as during deserialisation fleetData can be null, causing save corruptions
         var data = SCUtils.getFleetData(fleet)
 
         var skills = SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()
@@ -83,6 +87,7 @@ class SCControllerHullmod : BaseHullMod() {
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
         var member = ship?.fleetMember ?: return
         var fleet = member.fleetData?.fleet ?: return
+        var fleetData = fleet.fleetData ?: return //Have to do this, as during deserialisation fleetData can be null, causing save corruptions
         var data = SCUtils.getFleetData(fleet)
 
         var skills = SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()

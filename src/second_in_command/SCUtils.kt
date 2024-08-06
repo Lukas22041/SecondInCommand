@@ -48,6 +48,10 @@ object SCUtils {
         var data = fleet.memoryWithoutUpdate.get(FLEET_DATA_KEY) as SCData?
         if (data == null) {
             data = SCData(fleet)
+
+            //Provide Placeholder data in case fleet data is null, for some reason, This will ignore the init and not save the data
+            if (fleet.fleetData == null) return data
+
             fleet.memoryWithoutUpdate.set(FLEET_DATA_KEY, data)
             data!!.init() //Move init to after the data has been assigned to the fleet key, otherwise it can cause some infinite loops
         }

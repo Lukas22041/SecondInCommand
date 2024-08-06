@@ -227,11 +227,11 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
 
                 member.variant.addMod("sc_skill_controller")
 
-                var moduleSlots = member.variant.moduleSlots
+                /*var moduleSlots = member.variant.moduleSlots
                 for (slot in moduleSlots) {
                     var module = member.variant.getModuleVariant(slot)
                     module.addMod("sc_skill_controller")
-                }
+                }*/
             }
         }
     }
