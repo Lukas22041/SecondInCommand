@@ -46,8 +46,6 @@ object NPCOfficerGenerator {
         var nonCombatFP = fleet.fleetData.membersListCopy.filter { it.isCivilian }.sumOf { it.fleetPointCost }.toFloat() * 0.2f
         combatFP += nonCombatFP
 
-        combatFP += 1000f
-
         if (isBoss) combatFP += 120f
         if (isOmega) combatFP += 80f
         if (hasSupercap) combatFP += 80f
@@ -55,7 +53,7 @@ object NPCOfficerGenerator {
         //if (isStation) combatFP += 40f
 
         var divide = MathUtils.getRandomNumberInRange(20f, 22f)
-        var maxSkillCount = MathUtils.getRandomNumberInRange(15, 15)
+        var maxSkillCount = MathUtils.getRandomNumberInRange(11, 14)
 
         var skillCount = (combatFP / divide).toInt()
         skillCount = MathUtils.clamp(skillCount, 1, maxSkillCount) //Minimum of atleast 1 skill per fleet
