@@ -1,7 +1,7 @@
 {
-    "masterVersionFile":"https://raw.githubusercontent.com/Lukas22041/SecondInCommand/SecondInCommand.version.version",
-    "modName":"Random Assortment of Things",
-	"modThreadId":26260,
+    "masterVersionFile":"https://raw.githubusercontent.com/Lukas22041/SecondInCommand/main/SecondInCommand.version",
+    "modName":"Second in Command",
+	#"modThreadId":26260,
     "modVersion":
     {
         "major":1,
