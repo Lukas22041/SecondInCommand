@@ -16,11 +16,18 @@ class Expedition : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+20%% cargo and fuel capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("-15%% fuel usage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("-10%% monthly supply consumption for ship maintenance", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+        stats!!.suppliesPerMonth.modifyMult(id, 0.90f)
+        stats!!.fuelUseMod.modifyMult(id, 0.85f)
+
+        stats!!.cargoMod.modifyPercent(id, 20f)
+        stats!!.fuelMod.modifyPercent(id, 20f)
 
     }
 

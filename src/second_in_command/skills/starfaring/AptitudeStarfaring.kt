@@ -13,7 +13,7 @@ class AptitudeStarfaring : SCBaseAptitudePlugin() {
 
     override fun createSections() {
 
-        var section1 = SCAptitudeSection(true, 0, "technology2")
+        var section1 = SCAptitudeSection(true, 0, "industry1")
 
         section1.addSkill("sc_starfaring_bulk_transport")
         section1.addSkill("sc_starfaring_salvaging")
@@ -22,13 +22,13 @@ class AptitudeStarfaring : SCBaseAptitudePlugin() {
         //section1.addSkill("sc_starfaring_reactive_burn")
         addSection(section1)
 
-        var section2 = SCAptitudeSection(true, 1, "technology4")
+        var section2 = SCAptitudeSection(true, 1, "industry2")
         section2.addSkill("sc_starfaring_navigation")
         section2.addSkill("sc_starfaring_starmapping")
         section2.addSkill("sc_starfaring_emergency_order")
         addSection(section2)
 
-        var section3 = SCAptitudeSection(false, 4, "technology4")
+        var section3 = SCAptitudeSection(false, 4, "industry4")
         section3.addSkill("sc_starfaring_expedition")
         section3.addSkill("sc_starfaring_continious_repairs")
         addSection(section3)
