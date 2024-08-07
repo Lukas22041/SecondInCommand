@@ -1,0 +1,20 @@
+{
+    "masterVersionFile":"https://raw.githubusercontent.com/Lukas22041/SecondInCommand/SecondInCommand.version.version",
+    "modName":"Random Assortment of Things",
+	"modThreadId":26260,
+    "modVersion":
+    {
+        "major":1,
+        "minor":0,
+        "patch":0 # Can be a number, character or string (1, 2, a, b, "-RC2", etc)
+    },
+	
+	#Link towards a direct download, fetched from the online version file
+	"directDownloadURL":"https://github.com/Lukas22041/SecondInCommand/releases/latest/download/Second-in-Command.zip",
+	
+	#Link towards a directly accessible text file, which can be used to display a changelog ingame, is fetched from the online version file.
+	"changelogURL":"https://raw.githubusercontent.com/Lukas22041/SecondInCommand/main/changelog.txt",
+
+
+	
+}
