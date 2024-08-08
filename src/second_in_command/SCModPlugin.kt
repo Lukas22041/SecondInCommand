@@ -84,6 +84,10 @@ class SCModPlugin : BaseModPlugin() {
         if (!Global.getSector().characterData.abilities.contains(Abilities.GRAVITIC_SCAN)) {
             Global.getSector().characterData.addAbility(Abilities.GRAVITIC_SCAN)
         }
+
+        if (!Global.getSector().characterData.abilities.contains(Abilities.REMOTE_SURVEY)) {
+            Global.getSector().characterData.addAbility(Abilities.REMOTE_SURVEY)
+        }
     }
 
     override fun onNewGame() {

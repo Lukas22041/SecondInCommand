@@ -63,9 +63,7 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
         }
         else {
 
-            //Condition here to check for which fleets not to spawn officers for, i.e ziggurat or other boss ships
-
-
+            clearCommanderSkills()
 
             generateNPCOfficers()
         }
@@ -74,6 +72,8 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
         //Moved here, away from the inflator, in case this class only got created on interaction
         applyControllerHullmod()
     }
+
+
 
     fun getActiveOfficers() = activeOfficers.filterNotNull()
 
@@ -232,6 +232,39 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
                     var module = member.variant.getModuleVariant(slot)
                     module.addMod("sc_skill_controller")
                 }*/
+            }
+        }
+    }
+
+    var blacklist = listOf(
+        "tactical_drills",
+        "coordinated_maneuvers",
+        "wolfpack_tactics",
+        "crew_training",
+        "fighter_uplink",
+        "carrier_group",
+        "officer_training",
+        "officer_management",
+        "best_of_the_best",
+        "support_doctrine",
+        "electronic_warfare",
+        "flux_regulation",
+        "cybernetic_augmentation",
+        "phase_corps",
+        "derelict_contingent",
+    )
+
+    //Remove vanilla admiral skills from existing NPC fleets, mostly in case some mod overwrites the settings.json configs
+    fun clearCommanderSkills() {
+
+
+        var skills = commander.stats.skillsCopy.filter { it.level >= 0.1f }.filterNotNull()
+
+        for (skill in ArrayList(skills)) {
+            var id = skill.skill?.id ?: "skill_not_found"
+            if (blacklist.contains(id)) {
+                skill.level = 0f
+                commander.stats.decreaseSkill(skill.skill.id)
             }
         }
     }
