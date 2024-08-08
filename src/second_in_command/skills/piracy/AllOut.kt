@@ -16,8 +16,8 @@ class AllOut : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+20%% ammunition capacity for weapons that use ammunition", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+20%% ammunition recharge rate for weapons that use ammunition", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+20%% ammunition capacity for non-missile weapons that use ammunition", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+20%% ammunition recharge rate for non-missile weapons that use ammunition", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 

@@ -14,8 +14,9 @@
 	"officerMaxEliteSkills":2,
 	 
 	#Essentially Disable vanilla admiral skills if not added manualy. 
-	#"commanderLevelForTwoSkills":99,
-	#"commanderLevelForOneSkill":99,
+	#An additional script removes any vanilla skills if they still appear somehow
+	"commanderLevelForTwoSkills":99,
+	"commanderLevelForOneSkill":98,
 	 
 	"graphics":{
 		"sc_ui":{
