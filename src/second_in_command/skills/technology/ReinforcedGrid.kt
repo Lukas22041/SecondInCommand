@@ -17,7 +17,7 @@ class ReinforcedGrid : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("-40%% overload duration", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+25%% emp damage resistance", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+25%% EMP damage resistance", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
 
     }

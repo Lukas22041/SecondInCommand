@@ -38,7 +38,7 @@ class SCSkillTooltipCreator(var data: SCData, var skill: SCBaseSkillPlugin, var 
         if (!sectionMeetsRequirements) {
             var addedS = ""
             if (requiredSkillPoints >= 2) addedS = "s"
-            tooltip.addPara("Requires atleast $requiredSkillPoints lower tier skill$addedS.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+            tooltip.addPara("Requires at least $requiredSkillPoints lower tier skill$addedS.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
         }
 
         if (pickOnlyOne) {
