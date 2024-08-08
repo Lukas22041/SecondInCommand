@@ -66,6 +66,11 @@ class SCModPlugin : BaseModPlugin() {
     }
 
     override fun onGameLoad(newGame: Boolean) {
+
+        if (!Global.getSector().listenerManager.hasListenerOfClass(ExecutiveOfficerCommAdder::class.java)) {
+            Global.getSector().listenerManager.addListener(ExecutiveOfficerCommAdder(), false)
+        }
+
         Global.getSector().addTransientScript(SkillPanelReplacerScript())
         Global.getSector().addTransientScript(ControllerHullmodAdderScript())
         Global.getSector().addTransientScript(SCNeuralJunctionScript())

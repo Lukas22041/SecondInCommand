@@ -6,12 +6,13 @@ import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.api.ui.PositionAPI
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
-import lunalib.backend.ui.refit.RefitButtonAdder
 import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl.GL11
+import second_in_command.specs.SCOfficer
+import second_in_command.ui.SCOfficerPickerMenuPanel
 import java.awt.Color
 
-class PickerBackgroundPanelPlugin(private var parent: UIPanelAPI) : CustomUIPanelPlugin {
+class ManagePanelPlugin(private var parent: UIPanelAPI, var officerPanel: SCOfficerPickerMenuPanel) : CustomUIPanelPlugin {
 
     var position: PositionAPI? = null
     var panel: UIPanelAPI? = null
@@ -135,6 +136,8 @@ class PickerBackgroundPanelPlugin(private var parent: UIPanelAPI) : CustomUIPane
 
     fun close() {
         parent.removeComponent(panel)
+        officerPanel.recreatePanel()
+
     }
 
 }

@@ -376,8 +376,6 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         //Name Changing
         var nameElement = BackgroundlessTextfield(player.nameString, Misc.getBasePlayerColor(), subelement, 260f, 30f)
         nameElement.advance {
-
-
             var playerName = player.nameString
             if (playerName != nameElement.getText()) {
                 var space = nameElement.getText().indexOf(" ")

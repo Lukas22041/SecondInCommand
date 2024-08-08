@@ -1,27 +1,48 @@
 package second_in_command.ui
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
+import lunalib.lunaExtensions.addLunaTextfield
 import second_in_command.SCData
+import second_in_command.misc.addTooltip
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.*
-import second_in_command.ui.panels.PickerBackgroundPanelPlugin
+import second_in_command.ui.panels.BackgroundPanelPlugin
+import second_in_command.ui.panels.ManagePanelPlugin
 import second_in_command.ui.tooltips.OfficerTooltipCreator
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
 
 class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerElement: SCOfficerPickerElement, var subpanelParent: CustomPanelAPI, var slotId: Int, var data: SCData, var isAtColony: Boolean) {
 
-
+    var activePanel: CustomPanelAPI? = null
+    var activeElement: TooltipMakerAPI? = null
 
     var selectedOfficer: SCOfficer? = null
 
+    var lastScroller = 0f
+
     fun init() {
-        var plugin = PickerBackgroundPanelPlugin(menu.panel)
+        recreatePanel()
+
+    }
+
+    fun recreatePanel() {
+
+        if (activePanel != null) {
+            if (activeElement != null) {
+                lastScroller = activeElement!!.externalScroller.yOffset
+            }
+
+            menu.panel.removeComponent(activePanel)
+        }
+
+        var plugin = BackgroundPanelPlugin(menu.panel)
 
         var width = menu.width - 25
         var height = menu.height - 25
@@ -33,10 +54,14 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
         menu.panel.addComponent(popupPanel)
         popupPanel.position.inMid()
 
+        activePanel = popupPanel
+
         var scrollerPanel = popupPanel.createCustomPanel(width, height - heightCap, null)
         popupPanel.addComponent(scrollerPanel)
         scrollerPanel.position.inTL(0f, 0f)
         var scrollerElement = scrollerPanel.createUIElement(width, height - heightCap, true)
+
+        activeElement = scrollerElement
 
         var officers = data.getOfficersInFleet()
         var activeOfficers = data.getAssignedOfficers()
@@ -249,15 +274,17 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
         buttonPanel.addUIElement(buttonElement)
         buttonElement.addPara("", 0f)
 
+        //Confirm
         var confirmButton = ConfirmCancelButton(Misc.getGrayColor(), buttonElement, 120f, 35f).apply {
             addText("Confirm")
             centerText()
             blink = false
-            position.inTR(150f, 14f)
+            position.inTR(150f+130, 14f)
         }
 
         confirmButton.advance {
             if (selectedOfficer != null) {
+
                 var plugin = SCSpecStore.getAptitudeSpec(selectedOfficer!!.aptitudeId)!!.getPlugin()
                 confirmButton.color = plugin.getColor()
                 confirmButton.blink = true
@@ -278,39 +305,50 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
             var previousOfficerInSlot = data.getOfficerInSlot(slotId)
             data.setOfficerInSlot(slotId, selectedOfficer!!)
-          /*  if (previousOfficerInSlot != null) {
-                var skills = previousOfficerInSlot.getActiveSkillPlugins()
-
-                if (Global.getSector().playerFleet?.fleetData != null) {
-                    for (skill in skills) {
-                        skill.onDeactivation(data)
-                    }
-                    Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
-                }
-            }*/
-
-
-            //data.setOfficerInSlot(slotId, selectedOfficer!!)
-
-
-
-          /*  if (Global.getSector().playerFleet?.fleetData != null) {
-                var skills = selectedOfficer!!.getActiveSkillPlugins()
-                for (skill in skills) {
-                    skill.onActivation(data)
-                }
-                Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
-            }*/
-
 
             menu.recreateAptitudeRow(subpanelParent, data.getOfficerInSlot(slotId), slotId)
         }
 
+        //Manage
+        var manageButton = ConfirmCancelButton(Misc.getGrayColor(), buttonElement, 120f, 35f).apply {
+
+            addText("Manage")
+            centerText()
+            blink = false
+            position.rightOfTop(confirmButton.elementPanel, 10f)
+        }
+
+        manageButton.advance {
+            if (selectedOfficer != null) {
+                var plugin = SCSpecStore.getAptitudeSpec(selectedOfficer!!.aptitudeId)!!.getPlugin()
+                manageButton.color = plugin.getColor()
+                manageButton.blink = true
+            }
+        }
+
+        manageButton.onClick {
+
+            if (selectedOfficer == null) {
+                Global.getSoundPlayer().playUISound("ui_button_disabled_pressed", 1f, 1f)
+                return@onClick
+            }
+
+            manageButton.playClickSound()
+            openOfficerManagementPanel(popupPanel, selectedOfficer!!)
+
+        }
+
+        buttonElement.addTooltip(manageButton.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 250f) { tooltip ->
+            tooltip.addPara("Change the name or dismiss an officer. Can only manage non-assigned officers", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "name", "dismiss")
+        }
+
+        //Cancel
         var cancelButton = ConfirmCancelButton(Misc.getBasePlayerColor(), buttonElement, 120f, 35f).apply {
             addText("Cancel")
             centerText()
             blink = false
-            position.rightOfTop(confirmButton.elementPanel, 10f)
+            //position.rightOfTop(confirmButton.elementPanel, 10f)
+            position.rightOfTop(manageButton.elementPanel, 10f)
         }
 
         cancelButton.onClick {
@@ -318,6 +356,87 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             menu.panel.removeComponent(popupPanel)
         }
 
+
+        scrollerElement.externalScroller.yOffset = lastScroller
+
+    }
+
+    fun openOfficerManagementPanel(popupPanel: CustomPanelAPI, officer: SCOfficer) {
+        var plugin = ManagePanelPlugin(popupPanel, this)
+
+        var width = 240f
+        var height = 170f
+
+        var managementPanel = menu.panel.createCustomPanel(width, height, plugin)
+        plugin.panel = managementPanel
+        popupPanel.addComponent(managementPanel)
+        managementPanel.position.inMid()
+
+        var element = managementPanel.createUIElement(width, height, false)
+        managementPanel.addUIElement(element)
+
+        var nameElement = element.addLunaTextfield(officer.person.nameString, false, 160f, 30f).apply {
+            enableTransparency = true
+        }
+        nameElement.position.inTMid(20f)
+
+        nameElement.advance {
+            var officerName = officer.person.nameString
+            if (officerName != nameElement.getText()) {
+                var space = nameElement.getText().indexOf(" ")
+
+                if (space == -1) {
+                    officer.person.name.first = nameElement.getText()
+                } else {
+                    var first = nameElement.getText().substring(0, space)
+                    var last = nameElement.getText().substring(space+1, nameElement.getText().length)
+                    var fullname = "$first $last"
+
+                    if (last == "") {
+                        fullname = first
+                    }
+
+                    officer.person.name.first = first
+                    officer.person.name.last = last
+                    //nameElement.changePara(fullname)
+
+                }
+            }
+        }
+
+        var dismissButton = ConfirmCancelButton(Misc.getNegativeHighlightColor(), element, 160f, 30f).apply {
+            addText("Dismiss")
+            centerText()
+            blink = false
+            position.belowLeft(nameElement.elementPanel, 20f)
+        }
+
+        dismissButton.onClick {
+            dismissButton.playClickSound()
+            if (it.isDoubleClick && it.isLMBDownEvent) {
+                selectedOfficer = null
+                dismissButton.playSound(Sounds.STORY_POINT_SPEND, 1f, 1f)
+                data.removeOfficerFromFleet(officer)
+                plugin.close()
+            }
+        }
+
+        element.addTooltip(dismissButton.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 300f) { tooltip ->
+            tooltip.addPara("Click this button twice in rapid succession to permanently dismiss this officer. Doing so will forever remove them from your fleet",
+                0f, Misc.getTextColor(), Misc.getHighlightColor(), "twice", "permanently dismiss")
+        }
+
+        var closeButton = ConfirmCancelButton(Misc.getGrayColor(), element, 160f, 30f).apply {
+            addText("Close")
+            centerText()
+            blink = false
+            position.belowLeft(dismissButton.elementPanel, 20f)
+        }
+
+        closeButton.onClick {
+            closeButton.playClickSound()
+            plugin.close()
+        }
 
     }
 

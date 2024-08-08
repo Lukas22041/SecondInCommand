@@ -1,4 +1,14 @@
 
+Version 1.0.2
+Save Compatible
+
+- Added a "Manage" button to the officer picker, allowing for renaming & dismissing officers.
+- Fixed XOs not spawning on the comm directory if the mod has been added mid-save
+- Increased the chance for XOs on Colony Comm-Links
+- There is now a chance for multiple XOs to be on the same colony.
+
+
+
 Version 1.0.1
 Save Compatible
 

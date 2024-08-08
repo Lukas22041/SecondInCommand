@@ -11,7 +11,6 @@ import com.fs.starfarer.api.util.Misc
 import second_in_command.misc.NPCOfficerGenerator
 import second_in_command.specs.SCBaseSkillPlugin
 import second_in_command.specs.SCOfficer
-import second_in_command.specs.SCSpecStore
 
 //Per Fleet Data
 class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener {
@@ -175,6 +174,16 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
 
     fun isSkillActive(skillId: String) : Boolean {
         return getAssignedOfficers().filter { it != null }.flatMap { it!!.getActiveSkillPlugins().map { it.getId() } }.contains(skillId)
+    }
+
+    fun getOfficersAssignedSlot(officer: SCOfficer) : Int? {
+        if (!officer.isAssigned()) return null
+
+        if (getOfficerInSlot(0) == officer) return 0
+        if (getOfficerInSlot(1) == officer) return 1
+        if (getOfficerInSlot(2) == officer) return 2
+
+        return null
     }
 
 

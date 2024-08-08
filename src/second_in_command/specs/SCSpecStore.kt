@@ -22,6 +22,7 @@ object SCSpecStore {
     fun loadAptitudeSpecsFromCSV() {
         var CSV = Global.getSettings().getMergedSpreadsheetDataForMod("id", "data/config/secondInCommand/SCAptitudes.csv", SCUtils.MOD_ID)
 
+
         for (index in 0 until  CSV.length())
         {
             val row = CSV.getJSONObject(index)
