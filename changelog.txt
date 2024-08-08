@@ -2,7 +2,7 @@
 Version 1.0.1
 Save Compatible
 
-- NPC fleets should no longer spawn with admiral vanilla skills.
+- NPC fleets should no longer spawn with vanilla admiral skills.
 - Made "Remote Survey" unlocked by default. 
 - Fixed an issue with a Lunalib configuration.
 - Made the "All-Out" skills tooltip more specific.
