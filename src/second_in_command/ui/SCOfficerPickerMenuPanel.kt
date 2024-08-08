@@ -82,9 +82,22 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             var officerPickerElement = SCOfficerPickerElement(officer.person, aptitudePlugin.getColor(), inner, 96f, 96f)
             officerPickerElement.onClick { selectOfficer(officer) }
 
-            officerPickerElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
+            var paraElement = inner.addLunaElement(100f, 20f).apply {
+                renderBorder = false
+                renderBackground = false
+            }
+            paraElement.elementPanel.position.aboveMid(officerPickerElement.elementPanel, 0f)
+
+            paraElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
+            var aptitudePara = paraElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
+            aptitudePara.position.inTL(paraElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 1, paraElement.height  -aptitudePara.computeTextHeight(aptitudePara.text)-5)
+
+
+           /* officerPickerElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
             var aptitudePara = officerPickerElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
             aptitudePara.position.inTL(officerPickerElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 1, -aptitudePara.computeTextHeight(aptitudePara.text)-5)
+
+            */
 
             scrollerElement.addTooltipTo(OfficerTooltipCreator(officer, isAtColony), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
 

@@ -43,12 +43,26 @@ class ProvisionalReplacements : SCBaseSkillPlugin() {
         bonus = bonus.coerceIn(0f, 0.30f)
 
         stats!!.suppliesPerMonth.modifyMult(id, 1-bonus, "Provisional Replacements")
-        stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat(id, 1.5f)
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
 
+
+    }
+
+    override fun advance(data: SCData, amount: Float) {
+        data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat("sc_provisional_replacements", 1.5f)
+
+    }
+
+    override fun onActivation(data: SCData) {
+        data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat("sc_provisional_replacements", 1.5f)
+
+    }
+
+    override fun onDeactivation(data: SCData) {
+        data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).unmodify("sc_provisional_replacements")
 
     }
 

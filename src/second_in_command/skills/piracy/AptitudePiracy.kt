@@ -41,7 +41,8 @@ class AptitudePiracy : SCBaseAptitudePlugin() {
 
     override fun getMarketSpawnweight(market: MarketAPI): Float {
         var weight = spec.spawnWeight
-        if (market.faction.isPirateFaction()) weight += 2f
+        if (market.faction.id == Factions.PIRATES) weight *= 3f
+        else if (market.faction.isPirateFaction()) weight *= 2f
         return weight
     }
 

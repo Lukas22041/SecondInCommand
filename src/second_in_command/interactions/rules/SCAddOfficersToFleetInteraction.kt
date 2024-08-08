@@ -71,7 +71,8 @@ class SCAddOfficersToFleetInteraction : BaseCommandPlugin() {
 
             element.addSpacer(10f)
 
-            var officerPickerElement = SCOfficerPickerElement(officer?.person, aptitudePlugin.getColor(), element, 72f, 72f)
+            var officerPickerElement = SCOfficerPickerElement(officer?.person, aptitudePlugin.getColor(), element, 80f, 80f)
+            //officerPickerElement.position.inTL(10f, 10f)
 
             officerPickerElement.onHoverEnter {
                 officerPickerElement.playScrollSound()
@@ -94,7 +95,7 @@ class SCAddOfficersToFleetInteraction : BaseCommandPlugin() {
            /* var officerUnderline = SkillUnderlineElement(aptitudePlugin.getColor(), 2f, element, 72f)
             officerUnderline.position.belowLeft(officerPickerElement.elementPanel, 2f)*/
 
-            var offset = 4f
+            var offset = 6f
             var offsetElement = element.addLunaElement(0f, 0f)
             offsetElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, -8f)
 

@@ -19,32 +19,48 @@ import second_in_command.ui.tooltips.SCSkillTooltipCreator
 object SCUtils {
 
     var MOD_ID = "second_in_command"
-    var DATA_KEY = "\$sc_stored_data"
+    var FLEET_DATA_KEY = "\$sc_stored_data"
+    var SECTOR_DATA_KEY = "\$sc_sector_data"
+
+    @JvmStatic
+    fun getSectorData() : SCSectorData {
+        var data = Global.getSector().playerFleet.memoryWithoutUpdate.get(SECTOR_DATA_KEY) as SCSectorData?
+        if (data == null) {
+            data = SCSectorData()
+            Global.getSector().playerFleet.memoryWithoutUpdate.set(SECTOR_DATA_KEY, data)
+        }
+        return data
+    }
 
     @JvmStatic
     fun getPlayerData() : SCData {
-        var data = Global.getSector().playerFleet.memoryWithoutUpdate.get(DATA_KEY) as SCData?
+        var data = Global.getSector().playerFleet.memoryWithoutUpdate.get(FLEET_DATA_KEY) as SCData?
         if (data == null) {
             data = SCData(Global.getSector().playerFleet)
-            Global.getSector().playerFleet.memoryWithoutUpdate.set(DATA_KEY, data)
+            Global.getSector().playerFleet.memoryWithoutUpdate.set(FLEET_DATA_KEY, data)
             data!!.init()
         }
         return data
     }
 
-
+    @JvmStatic
     fun getFleetData(fleet: CampaignFleetAPI) : SCData{
-        var data = fleet.memoryWithoutUpdate.get(DATA_KEY) as SCData?
+        var data = fleet.memoryWithoutUpdate.get(FLEET_DATA_KEY) as SCData?
         if (data == null) {
             data = SCData(fleet)
-            fleet.memoryWithoutUpdate.set(DATA_KEY, data)
+
+            //Provide Placeholder data in case fleet data is null, for some reason, This will ignore the init and not save the data
+            if (fleet.fleetData == null) return data
+
+            fleet.memoryWithoutUpdate.set(FLEET_DATA_KEY, data)
             data!!.init() //Move init to after the data has been assigned to the fleet key, otherwise it can cause some infinite loops
         }
         return data
     }
 
+    @JvmStatic
     fun hasFleetData(fleet: CampaignFleetAPI) : Boolean {
-        return fleet.memoryWithoutUpdate.get(DATA_KEY) as SCData? != null
+        return fleet.memoryWithoutUpdate.get(FLEET_DATA_KEY) as SCData? != null
     }
 
     @JvmStatic
@@ -82,7 +98,7 @@ object SCUtils {
         return false
     }
 
-
+    @JvmStatic
     fun changeOfficerAptitude(fleet: CampaignFleetAPI, officer: SCOfficer, aptitudeId: String) {
         var data = getFleetData(fleet)
 

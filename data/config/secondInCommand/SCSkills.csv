@@ -61,6 +61,19 @@ sc_technology_energised,Energised,graphics/secondInCommand/technology/energised.
 sc_technology_neural_link,Neural Link,graphics/secondInCommand/technology/neural_link.png,,second_in_command.skills.technology.NeuralLink
 sc_technology_makeshift_drones,Makeshift Drones,graphics/secondInCommand/technology/makeshift_drones.png,,second_in_command.skills.technology.MakeshiftDrones
 ,,,,
+#Starfaring,,,,
+sc_starfaring_ad_astra,Ad Astra,graphics/secondInCommand/starfaring/ad_astra.png,1,second_in_command.skills.starfaring.AdAstra
+sc_starfaring_bulk_transport,Bulk Transport,graphics/secondInCommand/starfaring/bulk_transport.png,0.33,second_in_command.skills.starfaring.BulkTransport
+sc_starfaring_salvaging,Salvaging,graphics/secondInCommand/starfaring/salvaging.png,0.33,second_in_command.skills.starfaring.Salvaging
+sc_starfaring_recovery_efforts,Recovery Efforts,graphics/secondInCommand/starfaring/recovery_efforts.png,0.33,second_in_command.skills.starfaring.RecoveryEfforts
+sc_starfaring_makeshift_equipment,Makeshift Equipment,graphics/secondInCommand/starfaring/makeshift_equipment.png,0.33,second_in_command.skills.starfaring.MakeshiftEquipment
+sc_starfaring_navigation,Navigation,graphics/secondInCommand/starfaring/navigation.png,1,second_in_command.skills.starfaring.Navigation
+sc_starfaring_starmapping,Starmapping,graphics/secondInCommand/starfaring/starmapping.png,1,second_in_command.skills.starfaring.Starmapping
+sc_starfaring_emergency_order,Emergency Order,graphics/secondInCommand/starfaring/emergency_order.png,1,second_in_command.skills.starfaring.EmergencyOrder
+#sc_starfaring_reactive_burn,Reactive Burn,graphics/secondInCommand/starfaring/reactive_burn.png,,second_in_command.skills.starfaring.ReactiveBurn
+sc_starfaring_expedition,Expedition,graphics/secondInCommand/starfaring/expedition.png,1,second_in_command.skills.starfaring.Expedition
+sc_starfaring_continuous_repairs,Continuous Repairs,graphics/secondInCommand/starfaring/continuous_repairs.png,,second_in_command.skills.starfaring.ContinuousRepairs
+,,,,
 #Piracy,,,,
 sc_piracy_generous_donation,Generous Donation,graphics/secondInCommand/piracy/generous_donation.png,1,second_in_command.skills.piracy.GenerousDonation
 sc_piracy_legitimate_salvage,Legitimate Salvage ,graphics/secondInCommand/piracy/legitimate_salvage.png,0.33,second_in_command.skills.piracy.LegitimateSalvage
