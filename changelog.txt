@@ -1,4 +1,15 @@
 
+Version 1.0.3
+Save Compatible
+
+- Added support for aptitudes being incompatible with others, making them not pickable at the same time.
+- The Starfaring & Piracy aptitude can no longer be used both at the same time.
+- XOs in the Comm Directory now display their aptitude in the selection screen.
+- The officer slots tooltip now always mentions the keybinds for assignment and removal.
+- Rewrote the base skill and aptitude plugin to java.
+
+
+
 Version 1.0.2
 Save Compatible
 

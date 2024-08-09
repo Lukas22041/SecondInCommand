@@ -13,7 +13,7 @@ class OfficerTooltipCreator(var officer: SCOfficer?, var isAtColony: Boolean, va
 
 
     override fun getTooltipWidth(tooltipParam: Any?): Float {
-        return 350f
+        return 400f
     }
 
     override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {

@@ -37,4 +37,5 @@ class AptitudeManagement : SCBaseAptitudePlugin() {
         return 1f
     }
 
+
 }

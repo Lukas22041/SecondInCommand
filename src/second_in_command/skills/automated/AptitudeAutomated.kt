@@ -47,4 +47,5 @@ class AptitudeAutomated : SCBaseAptitudePlugin() {
 
         return 0f
     }
+
 }

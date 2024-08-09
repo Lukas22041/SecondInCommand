@@ -22,6 +22,7 @@ class SCModPlugin : BaseModPlugin() {
         LunaDebug.addSnippet(AddAllOfficersSnippet())
         LunaDebug.addSnippet(AddXPToOfficersSnippet())
 
+        SCSpecStore.loadCategoriesFromCSV()
         SCSpecStore.loadAptitudeSpecsFromCSV()
         SCSpecStore.loadSkillSpecsFromCSV()
 

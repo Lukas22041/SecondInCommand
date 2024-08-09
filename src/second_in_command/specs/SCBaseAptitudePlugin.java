@@ -48,12 +48,22 @@ public abstract class SCBaseAptitudePlugin {
         return spec.getSpawnWeight();
     }
 
+
+    /**Only used for NPC fleet generation. Guarantees its a priority pick when the conditon is set, should be used sparingly. */
+    public Boolean guaranteePick(CampaignFleetAPI fleet) {
+        return false;
+    }
+
     public final String getId() {
         return spec.getId();
     }
 
     public String getName() {
         return spec.getName();
+    }
+
+    public List<SCCategorySpec> getCategories() {
+        return spec.getCategories();
     }
 
     public Color getColor() {

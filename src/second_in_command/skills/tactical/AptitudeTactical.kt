@@ -36,4 +36,6 @@ class AptitudeTactical : SCBaseAptitudePlugin() {
         return 1f
     }
 
+
+
 }

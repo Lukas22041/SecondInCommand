@@ -46,4 +46,6 @@ class AptitudeTechnology : SCBaseAptitudePlugin() {
         return mult
     }
 
+
+
 }

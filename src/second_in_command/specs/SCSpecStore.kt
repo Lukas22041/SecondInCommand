@@ -23,6 +23,37 @@ object SCSpecStore {
     @JvmStatic
     fun getSkillSpec(specId: String) = skillSpecs.find { it.id == specId }
 
+
+    private var categorySpecs = ArrayList<SCCategorySpec>()
+    @JvmStatic
+    fun getCategorySpecs() = categorySpecs
+    fun getCategorySpec(specId: String) = categorySpecs.find { it.id == specId }
+
+
+    fun loadCategoriesFromCSV() {
+        var CSV = Global.getSettings().getMergedSpreadsheetDataForMod("id", "data/config/secondInCommand/SCCategories.csv", SCUtils.MOD_ID)
+
+
+        for (index in 0 until  CSV.length())
+        {
+            val row = CSV.getJSONObject(index)
+
+            val id = row.getString("id")
+            if (id.startsWith("#") || id == "") continue
+            val name = row.getString("name")
+            //val category = row.getString("category")
+
+            val colorString = row.getString("color")
+            val cs = colorString.split(",").map { it.trim().toInt() }
+            val color = Color(cs[0], cs[1], cs[2], cs[3])
+
+            var spec = SCCategorySpec(id, name, color)
+            categorySpecs.add(spec)
+        }
+
+        logger.debug("Second in Command: Loaded ${categorySpecs.count()} Category Specs.")
+    }
+
     fun loadAptitudeSpecsFromCSV() {
         var CSV = Global.getSettings().getMergedSpreadsheetDataForMod("id", "data/config/secondInCommand/SCAptitudes.csv", SCUtils.MOD_ID)
 
@@ -35,6 +66,16 @@ object SCSpecStore {
             if (id.startsWith("#") || id == "") continue
             val name = row.getString("name")
             //val category = row.getString("category")
+
+            var categories = mutableListOf<SCCategorySpec>()
+            val categoriesString = row.getString("categories").trim()
+            if (categoriesString != "") {
+                var list = categoriesString.split(",").map { it.trim() }
+                for (entry in list) {
+                    var spec = getCategorySpec(entry)
+                    categories.add(spec!!)
+                }
+            }
 
 
             val spawnWeight = row.getFloat("spawnWeight")
@@ -49,7 +90,7 @@ object SCSpecStore {
 
             val pluginPath = row.getString("plugin")
 
-            var spec = SCAptitudeSpec(id, name, spawnWeight, color, tags, pluginPath)
+            var spec = SCAptitudeSpec(id, name, categories, spawnWeight, color, tags, pluginPath)
             aptitudeSpecs.add(spec)
         }
 

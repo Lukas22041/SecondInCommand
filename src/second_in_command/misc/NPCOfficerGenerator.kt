@@ -79,14 +79,59 @@ object NPCOfficerGenerator {
         }
 
 
+
         var aptitudePicker = WeightedRandomPicker<SCBaseAptitudePlugin>()
-        for (aptitude in SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }) {
+        var aptitudes = ArrayList<SCBaseAptitudePlugin>()
+
+
+        var availableAptitudes = SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }.toMutableList()
+
+        var priority = availableAptitudes.filter { it.guaranteePick(fleet) }.toMutableList()
+
+
+        while (priority.isNotEmpty() && aptitudeCount >= 1) {
+
+            var aptitude = priority.first()
+
+            aptitudes.add(aptitude)
+            priority.remove(aptitude)
+
+            aptitudeCount -= 1
+
+            var categories = aptitude.categories
+            for (other in ArrayList(availableAptitudes)) {
+                var otherCategories = other.categories
+
+                if (categories.any { otherCategories.contains(it) }) {
+                    availableAptitudes.remove(other)
+                    priority.remove(other)
+                }
+            }
+
+        }
+
+
+        var noPriority = availableAptitudes.filter { !it.guaranteePick(fleet) }.toMutableList()
+        for (aptitude in noPriority) {
             aptitudePicker.add(aptitude, aptitude.getNPCFleetSpawnWeight(data, fleet))
         }
 
-        var aptitudes = ArrayList<SCBaseAptitudePlugin>()
         for (i in 0 until aptitudeCount) {
-            aptitudes.add(aptitudePicker.pickAndRemove())
+            if (aptitudeCount <= 0) break
+            if (aptitudePicker.isEmpty) break
+
+            var pick = aptitudePicker.pickAndRemove()
+            aptitudes.add(pick)
+
+            var categories = pick.categories
+            for (other in ArrayList(noPriority)) {
+                var otherCategories = other.categories
+
+                if (categories.any { otherCategories.contains(it) }) {
+                    noPriority.remove(other)
+                    aptitudePicker.remove(other)
+                }
+            }
         }
 
         var officers = ArrayList<SCOfficer>()

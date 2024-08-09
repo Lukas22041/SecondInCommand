@@ -10,6 +10,7 @@ import lunalib.lunaExtensions.addLunaTextfield
 import second_in_command.SCData
 import second_in_command.misc.addTooltip
 import second_in_command.specs.SCAptitudeSection
+import second_in_command.specs.SCCategorySpec
 import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.*
@@ -17,6 +18,7 @@ import second_in_command.ui.panels.BackgroundPanelPlugin
 import second_in_command.ui.panels.ManagePanelPlugin
 import second_in_command.ui.tooltips.OfficerTooltipCreator
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
+import java.awt.Color
 
 class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerElement: SCOfficerPickerElement, var subpanelParent: CustomPanelAPI, var slotId: Int, var data: SCData, var isAtColony: Boolean) {
 
@@ -63,7 +65,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
         activeElement = scrollerElement
 
-        var officers = data.getOfficersInFleet()
+        var officers = data.getOfficersInFleet().sortedByDescending { it.isAssigned() }
         var activeOfficers = data.getAssignedOfficers()
 
         for (officer in officers) {
@@ -71,8 +73,12 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             var aptitudeSpec = SCSpecStore.getAptitudeSpec(officer.aptitudeId)
             var aptitudePlugin = aptitudeSpec!!.getPlugin()
 
+            var categories = aptitudePlugin.categories
+
+            var extra = 0f
+            if (categories.isNotEmpty()) extra += 24f
             scrollerElement.addSpacer(10f)
-            var officerElement = scrollerElement.addLunaElement(width - 10, 96f + 36).apply {
+            var officerElement = scrollerElement.addLunaElement(width - 10, 96f + 36 + extra).apply {
                 enableTransparency = true
                 backgroundAlpha = 0.025f
                 borderAlpha = 0.1f
@@ -234,6 +240,70 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
                 }
             }
 
+            //Category Section
+
+            if (categories.isNotEmpty()) {
+               /* var categoryHelp = HelpIconElement(aptitudePlugin.color, inner, 24f, 24f)
+                categoryHelp.elementPanel.position.belowLeft(officerPickerElement.elementPanel, 8f)*/
+
+                var anchor = inner.addLunaElement(20f, 20f).apply {
+                    renderBackground = false
+                    renderBorder = false
+                }
+                anchor.elementPanel.position.belowLeft(officerPickerElement.elementPanel, 10f)
+
+                var categoryNames = ArrayList<String>()
+                var categoryColors = ArrayList<Color>()
+                var categoryText = ""
+
+                for (category in categories) {
+                    categoryNames.add(category.name)
+                    categoryColors.add(Misc.getHighlightColor())
+
+                    categoryText += "${category.name}, "
+                }
+
+                categoryText = categoryText.trim()
+                categoryText = categoryText.trim { it == ',' }
+
+                var extraS = "y"
+                if (categories.size >= 2) extraS = "ies"
+
+                var label = inner.addPara("Categor$extraS: $categoryText", 0f, Misc.getGrayColor(), Misc.getHighlightColor())
+                //label.position.rightOfMid(categoryHelp.elementPanel, 5f)
+                label.position.rightOfMid(anchor.elementPanel, -16f)
+
+                label.setHighlight("Categor$extraS:",*categoryNames.toTypedArray())
+                label.setHighlightColors(aptitudePlugin.color, *categoryColors.toTypedArray())
+
+                var length = label.computeTextWidth(label.text)
+
+                var categoryBackground = inner.addLunaElement(length + 8 + 4, 24f).apply {
+                    enableTransparency = true
+                    backgroundAlpha = 0.025f
+                    borderAlpha = 0.4f
+                    backgroundColor = aptitudePlugin.color
+                    borderColor = aptitudePlugin.color
+                }
+
+                categoryBackground.elementPanel.position.rightOfMid(anchor.elementPanel, -16f - 4)
+
+                categoryBackground.onClick { selectOfficer(officer) }
+
+                inner.addTooltip(categoryBackground.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 250f) { tooltip ->
+                    tooltip.addPara("Some aptitudes are part of a category. You can not assign multiple officers of the same category at the same time.", 0f,
+                        Misc.getTextColor(), Misc.getHighlightColor(), "category", "can not assign two officers of the same category at the same time")
+                }
+
+           /*     var categoryHelp = HelpIconElement(Misc.getBasePlayerColor(), inner, 20f, 20f)
+                categoryHelp.elementPanel.position.rightOfMid(anchor.elementPanel, length - 20f + 4)*/
+            }
+
+
+
+
+
+            //Top Para
             var paraAnchorElement = inner.addLunaElement(0f, 0f)
             paraAnchorElement.position.aboveLeft(originSkillElement.elementPanel, 6f)
 
@@ -245,8 +315,8 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             var minusText = ""
 
             if (officerAlreadySlotted(officer)) officerParaTextExtra = "This officer is already assigned."
-            else if (doesOffficerMatchExistingAptitude(officer)) officerParaTextExtra = "Can't assign two officers of the same aptitude."
-            //else if (doesOffficerMatchCategory(officer)) officerParaTextExtra = "Can't assign two aptitudes of the same category."
+            else if (doesOffficerMatchExistingAptitude(officer)) officerParaTextExtra = "Can't assign multiple officers of the same aptitude."
+            else if (doesOffficerMatchCategory(officer)) officerParaTextExtra = "Can't assign multiple officers that are part of the same category."
 
             if (officerParaTextExtra != "") minusText = "-"
 
@@ -279,7 +349,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             addText("Confirm")
             centerText()
             blink = false
-            position.inTR(150f+130, 14f)
+            position.inTR(150f+130+35+2, 14f)
         }
 
         confirmButton.advance {
@@ -359,6 +429,16 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
         scrollerElement.externalScroller.yOffset = lastScroller
 
+
+         var helpIcon = HelpIconElement(Misc.getBasePlayerColor(), buttonElement, 35f, 35f)
+         helpIcon.elementPanel.position.rightOfMid(cancelButton.elementPanel, 6f)
+
+            buttonElement.addTooltip(helpIcon.elementPanel, TooltipMakerAPI.TooltipLocation.ABOVE, 350f) { tooltip ->
+                tooltip.addPara("This screen can be used to assign, dismiss or re-name officers under your command. \n\n" +
+                        "You can not assign multiple officers of the same aptitude. You also can not assign multiple officers that are within the same category. \n\n" +
+                        "For example, you can not have two different officers of the \"Logistical\" category active together.",
+                    0f, Misc.getTextColor(), Misc.getHighlightColor(), "assign", "dismiss", "re-name", "Logistical")
+            }
     }
 
     fun openOfficerManagementPanel(popupPanel: CustomPanelAPI, officer: SCOfficer) {
@@ -442,7 +522,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
     fun selectOfficer(officer: SCOfficer) {
 
-        if (officerAlreadySlotted(officer) || doesOffficerMatchExistingAptitude(officer) || officerAlreadySlotted(officer)) {
+        if (officerAlreadySlotted(officer) || doesOffficerMatchExistingAptitude(officer) || doesOffficerMatchCategory(officer)) {
             Global.getSoundPlayer().playUISound("ui_button_disabled_pressed", 1f, 1f)
             return
         }
@@ -463,18 +543,24 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
         return false
     }
 
-   /* fun doesOffficerMatchCategory(officer: SCOfficer) : Boolean {
+
+
+    fun doesOffficerMatchCategory(officer: SCOfficer) : Boolean {
+        var list = mutableListOf<SCCategorySpec>()
+        var categories = officer.getAptitudePlugin().categories
         for (active in data.getAssignedOfficers()) {
             if (active == null) continue
             if (active.person == originalPickerElement.officer) continue
-            var spec = SCSpecStore.getAptitudeSpec(officer.aptitudeId)
-            var activeSpec = SCSpecStore.getAptitudeSpec(active.aptitudeId)
-            if (spec!!.category == "") continue
-            if (activeSpec!!.category == spec.category) return true
+
+            var othersCategories = active.getAptitudePlugin().categories
+
+            if (othersCategories.any { categories.contains(it) }) {
+                return true
+            }
         }
 
         return false
-    }*/
+    }
 
     fun officerAlreadySlotted(officer: SCOfficer) : Boolean {
         return data.getAssignedOfficers().contains(officer)
