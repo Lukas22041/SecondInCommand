@@ -246,7 +246,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
             if (officerAlreadySlotted(officer)) officerParaTextExtra = "This officer is already assigned."
             else if (doesOffficerMatchExistingAptitude(officer)) officerParaTextExtra = "Can't assign two officers of the same aptitude."
-            else if (doesOffficerMatchCategory(officer)) officerParaTextExtra = "Can't assign two aptitudes of the same category."
+            //else if (doesOffficerMatchCategory(officer)) officerParaTextExtra = "Can't assign two aptitudes of the same category."
 
             if (officerParaTextExtra != "") minusText = "-"
 
@@ -463,7 +463,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
         return false
     }
 
-    fun doesOffficerMatchCategory(officer: SCOfficer) : Boolean {
+   /* fun doesOffficerMatchCategory(officer: SCOfficer) : Boolean {
         for (active in data.getAssignedOfficers()) {
             if (active == null) continue
             if (active.person == originalPickerElement.officer) continue
@@ -474,7 +474,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
         }
 
         return false
-    }
+    }*/
 
     fun officerAlreadySlotted(officer: SCOfficer) : Boolean {
         return data.getAssignedOfficers().contains(officer)
@@ -484,7 +484,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
         return sections.sumOf { it.activeSkillsInUI.count { it.activated } }
     }
 
-    fun calculateSectionRequirements(officer: SCOfficer, sections: ArrayList<SCAptitudeSection>, skillElements: ArrayList<SkillWidgetElement>) {
+    fun calculateSectionRequirements(officer: SCOfficer, sections: MutableList<SCAptitudeSection>, skillElements: ArrayList<SkillWidgetElement>) {
         for (section in sections) {
 
             var count = getActiveSkillCount(section.previousUISections)

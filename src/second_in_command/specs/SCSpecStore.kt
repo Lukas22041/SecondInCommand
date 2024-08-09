@@ -12,11 +12,15 @@ object SCSpecStore {
     var logger = Global.getLogger(this::class.java).apply { level = Level.ALL }
 
     private var aptitudeSpecs = ArrayList<SCAptitudeSpec>()
+    @JvmStatic
     fun getAptitudeSpecs() = aptitudeSpecs
+    @JvmStatic
     fun getAptitudeSpec(specId: String) = aptitudeSpecs.find { it.id == specId }
 
     private var skillSpecs = ArrayList<SCSkillSpec>()
+    @JvmStatic
     fun getSkillSpecs() = skillSpecs
+    @JvmStatic
     fun getSkillSpec(specId: String) = skillSpecs.find { it.id == specId }
 
     fun loadAptitudeSpecsFromCSV() {
@@ -30,7 +34,7 @@ object SCSpecStore {
             val id = row.getString("id")
             if (id.startsWith("#") || id == "") continue
             val name = row.getString("name")
-            val category = row.getString("category")
+            //val category = row.getString("category")
 
 
             val spawnWeight = row.getFloat("spawnWeight")
@@ -45,7 +49,7 @@ object SCSpecStore {
 
             val pluginPath = row.getString("plugin")
 
-            var spec = SCAptitudeSpec(id, name, category, spawnWeight, color, tags, pluginPath)
+            var spec = SCAptitudeSpec(id, name, spawnWeight, color, tags, pluginPath)
             aptitudeSpecs.add(spec)
         }
 

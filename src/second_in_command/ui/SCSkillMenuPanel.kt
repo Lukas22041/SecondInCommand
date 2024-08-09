@@ -503,11 +503,11 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
         recreateAptitudeRow(subpanelParent, offficer, slotId)
     }
 
-    fun getActiveSkillCount(sections: ArrayList<SCAptitudeSection>) : Int {
+    fun getActiveSkillCount(sections: MutableList<SCAptitudeSection>) : Int {
         return sections.sumOf { it.activeSkillsInUI.count { it.activated } }
     }
 
-    fun recalculateSectionRequirements(officer: SCOfficer, sections: ArrayList<SCAptitudeSection>, skillElements: ArrayList<SkillWidgetElement>) {
+    fun recalculateSectionRequirements(officer: SCOfficer, sections: MutableList<SCAptitudeSection>, skillElements: ArrayList<SkillWidgetElement>) {
         for (section in sections) {
 
             var count = getActiveSkillCount(section.previousUISections)
@@ -554,7 +554,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
         }
     }
 
-    fun getSkillsSection(skillId: String, sections: ArrayList<SCAptitudeSection>) : SCAptitudeSection? {
+    fun getSkillsSection(skillId: String, sections: MutableList<SCAptitudeSection>) : SCAptitudeSection? {
         return sections.find { it.getSkills().contains(skillId) }
     }
 

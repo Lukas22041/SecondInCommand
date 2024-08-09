@@ -7,8 +7,11 @@ import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.campaign.Faction
 import second_in_command.SCData
 import java.awt.Color
+/*
 
-/**Base Plugin for Aptitudes. */
+*/
+/**Base Plugin for Aptitudes. *//*
+
 abstract class SCBaseAptitudePlugin() {
 
     lateinit var spec: SCAptitudeSpec
@@ -47,9 +50,6 @@ abstract class SCBaseAptitudePlugin() {
         return spec.id
     }
 
-    fun getCategory() : String{
-        return spec.category
-    }
 
     open fun getName() : String {
         return spec.name
@@ -63,4 +63,4 @@ abstract class SCBaseAptitudePlugin() {
         return spec.tags
     }
 
-}
+}*/
