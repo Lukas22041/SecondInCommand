@@ -12,6 +12,7 @@ import second_in_command.SCData
 /**Base Plugin for Skills.
  * Handles similar to hullmod plugins.
  * Do not store variables in the class itself. It will cause leaks.*/
+/*
 abstract class SCBaseSkillPlugin {
 
     lateinit var spec: SCSkillSpec
@@ -44,14 +45,20 @@ abstract class SCBaseSkillPlugin {
 
     open fun advanceInCampaign(data: SCData, member: FleetMemberAPI?, amount: Float) { }
 
-    /**Non-ship specific campaign advance*/
+    */
+/**Non-ship specific campaign advance*//*
+
     open fun advance(data: SCData, amount: Float) { }
 
     open fun advanceInCombat(data: SCData, ship: ShipAPI?, amount: Float) { }
 
-    /**Called when the skill is acquired and if the officer is re-assigned. Also may be called in other scenarios aslong as the skill is active*/
+    */
+/**Called when the skill is acquired and if the officer is re-assigned. Also may be called in other scenarios aslong as the skill is active*//*
+
     open fun onActivation(data: SCData) { }
 
-    /**Called when the corrosponding officer is un-assigned */
+    */
+/**Called when the corrosponding officer is un-assigned *//*
+
     open fun onDeactivation(data: SCData) { }
-}
+}*/

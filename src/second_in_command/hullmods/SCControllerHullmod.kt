@@ -57,7 +57,6 @@ class SCControllerHullmod : BaseHullMod() {
 
         var skills = SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()
         for (skill in skills) {
-            skill.applyEffectsBeforeShipCreation(data, stats, stats!!.variant, hullSize, "${id}_${skill.getId()}")
         }
     }
 
