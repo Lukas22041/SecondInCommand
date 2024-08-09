@@ -1,4 +1,12 @@
 
+Version 1.0.4
+Save Compatible
+
+- Fixed accidentaly having removed a single line of the code, which made half of the skills no longer work, yup.
+- Added a LunaSettings config for lowering or inreasing the players XP gain.
+
+
+
 Version 1.0.3
 Save Compatible
 
