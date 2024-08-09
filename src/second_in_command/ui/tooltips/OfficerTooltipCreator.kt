@@ -7,7 +7,7 @@ import second_in_command.specs.SCOfficer
 import second_in_command.ui.SCSkillMenuPanel
 import second_in_command.ui.elements.OfficerXPBar
 
-class OfficerTooltipCreator(var officer: SCOfficer?, var isAtColony: Boolean) : BaseTooltipCreator() {
+class OfficerTooltipCreator(var officer: SCOfficer?, var isAtColony: Boolean, var openedFromPicker: Boolean) : BaseTooltipCreator() {
 
 
 
@@ -98,6 +98,13 @@ class OfficerTooltipCreator(var officer: SCOfficer?, var isAtColony: Boolean) : 
              tooltip.addSpacer(10f)
              tooltip.addPara("This officer can only be assigned and un-assigned while the fleet is docked to a colony due to the preparations required for ${officer!!.person.hisOrHer} field of work.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
          }*/
+
+
+        if (!openedFromPicker) {
+            tooltip.addSpacer(10f)
+            tooltip!!.addPara("Left-click to select an executive officer to assign. Right-click to un-assign officers.",
+                0f, Misc.getTextColor(), Misc.getHighlightColor(), "Left-click", "Right-click")
+        }
 
         tooltip.addSpacer(30f)
 

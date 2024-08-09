@@ -57,7 +57,7 @@ class ExecutiveOfficerCommAdder : EconomyTickListener {
                 officer.memoryWithoutUpdate.set("\$sc_officer_aptitude", pick.id)
                 officer.memoryWithoutUpdate.set("\$sc_hireable", true)
 
-                officer.postId = "executive_officer_for_hire"
+                officer.postId = "executive_officer_${pick.id}"
 
                 var id = market.commDirectory.addPerson(officer)
                 previousPeople.put(id, market)

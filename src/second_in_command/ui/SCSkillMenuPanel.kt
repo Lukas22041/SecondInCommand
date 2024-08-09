@@ -245,7 +245,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
         }
 
 
-        subelement.addTooltipTo(OfficerTooltipCreator(officer, isAtColony), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
+        subelement.addTooltipTo(OfficerTooltipCreator(officer, isAtColony, false), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
 
         var offset = 10f
         var offsetElement = subelement.addLunaElement(0f, 0f)

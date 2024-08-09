@@ -1,5 +1,5 @@
 id,name,category,spawnWeight,color,tags,plugin
-,,#can not use multiple aptitudes of the same category,"#Used for Procgen, not for NPCs. NPCs are decided in the plugin",,,
+#All aptitudes require a matching entry in default_ranks.json: executive_officer_aptitudeId,,#can not use multiple aptitudes of the same category,"#Used for Procgen, not for NPCs. NPCs are decided in the plugin",,,
 ,,,,,,
 sc_tactical,Tactical,tactical,1.0,"230,181,2,255","startingOption,",second_in_command.skills.tactical.AptitudeTactical
 sc_management,Management,management,1.0,"107,175,0,255","startingOption,",second_in_command.skills.management.AptitudeManagement

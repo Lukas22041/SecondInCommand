@@ -124,7 +124,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
             */
 
-            scrollerElement.addTooltipTo(OfficerTooltipCreator(officer, isAtColony), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
+            scrollerElement.addTooltipTo(OfficerTooltipCreator(officer, isAtColony, true), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
 
             var offset = 10f
             var offsetElement = inner.addLunaElement(0f, 0f)

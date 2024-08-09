@@ -4,6 +4,15 @@
 		"executive_officer":{"name":"Executive Officer"}, 
 		"executive_officer_for_hire":{"name":"Executive Officer (available for hire)"}, 
 		
+		"executive_officer_sc_tactical": {"name":"Executive Officer (Tactical)"}, 
+		"executive_officer_sc_management": {"name":"Executive Officer (Management)"}, 
+		"executive_officer_sc_wolfpack": {"name":"Executive Officer (Smallcraft)"}, 
+		"executive_officer_sc_support": {"name":"Executive Officer (Support)"}, 
+		"executive_officer_sc_technology": {"name":"Executive Officer (Technical)"}, 
+		"executive_officer_sc_starfaring": {"name":"Executive Officer (Starfaring)"}, 
+		"executive_officer_sc_piracy": {"name":"Executive Officer (Piracy)"}, 
+		"executive_officer_sc_automated": {"name":"Executive Officer (Automation)"}, 
+		
 	},
 }
 
