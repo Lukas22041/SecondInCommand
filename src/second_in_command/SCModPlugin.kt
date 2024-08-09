@@ -68,6 +68,8 @@ class SCModPlugin : BaseModPlugin() {
 
     override fun onGameLoad(newGame: Boolean) {
 
+        Global.getSettings().setFloat("xpGainMult", SCSettings.playerXPMult)
+
         if (!Global.getSector().listenerManager.hasListenerOfClass(ExecutiveOfficerCommAdder::class.java)) {
             Global.getSector().listenerManager.addListener(ExecutiveOfficerCommAdder(), false)
         }

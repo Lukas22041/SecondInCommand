@@ -1,6 +1,7 @@
 fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
 ,,,,,,,,
-,,,,,,,,
+sc_playerHeader,Player,Header,Player,,,,,
+sc_playerXPMult,Player & Officer XP Mult,Double,1,,Modifies how much experience both the [player] and [vanilla officers] gain. This does not effect executive officers.,0.1,5,
 ,,,,,,,,
 sc_officerHeader,Executive Officers,Header,Executive Officers,,,,,
 sc_officerXPMult,XP Mult,Double,1,,Modifies how much experience executive officers gain per battle.,0.1,5,

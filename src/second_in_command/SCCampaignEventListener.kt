@@ -32,7 +32,7 @@ class SCCampaignEventListener : BaseCampaignEventListener(false) {
 
             xp *= plugin.computePlayerContribFraction()
 
-            xp *= Global.getSettings().getFloat("xpGainMult")
+            //xp *= Global.getSettings().getFloat("xpGainMult")
 
             for (officer in SCUtils.getPlayerData().getOfficersInFleet()) {
                 officer.addXP(xp)
