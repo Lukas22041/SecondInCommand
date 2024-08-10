@@ -14,11 +14,7 @@ public abstract class SCBaseAptitudePlugin {
 
     public SCAptitudeSpec spec;
 
-
-
-
-
-
+    /**Used for adding sections within the createSections() method. */
     public final void addSection(SCAptitudeSection section) {
         sections.add(section);
     }
