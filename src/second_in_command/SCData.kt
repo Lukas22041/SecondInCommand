@@ -151,6 +151,17 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
     }
 
     fun setOfficerInEmptySlotIfAvailable(officer: SCOfficer) {
+
+        //Check for incompatibilities
+        var categories = officer.getAptitudePlugin().categories
+        for (other in getActiveOfficers()) {
+            var otherCategories = other.getAptitudePlugin().categories
+
+            if (categories.any { otherCategories.contains(it) }) {
+                return
+            }
+        }
+
         if (getOfficerInSlot(0) == null) {
             setOfficerInSlot(0, officer)
         }

@@ -46,11 +46,11 @@ class CrewTraining : SCBaseSkillPlugin() {
         tooltip.addPara("+10%% maximum combat readiness for all ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - The bonus is increased by 5%% for any ship with an officer assigned to it", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "5%")
 
-        tooltip.addSpacer(10f)
+      /*  tooltip.addSpacer(10f)
 
         tooltip.addPara("+2 to maximum number of officers you're able to command", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - If this executive officer is unassigned, any officer over the limit will also be unassigned", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "5%")
-
+*/
 
     }
 
@@ -75,13 +75,13 @@ class CrewTraining : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-        data.commander.stats.officerNumber.modifyFlat("sc_crew_training", 2f)
+        //data.commander.stats.officerNumber.modifyFlat("sc_crew_training", 2f)
     }
 
     override fun onActivation(data: SCData) {
 
         //Add additional officers
-        if (data.isNPC && !data.fleet.addAndCheckTag("sc_crew_training_update")) {
+       /* if (data.isNPC && !data.fleet.addAndCheckTag("sc_crew_training_update")) {
             var count = 2
             var membersWithoutOfficers = data.fleet.fleetData.membersListCopy
                 .filter { (it.captain == null || it.captain.isDefault) && !it.isAutomated() }.toMutableList()
@@ -97,16 +97,16 @@ class CrewTraining : SCBaseSkillPlugin() {
                     pick.captain = officer
                 }
             }
-        }
+        }*/
     }
 
 
 
     override fun onDeactivation(data: SCData) {
-        data.commander.stats.officerNumber.unmodify("sc_crew_training")
+        /*data.commander.stats.officerNumber.unmodify("sc_crew_training")
 
         if (!data.isNPC) {
             removeOfficersOverTheLimit()
-        }
+        }*/
     }
 }

@@ -34,18 +34,35 @@ object SCUtils {
 
     @JvmStatic
     fun getPlayerData() : SCData {
-        var data = Global.getSector().playerFleet.memoryWithoutUpdate.get(FLEET_DATA_KEY) as SCData?
+        /*var data = Global.getSector().playerFleet.memoryWithoutUpdate.get(FLEET_DATA_KEY) as SCData?
+
+        if (data == null) {
+            data = Global.getSector().playerPerson.memoryWithoutUpdate.get(FLEET_DATA_KEY) as SCData?
+            Global.getSector().playerFleet.memoryWithoutUpdate.set(FLEET_DATA_KEY, data)
+        }
+
         if (data == null) {
             data = SCData(Global.getSector().playerFleet)
             Global.getSector().playerFleet.memoryWithoutUpdate.set(FLEET_DATA_KEY, data)
+            Global.getSector().playerPerson.memoryWithoutUpdate.set(FLEET_DATA_KEY, data) //To avoid executive officers being lost on player fleet destruction
             data!!.init()
         }
-        return data
+
+        return data*/
+
+        return getFleetData(Global.getSector().playerFleet)
     }
 
     @JvmStatic
     fun getFleetData(fleet: CampaignFleetAPI) : SCData{
         var data = fleet.memoryWithoutUpdate.get(FLEET_DATA_KEY) as SCData?
+
+        //Fixes player fleet after fleet death
+        if (data == null && fleet.isPlayerFleet) {
+            data = Global.getSector().playerPerson.memoryWithoutUpdate.get(FLEET_DATA_KEY) as SCData?
+            fleet.memoryWithoutUpdate.set(FLEET_DATA_KEY, data)
+        }
+
         if (data == null) {
             data = SCData(fleet)
 
@@ -53,6 +70,11 @@ object SCUtils {
             if (fleet.fleetData == null) return data
 
             fleet.memoryWithoutUpdate.set(FLEET_DATA_KEY, data)
+
+            if (fleet.isPlayerFleet) {
+                Global.getSector().playerPerson.memoryWithoutUpdate.set(FLEET_DATA_KEY, data) //To avoid executive officers being lost on player fleet destruction
+            }
+
             data!!.init() //Move init to after the data has been assigned to the fleet key, otherwise it can cause some infinite loops
         }
         return data

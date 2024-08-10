@@ -1,4 +1,13 @@
 
+Version 1.0.5
+Save Compatible
+
+- Removed the +2 officer gain from the "Crew Training" skill.
+- Fixed a bug that made it possible to use two incompatible aptitudes together.
+- Fixed a bug that removed all your executive officers if your fleet got entirely defeaten. (only fixed on new saves)
+
+
+
 Version 1.0.4
 Save Compatible
 
