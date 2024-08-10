@@ -26,6 +26,7 @@ class CrewTraining : SCBaseSkillPlugin() {
 
             var fleet = Global.getSector().playerFleet
             var shipsWithOfficers = fleet.fleetData.membersListCopy.filter { fleet.fleetData.officersCopy.map { it.person }.contains(it.captain) }.toMutableList()
+            var officers = fleet.fleetData.officersCopy
 
             while (shipsWithOfficers.count() > maximum) {
                 if (shipsWithOfficers.isEmpty()) break
