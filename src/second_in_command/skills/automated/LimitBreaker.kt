@@ -47,7 +47,7 @@ class LimitBreaker : SCBaseSkillPlugin() {
                 if (core.isDefault) continue
                 if (!core.isAICore) continue
 
-                if (core.memoryWithoutUpdate.get("\$sc_limit_break_level") == true) return
+                if (core.memoryWithoutUpdate.get("\$sc_limit_break_level") == true) continue
 
                 core.stats.level += 1
                 core.memoryWithoutUpdate.set("\$sc_limit_break_level", true)
