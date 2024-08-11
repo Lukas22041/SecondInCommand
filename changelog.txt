@@ -1,7 +1,7 @@
 
 Version 1.0.6
 
-- Fixed an issue that made "Limit Breaker" not apply to all cores ships.
+- Fixed an issue that made "Limit Breaker" not apply to all cores.
 
 
 
