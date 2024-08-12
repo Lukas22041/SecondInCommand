@@ -15,8 +15,8 @@ class Authority : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+5%% to all ships speed and maneuverability for every combat objective held", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+5%% to all weapons range for every combat objective held", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+3%% to all ships speed and maneuverability for every combat objective held", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+3%% to all weapons range for every combat objective held", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
@@ -26,7 +26,7 @@ class Authority : SCBaseSkillPlugin() {
         var held = objectives.filter { it.owner == ship!!.owner }.count()
 
         //var bonus = 1f + (0.05f * held)
-        var bonus = 5f * held
+        var bonus = 3f * held
 
         var stats = ship!!.mutableStats
 

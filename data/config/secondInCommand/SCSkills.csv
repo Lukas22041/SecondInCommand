@@ -85,6 +85,7 @@ sc_piracy_improvised_raids,Improvised Raids,graphics/secondInCommand/piracy/impr
 sc_piracy_hunting_grounds,Hunting Grounds,graphics/secondInCommand/piracy/hunting_grounds.png,1,second_in_command.skills.piracy.HuntingGrounds
 sc_piracy_all_out,All-Out,graphics/secondInCommand/piracy/all_out.png,1,second_in_command.skills.piracy.AllOut
 sc_piracy_steadfast,Steadfast,graphics/secondInCommand/piracy/steadfast.png,1,second_in_command.skills.piracy.Steadfast
+sc_piracy_bounty_board,Bounty Board,graphics/secondInCommand/piracy/bounty_board.png,1,second_in_command.skills.piracy.BountyBoard
 sc_piracy_provisional_replacements,Provisional Replacements,graphics/secondInCommand/piracy/provisional_replacements.png,1,second_in_command.skills.piracy.ProvisionalReplacements
 ,,,,
 ,,,,

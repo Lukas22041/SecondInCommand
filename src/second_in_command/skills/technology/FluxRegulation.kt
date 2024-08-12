@@ -1,10 +1,8 @@
 package second_in_command.skills.technology
 
-import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
-import com.fs.starfarer.api.impl.campaign.skills.BaseSkillEffectDescription
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
@@ -18,22 +16,31 @@ class FluxRegulation : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+5 maximum flux capacitors and vents for all loadouts", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("   - If this officer is unassigned, capacitors and vents over the limit are removed", 0f, Misc.getTextColor(), Misc.getHighlightColor())
+        /*tooltip.addPara("+5 maximum flux capacitors and vents for all loadouts", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - If this officer is unassigned, capacitors and vents over the limit are removed", 0f, Misc.getTextColor(), Misc.getHighlightColor())*/
+
+        tooltip.addPara("Flux Capacity from vents is increased by 20 per ordnance point spend", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Flux dissipation from vents is increased by 2 per ordnance point spend", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("+10%% flux dissipation for combat ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+10%% flux capacity for combat ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% flux dissipation", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% flux capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
-        if (!BaseSkillEffectDescription.isCivilian(stats)) {
-            stats!!.fluxDissipation.modifyPercent(id, 10f)
-            stats!!.fluxCapacity.modifyPercent(id, 10f)
-        }
+        var vents = stats!!.variant.numFluxVents
+        var caps = stats!!.variant.numFluxCapacitors
+        var fluxIncrease = 2f * vents
+        var capsIncrease = 20f * caps
+
+        stats.fluxDissipation.modifyFlat(id, fluxIncrease)
+        stats.fluxCapacity.modifyFlat(id, capsIncrease)
+
+        stats!!.fluxDissipation.modifyPercent(id, 10f)
+        stats!!.fluxCapacity.modifyPercent(id, 10f)
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
@@ -43,13 +50,13 @@ class FluxRegulation : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-        data.commander.stats.maxVentsBonus.modifyFlat("sc_flux_regulation", 5f)
-        data.commander.stats.maxCapacitorsBonus.modifyFlat("sc_flux_regulation", 5f)
+       /* data.commander.stats.maxVentsBonus.modifyFlat("sc_flux_regulation", 5f)
+        data.commander.stats.maxCapacitorsBonus.modifyFlat("sc_flux_regulation", 5f)*/
     }
 
     override fun onDeactivation(data: SCData) {
-        data.commander.stats.maxVentsBonus.unmodify("sc_flux_regulation")
-        data.commander.stats.maxCapacitorsBonus.unmodify("sc_flux_regulation")
+        /*data.commander.stats.maxVentsBonus.unmodify("sc_flux_regulation")
+        data.commander.stats.maxCapacitorsBonus.unmodify("sc_flux_regulation")*/
 
     }
 

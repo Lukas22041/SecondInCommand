@@ -25,13 +25,14 @@ class AptitudePiracy : SCBaseAptitudePlugin() {
         section1.addSkill("sc_piracy_outmanoeuvred")
         section1.addSkill("sc_piracy_ambush")
         section1.addSkill("sc_piracy_stockpile")
-        section1.addSkill("sc_piracy_improvised_raids")
+        //section1.addSkill("sc_piracy_improvised_raids")
         section1.addSkill("sc_piracy_hunting_grounds")
         section1.addSkill("sc_piracy_all_out")
         section1.addSkill("sc_piracy_steadfast")
         addSection(section1)
 
         var section2 = SCAptitudeSection(true, 3, "technology2")
+        section2.addSkill("sc_piracy_bounty_board")
         section2.addSkill("sc_piracy_provisional_replacements")
         addSection(section2)
 
