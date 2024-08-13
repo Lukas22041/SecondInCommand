@@ -29,6 +29,8 @@ class BountyBoard : SCBaseSkillPlugin() {
         tooltip.addPara("You receive $creditsString credits per opposing ship destroyed or disabled in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - This is multiplied by 1x/2x/3x/10x based on the hullsize of each destroyed ship", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
         "1x", "2x", "3x", "10x")
+        tooltip.addPara("   - The payment is halved for civilian targets", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
+            "halved")
 
 
     }
@@ -87,6 +89,7 @@ class BountyBoardSkillListener() : FleetEventListener {
                     else -> 1f
                 }
                 bounty += mult * base
+                if (loss.isCivilian) bounty *= 0.5f //Half for civilian targets
             }
             payment += (bounty * battle.playerInvolvementFraction).toInt()
         }
@@ -94,7 +97,7 @@ class BountyBoardSkillListener() : FleetEventListener {
         Global.getSector().playerFleet.cargo.credits.add(payment)
         Global.getSector().campaignUI.addMessage(object : BaseIntelPlugin() {
             override fun getName(): String {
-                return "Skill: Bounty Board"
+                return "Skill - Bounty Board"
             }
 
             override fun getIcon(): String {

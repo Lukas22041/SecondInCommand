@@ -49,11 +49,28 @@ object NPCOfficerGenerator {
         if (isBoss) combatFP += 120f
         if (isOmega) combatFP += 80f
         if (hasSupercap) combatFP += 80f
-        if (isAutomated) combatFP += 10f
+        if (isAutomated) combatFP += 20f
         //if (isStation) combatFP += 40f
 
+        var minSkills = 11
+        var maxSkills = 14
+
+        if (SCSettings.difficulty == "Hard") {
+            minSkills = 15
+            maxSkills = 15
+
+            combatFP *= 1.33f
+            combatFP += 60
+        }
+        else if (SCSettings.difficulty == "Easy") {
+            minSkills = 8
+            maxSkills = 12
+
+            combatFP *= 0.666f
+        }
+
         var divide = MathUtils.getRandomNumberInRange(20f, 22f)
-        var maxSkillCount = MathUtils.getRandomNumberInRange(11, 14)
+        var maxSkillCount = MathUtils.getRandomNumberInRange(minSkills, maxSkills)
 
         var skillCount = (combatFP / divide).toInt()
         skillCount = MathUtils.clamp(skillCount, 1, maxSkillCount) //Minimum of atleast 1 skill per fleet

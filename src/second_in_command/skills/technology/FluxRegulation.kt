@@ -19,13 +19,19 @@ class FluxRegulation : SCBaseSkillPlugin() {
         /*tooltip.addPara("+5 maximum flux capacitors and vents for all loadouts", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - If this officer is unassigned, capacitors and vents over the limit are removed", 0f, Misc.getTextColor(), Misc.getHighlightColor())*/
 
-        tooltip.addPara("Flux Capacity from vents is increased by 20 per ordnance point spend", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("Flux dissipation from vents is increased by 2 per ordnance point spend", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
-        tooltip.addSpacer(10f)
+        /*tooltip.addPara("Flux capacity from capacitors is increased by 20", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Flux dissipation from vents is increased by 2", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())*/
+
 
         tooltip.addPara("+10%% flux dissipation", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+10%% flux capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+
+        tooltip.addSpacer(10f)
+
+        tooltip.addPara("Capacitors and Vents provide more flux capacity and dissipation", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("   +20 extra flux capacity per capacitor on the ship", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+20")
+        tooltip.addPara("   +2 extra flux dissipation per vent on the ship", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+2")
 
     }
 

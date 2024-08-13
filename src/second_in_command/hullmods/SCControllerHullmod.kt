@@ -25,7 +25,7 @@ class SCControllerHullmod : BaseHullMod() {
                         member.setVariant(variant, false, true)
                     }
 
-                    member.variant.addMod("sc_skill_controller")
+                    member.variant.addPermaMod("sc_skill_controller")
 
                     /*var moduleSlots = member.variant.moduleSlots
                     for (slot in moduleSlots) {

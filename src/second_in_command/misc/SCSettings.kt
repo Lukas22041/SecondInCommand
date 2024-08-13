@@ -29,6 +29,8 @@ class SCSettings : LunaSettingsListener {
         var xpGainMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_officerXPMult")!!
 
         var playerXPMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_playerXPMult")!!
+
+        var difficulty = LunaSettings.getString(SCUtils.MOD_ID, "sc_fleetDifficulty")
     }
 
     init {
@@ -47,6 +49,8 @@ class SCSettings : LunaSettingsListener {
 
         playerXPMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_playerXPMult")!!
         Global.getSettings().setFloat("xpGainMult", playerXPMult)
+
+        difficulty = LunaSettings.getString(SCUtils.MOD_ID, "sc_fleetDifficulty")
 
     }
 
