@@ -19,7 +19,7 @@ class MassBombardment : SCBaseSkillPlugin() {
         tooltip.addPara("+30%% missile weapon rate of fire", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+40%% ammo capacity of missile weapons", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+40%% ammo regeneration of rechargeable missile weapons", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("-25%% missile weapon damage", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+        tooltip.addPara("-15%% missile weapon damage", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
 
         
     }
@@ -29,7 +29,7 @@ class MassBombardment : SCBaseSkillPlugin() {
         stats!!.missileRoFMult.modifyPercent(id, 30f)
         stats!!.missileAmmoBonus.modifyPercent(id, 40f)
         stats!!.missileAmmoRegenMult.modifyPercent(id, 40f)
-        stats!!.missileWeaponDamageMult.modifyPercent(id, 0.75f)
+        stats!!.missileWeaponDamageMult.modifyPercent(id, 0.85f)
 
     }
 

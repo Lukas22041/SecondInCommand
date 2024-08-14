@@ -1,6 +1,7 @@
 fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
 ,,,,,,,,
 sc_playerHeader,Player,Header,Player,,,,,
+sc_playerMaxLevel,Player Max Level,Int,15,,"Sets the max level of the player somewhere between [15] and [25]. If you are new to the mod, i would recommend to leave it at [15] and see if that is enough first. Player levels are exclusively used for combat skill points.",15,25,
 sc_playerXPMult,Player & Officer XP Mult,Double,1,,Modifies how much experience both the [player] and [vanilla officers] gain. This does not effect executive officers.,0.1,5,
 ,,,,,,,,
 sc_officerHeader,Executive Officers,Header,Executive Officers,,,,,

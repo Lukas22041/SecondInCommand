@@ -4,7 +4,7 @@ id,name,categories,spawnWeight,color,tags,plugin
 sc_tactical,Tactical,,1.0,"230,181,2,255","startingOption,",second_in_command.skills.tactical.AptitudeTactical
 sc_management,Management,,1.0,"107,175,0,255","startingOption,",second_in_command.skills.management.AptitudeManagement
 sc_wolfpack,Smallcraft,,1.0,"203, 230, 2,255","startingOption,",second_in_command.skills.wolfpack.AptitudeWolfpack
-sc_support,Support,,1.0,"2, 230, 139,255","startingOption,",second_in_command.skills.support.AptitudeSupport
+sc_support,Strikecraft,,1.0,"2, 230, 139,255","startingOption,",second_in_command.skills.support.AptitudeSupport
 sc_technology,Technical,,1.0,"0,121,216,255","startingOption,",second_in_command.skills.technology.AptitudeTechnology
 sc_starfaring,Starfaring,sc_cat_logistical,1.0,"164, 0, 209,255","startingOption,",second_in_command.skills.starfaring.AptitudeStarfaring
 sc_piracy,Piracy,sc_cat_logistical,1.0,"200,0,0,255","startingOption,",second_in_command.skills.piracy.AptitudePiracy

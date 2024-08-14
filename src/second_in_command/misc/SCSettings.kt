@@ -31,6 +31,10 @@ class SCSettings : LunaSettingsListener {
         var playerXPMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_playerXPMult")!!
 
         var difficulty = LunaSettings.getString(SCUtils.MOD_ID, "sc_fleetDifficulty")
+
+        @JvmStatic
+        var playerMaxLevel = LunaSettings.getInt(SCUtils.MOD_ID, "sc_playerMaxLevel")
+
     }
 
     init {
@@ -51,6 +55,8 @@ class SCSettings : LunaSettingsListener {
         Global.getSettings().setFloat("xpGainMult", playerXPMult)
 
         difficulty = LunaSettings.getString(SCUtils.MOD_ID, "sc_fleetDifficulty")
+
+        playerMaxLevel = LunaSettings.getInt(SCUtils.MOD_ID, "sc_playerMaxLevel")
 
     }
 
