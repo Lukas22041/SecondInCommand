@@ -1,4 +1,4 @@
-package second_in_command.skills.support
+package second_in_command.skills.strikecraft
 
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
@@ -8,17 +8,15 @@ import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
-class SystemProficiency : SCBaseSkillPlugin() {
+class Huntsman : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "all fighters with shipsystems"
+        return "all fighters"
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("If the shipsystem has charges: +1 charge", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("If the shipsystem regenerates charges: +40%% regeneration rate", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("If the shipsystem has a cooldown: -33%% cooldown", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+25%% damage against frigates", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
@@ -33,9 +31,7 @@ class SystemProficiency : SCBaseSkillPlugin() {
     override fun applyEffectsToFighterSpawnedByShip(data: SCData, fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
         var stats = fighter!!.mutableStats
 
-        stats.systemUsesBonus.modifyFlat(id, 1f)
-        stats.systemRegenBonus.modifyPercent(id, 40f)
-        stats.systemCooldownBonus.modifyMult(id, 0.666f)
+        stats.damageToFrigates.modifyPercent(id, 25f)
     }
 
 }

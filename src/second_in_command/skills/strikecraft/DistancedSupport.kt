@@ -1,4 +1,4 @@
-package second_in_command.skills.support
+package second_in_command.skills.strikecraft
 
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
@@ -8,7 +8,7 @@ import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
-class AdvancedManeuvers : SCBaseSkillPlugin() {
+class DistancedSupport : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
         return "all fighters"
@@ -16,13 +16,13 @@ class AdvancedManeuvers : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+25%% top speed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+10%% damage dealt", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+15%% weapon fire rate", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+40%% engagement range", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+15%% top speed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+        stats!!.fighterWingRange.modifyPercent(id, 40f)
 
     }
 
@@ -33,18 +33,9 @@ class AdvancedManeuvers : SCBaseSkillPlugin() {
     override fun applyEffectsToFighterSpawnedByShip(data: SCData, fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
         var stats = fighter!!.mutableStats
 
-        stats.maxSpeed.modifyPercent(id, 25f)
-        stats.acceleration.modifyPercent(id, 20f)
-        stats.deceleration.modifyPercent(id, 20f)
-
-        stats.ballisticWeaponDamageMult.modifyPercent(id, 10f)
-        stats.energyWeaponDamageMult.modifyPercent(id, 10f)
-        stats.missileWeaponDamageMult.modifyPercent(id, 10f)
-
-        stats.ballisticRoFMult.modifyPercent(id, 15f)
-        stats.energyRoFMult.modifyPercent(id, 15f)
-        stats.missileRoFMult.modifyPercent(id, 15f)
-
+        stats.maxSpeed.modifyPercent(id, 15f)
+        stats.acceleration.modifyPercent(id, 15f * 2f)
+        stats.deceleration.modifyPercent(id, 15f * 2f)
     }
 
 }

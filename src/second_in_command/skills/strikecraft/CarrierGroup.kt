@@ -1,4 +1,4 @@
-package second_in_command.skills.support
+package second_in_command.skills.strikecraft
 
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI

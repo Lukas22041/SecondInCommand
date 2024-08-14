@@ -1,4 +1,4 @@
-package second_in_command.skills.wolfpack
+package second_in_command.skills.smallcraft
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*

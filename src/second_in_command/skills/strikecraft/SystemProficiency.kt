@@ -1,4 +1,4 @@
-package second_in_command.skills.support
+package second_in_command.skills.strikecraft
 
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
@@ -8,21 +8,21 @@ import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
-class DistancedSupport : SCBaseSkillPlugin() {
+class SystemProficiency : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "all fighters"
+        return "all fighters with shipsystems"
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+40%% engagement range", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+15%% top speed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("If the shipsystem has charges: +1 charge", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("If the shipsystem regenerates charges: +40%% regeneration rate", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("If the shipsystem has a cooldown: -33%% cooldown", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        stats!!.fighterWingRange.modifyPercent(id, 40f)
 
     }
 
@@ -33,9 +33,9 @@ class DistancedSupport : SCBaseSkillPlugin() {
     override fun applyEffectsToFighterSpawnedByShip(data: SCData, fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
         var stats = fighter!!.mutableStats
 
-        stats.maxSpeed.modifyPercent(id, 15f)
-        stats.acceleration.modifyPercent(id, 15f * 2f)
-        stats.deceleration.modifyPercent(id, 15f * 2f)
+        stats.systemUsesBonus.modifyFlat(id, 1f)
+        stats.systemRegenBonus.modifyPercent(id, 40f)
+        stats.systemCooldownBonus.modifyMult(id, 0.666f)
     }
 
 }

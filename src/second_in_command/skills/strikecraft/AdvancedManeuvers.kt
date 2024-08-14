@@ -1,4 +1,4 @@
-package second_in_command.skills.support
+package second_in_command.skills.strikecraft
 
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
@@ -8,7 +8,7 @@ import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 
-class Huntsman : SCBaseSkillPlugin() {
+class AdvancedManeuvers : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
         return "all fighters"
@@ -16,7 +16,9 @@ class Huntsman : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+25%% damage against frigates", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+25%% top speed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% damage dealt", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+15%% weapon fire rate", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
@@ -31,7 +33,18 @@ class Huntsman : SCBaseSkillPlugin() {
     override fun applyEffectsToFighterSpawnedByShip(data: SCData, fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
         var stats = fighter!!.mutableStats
 
-        stats.damageToFrigates.modifyPercent(id, 25f)
+        stats.maxSpeed.modifyPercent(id, 25f)
+        stats.acceleration.modifyPercent(id, 20f)
+        stats.deceleration.modifyPercent(id, 20f)
+
+        stats.ballisticWeaponDamageMult.modifyPercent(id, 10f)
+        stats.energyWeaponDamageMult.modifyPercent(id, 10f)
+        stats.missileWeaponDamageMult.modifyPercent(id, 10f)
+
+        stats.ballisticRoFMult.modifyPercent(id, 15f)
+        stats.energyRoFMult.modifyPercent(id, 15f)
+        stats.missileRoFMult.modifyPercent(id, 15f)
+
     }
 
 }
