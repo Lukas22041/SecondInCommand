@@ -9,5 +9,5 @@ sc_officerXPMult,XP Mult,Double,1,,Modifies how much experience executive office
 ,,,,,,,,
 sc_npcHeader,NPC Fleets,Header,NPC Fleets,,,,,
 sc_canNPCsSpawnWithSkills,Can NPCs spawn with skills,Boolean,true,,NPC fleets can spawn with skills from this mod if enabled. Disabling this configuration does not remove skills from fleets that already spawned with them.,,,
-sc_fleetDifficulty,Difficulty,Radio,Normal,"Easy,Normal,Hard","Difficulty selection for other fleets. [May not effect already spawed fleets]. Configuring it changes how many skills a fleet can have at maximum, and influences the scale of how many skills they receive based on the fleets size.",,,
+sc_fleetDifficulty,Difficulty,Radio,Normal,"Easy,Normal,Hard","Difficulty selection for other fleets. [May not effect already spawed fleets]. Configuring it changes how many skills a fleet can have at maximum, and influences the scale of how many skills they receive based on the fleets size. Some fleets may be unaffected by this setting.",,,
 ,,,,,,,,

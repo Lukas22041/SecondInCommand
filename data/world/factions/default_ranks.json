@@ -9,6 +9,7 @@
 		"executive_officer_sc_wolfpack": {"name":"Executive Officer (Smallcraft)"}, 
 		"executive_officer_sc_support": {"name":"Executive Officer (Support)"}, 
 		"executive_officer_sc_technology": {"name":"Executive Officer (Technical)"}, 
+		"sc_improvisation": {"name":"Executive Officer (Improvisation)"}, 
 		"executive_officer_sc_starfaring": {"name":"Executive Officer (Starfaring)"}, 
 		"executive_officer_sc_piracy": {"name":"Executive Officer (Piracy)"}, 
 		"executive_officer_sc_automated": {"name":"Executive Officer (Automation)"}, 

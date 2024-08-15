@@ -65,7 +65,8 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
         activeElement = scrollerElement
 
-        var officers = data.getOfficersInFleet().sortedByDescending { it.isAssigned() }
+        //var officers = data.getOfficersInFleet().sortedByDescending { it.isAssigned() }
+        var officers = data.getOfficersInFleet().sortedWith(compareBy({ !it.isAssigned() }, { it.getAptitudeSpec().order }))
         var activeOfficers = data.getAssignedOfficers()
 
         for (officer in officers) {

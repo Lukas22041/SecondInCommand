@@ -33,7 +33,6 @@ object SCSpecStore {
     fun loadCategoriesFromCSV() {
         var CSV = Global.getSettings().getMergedSpreadsheetDataForMod("id", "data/config/secondInCommand/SCCategories.csv", SCUtils.MOD_ID)
 
-
         for (index in 0 until  CSV.length())
         {
             val row = CSV.getJSONObject(index)
@@ -57,9 +56,10 @@ object SCSpecStore {
     fun loadAptitudeSpecsFromCSV() {
         var CSV = Global.getSettings().getMergedSpreadsheetDataForMod("id", "data/config/secondInCommand/SCAptitudes.csv", SCUtils.MOD_ID)
 
-
+        var order = 0
         for (index in 0 until  CSV.length())
         {
+            order++
             val row = CSV.getJSONObject(index)
 
             val id = row.getString("id")
@@ -90,7 +90,7 @@ object SCSpecStore {
 
             val pluginPath = row.getString("plugin")
 
-            var spec = SCAptitudeSpec(id, name, categories, spawnWeight, color, tags, pluginPath)
+            var spec = SCAptitudeSpec(id, name, categories, spawnWeight, color, tags, order, pluginPath)
             aptitudeSpecs.add(spec)
         }
 
