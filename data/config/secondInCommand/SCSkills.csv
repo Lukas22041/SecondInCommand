@@ -91,7 +91,7 @@ sc_piracy_provisional_replacements,Provisional Replacements,graphics/secondInCom
 #Automated,,,,
 sc_automated_automated_ships,Automated Ships,graphics/secondInCommand/automated/automated_ships.png,1,second_in_command.skills.automated.AutomatedShips
 sc_automated_magnetic_shielding,Magnetic Shielding,graphics/secondInCommand/automated/magnetic_shielding.png,1,second_in_command.skills.automated.MagneticShielding
-sc_automated_self_repair,Self-Repair,graphics/secondInCommand/automated/self_repair.png,1,second_in_command.skills.automated.SelfRepair
+sc_automated_self_repair,Self-Repair,graphics/secondInCommand/automated/self_repair.png,,second_in_command.skills.automated.SelfRepair
 sc_automated_overclock,Overclock,graphics/secondInCommand/automated/overclock.png,1,second_in_command.skills.automated.Overclock
 sc_automated_electronic_warfare,Electronic Warfare,graphics/secondInCommand/automated/electronic_warfare.png,1,second_in_command.skills.automated.ElectronicWarfare
 sc_automated_specialised_equipment,Specialised Equipment,graphics/secondInCommand/automated/specialised_equipment.png,,second_in_command.skills.automated.SpecialisedEquipment

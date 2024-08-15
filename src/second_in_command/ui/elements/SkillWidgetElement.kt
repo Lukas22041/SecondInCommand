@@ -61,7 +61,7 @@ class SkillWidgetElement(var id: String, var activated: Boolean, var canChangeSt
             sprite.color = Color(50, 50, 50)
         }
         else if (!activated) {
-            sprite.color = Color(150, 150, 150)
+            sprite.color = Color(140, 140, 140)
         }
         else {
             sprite.color = Color(255, 255, 255)

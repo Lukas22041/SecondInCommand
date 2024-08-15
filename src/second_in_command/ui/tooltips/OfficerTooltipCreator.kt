@@ -64,7 +64,7 @@ class OfficerTooltipCreator(var officer: SCOfficer?, var isAtColony: Boolean, va
 
         var inactiveGain = (SCOfficer.inactiveXPMult * 100).toInt()
 
-        var firstPara = tooltip.addPara("${officer!!.person.nameString} has experience within the ${plugin.getName()} aptitude. This aptitude has a maximum level of ${officer!!.getMaxLevel()}.", 0f,
+        var firstPara = tooltip.addPara("${officer!!.person.nameString} has experience within the ${plugin.getName()} aptitude. All officers have a maximum level of ${officer!!.getMaxLevel()}.", 0f,
         Misc.getTextColor(), Misc.getHighlightColor(), "")
         firstPara.position.inTL(5f, 60f)
 

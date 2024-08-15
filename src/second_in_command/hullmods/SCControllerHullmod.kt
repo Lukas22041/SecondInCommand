@@ -40,6 +40,12 @@ class SCControllerHullmod : BaseHullMod() {
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
         var member = ship?.mutableStats?.fleetMember ?: return
         var fleet = member.fleetData?.fleet ?: return
+
+        if (!fleet.isPlayerFleet && Global.getSector().playerFleet?.fleetData?.membersListCopy?.contains(member) == true) {
+            //Fix for battles where you join an ally, as those set the members fleet to theirs.
+            fleet = Global.getSector().playerFleet
+        }
+
         var fleetData = fleet.fleetData ?: return //Have to do this, as during deserialisation fleetData can be null, causing save corruptions
         var data = SCUtils.getFleetData(fleet)
 
@@ -52,6 +58,12 @@ class SCControllerHullmod : BaseHullMod() {
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         var member = stats?.fleetMember ?: return
         var fleet = member.fleetData?.fleet ?: return
+
+        if (fleet != Global.getSector().playerFleet && Global.getSector().playerFleet?.fleetData?.membersListCopy?.contains(member) == true) {
+            //Fix for battles where you join an ally, as those set the members fleet to theirs.
+            fleet = Global.getSector().playerFleet
+        }
+
         var fleetData = fleet.fleetData ?: return //Have to do this, as during deserialisation fleetData can be null, causing save corruptions
         var data = SCUtils.getFleetData(fleet)
 
@@ -64,6 +76,12 @@ class SCControllerHullmod : BaseHullMod() {
     override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
         var member = ship?.mutableStats?.fleetMember ?: return
         var fleet = member.fleetData?.fleet ?: return
+
+        if (!fleet.isPlayerFleet && Global.getSector().playerFleet?.fleetData?.membersListCopy?.contains(member) == true) {
+            //Fix for battles where you join an ally, as those set the members fleet to theirs.
+            fleet = Global.getSector().playerFleet
+        }
+
         var fleetData = fleet.fleetData ?: return //Have to do this, as during deserialisation fleetData can be null, causing save corruptions
         var data = SCUtils.getFleetData(fleet)
 
@@ -87,6 +105,12 @@ class SCControllerHullmod : BaseHullMod() {
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
         var member = ship?.fleetMember ?: return
         var fleet = member.fleetData?.fleet ?: return
+
+        if (!fleet.isPlayerFleet && Global.getSector().playerFleet?.fleetData?.membersListCopy?.contains(member) == true) {
+            //Fix for battles where you join an ally, as those set the members fleet to theirs.
+            fleet = Global.getSector().playerFleet
+        }
+
         var fleetData = fleet.fleetData ?: return //Have to do this, as during deserialisation fleetData can be null, causing save corruptions
         var data = SCUtils.getFleetData(fleet)
 

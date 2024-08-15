@@ -39,6 +39,8 @@ class ExecutiveOfficerCommAdder : EconomyTickListener {
         //var chance = 0.5f
         var chance = 0.75f
         for (market in markets) {
+            if (market == null || market.isHidden) continue
+
             if (Random().nextFloat() >= chance) continue
 
             var count = 1

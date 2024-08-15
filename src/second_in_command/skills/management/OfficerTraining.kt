@@ -78,12 +78,13 @@ class OfficerTraining : SCBaseSkillPlugin() {
             //Filter out certain unique characters
             membersWithOfficers.filter { !Global.getSector().importantPeople.containsPerson(it.captain) }
 
-            //Do not increase the level multiple times
-            membersWithOfficers.filter { !it.captain.hasTag("sc_officer_training_increased_lv") }
 
             val plugin = Global.getSettings().getPlugin("officerLevelUp") as OfficerLevelupPlugin
             for (member in membersWithOfficers) {
+
                 var captain = member.captain
+                if (captain.hasTag("sc_officer_training_increased_lv")) continue //Do not increase the level multiple times
+
                 captain.addTag("sc_officer_training_increased_lv")
 
                 for (level in 0 until levels) {
