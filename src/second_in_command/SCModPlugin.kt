@@ -68,7 +68,6 @@ class SCModPlugin : BaseModPlugin() {
 
     override fun onGameLoad(newGame: Boolean) {
 
-
         if (!Global.getSector().playerPerson.stats.hasSkill("sc_utility_skill")) {
             Global.getSector().playerPerson.stats.setSkillLevel("sc_utility_skill", 2f)
         }
@@ -90,15 +89,15 @@ class SCModPlugin : BaseModPlugin() {
         Global.getSector().registerPlugin(SCCampaignPlugin())
 
         //Add Abilities that no longer have a skill
-        if (!Global.getSector().characterData.abilities.contains(Abilities.TRANSVERSE_JUMP)) {
+        if (SCSettings.spawnWithTransverse && !Global.getSector().characterData.abilities.contains(Abilities.TRANSVERSE_JUMP)) {
             Global.getSector().characterData.addAbility(Abilities.TRANSVERSE_JUMP)
         }
 
-        if (!Global.getSector().characterData.abilities.contains(Abilities.GRAVITIC_SCAN)) {
+        if (SCSettings.spawnWithNeutrino && !Global.getSector().characterData.abilities.contains(Abilities.GRAVITIC_SCAN)) {
             Global.getSector().characterData.addAbility(Abilities.GRAVITIC_SCAN)
         }
 
-        if (!Global.getSector().characterData.abilities.contains(Abilities.REMOTE_SURVEY)) {
+        if (SCSettings.spawnWithRemoteSurvey && !Global.getSector().characterData.abilities.contains(Abilities.REMOTE_SURVEY)) {
             Global.getSector().characterData.addAbility(Abilities.REMOTE_SURVEY)
         }
     }

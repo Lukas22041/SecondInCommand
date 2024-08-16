@@ -20,7 +20,6 @@ class Preservation : SCBaseSkillPlugin() {
             if (variant.hasTag("sc_applied_dmods_this_frame")) return
             variant.addTag("sc_applied_dmods_this_frame")
 
-
             var dmodSpecs = Global.getSettings().allHullModSpecs.filter { it.hasTag(Tags.HULLMOD_DMOD) }
             var hmods = variant.permaMods
             for (hmod in hmods) {
