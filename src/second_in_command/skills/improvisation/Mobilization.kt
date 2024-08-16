@@ -18,11 +18,26 @@ class Mobilization : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Ships with the \"Militarized Subsystems\" hullmod gain the following effects: ", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - The ships top speed is increased by 10%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "10%")
+        tooltip.addPara("   - The ships flux dissipation and capacity is increased by 10%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "10%")
+        tooltip.addPara("   - The ships weapon range is increased by 15%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "15%")
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+
+        if (variant.hasHullMod(HullMods.MILITARIZED_SUBSYSTEMS)) {
+            stats.maxSpeed.modifyPercent(id, 10f)
+
+            stats.fluxDissipation.modifyPercent(id, 10f)
+            stats.fluxCapacity.modifyPercent(id, 10f)
+
+            stats.ballisticWeaponRangeBonus.modifyPercent(id, 15f)
+            stats.energyWeaponRangeBonus.modifyPercent(id, 15f)
+            stats.missileWeaponRangeBonus.modifyPercent(id, 15f)
+
+        }
 
     }
 

@@ -18,12 +18,20 @@ class EnhancedOverrides : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Ships with the \"Safety Overrides\" hullmod gain the following effects: ", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - The ships peak performance time is improved by 25%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "25%")
+        tooltip.addPara("   - Safety Overrides weapon range threshold is increased by 150 units", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "150")
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+        if (variant.hasHullMod(HullMods.SAFETYOVERRIDES)) {
 
+
+            stats.peakCRDuration.modifyPercent(id, 25f)
+            stats.weaponRangeThreshold.modifyFlat(id, 150f)
+
+        }
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI, variant: ShipVariantAPI, id: String?) {

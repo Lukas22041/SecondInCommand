@@ -18,12 +18,24 @@ class Redistribution : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Ships with the \"Shield Shunt\" hullmod gain the following effects: ", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - The ships flux dissipation is increased by 5%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "5%")
+        tooltip.addPara("   - The ships armor is increased by an additional 10%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "10%")
+        tooltip.addPara("   - The ships receives 20%% less emp damage", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "20%")
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+        if (variant.hasHullMod(HullMods.SHIELD_SHUNT)) {
 
+
+            stats.fluxDissipation.modifyPercent(id, 5f)
+            stats.armorBonus.modifyPercent(id, 10f)
+            stats.empDamageTakenMult.modifyMult(id, 0.75f)
+
+
+
+        }
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI, variant: ShipVariantAPI, id: String?) {

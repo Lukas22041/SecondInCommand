@@ -37,6 +37,15 @@ class SCControllerHullmod : BaseHullMod() {
         }
     }
 
+
+    override fun getDisplaySortOrder(): Int {
+        return 0
+    }
+
+    override fun getDisplayCategoryIndex(): Int {
+        return 0
+    }
+
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
         var member = ship?.mutableStats?.fleetMember ?: return
         var fleet = member.fleetData?.fleet ?: return

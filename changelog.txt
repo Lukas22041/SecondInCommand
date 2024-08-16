@@ -1,4 +1,29 @@
 
+Version 1.1.0
+NOT SAVE COMPATIBLE
+
+- Added the "Improvisation" aptitude, increasing the count of skills to 93.
+- Renamed "Support" to "Strikecraft"
+- Nerfed the "Authority" Skill from 5% to 3%.
+- Removed the "Energised" Skill and added new skills for the technical tree, also further adjusted which skills can be unlocked at which level.
+- "Flux Regulation" now improves the efficiency of vents and caps instead of increasing the maximum you can add.
+- Added a new skill to the piracy aptitude.
+- The "Improvised Raids" skill has been merged in to the "Hunting Grounds" skill.
+- "Continuous Repairs" now provides a 50% chance to not acquire d-mods on ship destruction.
+- Low-Grade-Deployment now also provides an increase in repair rate.
+- Steadfast now also boosts weapon & engine repair time and provides 5% to the combat readiness maximum.
+- Added configs for player max level, allowing an increase up to level 25.
+- Added difficulty options in the configs.
+- The "Self-Repair" skill no longer appears on NPC fleets.
+- The Executive Officer menu is now sorted based on aptitude, rather than the order you acquired them at.
+- Fixed an issue where the allies skills would apply to the player instead of their own if they joined in to a fight between two other fleets.
+- Fixed a bug related to the officer training skill leveling up certain officers multiple times.
+- Fixed skills not immediately applying on a ship that used the "Strip" option to remove all hmods and weapons
+- Fixed executive officers appearing on hidden markets.
+- Fixed a rare crash with the "Trapped Prey" Skill.
+
+
+
 Version 1.0.6
 
 - Fixed an issue that made "Limit Breaker" not apply to all cores.

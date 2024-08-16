@@ -16,12 +16,17 @@ class DefensiveConfiguration : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("All ships have slightly improved autofire accuracy", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+100 point defense weapon range", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+33%% weapon turn rate", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-
+        stats.autofireAimAccuracy.modifyFlat(id, 0.2f)
+        stats.nonBeamPDWeaponRangeBonus.modifyFlat(id, 100f)
+        stats.beamPDWeaponRangeBonus.modifyFlat(id, 100f)
+        stats.weaponTurnRateBonus.modifyPercent(id, 33f)
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI, variant: ShipVariantAPI, id: String?) {

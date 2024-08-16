@@ -68,6 +68,11 @@ class SCModPlugin : BaseModPlugin() {
 
     override fun onGameLoad(newGame: Boolean) {
 
+
+        if (!Global.getSector().playerPerson.stats.hasSkill("sc_utility_skill")) {
+            Global.getSector().playerPerson.stats.setSkillLevel("sc_utility_skill", 2f)
+        }
+
         Global.getSettings().setFloat("xpGainMult", SCSettings.playerXPMult)
 
         if (!Global.getSector().listenerManager.hasListenerOfClass(ExecutiveOfficerCommAdder::class.java)) {

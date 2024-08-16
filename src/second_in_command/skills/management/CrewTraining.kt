@@ -58,7 +58,7 @@ class CrewTraining : SCBaseSkillPlugin() {
         var cr = 0.10f
 
         var captain = stats!!.fleetMember?.captain
-        if (captain != null && !captain.isDefault && !captain.isAICore) {
+        if (captain != null && !captain.isDefault/* && !captain.isAICore*/) {
             cr += 0.05f
         }
 

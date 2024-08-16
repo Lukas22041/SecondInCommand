@@ -10,3 +10,5 @@ Also enables rapid switching between the linked ships without using a shuttle po
 Also enables rapid switching between the linked ships without using a shuttle pod. The transfer is instant if the combined deployment points of the ships are %s or less. The destination ship must not be under the command of an officer or an AI core.
 
 The complexity of the modifications increases the ship's deployment points and supply cost to recover from deployment by %s.",Specialized Neural Interface for automated ships.,,graphics/hullmods/neural_integrator.png
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,

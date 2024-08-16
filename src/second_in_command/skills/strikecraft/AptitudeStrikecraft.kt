@@ -41,7 +41,11 @@ class AptitudeStrikecraft : SCBaseAptitudePlugin() {
         var level = carriers.count().toFloat().levelBetween(0f, fleet.fleetData.membersListCopy.count().toFloat())
 
 
-        if (carriers.isNotEmpty()) {
+       /* if (carriers.isNotEmpty()) {
+            mult = 0.5f
+        }*/
+
+        if (level >= 0.1) {
             mult = 0.5f
         }
 

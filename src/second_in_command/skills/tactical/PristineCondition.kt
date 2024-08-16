@@ -1,5 +1,6 @@
 package second_in_command.skills.tactical
 
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
@@ -41,6 +42,11 @@ class PristineCondition : SCBaseSkillPlugin() {
 
 
 
+    }
+
+    override fun getNPCSpawnWeight(fleet: CampaignFleetAPI): Float {
+        if (fleet.fleetData.membersListCopy.any { it.variant.sMods.isNotEmpty() }) return super.getNPCSpawnWeight(fleet)
+        return 0f
     }
 
 }
