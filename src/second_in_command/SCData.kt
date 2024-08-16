@@ -9,6 +9,7 @@ import com.fs.starfarer.api.campaign.listeners.FleetEventListener
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
 import second_in_command.misc.NPCOfficerGenerator
+import second_in_command.skills.PlayerLevelEffects
 import second_in_command.specs.SCBaseSkillPlugin
 import second_in_command.specs.SCOfficer
 
@@ -212,6 +213,10 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
 
         for (skill in getAllActiveSkillsPlugins()) {
             skill.advance(this, amount)
+        }
+
+        if (isPlayer) {
+            PlayerLevelEffects.advance(this, amount)
         }
 
     }

@@ -8,6 +8,7 @@ import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCUtils
+import second_in_command.skills.PlayerLevelEffects
 
 class SCControllerHullmod : BaseHullMod() {
 
@@ -62,6 +63,11 @@ class SCControllerHullmod : BaseHullMod() {
         for (skill in skills) {
             skill.applyEffectsAfterShipCreation(data, ship, ship!!.variant, "${id}_${skill.getId()}")
         }
+
+        if (data.isPlayer) {
+            PlayerLevelEffects.applyEffectsAfterShipCreation(data, ship, ship!!.variant, "${id}_player")
+        }
+
     }
 
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
@@ -79,6 +85,10 @@ class SCControllerHullmod : BaseHullMod() {
         var skills = SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()
         for (skill in skills) {
             skill.applyEffectsBeforeShipCreation(data, stats, stats.variant, hullSize, "${id}_${skill.getId()}")
+        }
+
+        if (data.isPlayer) {
+            PlayerLevelEffects.applyEffectsBeforeShipCreation(data, stats, stats.variant, hullSize!!, "${id}_player")
         }
     }
 
@@ -98,6 +108,10 @@ class SCControllerHullmod : BaseHullMod() {
         for (skill in skills) {
             skill.applyEffectsToFighterSpawnedByShip(data, fighter, ship, "${id}_${skill.getId()}")
         }
+
+        if (data.isPlayer) {
+            PlayerLevelEffects.applyEffectsToFighterSpawnedByShip(data, fighter, ship, "${id}_player")
+        }
     }
 
     override fun advanceInCampaign(member: FleetMemberAPI?, amount: Float) {
@@ -108,6 +122,10 @@ class SCControllerHullmod : BaseHullMod() {
         var skills = SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()
         for (skill in skills) {
             skill.advanceInCampaign(data, member, amount)
+        }
+
+        if (data.isPlayer) {
+            PlayerLevelEffects.advanceInCampaign(data, member, amount)
         }
     }
 
@@ -126,6 +144,10 @@ class SCControllerHullmod : BaseHullMod() {
         var skills = SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()
         for (skill in skills) {
             skill.advanceInCombat(data, ship, amount)
+        }
+
+        if (data.isPlayer) {
+            PlayerLevelEffects.advanceInCombat(data, ship, amount)
         }
     }
 }
