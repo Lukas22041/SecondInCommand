@@ -1,5 +1,6 @@
 package second_in_command.specs
 
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.characters.PersonAPI
 import second_in_command.SCData
 import second_in_command.misc.SCSettings
@@ -66,6 +67,16 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
         var mult = 1f
         mult *= 0.5f //Default reduction in XP, shouldnt be the same as the players gain
         mult *= SCSettings.xpGainMult
+
+        var player = Global.getSector().playerPerson
+        var playerLevel = player.stats.level
+        var levelMult = 1f
+        if (playerLevel >= 2) levelMult += 0.1f
+        if (playerLevel >= 4) levelMult += 0.1f
+        if (playerLevel >= 6) levelMult += 0.1f
+        if (playerLevel >= 8) levelMult += 0.1f
+        mult *= levelMult
+
         if (!isAssigned()) mult *= inactiveXPMult
         return mult
     }

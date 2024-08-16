@@ -19,11 +19,17 @@ class SCSettings : LunaSettingsListener {
             300000f, //LV3
             600000f, //LV4*/
 
-            0f, //LV0
+           /* 0f, //LV0
             75000f, //LV1
             150000f, //LV2
             450000f, //LV3
-            1350000f, //LV4
+            1350000f, //LV4*/
+
+            0f, //LV0
+            80000f, //LV1
+            160000f, //LV2
+            480000f, //LV3
+            1440000f, //LV4
         )
         var canNPCsSpawnWithSkills = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_canNPCsSpawnWithSkills")!!
         var xpGainMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_officerXPMult")!!

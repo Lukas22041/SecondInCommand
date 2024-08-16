@@ -15,6 +15,7 @@ import second_in_command.SCData
 import second_in_command.misc.VanillaSkillTooltip
 import second_in_command.misc.clearChildren
 import second_in_command.misc.loadTextureCached
+import second_in_command.skills.PlayerLevelEffects
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.ui.elements.*
 
@@ -505,11 +506,12 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         var xpBar = PlayerXPBarElement(subelement, 260f, 20f)
         xpBar.position.belowLeft(portrait.elementPanel, 10f)
 
-        subelement.addSpacer(5f)
+        subelement.addSpacer(7f)
         var level = Global.getSector().playerPerson.stats.level
-        var levelText = "   - Level $level"
+        var levelText = "-Hover over the bar to view level up effects\n" +
+                        "-Level $level"
         if (level >= Global.getSettings().levelupPlugin.maxLevel) levelText += " (maximum)"
-        var levelPara = subelement.addPara("$levelText", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "$level")
+        var levelPara = subelement.addPara("$levelText", 0f, Misc.getGrayColor(), Misc.getHighlightColor(),  "$level")
 
         subelement.addTooltipTo(object : BaseTooltipCreator() {
             override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
@@ -549,6 +551,12 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
                 tooltip!!.addPara("You gain $spPerLevel story points over the course of each level. In addition, you will continue to gain story points after reaching the maximum level.",
                     0f, Misc.getTextColor(), Misc.getStoryOptionColor(), "$spPerLevel")
 
+
+
+
+
+
+
                 tooltip.addSpacer(10f)
                 tooltip.addSectionHeading("Bonus Experience", Alignment.MID, 0f)
                 tooltip.addSpacer(10f)
@@ -569,10 +577,27 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
 
                 tooltip!!.addPara("You will gain $extraBonusXPString additional bonus experience on reaching the maximum level, based on your use of story points so far.",
                     0f, Misc.getTextColor(), Misc.getStoryOptionColor(), "$extraBonusXPString")
+
+
+
+
+                tooltip.addSpacer(10f)
+                tooltip.addSectionHeading("Level Up Effects", Alignment.MID, 0f)
+                tooltip.addSpacer(10f)
+
+                for (i in 0 until maxLevel) {
+                    var text = PlayerLevelEffects.getTooltipForLevel(i)
+                    if (text == "") continue
+                    var color = PlayerLevelEffects.getColor(i)
+
+                    tooltip.addPara(" - Lv$i: $text",  0f, color, Misc.getHighlightColor(), "Lv$i:")
+                }
+
+                tooltip.addSpacer(5f)
             }
 
             override fun getTooltipWidth(tooltipParam: Any?): Float {
-                return 400f
+                return 410f
             }
         }, xpBar.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT )
 
