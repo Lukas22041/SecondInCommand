@@ -2,7 +2,7 @@
 Version 1.1.1
 Save Compatible with 1.1.0
 
-- Fixed Improvisation, Smallcraft & Strikecraft Officers displaying wrong in the comm-link
+- Fixed Improvisation, Smallcraft & Strikecraft Officers displaying wrong in the comm-link.
 - Added configs that make the player no longer start with abilities that are no longer provides by skills.
 
 
