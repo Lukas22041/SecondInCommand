@@ -18,17 +18,29 @@ import second_in_command.specs.SCBaseSkillPlugin
 class OfficerManagement : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "fleet"
+        return "all ships with officers"
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
-        tooltip.addPara("+2 to maximum number of officers you're able to command", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+       /* tooltip.addPara("+2 to maximum number of officers you're able to command", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - If this executive officer is unassigned, any officer over the limit will also be unassigned", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "5%")
+*/
 
+        tooltip.addPara("All ships with officers gain the following bonuses: ", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - The ships maximum combat readiness is increased by 5%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "5%")
+        tooltip.addPara("   - The ships peak performance time is increased by 20%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "20%")
+        tooltip.addPara("   - The ships recovery cost is reduced by 20%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "20%")
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+
+        var captain = stats!!.fleetMember?.captain
+        if (captain != null && !captain.isDefault) {
+            stats.maxCombatReadiness.modifyFlat(id, 0.05f, "Officer Management")
+            stats.peakCRDuration.modifyPercent(id, 20f)
+            stats.suppliesToRecover.modifyMult(id, 0.8f)
+        }
 
     }
 
@@ -37,12 +49,12 @@ class OfficerManagement : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-        data.commander.stats.officerNumber.modifyFlat("sc_officer_management", 2f)
+        //data.commander.stats.officerNumber.modifyFlat("sc_officer_management", 2f)
     }
 
     override fun onActivation(data: SCData) {
 
-        //Add additional officers
+       /* //Add additional officers
         if (data.isNPC && !data.fleet.addAndCheckTag("sc_officer_management_update")) {
             var count = 2
             var membersWithoutOfficers = data.fleet.fleetData.membersListCopy
@@ -59,23 +71,19 @@ class OfficerManagement : SCBaseSkillPlugin() {
                     pick.captain = officer
                 }
             }
-        }
+        }*/
 
     }
 
     override fun onDeactivation(data: SCData) {
 
-        data.commander.stats.officerNumber.unmodify("sc_officer_management")
+      /*  data.commander.stats.officerNumber.unmodify("sc_officer_management")
 
         if (!data.isNPC) {
             CrewTraining.removeOfficersOverTheLimit()
-        }
+        }*/
 
     }
 
-    override fun getNPCSpawnWeight(fleet: CampaignFleetAPI): Float {
-        if (fleet.flagship?.isAutomated() == true) return 0f
-        return super.getNPCSpawnWeight(fleet)
-    }
 
 }

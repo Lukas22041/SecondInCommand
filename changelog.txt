@@ -1,3 +1,13 @@
+Version 1.1.2
+Save Compatible with 1.1.0, though some stats of changed skills may remain.
+
+- Added some effects that are unlocked upon reaching certain levels, those are visible when hovering over the xp bar.
+- Replaced Officer Training & Officer Management with new effects.
+- Increased XP required for Executive officers by a small amount.
+- "Enhanced Overrides" has its range buff reduced from 150 to 100 and is now much rarer on NPC fleets.
+- Renamed "Bounty Board" to "Privateering", and reduced the base credits gained from 500 to 300.
+
+
 
 Version 1.1.1
 Save Compatible with 1.1.0

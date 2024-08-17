@@ -21,18 +21,33 @@ import kotlin.collections.HashMap
 class OfficerTraining : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "fleet"
+        return "all ships with officers"
+
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
-        tooltip.addPara("+2 to maximum level of officers under your command", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+       /* tooltip.addPara("+2 to maximum level of officers under your command", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - If this executive officer is unassigned, any officer over the level limit will have some skills made inactive", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
-        tooltip.addPara("   - Inactive skills can be restored by re-assigning this officer", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
+        tooltip.addPara("   - Inactive skills can be restored by re-assigning this officer", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")*/
 
+        tooltip.addPara("All ships with officers gain the following bonuses: ", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - The range of all weapons is increased by 10%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "10%")
+        tooltip.addPara("   - The ships resistance to all types of damage is increased 10%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "10%")
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+
+        var captain = stats!!.fleetMember?.captain
+        if (captain != null && !captain.isDefault) {
+            stats.ballisticWeaponRangeBonus.modifyPercent(id, 10f)
+            stats.energyWeaponRangeBonus.modifyPercent(id, 10f)
+            stats.missileWeaponRangeBonus.modifyPercent(id, 10f)
+
+            stats.hullDamageTakenMult.modifyMult(id, 0.9f)
+            stats.armorDamageTakenMult.modifyMult(id, 0.9f)
+            stats.shieldDamageTakenMult.modifyMult(id, 0.9f)
+        }
 
     }
 
@@ -42,14 +57,14 @@ class OfficerTraining : SCBaseSkillPlugin() {
 
     override fun advance(data: SCData, amount: Float) {
 
-        data.commander.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).modifyFlat("sc_officer_training", 2f)
+        //data.commander.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).modifyFlat("sc_officer_training", 2f)
 
     }
 
 
     override fun onActivation(data: SCData) {
 
-        data.commander.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).modifyFlat("sc_officer_training", 2f)
+        /*data.commander.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).modifyFlat("sc_officer_training", 2f)
 
         if (!data.isNPC) {
             var officers = Global.getSector().playerFleet.fleetData.officersCopy.map { it.person }
@@ -73,7 +88,7 @@ class OfficerTraining : SCBaseSkillPlugin() {
             var levels = 2
 
             var membersWithOfficers = data.fleet.fleetData.membersListCopy
-                .filter { (it.captain != null && !it.captain.isDefault) && !it.isAutomated() /*&& !it.isFlagship*/}.toMutableList() //Also filter out flagship, just to be save for some unique bounties
+                .filter { (it.captain != null && !it.captain.isDefault) && !it.isAutomated() *//*&& !it.isFlagship*//*}.toMutableList() //Also filter out flagship, just to be save for some unique bounties
 
             //Filter out certain unique characters
             membersWithOfficers.filter { !Global.getSector().importantPeople.containsPerson(it.captain) }
@@ -98,7 +113,7 @@ class OfficerTraining : SCBaseSkillPlugin() {
                 }
             }
 
-        }
+        }*/
 
 
 
@@ -106,7 +121,7 @@ class OfficerTraining : SCBaseSkillPlugin() {
 
     override fun onDeactivation(data: SCData) {
 
-        data.commander.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).unmodify("sc_officer_training")
+        /*data.commander.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).unmodify("sc_officer_training")
 
         if (!data.isNPC) {
             var maxLevel = Global.getSector().characterData.person.stats.dynamic.getMod(Stats.OFFICER_MAX_LEVEL_MOD).computeEffective(Global.getSettings().getFloat("officerMaxLevel"))
@@ -145,11 +160,8 @@ class OfficerTraining : SCBaseSkillPlugin() {
                     officer.stats.setSkillLevel("sc_inactive", 1f)
                 }
             }
-        }
+        }*/
     }
 
-    override fun getNPCSpawnWeight(fleet: CampaignFleetAPI): Float {
-        if (fleet.flagship?.isAutomated() == true) return 0f
-        return super.getNPCSpawnWeight(fleet)
-    }
+
 }

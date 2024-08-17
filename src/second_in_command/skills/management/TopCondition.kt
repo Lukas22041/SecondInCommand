@@ -23,7 +23,7 @@ class TopCondition : SCBaseSkillPlugin() {
         var ppt = 30f
 
         var captain = stats!!.fleetMember?.captain
-        if (captain != null && !captain.isDefault && !captain.isAICore) {
+        if (captain != null && !captain.isDefault /*&& !captain.isAICore*/) {
             ppt += 30f
         }
 
