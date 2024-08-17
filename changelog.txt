@@ -1,5 +1,5 @@
 Version 1.1.2
-Save Compatible with 1.1.0, though some stats of changed skills may remain.
+Save Compatible with 1.1.x, though some stats of changed skills may remain.
 
 - Added some effects that are unlocked upon reaching certain levels, those are visible when hovering over the xp bar.
 - Replaced Officer Training & Officer Management with new effects.
