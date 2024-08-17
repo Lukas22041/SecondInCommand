@@ -25,7 +25,7 @@ class BountyBoard : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        var creditsString = Misc.getDGSCredits(500f)
+        var creditsString = Misc.getDGSCredits(300f)
         tooltip.addPara("You receive $creditsString credits per opposing ship destroyed or disabled in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - This is multiplied by 1x/2x/3x/10x based on the hullsize of each destroyed ship", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
         "1x", "2x", "3x", "10x")
@@ -66,7 +66,7 @@ class BountyBoard : SCBaseSkillPlugin() {
 
 class BountyBoardSkillListener() : FleetEventListener {
 
-    var base = 500f
+    var base = 300f
 
     override fun reportFleetDespawnedToListener(fleet: CampaignFleetAPI?, reason: CampaignEventListener.FleetDespawnReason?,  param: Any?) {
     }

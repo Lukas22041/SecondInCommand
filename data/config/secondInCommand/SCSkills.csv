@@ -69,7 +69,7 @@ sc_improvisation_scrappy_maintenance,Scrappy Maintenance,graphics/secondInComman
 sc_improvisation_defensive_configuration,Defensive Configuration,graphics/secondInCommand/improvisation/defensive_configuration.png,1,second_in_command.skills.improvisation.DefensiveConfiguration
 sc_improvisation_secured_mounts,Secured Mounts,graphics/secondInCommand/improvisation/secured_mounts.png,1,second_in_command.skills.improvisation.SecuredMounts
 sc_improvisation_mobilization,Mobilization,graphics/secondInCommand/improvisation/mobilization.png,1.5,second_in_command.skills.improvisation.Mobilization
-sc_improvisation_enhanced_overrides,Enhanced Overrides,graphics/secondInCommand/improvisation/enhanced_overrides.png,1.5,second_in_command.skills.improvisation.EnhancedOverrides
+sc_improvisation_enhanced_overrides,Enhanced Overrides,graphics/secondInCommand/improvisation/enhanced_overrides.png,0.25,second_in_command.skills.improvisation.EnhancedOverrides
 sc_improvisation_redistribution,Redistribution,graphics/secondInCommand/improvisation/redistribution.png,1.5,second_in_command.skills.improvisation.Redistribution
 sc_improvisation_derelict_fortifications,Derelict Fortifications,graphics/secondInCommand/improvisation/derelict_fortifications.png,3,second_in_command.skills.improvisation.DerelictFortifications
 sc_improvisation_derelict_operations,Derelict Operations,graphics/secondInCommand/improvisation/derelict_operations.png,3,second_in_command.skills.improvisation.DerelictOperations
@@ -90,13 +90,13 @@ sc_starfaring_continuous_repairs,Continuous Repairs,graphics/secondInCommand/sta
 sc_piracy_generous_donation,Generous Donation,graphics/secondInCommand/piracy/generous_donation.png,1,second_in_command.skills.piracy.GenerousDonation
 sc_piracy_legitimate_salvage,Legitimate Salvage ,graphics/secondInCommand/piracy/legitimate_salvage.png,0.33,second_in_command.skills.piracy.LegitimateSalvage
 sc_piracy_low_grade_deployment,Low-grade Deployment,graphics/secondInCommand/piracy/low_grade_deployment.png,0.33,second_in_command.skills.piracy.LowgradeDeployment
-sc_piracy_outmanoeuvred,Outmanoeuvred,graphics/secondInCommand/piracy/outmanoeuvred.png,1.5,second_in_command.skills.piracy.Outmanoeuvred
+sc_piracy_outmanoeuvred,Outmaneuvered,graphics/secondInCommand/piracy/outmanoeuvred.png,1.5,second_in_command.skills.piracy.Outmanoeuvred
 sc_piracy_ambush,Ambush,graphics/secondInCommand/piracy/ambush.png,1.5,second_in_command.skills.piracy.Ambush
 sc_piracy_stockpile,Stockpile,graphics/secondInCommand/piracy/stockpile.png,0.33,second_in_command.skills.piracy.Stockpile
 sc_piracy_hunting_grounds,Hunting Grounds,graphics/secondInCommand/piracy/hunting_grounds.png,1,second_in_command.skills.piracy.HuntingGrounds
 sc_piracy_all_out,All-Out,graphics/secondInCommand/piracy/all_out.png,1,second_in_command.skills.piracy.AllOut
 sc_piracy_steadfast,Steadfast,graphics/secondInCommand/piracy/steadfast.png,1,second_in_command.skills.piracy.Steadfast
-sc_piracy_bounty_board,Bounty Board,graphics/secondInCommand/piracy/bounty_board.png,1,second_in_command.skills.piracy.BountyBoard
+sc_piracy_bounty_board,Privateering,graphics/secondInCommand/piracy/bounty_board.png,1,second_in_command.skills.piracy.BountyBoard
 sc_piracy_provisional_replacements,Provisional Replacements,graphics/secondInCommand/piracy/provisional_replacements.png,1,second_in_command.skills.piracy.ProvisionalReplacements
 ,,,,
 ,,,,
