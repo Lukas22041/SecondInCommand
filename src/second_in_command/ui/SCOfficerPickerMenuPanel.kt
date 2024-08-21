@@ -77,7 +77,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             var categories = aptitudePlugin.categories
 
             var extra = 0f
-            if (categories.isNotEmpty()) extra += 24f
+            if (categories.isNotEmpty()) extra += 20f
             scrollerElement.addSpacer(10f)
             var officerElement = scrollerElement.addLunaElement(width - 10, 96f + 36 + extra).apply {
                 enableTransparency = true
@@ -251,7 +251,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
                     renderBackground = false
                     renderBorder = false
                 }
-                anchor.elementPanel.position.belowLeft(officerPickerElement.elementPanel, 10f)
+                anchor.elementPanel.position.belowLeft(officerPickerElement.elementPanel, 8f)
 
                 var categoryNames = ArrayList<String>()
                 var categoryColors = ArrayList<Color>()
@@ -259,7 +259,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
                 for (category in categories) {
                     categoryNames.add(category.name)
-                    categoryColors.add(Misc.getHighlightColor())
+                    categoryColors.add(Misc.getTextColor())
 
                     categoryText += "${category.name}, "
                 }
@@ -281,10 +281,12 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
                 var categoryBackground = inner.addLunaElement(length + 8 + 4, 24f).apply {
                     enableTransparency = true
-                    backgroundAlpha = 0.025f
+                    renderBackground = false
+                    renderBorder = false
+                  /*  backgroundAlpha = 0.025f
                     borderAlpha = 0.4f
                     backgroundColor = aptitudePlugin.color
-                    borderColor = aptitudePlugin.color
+                    borderColor = aptitudePlugin.color*/
                 }
 
                 categoryBackground.elementPanel.position.rightOfMid(anchor.elementPanel, -16f - 4)
@@ -434,11 +436,16 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
          var helpIcon = HelpIconElement(Misc.getBasePlayerColor(), buttonElement, 35f, 35f)
          helpIcon.elementPanel.position.rightOfMid(cancelButton.elementPanel, 6f)
 
-            buttonElement.addTooltip(helpIcon.elementPanel, TooltipMakerAPI.TooltipLocation.ABOVE, 350f) { tooltip ->
+            buttonElement.addTooltip(helpIcon.elementPanel, TooltipMakerAPI.TooltipLocation.ABOVE, 400f) { tooltip ->
                 tooltip.addPara("This screen can be used to assign, dismiss or re-name officers under your command. \n\n" +
-                        "You can not assign multiple officers of the same aptitude. You also can not assign multiple officers that are within the same category. \n\n" +
-                        "For example, you can not have two different officers of the \"Logistical\" category active together.",
-                    0f, Misc.getTextColor(), Misc.getHighlightColor(), "assign", "dismiss", "re-name", "Logistical")
+                        "" +
+                        "Executive Officers are a different class of officer than your standard ship piloting one. " +
+                        "You can occasionally find them on a colonies comm-directory, but they may also appear in other places, like cryo-pods on derelict ships. \n\n" +
+                        "" +
+                        "You can not have multiple officers of the same aptitude active at once. \n\n" +
+                        "Additionally, some officers aptitudes are part of a category. Officers of the same category, for example \"Logistical\", can also not be used together. ",
+                    0f, Misc.getTextColor(), Misc.getHighlightColor(), "assign", "dismiss", "re-name", "comm-directory", "cryo-pods",
+                    "can not have multiple officers of the same aptitude active", "category", "Logistical")
             }
     }
 

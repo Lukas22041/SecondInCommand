@@ -65,7 +65,8 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
 
     fun getXPMult() : Float {
         var mult = 1f
-        mult *= 0.5f //Default reduction in XP, shouldnt be the same as the players gain
+        //mult *= 0.5f //Default reduction in XP, shouldnt be the same as the players gain
+        mult *= 0.85f //Default reduction in XP, shouldnt be the same as the players gain
         mult *= SCSettings.xpGainMult
 
         var player = Global.getSector().playerPerson
@@ -74,7 +75,7 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
         if (playerLevel >= 2) levelMult += 0.1f
         if (playerLevel >= 4) levelMult += 0.1f
         if (playerLevel >= 6) levelMult += 0.1f
-        if (playerLevel >= 8) levelMult += 0.1f
+        if (playerLevel >= 8) levelMult += 0.2f
         mult *= levelMult
 
         if (!isAssigned()) mult *= inactiveXPMult

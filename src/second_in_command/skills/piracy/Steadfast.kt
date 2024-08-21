@@ -29,7 +29,7 @@ class Steadfast : SCBaseSkillPlugin() {
         stats.combatEngineRepairTimeMult.modifyMult(id, 0.8f)
         stats.combatWeaponRepairTimeMult.modifyMult(id, 0.8f)
 
-        stats.maxCombatReadiness.modifyFlat(id, 0.05f)
+        stats.maxCombatReadiness.modifyFlat(id, 0.05f, "Steadfast")
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {

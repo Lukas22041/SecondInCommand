@@ -11,6 +11,7 @@ import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.json.JSONObject
 import org.lazywizard.lazylib.MathUtils
 import org.magiclib.kotlin.setSalvageSpecial
+import second_in_command.SCUtils
 import second_in_command.interactions.ExecutiveOfficerRescueSpecial
 import second_in_command.specs.SCAptitudeSpec
 import second_in_command.specs.SCOfficer
@@ -49,7 +50,14 @@ class ExecutiveOfficerCommAdder : EconomyTickListener {
             for (i in 0 until count) {
                 var aptitudes = SCSpecStore.getAptitudeSpecs()
                 var picker = WeightedRandomPicker<SCAptitudeSpec>()
-                aptitudes.forEach { picker.add(it, it.getPlugin().getMarketSpawnweight(market)) }
+
+                for (aptitude in aptitudes) {
+                    var weight = aptitude.getPlugin().getMarketSpawnweight(market)
+                    if (SCUtils.getPlayerData().hasAptitudeInFleet(aptitude.id)) weight *= 0.5f
+                    picker.add(aptitude, weight)
+                }
+
+                //aptitudes.forEach { picker.add(it, it.getPlugin().getMarketSpawnweight(market)) }
 
                 var pick = picker.pick()
 

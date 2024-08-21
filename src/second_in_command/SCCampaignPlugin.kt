@@ -22,7 +22,7 @@ class SCCampaignPlugin : BaseCampaignPlugin() {
             return PluginPick<AICoreOfficerPlugin>(object : BaseAICoreOfficerPluginImpl() {
                 override fun createPerson(aiCoreId: String?, factionId: String?, random: Random?): PersonAPI {
                     var player = Global.getSector().playerPerson
-                    player.memoryWithoutUpdate.set(AICoreOfficerPlugin.AUTOMATED_POINTS_MULT, 4f)
+                    player.memoryWithoutUpdate.set(AICoreOfficerPlugin.AUTOMATED_POINTS_MULT, 3f)
                     return player
                 }
             }, CampaignPlugin.PickPriority.HIGHEST)

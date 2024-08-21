@@ -32,7 +32,6 @@ class SkillPanelReplacerScript : EveryFrameScript {
 
         var docked = false
 
-
         var dialog = ReflectionUtils.invoke("getEncounterDialog", state)
         if (dialog != null)
         {

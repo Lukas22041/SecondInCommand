@@ -151,6 +151,10 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
         }
     }
 
+    fun hasAptitudeInFleet(aptitudeId: String) : Boolean {
+        return getOfficersInFleet().any { it.aptitudeId == aptitudeId }
+    }
+
     fun setOfficerInEmptySlotIfAvailable(officer: SCOfficer) {
 
         //Check for incompatibilities

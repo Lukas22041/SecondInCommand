@@ -1,12 +1,10 @@
 package second_in_command.skills.piracy
 
-import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
+import com.fs.starfarer.api.impl.campaign.DModManager
 import com.fs.starfarer.api.impl.campaign.ids.Stats
-import com.fs.starfarer.api.impl.campaign.ids.Tags
-import com.fs.starfarer.api.impl.campaign.skills.HullRestoration
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
@@ -21,14 +19,14 @@ class ProvisionalReplacements : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("All ships are much more likely to be recoverable if lost in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("-6%% monthly supply usage per d-mod on the ship", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("   - The maximum effect is reached at 5 d-mods", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "5")
+        tooltip.addPara("The supply recovery cost reduction from d-mods also applies to the ships monthly supply cost", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - In essence, this applies a 20%% reduction in monthly supply cost per d-mod", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "20%")
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
-        var dmods = 0
+        /*var dmods = 0
 
         var dmodSpecs = Global.getSettings().allHullModSpecs.filter { it.hasTag(Tags.HULLMOD_DMOD) }
 
@@ -42,11 +40,18 @@ class ProvisionalReplacements : SCBaseSkillPlugin() {
         var bonus = 0.06f * dmods
         bonus = bonus.coerceIn(0f, 0.30f)
 
-        stats!!.suppliesPerMonth.modifyMult(id, 1-bonus, "Provisional Replacements")
+        stats!!.suppliesPerMonth.modifyMult(id, 1-bonus, "Provisional Replacements")*/
+
+        var dmods = DModManager.getNumDMods(variant)
+
+        var mult = 1f
+        for (dmod in 0 until dmods) {
+            mult *= 0.8f
+        }
+        stats!!.suppliesPerMonth.modifyMult(id, mult)
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
-
 
 
     }

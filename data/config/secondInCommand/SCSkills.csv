@@ -8,7 +8,7 @@ sc_tactical_pristine_condition,Pristine Condition,graphics/secondInCommand/tacti
 sc_tactical_tactical_drills,Tactical Drills,graphics/secondInCommand/tactical/tactical_drills.png,1,second_in_command.skills.tactical.TacticalDrills
 sc_tactical_efficient_ordnance,Efficient Ordnance,graphics/secondInCommand/tactical/efficient_ordnance.png,1,second_in_command.skills.tactical.EfficientOrdnance
 #sc_tactical_superiority,Superiority,graphics/secondInCommand/tactical/superiority.png,1,second_in_command.skills.tactical.Superiority
-sc_tactical_full_throttle,Full Throttle,graphics/secondInCommand/tactical/full_throttle.png,1.5,second_in_command.skills.tactical.FullThrottle
+sc_tactical_full_throttle,Full Throttle,graphics/secondInCommand/tactical/full_throttle.png,1,second_in_command.skills.tactical.FullThrottle
 sc_tactical_accelerated_barrels,Accelerated Barrels,graphics/secondInCommand/tactical/accelerated_barrels.png,1.5,second_in_command.skills.tactical.AcceleratedBarrels
 sc_tactical_mass_bombardment,Mass Bombardment,graphics/secondInCommand/tactical/mass_bombardment.png,1.5,second_in_command.skills.tactical.MassBombardment
 sc_tactical_defensive_protocols,Defensive Protocols,graphics/secondInCommand/tactical/defensive_protocols.png,1.5,second_in_command.skills.tactical.DefensiveProtocols

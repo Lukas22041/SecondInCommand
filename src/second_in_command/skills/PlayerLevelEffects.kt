@@ -21,7 +21,7 @@ object PlayerLevelEffects {
             2 -> "+10%% experience gain for executive officers"
             4 -> "+10%% experience gain for executive officers"
             6 -> "+10%% experience gain for executive officers"
-            8 -> "+10%% experience gain for executive officers"
+            8 -> "+20%% experience gain for executive officers"
             10 -> "+2 maximum number of officers you're able to command"
             12 -> "+1 maximum level for officers under your command"
             14 -> "+1 maximum elite skills for officers under your command"

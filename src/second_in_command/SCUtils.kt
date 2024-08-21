@@ -57,10 +57,20 @@ object SCUtils {
     fun getFleetData(fleet: CampaignFleetAPI) : SCData{
         var data = fleet.memoryWithoutUpdate.get(FLEET_DATA_KEY) as SCData?
 
-        //Fixes player fleet after fleet death
-        if (data == null && fleet.isPlayerFleet) {
+        //Playerfleet data should always be grabbed from tbe player person instead, and its data should always be updated to match
+        if (/*data == null && */fleet.isPlayerFleet) {
             data = Global.getSector().playerPerson.memoryWithoutUpdate.get(FLEET_DATA_KEY) as SCData?
             fleet.memoryWithoutUpdate.set(FLEET_DATA_KEY, data)
+            if (data != null) {
+                data.fleet = fleet //Otherwise it would continue targeting the old fleet
+
+                if (!fleet.eventListeners.any { it is SCData }) {
+                    fleet.addEventListener(data)
+                }
+                if (!fleet.hasScriptOfClass(SCData::class.java)) {
+                    fleet.addScript(data)
+                }
+            }
         }
 
         if (data == null) {
