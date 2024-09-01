@@ -4,6 +4,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import lunalib.lunaUI.elements.LunaElement
 import org.lwjgl.opengl.GL11
+import second_in_command.misc.SCSettings
 import java.awt.Color
 
 class SkillWidgetElement(var id: String, var activated: Boolean, var canChangeState: Boolean, var preAcquired: Boolean, var iconPath: String, var soundId: String, var color: Color, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
@@ -57,15 +58,33 @@ class SkillWidgetElement(var id: String, var activated: Boolean, var canChangeSt
         sprite.setSize(width-8, height-8)
         sprite.alphaMult = alphaMult
 
-        if (!canChangeState && !activated) {
-            sprite.color = Color(50, 50, 50)
+        //Contrast Mode
+        if (SCSettings.highConstrastIcons!!) {
+            if (!canChangeState && !activated) {
+                sprite.color = Color(40, 40, 40)
+            }
+            else if (!activated) {
+                sprite.color = Color(90, 90, 90)
+            }
+            else {
+                sprite.color = Color(255, 255, 255)
+            }
+        } else {
+            if (!canChangeState && !activated) {
+                sprite.color = Color(50, 50, 50)
+            }
+            else if (!activated) {
+                sprite.color = Color(140, 140, 140)
+            }
+            else {
+                sprite.color = Color(255, 255, 255)
+            }
         }
-        else if (!activated) {
-            sprite.color = Color(140, 140, 140)
-        }
-        else {
-            sprite.color = Color(255, 255, 255)
-        }
+
+
+
+
+
         sprite.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
 
         if (activated) {
@@ -85,12 +104,14 @@ class SkillWidgetElement(var id: String, var activated: Boolean, var canChangeSt
         else {
             inactiveBorder.setNormalBlend()
             inactiveBorder.color = color
+            if (SCSettings.highConstrastIcons!!) inactiveBorder.color = color.darker()
             inactiveBorder.setSize(width, height)
             inactiveBorder.alphaMult = alphaMult
             inactiveBorder.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
 
             inactiveBorder.setAdditiveBlend()
             inactiveBorder.color = color
+            if (SCSettings.highConstrastIcons!!) inactiveBorder.color = color.darker()
             inactiveBorder.setSize(width, height)
             inactiveBorder.alphaMult = alphaMult * 0.2f
             inactiveBorder.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())

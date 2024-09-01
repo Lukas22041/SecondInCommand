@@ -17,16 +17,17 @@ object PlayerLevelEffects {
 
 
     fun getTooltipForLevel(level: Int) : String{
-        return when (level) {
-            2 -> "+10%% experience gain for executive officers"
-            4 -> "+10%% experience gain for executive officers"
-            6 -> "+10%% experience gain for executive officers"
-            8 -> "+20%% experience gain for executive officers"
-            10 -> "+2 maximum number of officers you're able to command"
-            12 -> "+1 maximum level for officers under your command"
-            14 -> "+1 maximum elite skills for officers under your command"
-            else -> ""
-        }
+
+        if (level == 2) return "+10%% experience gain for executive officers"
+        if (level == 4) return "+10%% experience gain for executive officers"
+        if (level == 6) return "+10%% experience gain for executive officers"
+        if (level == 8) return "+20%% experience gain for executive officers"
+        if (level == 10) return "+2 maximum number of officers you're able to command"
+        if (level == 12) return "+1 maximum level for officers under your command"
+        if (level == 14) return "+1 maximum elite skills for officers under your command"
+        if (level == 15 && Global.getSettings().modManager.isModEnabled("nexerelin")) return "+1 operative under your command"
+
+        return ""
     }
 
     fun getIconForLevel(level: Int) : String {
@@ -75,6 +76,10 @@ object PlayerLevelEffects {
 
         if (playerLevel >= 14) {
             data.commander.stats.dynamic.getMod(Stats.OFFICER_MAX_ELITE_SKILLS_MOD).modifyFlat("sc_level_up_effect", 1f)
+        }
+
+        if (playerLevel >= 15 && Global.getSettings().modManager.isModEnabled("nexerelin")) {
+            data.commander. stats.dynamic.getStat("nex_max_agents").modifyFlat("sc_level_up_effect", 1f);
         }
 
     }

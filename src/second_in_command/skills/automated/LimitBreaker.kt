@@ -76,6 +76,7 @@ class LimitBreaker : SCBaseSkillPlugin() {
             for (member in membersWithAICores) {
                 var core = member.captain
                 core.addTag("sc_limit_breaker_update")
+                core.memoryWithoutUpdate.set("\$sc_limit_break_level", true) //Just in case the core somehow ends up in the player fleet
 
                 for (level in 0 until levels) {
                     core.stats.level += 1

@@ -585,7 +585,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
                 tooltip.addSectionHeading("Level Up Effects", Alignment.MID, 0f)
                 tooltip.addSpacer(10f)
 
-                for (i in 0 until maxLevel) {
+                for (i in 0 .. maxLevel) {
                     var text = PlayerLevelEffects.getTooltipForLevel(i)
                     if (text == "") continue
                     var color = PlayerLevelEffects.getColor(i)

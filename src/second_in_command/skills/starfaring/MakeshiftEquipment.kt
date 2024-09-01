@@ -21,13 +21,13 @@ class MakeshiftEquipment : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("-20%% monthly supply consumption for ship maintenance", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("-25%% monthly supply consumption for ship maintenance", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("-50%% resources required to survey planets", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        stats!!.suppliesPerMonth.modifyMult(id, 0.8f)
+        stats!!.suppliesPerMonth.modifyMult(id, 0.75f)
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {

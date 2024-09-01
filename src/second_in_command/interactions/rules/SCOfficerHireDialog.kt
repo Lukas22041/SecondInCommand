@@ -77,7 +77,7 @@ class SCOfficerHireDialogDelegate(var original: InteractionDialogPlugin, var per
 
             dialog.optionPanel.clearOptions()
 
-            dialog.textPanel.addPara("You ask ${person.nameString} some questions to establish where his skills lie.")
+            dialog.textPanel.addPara("You ask ${person.nameString} some questions to establish where ${person.hisOrHer} skills lie.")
 
             var scOfficer = SCOfficer(person, aptitudeId)
 

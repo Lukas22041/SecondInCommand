@@ -31,7 +31,7 @@ class ContinuousRepairs : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("Ships lost in combat have a 50%% chance to avoid d-mods", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("Every 300 deployment points worth of opponents defeated remove a random d-mod from a random ship", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Every 240 deployment points worth of opponents defeated remove a random d-mod from a random ship", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - This effect can trigger multiple times from the same battle", 0f, Misc.getTextColor(), Misc.getHighlightColor())
         tooltip.addPara("   - This count is being kept track of between battles", 0f, Misc.getTextColor(), Misc.getHighlightColor())
 
@@ -70,7 +70,7 @@ class ContinuousRepairs : SCBaseSkillPlugin() {
 
 class ContinuousRepairsListener() : BaseCampaignEventListener(false) {
 
-    var required = 300
+    var required = 240
 
     override fun reportEncounterLootGenerated(plugin: FleetEncounterContextPlugin?, loot: CargoAPI?) {
         if (plugin == null) return
