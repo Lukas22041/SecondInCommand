@@ -1,14 +1,20 @@
 package second_in_command.ui
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.characters.FullName
+import com.fs.starfarer.api.characters.PersonAPI
 import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
+import lunalib.lunaExtensions.addLunaSpriteElement
 import lunalib.lunaExtensions.addLunaTextfield
+import lunalib.lunaUI.elements.LunaSpriteElement
 import second_in_command.SCData
 import second_in_command.misc.addTooltip
+import second_in_command.misc.getAndLoadSprite
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCCategorySpec
 import second_in_command.specs.SCOfficer
@@ -452,7 +458,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
     fun openOfficerManagementPanel(popupPanel: CustomPanelAPI, officer: SCOfficer) {
         var plugin = ManagePanelPlugin(popupPanel, this)
 
-        var width = 240f
+        var width = 316f
         var height = 170f
 
         var managementPanel = menu.panel.createCustomPanel(width, height, plugin)
@@ -463,10 +469,44 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
         var element = managementPanel.createUIElement(width, height, false)
         managementPanel.addUIElement(element)
 
-        var nameElement = element.addLunaTextfield(officer.person.nameString, false, 160f, 30f).apply {
+
+        var portraitElement = element.addLunaElement(128f, 128f)
+        portraitElement.position.inTL(20f, 20f)
+
+        portraitElement.render {
+            var path = officer.person.portraitSprite
+            var sprite = Global.getSettings().getAndLoadSprite(path)
+
+            sprite.setSize(128f, 128f)
+            sprite.alphaMult = 1f
+            sprite.setNormalBlend()
+            sprite.render(portraitElement.elementPanel.position.x, portraitElement.elementPanel.position.y)
+
+            if (portraitElement.isHovering) {
+                sprite.setAdditiveBlend()
+                sprite.alphaMult = 0.3f
+                sprite.render(portraitElement.elementPanel.position.x, portraitElement.elementPanel.position.y)
+            }
+        }
+
+        portraitElement.onHoverEnter {
+            portraitElement.playScrollSound()
+        }
+
+        portraitElement.onClick {
+            portraitElement.playClickSound()
+            openPortraitPicker(officer.person)
+        }
+
+        element.addTooltip(portraitElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 350f ) {
+            it.addPara("Click to change the officers portrait. You can pick from any portrait that is available for the player at the start of the game.", 0f)
+        }
+
+        var nameElement = element.addLunaTextfield(officer.person.nameString, false, 128f, 30f).apply {
             enableTransparency = true
         }
-        nameElement.position.inTMid(20f)
+        //nameElement.position.inTMid(20f)
+        nameElement.position.rightOfTop(portraitElement.elementPanel, 20f)
 
         nameElement.advance {
             var officerName = officer.person.nameString
@@ -492,7 +532,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             }
         }
 
-        var dismissButton = ConfirmCancelButton(Misc.getNegativeHighlightColor(), element, 160f, 30f).apply {
+        var dismissButton = ConfirmCancelButton(Misc.getNegativeHighlightColor(), element, 128f, 30f).apply {
             addText("Dismiss")
             centerText()
             blink = false
@@ -514,7 +554,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
                 0f, Misc.getTextColor(), Misc.getHighlightColor(), "twice", "permanently dismiss")
         }
 
-        var closeButton = ConfirmCancelButton(Misc.getGrayColor(), element, 160f, 30f).apply {
+        var closeButton = ConfirmCancelButton(Misc.getGrayColor(), element, 128f, 30f).apply {
             addText("Close")
             centerText()
             blink = false
@@ -525,6 +565,88 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             closeButton.playClickSound()
             plugin.close()
         }
+
+    }
+
+    fun openPortraitPicker(officer: PersonAPI) {
+        var plugin = BackgroundPanelPlugin(menu.panel)
+
+        var width = 530f
+        var height = 500f
+
+        var portraitPanel = menu.panel.createCustomPanel(width, height, plugin)
+        plugin.panel = portraitPanel
+        menu.panel.addComponent(portraitPanel)
+        portraitPanel.position.inMid()
+
+        var element = portraitPanel!!.createUIElement(width, height, true)
+        element.position.inTL(0f, 0f)
+
+        var lastElement: UIPanelAPI? = null
+        var lastRowElement: UIPanelAPI? = null
+        var elementPerRow = 5
+        var currentCount = 0
+        var size = 96f
+
+        var portraits = ArrayList<String>()
+        portraits += Global.getSector().playerFaction.factionSpec.getAllPortraits(FullName.Gender.MALE)
+        portraits += Global.getSector().playerFaction.factionSpec.getAllPortraits(FullName.Gender.FEMALE)
+        portraits = portraits.distinct() as ArrayList<String>
+
+        for (portrait in portraits) {
+
+            var luna = element.addLunaSpriteElement(portrait, LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, size, 0f).apply {
+                enableTransparency = true
+                width = 0f
+                height = 0f
+                getSprite().alphaMult = 0.6f
+
+                advance {
+                    if (isHovering) {
+
+                        getSprite().alphaMult = 1f
+                    }
+                    else {
+
+                        getSprite().alphaMult = 0.7f
+                    }
+                }
+
+                onClick {
+                    plugin.close()
+                    officer.portraitSprite = portrait
+                    playClickSound()
+                }
+
+                onHoverEnter {
+                    playScrollSound()
+                }
+            }
+
+            luna.position.setSize(size, size)
+            luna.getSprite().setSize(size, size)
+
+            if (currentCount == 0) {
+                element.addSpacer(size + 10f)
+                if (lastRowElement != null) {
+                    luna.elementPanel.position.belowLeft(lastRowElement, 10f)
+                }
+                lastRowElement = luna.elementPanel
+            }
+            else {
+                luna.elementPanel.position.rightOfMid(lastElement!!, 10f)
+            }
+
+            currentCount++
+
+            if (currentCount == elementPerRow) {
+                currentCount = 0
+            }
+
+            lastElement = luna.elementPanel
+        }
+
+        portraitPanel.addUIElement(element)
 
     }
 

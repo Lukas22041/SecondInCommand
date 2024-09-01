@@ -1,3 +1,16 @@
+Version 1.1.4
+Save Compatible with 1.1.x
+
+- Added the ability to change an executive officers portrait (Officer Picker -> Manage -> Click on Portrait)
+- You now gain an additional nexerelin operative at lv15.
+- "Continuous Repairs" now requires 240DP instead of 300DP to repair d-mods.
+- Increased "Bulk Transports" from 30% to 40%.
+- Increased "Makeshift Equipments" supply reduction from 20% to 25%.
+- Increased "Privateering"s base bounty reward from 300 to 400.
+- Added the "High Constrast Icons" config for people that have difficulities with spotting which skills are active.
+
+
+
 Version 1.1.3
 Save Compatible with 1.1.x
 

@@ -79,7 +79,7 @@ object PlayerLevelEffects {
         }
 
         if (playerLevel >= 15 && Global.getSettings().modManager.isModEnabled("nexerelin")) {
-            data.commander. stats.dynamic.getStat("nex_max_agents").modifyFlat("sc_level_up_effect", 1f);
+            data.commander.stats.dynamic.getStat("nex_max_agents").modifyFlat("sc_level_up_effect", 1f);
         }
 
     }
