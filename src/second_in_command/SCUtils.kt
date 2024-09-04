@@ -66,10 +66,18 @@ object SCUtils {
 
                 if (!fleet.eventListeners.any { it is SCData }) {
                     fleet.addEventListener(data)
+
+                    //Experimental, but should help in some cases
+                    var skills = data.getAllActiveSkillsPlugins()
+                    for (skill in skills) {
+                        skill.onActivation(data)
+                    }
                 }
                 if (!fleet.hasScriptOfClass(SCData::class.java)) {
                     fleet.addScript(data)
                 }
+
+
             }
         }
 

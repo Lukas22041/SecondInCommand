@@ -82,6 +82,7 @@ class SCModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(ControllerHullmodAdderScript())
         Global.getSector().addTransientScript(SCNeuralJunctionScript())
         Global.getSector().addTransientScript(VanillaSkillsDisabler())
+        Global.getSector().addTransientScript(AutomatedShipsManager())
         Global.getSector().listenerManager.addListener(NPCFleetInflater(), true)
 
         Global.getSector().addTransientListener(SCCampaignEventListener())

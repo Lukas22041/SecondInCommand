@@ -8,6 +8,7 @@ import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCUtils
+import second_in_command.scripts.AutomatedShipsManager
 import second_in_command.skills.PlayerLevelEffects
 
 class SCControllerHullmod : BaseHullMod() {
@@ -90,6 +91,9 @@ class SCControllerHullmod : BaseHullMod() {
         if (data.isPlayer) {
             PlayerLevelEffects.applyEffectsBeforeShipCreation(data, stats, stats.variant, hullSize!!, "${id}_player")
         }
+
+        //Handle Automated Ships
+        AutomatedShipsManager.get().applyEffects(data, stats, stats.variant, hullSize, "sc_automation_manager")
     }
 
     override fun applyEffectsToFighterSpawnedByShip(fighter: ShipAPI?, ship: ShipAPI?, id: String?) {

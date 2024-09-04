@@ -1,3 +1,11 @@
+Version 1.1.5
+Save Compatible with 1.1.x
+
+- Made it possible for other mods to add skills that enable automated ship recovery & penalty negation
+- Updated the tooltips of skills that provide automated ship points.
+
+
+
 Version 1.1.4
 Save Compatible with 1.1.x
 

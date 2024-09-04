@@ -7,6 +7,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.skills.AutomatedShips;
 import com.fs.starfarer.api.util.Misc;
 import second_in_command.SCUtils;
+import second_in_command.scripts.AutomatedShipsManager;
 
 
 public class AutomatedShipsReplacementLevel2 extends AutomatedShips.Level2 {
@@ -15,8 +16,9 @@ public class AutomatedShipsReplacementLevel2 extends AutomatedShips.Level2 {
     public void apply(MutableCharacterStatsAPI stats, String id, float level) {
         if (Global.getCurrentState() == GameState.TITLE) return;
         if (Global.getSector().getPlayerFleet() == null) return;
+        if (Global.getSector().getPlayerPerson() == null) return;
 
-        if (second_in_command.skills.automated.AutomatedShips.Companion.isAnyAutoSkillActive(SCUtils.getPlayerData().getFleet())) {
+        if (AutomatedShipsManager.get().canAcquireAutoShips()) {
             Misc.getAllowedRecoveryTags().add(Tags.AUTOMATED_RECOVERABLE);
         }
 
@@ -31,8 +33,9 @@ public class AutomatedShipsReplacementLevel2 extends AutomatedShips.Level2 {
 
         if (Global.getCurrentState() == GameState.TITLE) return;
         if (Global.getSector().getPlayerFleet() == null) return;
+        if (Global.getSector().getPlayerPerson() == null) return;
 
-        if (second_in_command.skills.automated.AutomatedShips.Companion.isAnyAutoSkillActive(SCUtils.getPlayerData().getFleet())) {
+        if (AutomatedShipsManager.get().canAcquireAutoShips()) {
             Misc.getAllowedRecoveryTags().add(Tags.AUTOMATED_RECOVERABLE);
         }
 
