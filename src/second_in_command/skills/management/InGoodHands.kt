@@ -20,7 +20,7 @@ class InGoodHands : SCBaseSkillPlugin() {
 
         tooltip.addPara("Ships with officers have a reduction in deployment points cost", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - The cost reduction is between 0%%-15%% of the ships total, based on officer level", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "0%", "15%")
-        tooltip.addPara("   - The maximum effect is reached at level 5", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "7")
+        tooltip.addPara("   - The maximum effect is reached at level 5", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "5")
         tooltip.addPara("   - The reduction can not be more than 10 points", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "10")
 
     }

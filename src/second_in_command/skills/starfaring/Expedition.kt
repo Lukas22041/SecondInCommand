@@ -3,6 +3,7 @@ package second_in_command.skills.starfaring
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
+import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
@@ -16,6 +17,7 @@ class Expedition : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
+        tooltip.addPara("+25%% resources - including rare items, such as blueprints - recovered from abandoned stations and derelicts", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+20%% cargo and fuel capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("-15%% fuel usage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("-10%% monthly supply consumption for ship maintenance", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
@@ -36,14 +38,15 @@ class Expedition : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-
+        data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_INCLUDES_RARE).modifyFlat("sc_expedition", 0.25f, "Salvaging Skill")
     }
 
     override fun onActivation(data: SCData) {
-
+        data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_INCLUDES_RARE).modifyFlat("sc_expedition", 0.25f, "Salvaging Skill")
     }
 
     override fun onDeactivation(data: SCData) {
+        data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_INCLUDES_RARE).unmodify("sc_expedition")
 
     }
 

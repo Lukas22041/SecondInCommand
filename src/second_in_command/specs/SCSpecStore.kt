@@ -80,7 +80,7 @@ object SCSpecStore {
 
             val spawnWeight = row.getFloat("spawnWeight")
 
-
+            var specsOrder = row.optInt("order", order)
 
             val colorString = row.getString("color")
             val cs = colorString.split(",").map { it.trim().toInt() }
@@ -90,7 +90,8 @@ object SCSpecStore {
 
             val pluginPath = row.getString("plugin")
 
-            var spec = SCAptitudeSpec(id, name, categories, spawnWeight, color, tags, order, pluginPath)
+
+            var spec = SCAptitudeSpec(id, name, categories, spawnWeight, color, tags, specsOrder, pluginPath)
             aptitudeSpecs.add(spec)
         }
 

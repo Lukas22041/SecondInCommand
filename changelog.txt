@@ -1,3 +1,14 @@
+Version 1.1.6
+Save Compatible with 1.1.x
+
+- The "Expedition" skill now has a +25% increase for salvage (including rare items) from stations and derelicts.
+- Reduced the executive officer xp gain by a slight amnount.
+- Added a (unused) stat that can be modified to reduce or increase the automated points of a ship.
+- Added "Order" column to the SCAptitudes.csv file.
+- Fixed a rare crash on save load.
+
+
+
 Version 1.1.5
 Save Compatible with 1.1.x
 

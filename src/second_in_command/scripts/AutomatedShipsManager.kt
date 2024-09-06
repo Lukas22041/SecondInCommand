@@ -12,13 +12,21 @@ import com.fs.starfarer.api.impl.hullmods.Automated
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.SCUtils
-import second_in_command.skills.automated.AutomatedShips
 
 class AutomatedShipsManager : EveryFrameScript {
 
     companion object {
         @JvmStatic
-        fun get() = Global.getSector().transientScripts.find { it is AutomatedShipsManager } as AutomatedShipsManager
+        fun get() : AutomatedShipsManager {
+            var manager = Global.getSector().transientScripts.find { it is AutomatedShipsManager } as AutomatedShipsManager?
+
+            if (manager == null) {
+                manager = AutomatedShipsManager()
+                Global.getSector().transientScripts.add(manager)
+            }
+
+            return manager
+        }
     }
 
     override fun isDone(): Boolean {
@@ -66,8 +74,10 @@ class AutomatedShipsManager : EveryFrameScript {
     }
 
     fun getUsedDP() : Float{
-        var fleet = Global.getSector().playerFleet
+        var fleet = Global.getSector()?.playerFleet ?: return 0f //Can be null during Deserialization :)
         var points = 0f
+
+
         for (curr in fleet.fleetData.membersListCopy) {
             if (curr.isMothballed) continue
             if (!Misc.isAutomated(curr)) continue
@@ -76,8 +86,15 @@ class AutomatedShipsManager : EveryFrameScript {
             //if (curr.getCaptain().isAICore()) {
             points += curr.captain.memoryWithoutUpdate.getFloat(AICoreOfficerPlugin.AUTOMATED_POINTS_VALUE)
             mult = curr.captain.memoryWithoutUpdate.getFloat(AICoreOfficerPlugin.AUTOMATED_POINTS_MULT)
+
+
             if (mult == 0f) mult = 1f
             //}
+
+            var memberMult = curr.stats.dynamic.getStat("sc_auto_points_mult").modifiedValue
+            mult *= memberMult
+
+
             points += Math.round(curr.deploymentPointsCost * mult).toFloat()
         }
         return Math.round(points).toFloat()
