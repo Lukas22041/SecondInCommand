@@ -88,10 +88,11 @@ object SCSpecStore {
 
             var tags = row.getString("tags").split(",").map { it.trim() }
 
+            var modName = filterModPath(row.getString("fs_rowSource"))
+
             val pluginPath = row.getString("plugin")
 
-
-            var spec = SCAptitudeSpec(id, name, categories, spawnWeight, color, tags, specsOrder, pluginPath)
+            var spec = SCAptitudeSpec(id, name, categories, spawnWeight, color, tags, specsOrder, modName, pluginPath)
             aptitudeSpecs.add(spec)
         }
 
@@ -117,11 +118,11 @@ object SCSpecStore {
             var npcSpawnWeight = 0f
             if (npcSpawnWeightString != "") npcSpawnWeight = npcSpawnWeightString.toFloat()
 
-
+            var modName = filterModPath(row.getString("fs_rowSource"))
 
             val pluginPath = row.getString("plugin")
 
-            var spec = SCSkillSpec(id, name, iconPath, npcSpawnWeight, order, pluginPath)
+            var spec = SCSkillSpec(id, name, iconPath, npcSpawnWeight, order, modName, pluginPath)
             skillSpecs.add(spec)
         }
 
@@ -130,7 +131,15 @@ object SCSpecStore {
 
 
 
-
+    //From Console Commands by LazyWizard
+    private fun filterModPath(fullPath: String): String {
+        var modPath = fullPath.replace("/", "\\")
+        modPath = modPath.substring(modPath.lastIndexOf("\\mods\\"))
+        modPath = modPath.substring(0, modPath.indexOf('\\', 6)) + "\\"
+        modPath = modPath.replace("\\mods\\", "")
+        modPath = modPath.replace("\\", "")
+        return modPath
+    }
 
 
 }

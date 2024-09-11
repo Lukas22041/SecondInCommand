@@ -23,6 +23,7 @@
       <root url="jar://$PROJECT_DIR$/../LazyLib/jars/LazyLib.jar!/" />
       <root url="jar://$PROJECT_DIR$/../LazyLib/jars/LazyLib-Kotlin.jar!/" />
       <root url="jar://$PROJECT_DIR$/../LazyLib/jars/LazyLib-Console.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Console Commands/jars/lw_Console.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="https://fractalsoftworks.com/starfarer.api/" />
@@ -35,6 +36,8 @@
       <root url="jar://$PROJECT_DIR$/../LazyLib/jars/LazyLib.jar!/" />
       <root url="jar://$PROJECT_DIR$/../LazyLib/jars/LazyLib.jar!/" />
       <root url="jar://$PROJECT_DIR$/../LazyLib/jars/LazyLib-Kotlin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Console Commands/jars/lw_Console.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Console Commands/jars/lw_Console.jar!/" />
     </SOURCES>
   </library>
 </component>

@@ -50,6 +50,10 @@ object SCUtils {
 
         return data*/
 
+        /*if (Global.getSector().playerFleet == null) {
+            return SCData(Global.getFactory().createEmptyFleet("player", "", false))
+        }*/
+
         return getFleetData(Global.getSector().playerFleet)
     }
 

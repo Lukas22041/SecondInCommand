@@ -12,6 +12,9 @@ class SCSkillTooltipCreator(var data: SCData, var skill: SCBaseSkillPlugin, var 
 
     var sectionMeetsRequirements = true
 
+    override fun isTooltipExpandable(tooltipParam: Any?): Boolean {
+        return skill.spec.modname != "SecondInCommand"
+    }
 
     override fun getTooltipWidth(tooltipParam: Any?): Float {
         return 700f
@@ -45,7 +48,14 @@ class SCSkillTooltipCreator(var data: SCData, var skill: SCBaseSkillPlugin, var 
             tooltip.addPara("You can only pick one skill in this section.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
         }
 
+        var modname = aptitude.spec.modname
+        if (modname != "SecondInCommand" && expanded) {
+            tooltip.addSpacer(10f)
+            tooltip.addPara("Skill added by \"$modname\"", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        }
+
         tooltip.addSpacer(2f)
+
 
     }
 

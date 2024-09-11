@@ -11,6 +11,7 @@ data class SCAptitudeSpec(
     var color: Color,
     var tags: List<String>,
     var order: Int,
+    var modname: String,
     var pluginPath: String) {
 
     fun getPlugin() : SCBaseAptitudePlugin {

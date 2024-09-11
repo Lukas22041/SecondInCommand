@@ -1,3 +1,12 @@
+Version 1.1.7
+Save Compatible with 1.1.x
+
+- You can now press F1 on a skill added by other mods to see which mod it is from.
+- Added "ListAptitudes", "LevelExecutive", "AddExecutive" Console Commands
+- Adjusted Orders of the Aptitudes so that other mods can more easily put theirs inbetween them.
+
+
+
 Version 1.1.6
 Save Compatible with 1.1.x
 
