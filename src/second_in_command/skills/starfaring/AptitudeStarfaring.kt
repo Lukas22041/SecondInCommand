@@ -28,7 +28,7 @@ class AptitudeStarfaring : SCBaseAptitudePlugin() {
         section2.addSkill("sc_starfaring_emergency_order")
         addSection(section2)
 
-        var section3 = SCAptitudeSection(false, 4, "industry4")
+        var section3 = SCAptitudeSection(false, 3, "industry4")
         section3.addSkill("sc_starfaring_expedition")
         section3.addSkill("sc_starfaring_continuous_repairs")
         addSection(section3)

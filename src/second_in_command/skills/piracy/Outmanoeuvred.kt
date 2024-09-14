@@ -20,7 +20,7 @@ class Outmanoeuvred : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("+1 maximum burn level", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+20%% to the fleets maneuverability in the campaign", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+20%% maneuverability for the fleet outside of combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 

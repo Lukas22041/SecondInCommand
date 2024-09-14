@@ -53,7 +53,7 @@ class ExecutiveOfficerCommAdder : EconomyTickListener {
 
                 for (aptitude in aptitudes) {
                     var weight = aptitude.getPlugin().getMarketSpawnweight(market)
-                    if (SCUtils.getPlayerData().hasAptitudeInFleet(aptitude.id)) weight *= 0.5f
+                    if (SCUtils.getPlayerData().hasAptitudeInFleet(aptitude.id)) weight *= 0.6f
                     picker.add(aptitude, weight)
                 }
 

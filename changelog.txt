@@ -1,3 +1,14 @@
+Version 1.1.8
+Save Compatible with 1.1.x
+
+- The "Starfaring" Capstone skills now require 3 previous skills, instead of 4.
+- Increased Privateerings base reward back to 500 credits.
+- Fixed a bug that caused the "Privateering" reward to be way worse if there was any civilian ship in the opposing fleet.
+- Decreased spawnrate of executive officers on derelict ships.
+- Fixed a crash with the Re-Entry skill.
+
+
+
 Version 1.1.7
 Save Compatible with 1.1.x
 

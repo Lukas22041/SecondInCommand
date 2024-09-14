@@ -25,7 +25,7 @@ class ExecutiveOfficerSalvageSpecialGenerator {
 
         var entitiesWithPods = entitiesInSector.filter { isSalvagePod(it) }
 
-        var maximum = (entitiesWithPods.count() * 0.65f).toInt()
+        var maximum = (entitiesWithPods.count() * 0.4f).toInt()
 
         var suitableEntities = entitiesInSector.filter { entity -> isSuitable(entity) }
         suitableEntities = suitableEntities.shuffled()
@@ -37,7 +37,6 @@ class ExecutiveOfficerSalvageSpecialGenerator {
         for (entity in suitableEntities) {
             count+=1
             if (count >= maximum) break
-
 
             var aptitudes = SCSpecStore.getAptitudeSpecs()
             var picker = WeightedRandomPicker<SCAptitudeSpec>()
