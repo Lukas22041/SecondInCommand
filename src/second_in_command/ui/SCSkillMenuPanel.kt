@@ -11,6 +11,7 @@ import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
 import org.lazywizard.lazylib.MathUtils
+import org.lwjgl.input.Keyboard
 import second_in_command.SCData
 import second_in_command.misc.clearChildren
 import second_in_command.misc.getHeight
@@ -241,6 +242,45 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
         officerPickerElement.onHoverEnter {
             if (!officerPickerElement.isInEditMode) {
                 officerPickerElement.playScrollSound()
+            }
+        }
+
+        officerPickerElement.onInput {events ->
+            if (officerPickerElement.isHovering && officer != null) {
+                for (event in events!!) {
+                    if (event.isConsumed) continue
+                    if (event.isKeyDownEvent && event.eventValue == Keyboard.KEY_R) {
+                        event.consume()
+
+                        if (!officerPickerElement.isInEditMode) {
+
+                            var active = officer.getActiveSkillPlugins().filter { it != officer.getAptitudePlugin().originSkillPlugin }
+                            var count = active.count()
+
+                            var storyPoints = Global.getSector().playerPerson.stats.storyPoints
+                            if (count == 0 || storyPoints <= 3) {
+                                officerPickerElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
+                                return@onInput
+                            }
+
+                            for (skill in active) {
+                                officer.skillPoints += 1
+                                skill.onDeactivation(data)
+                            }
+
+                            officer.activeSkillIDs = mutableSetOf()
+                            Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
+
+                            officerPickerElement.playSound(Sounds.STORY_POINT_SPEND)
+
+                            Global.getSector().playerPerson.stats.storyPoints -= 4
+
+                            recreateAptitudeRow(subpanelParent, officer, slotId)
+                        }
+
+                        break
+                    }
+                }
             }
         }
 

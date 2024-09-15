@@ -1,5 +1,6 @@
 package second_in_command.ui.tooltips
 
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.ui.BaseTooltipCreator
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
@@ -101,6 +102,19 @@ class OfficerTooltipCreator(var officer: SCOfficer?, var isAtColony: Boolean, va
 
 
         if (!openedFromPicker) {
+
+            tooltip.addSpacer(10f)
+            var extra = ""
+            if (Global.getSector().playerPerson.stats.storyPoints <= 3) {
+                extra = "You do not have enough story points do so right now."
+            }
+
+            var label = tooltip!!.addPara("You can refund all skills by pressing \"R\" while hovering over this officer. This costs 4 story points to do. Can not be done while the skill selection is being edited. $extra", 0f,
+                Misc.getTextColor(), Misc.getHighlightColor(), "")
+
+            label.setHighlight("R", "4 story points", extra)
+            label.setHighlightColors(Misc.getHighlightColor(), Misc.getStoryOptionColor(), Misc.getNegativeHighlightColor())
+
             tooltip.addSpacer(10f)
             tooltip!!.addPara("Left-click to select an executive officer to assign. Right-click to un-assign officers.",
                 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Left-click", "Right-click")

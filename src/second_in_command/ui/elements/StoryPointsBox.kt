@@ -32,6 +32,8 @@ class StoryPointsBox(tooltip: TooltipMakerAPI, width: Float, height: Float) : Lu
     override fun advance(amount: Float) {
         super.advance(amount)
 
+        points = Global.getSector().playerPerson.stats.storyPoints
+
         if (isHovering) {
             textPara.setColor(textColor.brighter())
             numberPara.setColor(numberColor.brighter())

@@ -10,6 +10,7 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.DModManager
+import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.intel.MessageIntel
@@ -34,6 +35,7 @@ class ContinuousRepairs : SCBaseSkillPlugin() {
         tooltip.addPara("Every 240 deployment points worth of opponents defeated remove a random d-mod from a random ship", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - This effect can trigger multiple times from the same battle", 0f, Misc.getTextColor(), Misc.getHighlightColor())
         tooltip.addPara("   - This count is being kept track of between battles", 0f, Misc.getTextColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - Ignores ships with the Rugged Construction hullmod", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Rugged Construction")
 
     }
 
@@ -87,7 +89,7 @@ class ContinuousRepairsListener() : BaseCampaignEventListener(false) {
 
                 var picks = WeightedRandomPicker<FleetMemberAPI>()
                 for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
-                    if (member.variant.hasDMods() && !member.baseOrModSpec().hasTag(Tags.HULL_UNRESTORABLE) && !member.variant.hasTag(Tags.VARIANT_UNRESTORABLE)) {
+                    if (member.variant.hasDMods() && !member.variant.hasHullMod("rugged") && !member.baseOrModSpec().hasTag(Tags.HULL_UNRESTORABLE) && !member.variant.hasTag(Tags.VARIANT_UNRESTORABLE)) {
                         picks.add(member)
                     }
                 }
