@@ -100,7 +100,7 @@ class BountyBoardSkillListener() : FleetEventListener {
         Global.getSector().playerFleet.cargo.credits.add(payment)
         Global.getSector().campaignUI.addMessage(object : BaseIntelPlugin() {
             override fun getName(): String {
-                return "Skill - Bounty Board"
+                return "Skill - Privateering"
             }
 
             override fun getIcon(): String {

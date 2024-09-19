@@ -4,8 +4,7 @@ import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.BaseEveryFrameCombatPlugin
 import com.fs.starfarer.api.input.InputEventAPI
-import com.sun.org.apache.bcel.internal.generic.RET
-import second_in_command.skills.interlinked.scripts.InterlinkedScript
+import second_in_command.skills.synchronised.scripts.SynchronisedScript
 
 class CombatHandler : BaseEveryFrameCombatPlugin() {
 
@@ -15,7 +14,7 @@ class CombatHandler : BaseEveryFrameCombatPlugin() {
         if (engine != null) {
             if (Global.getCurrentState() != GameState.TITLE) {
 
-                engine.addLayeredRenderingPlugin(InterlinkedScript())
+                engine.addLayeredRenderingPlugin(SynchronisedScript())
 
             }
         }

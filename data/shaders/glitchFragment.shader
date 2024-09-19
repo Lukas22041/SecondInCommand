@@ -3,6 +3,7 @@
 
 uniform sampler2D tex;
 
+uniform vec3 colorMult;
 uniform float iTime;
 uniform float alphaMult;
 
@@ -29,9 +30,9 @@ void main() {
   	color.g = texture(tex, uv + vec2(offset(128.0, uv) * 0.03 * 0.16666666, 0.0)).g;
   	color.b = texture(tex, uv + vec2(offset(128.0, uv) * 0.03, 0.0)).b;
 
-	color.r *= 0.75;
-	color.g *= 0.75;
-	color.b *= 1.5;
+	color.r *= colorMult.r;
+	color.g *= colorMult.g;
+	color.b *= colorMult.b;
 
 	color.a *= alphaMult;
    	gl_FragColor = color;
