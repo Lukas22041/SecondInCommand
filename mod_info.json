@@ -21,6 +21,10 @@
             "id": "lunalib",
             "name": "LunaLib",
         },
+		{
+			"id": "shaderLib",
+			"name": "GraphicsLib",
+		},
     ],
 	"replace":[
 		"data/characters/skills/automated_ships.skill",

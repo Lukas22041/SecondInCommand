@@ -2,6 +2,7 @@
 	 
 	 "plugins":{		
 		#"SCSkillPanelReplacerTitle":"second_in_command.scripts.SkillPanelReplacerScriptTitlescreen",
+		"SCCombatHandler":"second_in_command.scripts.CombatHandler",
 	},	
 	
 	
