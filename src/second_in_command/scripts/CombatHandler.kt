@@ -14,7 +14,7 @@ class CombatHandler : BaseEveryFrameCombatPlugin() {
         if (engine != null) {
             if (Global.getCurrentState() != GameState.TITLE) {
 
-                engine.addLayeredRenderingPlugin(SynchronisedScript())
+                //engine.addLayeredRenderingPlugin(SynchronisedScript())
 
             }
         }

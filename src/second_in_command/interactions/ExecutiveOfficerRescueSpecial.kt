@@ -42,7 +42,7 @@ class ExecutiveOfficerRescueSpecialInteraction(var officer: SCOfficer) : BaseSal
             text.addParagraph("${officer.person.nameString} (level ${officer.getCurrentLevel()}) has joined your fleet",  Misc.getPositiveHighlightColor())
             text.setFontInsignia()
 
-            text.addPara("${officer.person.heOrShe.capitalize()} continues by elaborating on his skills, hoping they may be of use to you.", Misc.getTextColor(), plugin.getColor(), "${plugin.getName()}")
+            text.addPara("${officer.person.heOrShe.capitalize()} continues by elaborating on ${officer.person.hisOrHer} skills, hoping they may be of use to you.", Misc.getTextColor(), plugin.getColor(), "${plugin.getName()}")
 
          /*   var tooltip = text.beginTooltip()
 

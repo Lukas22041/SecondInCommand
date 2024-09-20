@@ -19,6 +19,7 @@ class SwarmDeployment : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("Fighter wings with at least four fighters gain an additional fighter in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - This skill may not work on ships with the Reserve Deployment shipsystem, or others of the same kind", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Reserve Deployment")
 
     }
 
