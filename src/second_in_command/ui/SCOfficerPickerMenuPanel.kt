@@ -364,6 +364,14 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
         confirmButton.advance {
             if (selectedOfficer != null) {
 
+                if (officerAlreadySlotted(selectedOfficer!!) || doesOffficerMatchExistingAptitude(selectedOfficer!!) || doesOffficerMatchCategory(selectedOfficer!!)) {
+
+                    confirmButton.color = Misc.getGrayColor()
+                    confirmButton.blink = false
+
+                    return@advance
+                }
+
                 var plugin = SCSpecStore.getAptitudeSpec(selectedOfficer!!.aptitudeId)!!.getPlugin()
                 confirmButton.color = plugin.getColor()
                 confirmButton.blink = true
@@ -372,7 +380,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
         confirmButton.onClick {
 
-            if (selectedOfficer == null) {
+            if (selectedOfficer == null || (officerAlreadySlotted(selectedOfficer!!) || doesOffficerMatchExistingAptitude(selectedOfficer!!) || doesOffficerMatchCategory(selectedOfficer!!))) {
                 Global.getSoundPlayer().playUISound("ui_button_disabled_pressed", 1f, 1f)
                 return@onClick
             }
@@ -413,12 +421,24 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             }
 
             manageButton.playClickSound()
-            openOfficerManagementPanel(popupPanel, selectedOfficer!!)
+            var plugin = openOfficerManagementPanel(popupPanel, selectedOfficer!!)
+            plugin.onClose = {
+                if (selectedOfficer != null) {
+                    var slot = data.getOfficersAssignedSlot(selectedOfficer!!)
+                    if (slot != null) {
+                        menu.recreateAptitudeRow(subpanelParent, selectedOfficer, slot)
+                    }
+                } else {
+                    //Clear the slot if the officer was dismissed
+                    menu.recreateAptitudeRow(subpanelParent, null, slotId)
+                }
+
+            }
 
         }
 
         buttonElement.addTooltip(manageButton.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 250f) { tooltip ->
-            tooltip.addPara("Change the name or dismiss an officer. Can only manage non-assigned officers", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "name", "dismiss")
+            tooltip.addPara("Change the name or dismiss an officer, or change their portrait. ", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "name", "dismiss", "portrait")
         }
 
         //Cancel
@@ -455,7 +475,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             }
     }
 
-    fun openOfficerManagementPanel(popupPanel: CustomPanelAPI, officer: SCOfficer) {
+    fun openOfficerManagementPanel(popupPanel: CustomPanelAPI, officer: SCOfficer) : ManagePanelPlugin {
         var plugin = ManagePanelPlugin(popupPanel, this)
 
         var width = 316f
@@ -566,6 +586,8 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             plugin.close()
         }
 
+        return plugin
+
     }
 
     fun openPortraitPicker(officer: PersonAPI) {
@@ -652,10 +674,10 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
     fun selectOfficer(officer: SCOfficer) {
 
-        if (officerAlreadySlotted(officer) || doesOffficerMatchExistingAptitude(officer) || doesOffficerMatchCategory(officer)) {
+        /*if (officerAlreadySlotted(officer) || doesOffficerMatchExistingAptitude(officer) || doesOffficerMatchCategory(officer)) {
             Global.getSoundPlayer().playUISound("ui_button_disabled_pressed", 1f, 1f)
             return
-        }
+        }*/
 
         Global.getSoundPlayer().playUISound("ui_button_pressed", 1f, 1f)
         selectedOfficer = officer

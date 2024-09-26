@@ -16,7 +16,7 @@ class NeuralJunction : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("The player can be assigned to pilot automated ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("   - The player counts as a 3${Strings.X} multiplier for automated points", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "3${Strings.X}")
+        tooltip.addPara("   - The player counts as a 2${Strings.X} multiplier for automated points", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "3${Strings.X}")
         tooltip.addPara("   - If this officer is unassigned, the player is moved to another ship", 0f, Misc.getTextColor(), Misc.getHighlightColor())
 
     }

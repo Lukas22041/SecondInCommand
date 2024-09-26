@@ -124,6 +124,11 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
     }
 
     fun removeOfficerFromFleet(officer: SCOfficer) {
+
+        if (officer.isAssigned()) {
+            setOfficerInSlot(getOfficersAssignedSlot(officer)!!, null)
+        }
+
         officer.data = null
         officers.remove(officer)
     }

@@ -20,7 +20,7 @@ class EnhancedOverrides : SCBaseSkillPlugin() {
 
         tooltip.addPara("Ships with the \"Safety Overrides\" hullmod gain the following effects: ", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - The ships peak performance time is improved by 25%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "25%")
-        tooltip.addPara("   - Safety Overrides weapon range threshold is increased by 100 units", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "150")
+        tooltip.addPara("   - Safety Overrides weapon range threshold is increased by 100 units", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "100")
 
     }
 

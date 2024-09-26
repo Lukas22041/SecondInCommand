@@ -16,6 +16,7 @@ class ManagePanelPlugin(private var parent: UIPanelAPI, var officerPanel: SCOffi
 
     var position: PositionAPI? = null
     var panel: UIPanelAPI? = null
+    var onClose = { }
 
     override fun positionChanged(position: PositionAPI?) {
         this.position = position
@@ -137,7 +138,7 @@ class ManagePanelPlugin(private var parent: UIPanelAPI, var officerPanel: SCOffi
     fun close() {
         parent.removeComponent(panel)
         officerPanel.recreatePanel()
-
+        onClose()
     }
 
 }

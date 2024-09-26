@@ -49,6 +49,18 @@ sc_strikecraft_reconfiguration,Reconfiguration,graphics/secondInCommand/strikecr
 sc_strikecraft_advanced_maneuvers,Advanced Maneuvers,graphics/secondInCommand/strikecraft/advanced_maneuvers.png,2,second_in_command.skills.strikecraft.AdvancedManeuvers
 sc_strikecraft_barrage,Barrage,graphics/secondInCommand/strikecraft/barrage.png,2,second_in_command.skills.strikecraft.Barrage
 ,,,,
+#Warfare,,,,
+sc_warfare_iron_sight,Iron Sight,graphics/secondInCommand/warfare/iron_sight.png,1,second_in_command.skills.warfare.IronSight
+sc_warfare_overprepared,Overprepared,graphics/secondInCommand/warfare/overprepared.png,1,second_in_command.skills.warfare.Overprepared
+sc_warfare_reserve_thrusters,Reserve Thrusters,graphics/secondInCommand/warfare/reserve_thrusters.png,1,second_in_command.skills.warfare.ReserveThrusters
+sc_warfare_stabilised_targeting,Stablised Targeting,graphics/secondInCommand/warfare/stabilised_targeting.png,1,second_in_command.skills.warfare.StablisedTargeting
+sc_warfare_immovable_object,Immovable Object,graphics/secondInCommand/warfare/immovable_object.png,1,second_in_command.skills.warfare.ImmovableObject
+sc_warfare_surefire_impact,Surefire Impact,graphics/secondInCommand/warfare/surefire_impact.png,1,second_in_command.skills.warfare.SurefireImpact
+sc_warfare_redundant_bays,Redundant Bays,graphics/secondInCommand/warfare/redundant_bays.png,1,second_in_command.skills.warfare.RedundantBays
+sc_warfare_tenacity,Tenacity,graphics/secondInCommand/warfare/tenacity.png,1,second_in_command.skills.warfare.Tenacity
+sc_warfare_overwhelming_force,Overwhelming Force,graphics/secondInCommand/warfare/overwhelming_force.png,1,second_in_command.skills.warfare.OverwhelmingForce
+sc_warfare_deflective_plating,Deflective Plating,graphics/secondInCommand/warfare/deflective_plating.png,1,second_in_command.skills.warfare.DeflectivePlating
+,,,,
 #Technology,,,,
 sc_technology_flux_regulation,Flux Regulation,graphics/secondInCommand/technology/flux_regulation.png,1,second_in_command.skills.technology.FluxRegulation
 sc_technology_countermeasures,Countermeasures,graphics/secondInCommand/technology/countermeasures.png,1,second_in_command.skills.technology.Countermeasures

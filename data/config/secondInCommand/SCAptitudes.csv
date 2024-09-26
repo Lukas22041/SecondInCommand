@@ -5,6 +5,7 @@ sc_tactical,Tactical,,1.0,"230,181,2,255","startingOption,",100,second_in_comman
 sc_management,Management,,1.0,"107,175,0,255","startingOption,",200,second_in_command.skills.management.AptitudeManagement
 sc_smallcraft,Smallcraft,,1.0,"203, 230, 2,255","startingOption,",300,second_in_command.skills.smallcraft.AptitudeSmallcraft
 sc_strikecraft,Strikecraft,,1.0,"2, 230, 139,255","startingOption,",400,second_in_command.skills.strikecraft.AptitudeStrikecraft
+sc_warfare,Warfare,,1.0,"224, 167, 88, 255","startingOption,",450,second_in_command.skills.warfare.AptitudeWarfare
 sc_technology,Technical,,1.0,"0,121,216,255","startingOption,",500,second_in_command.skills.technology.AptitudeTechnology
 sc_improvisation,Improvisation,,1.0,"181, 100, 2,255","startingOption,",600,second_in_command.skills.improvisation.AptitudeImprovisation
 sc_starfaring,Starfaring,sc_cat_logistical,1.0,"164, 0, 209,255","startingOption,",700,second_in_command.skills.starfaring.AptitudeStarfaring
