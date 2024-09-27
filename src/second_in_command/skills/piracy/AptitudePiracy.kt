@@ -36,8 +36,6 @@ class AptitudePiracy : SCBaseAptitudePlugin() {
         section2.addSkill("sc_piracy_provisional_replacements")
         addSection(section2)
 
-
-
     }
 
     override fun getMarketSpawnweight(market: MarketAPI): Float {

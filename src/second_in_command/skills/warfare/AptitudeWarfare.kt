@@ -1,8 +1,8 @@
 package second_in_command.skills.warfare
 
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.impl.campaign.ids.Factions
 import second_in_command.SCData
-import second_in_command.misc.baseOrModSpec
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCBaseAptitudePlugin
 
@@ -34,8 +34,15 @@ class AptitudeWarfare : SCBaseAptitudePlugin() {
 
     }
 
+    var factionsToPick = listOf(Factions.HEGEMONY, Factions.LUDDIC_CHURCH, Factions.LUDDIC_PATH)
+    var factionsNotToPick = listOf(Factions.TRITACHYON, Factions.OMEGA)
+
     override fun getNPCFleetSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
         var mult = 1f
+
+        if (factionsToPick.contains(fleet.faction.id)) mult *= 1.5f
+        if (factionsNotToPick.contains(fleet.faction.id)) mult *= 0.5f
+
         return mult
     }
 

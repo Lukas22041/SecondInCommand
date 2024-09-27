@@ -18,13 +18,24 @@ class SurefireImpact : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% missile damage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+30%% missile speed and hitpoints", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+30%% missile maneuverability", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
+        stats!!.missileWeaponDamageMult.modifyPercent(id, 10f)
 
+        stats.missileMaxSpeedBonus.modifyPercent(id, 30f)
+        stats.missileHealthBonus.modifyPercent(id, 30f)
+
+        stats.missileAccelerationBonus.modifyPercent(id, 30f)
+        stats.missileTurnAccelerationBonus.modifyPercent(id, 30f)
+        stats.missileTurnAccelerationBonus.modifyPercent(id, 30f)
+
+        stats.missileGuidance.modifyFlat(id, 0.1f)
 
     }
 

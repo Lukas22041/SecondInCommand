@@ -18,14 +18,18 @@ class StablisedTargeting : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% ballistic weapon damage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+20%% projectile speed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("-25%% weapon recoil", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+        stats!!.projectileSpeedMult.modifyPercent(id, 20f)
+        stats!!.ballisticWeaponDamageMult.modifyPercent(id, 10f)
 
-
-
+        stats!!.recoilDecayMult.modifyPercent(id, 25f)
+        stats!!.recoilPerShotMult.modifyMult(id, 0.75f)
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {

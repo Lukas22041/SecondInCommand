@@ -1,3 +1,20 @@
+Version 1.2.0
+Save Compatible with 1.1.x
+
+- Added the "Warfare" Aptitude, which comes with low-tech adjacent skills.
+- You can now Respecc Executive Officers at a cost of 4 story points per officer.
+  - This option mostly exists for Unique Officers, where finding a duplicate to specialise differently is impossible.
+
+- The "Manage" button is no longer blocked by the officer already being assigned or being incompatible with already assigned officers.
+- The "Automated Ships" skill now provides the 10% minimum deployment points effect from the base games version of Best of the Best.
+- "Neural Junction" now makes the player act as a 2x multiplier of automated points instead of 3x.
+- "Neural Junction" now provides automated ships piloted by the player with 15% more CR.
+- "Continous Repairs" now provides a higher chance to avoid d-mods on smaller ships.
+- "Continous Repairs" no longer repairs dmods on ships with the "Rugged Construction" hullmod.
+- Fixed the "Privateering" skills post-battle intel notification still refering to it with its old name.
+
+
+
 Version 1.1.8
 Save Compatible with 1.1.x
 
