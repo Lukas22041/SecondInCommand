@@ -425,12 +425,22 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
             plugin.onClose = {
                 if (selectedOfficer != null) {
                     var slot = data.getOfficersAssignedSlot(selectedOfficer!!)
-                    if (slot != null) {
+                    if (slot == slotId) {
                         menu.recreateAptitudeRow(subpanelParent, selectedOfficer, slot)
                     }
-                } else {
+                    /*else if (slot != null) {
+                        menu.recreateAptitudeRow(subpanelParent, selectedOfficer, slot)
+                    }*/
+                } /*else {
                     //Clear the slot if the officer was dismissed
                     menu.recreateAptitudeRow(subpanelParent, null, slotId)
+                }*/
+
+                //Clear Slots of dismissed officers
+                for (i in 0 ..2) {
+                    if (!data.getOfficersInFleet().contains(data.getOfficerInSlot(i))) {
+                        menu.recreateAptitudeRow(menu.rowParents.get(i)!!, null, i)
+                    }
                 }
 
             }

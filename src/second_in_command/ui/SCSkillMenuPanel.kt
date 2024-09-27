@@ -30,6 +30,8 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
     var height = 0f
     var isAtColony = false
 
+    var rowParents = HashMap<Int, CustomPanelAPI>()
+
     companion object {
         var crCost = 0.20f
     }
@@ -172,6 +174,8 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
         targetedElelement.addCustom(subpanel, 0f)
         /*var subelement = subpanel.createUIElement(width, 96f, false)
         subpanel.addUIElement(subelement)*/
+
+        rowParents.put(slotId, subpanel)
 
         recreateAptitudeRow(subpanel, officer, slotId)
     }
