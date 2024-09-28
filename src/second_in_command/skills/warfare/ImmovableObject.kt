@@ -20,7 +20,7 @@ class ImmovableObject : SCBaseSkillPlugin() {
 
         tooltip.addPara("+20%% repair speed for engines and weapons", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+30%% hitpoints for engines and weapons", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+300%% ship mass", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+100%% ship mass", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - Ship mass is primarily used for collision damage calculations", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "collision damage")
 
     }
@@ -36,7 +36,7 @@ class ImmovableObject : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI, variant: ShipVariantAPI, id: String?) {
-        ship.mass *= 3f
+        ship.mass += ship.mass
     }
 
     override fun onActivation(data: SCData) {

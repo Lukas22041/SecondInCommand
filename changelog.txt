@@ -1,5 +1,16 @@
+Version 1.2.2
+Save Compatible with 1.1.x & 1.2.x
+
+- Reduced "Iron Sight"s range increase to 10%, but gave it a 25% weapon repair speed increase in exchange.
+- Reduced the Mass from "Immoveable Object" increase to be a 2x mult instead.
+- Reduced "Deflective Platings" damage reduction from 60% to 50%.
+- Reduced "Tenacity"s effective armor increase to 75/100/125/150, based on hullsize.
+- Reduced "Surefire Impacts" increase in missile speed from 30% to 20%.
+
+
+
 Version 1.2.1
-Save Compatible with 1.1.x
+Save Compatible with 1.1.x & 1.2.x
 
 - Fixed the "Manage" button occasionaly causing the same officer to be on multiple slots at once (purely visual bug, though may cause issues if interacted with)
 

@@ -19,7 +19,8 @@ class SurefireImpact : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("+10%% missile damage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+30%% missile speed and hitpoints", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+20%% missile speed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+30%% missile hitpoints", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+30%% missile maneuverability", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
@@ -28,7 +29,7 @@ class SurefireImpact : SCBaseSkillPlugin() {
 
         stats!!.missileWeaponDamageMult.modifyPercent(id, 10f)
 
-        stats.missileMaxSpeedBonus.modifyPercent(id, 30f)
+        stats.missileMaxSpeedBonus.modifyPercent(id, 20f)
         stats.missileHealthBonus.modifyPercent(id, 30f)
 
         stats.missileAccelerationBonus.modifyPercent(id, 30f)

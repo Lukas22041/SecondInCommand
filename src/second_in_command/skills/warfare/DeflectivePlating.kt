@@ -18,7 +18,7 @@ class DeflectivePlating : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("At most once every 3 seconds per ship, single-hit hull damage above 500 points has the portion above 500 reduced by 60%%", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("At most once every 3 seconds per ship, single-hit hull damage above 500 points has the portion above 500 reduced by 50%%", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
@@ -49,7 +49,7 @@ class DeflectivePlating : SCBaseSkillPlugin() {
 class DeflectivePlatingListener(var ship: ShipAPI) : DamageTakenModifier, AdvanceableListener {
 
     var damageThreshold = 500f
-    var damageReduction = 60f
+    var damageReduction = 50f
     var secondsPerProc = 3f
 
     var sinceProc = secondsPerProc + 1f
