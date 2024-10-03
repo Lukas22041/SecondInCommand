@@ -36,7 +36,11 @@ class ImmovableObject : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI, variant: ShipVariantAPI, id: String?) {
+
+        if (ship.customData.containsKey("sc_immoveable_object")) return
         ship.mass += ship.mass
+        ship.setCustomData("sc_immoveable_object", true)
+
     }
 
     override fun onActivation(data: SCData) {

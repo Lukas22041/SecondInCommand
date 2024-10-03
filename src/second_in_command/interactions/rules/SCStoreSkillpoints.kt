@@ -21,7 +21,8 @@ class SCStoreSkillpoints : BaseCommandPlugin() {
         data.characterData.person.stats.points = 0
 
         data.addScript {
-            data.characterData.person.stats.points = points
+            //data.characterData.person.stats.points = points
+            data.characterData.person.stats.points += points
         }
 
 
