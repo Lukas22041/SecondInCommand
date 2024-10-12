@@ -1,3 +1,14 @@
+Version 1.2.3
+Save Compatible
+
+- Replaced the Rare Salvage buff from "Expedition" with a normal salvage buff, and increased some of the stat increases it provides.
+- The innitial officer selection now actually shows an officers category.
+- Fixed an issue that made aptitudes not ordered correctly in the bar events panel.
+- Fixed an issue that made some custom starts not provide their full amount of skillpoints.
+- Fixed a crash with the "Overwhelming Force" skill
+
+
+
 Version 1.2.2
 Save Compatible with 1.1.x & 1.2.x
 

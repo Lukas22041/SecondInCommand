@@ -17,19 +17,20 @@ class Expedition : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+25%% resources - including rare items, such as blueprints - recovered from abandoned stations and derelicts", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+20%% cargo and fuel capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("-15%% fuel usage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+25%% resources - but not rare items, such as blueprints - recovered from abandoned stations and derelicts", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        //tooltip.addPara("+25%% resources - including rare items, such as blueprints - recovered from abandoned stations and derelicts", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+25%% cargo and fuel capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("-20%% fuel usage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("-10%% monthly supply consumption for ship maintenance", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
         stats!!.suppliesPerMonth.modifyMult(id, 0.90f)
-        stats!!.fuelUseMod.modifyMult(id, 0.85f)
+        stats!!.fuelUseMod.modifyMult(id, 0.80f)
 
-        stats!!.cargoMod.modifyPercent(id, 20f)
-        stats!!.fuelMod.modifyPercent(id, 20f)
+        stats!!.cargoMod.modifyPercent(id, 25f)
+        stats!!.fuelMod.modifyPercent(id, 25f)
 
     }
 
@@ -38,15 +39,15 @@ class Expedition : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-        data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_INCLUDES_RARE).modifyFlat("sc_expedition", 0.25f, "Salvaging Skill")
+        data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_NOT_RARE).modifyFlat("sc_expedition", 0.25f, "Salvaging Skill")
     }
 
     override fun onActivation(data: SCData) {
-        data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_INCLUDES_RARE).modifyFlat("sc_expedition", 0.25f, "Salvaging Skill")
+        data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_NOT_RARE).modifyFlat("sc_expedition", 0.25f, "Salvaging Skill")
     }
 
     override fun onDeactivation(data: SCData) {
-        data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_INCLUDES_RARE).unmodify("sc_expedition")
+        data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_NOT_RARE).unmodify("sc_expedition")
 
     }
 

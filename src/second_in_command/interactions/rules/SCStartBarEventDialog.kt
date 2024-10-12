@@ -13,12 +13,14 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
 import second_in_command.SCUtils
+import second_in_command.misc.addTooltip
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.*
 import second_in_command.ui.tooltips.OfficerTooltipCreator
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
+import java.awt.Color
 
 class SCStartBarEventDialog : BaseCommandPlugin() {
     override fun execute(ruleId: String?, dialog: InteractionDialogAPI, params: MutableList<Misc.Token>?, memoryMap: MutableMap<String, MemoryAPI>?): Boolean {
@@ -179,7 +181,7 @@ class SCBarDelegatePanel(var plugin: SCStartBarEventDialogDelegate, var officers
 
         var height = panel!!.position.height - 25
 
-        var heightCap = 70f
+        var heightCap = 40f
 
         var scrollerPanel = panel.createCustomPanel(width, height - heightCap, null)
         panel.addComponent(scrollerPanel)
@@ -188,14 +190,18 @@ class SCBarDelegatePanel(var plugin: SCStartBarEventDialogDelegate, var officers
 
         var data = SCUtils.getPlayerData()
 
-
+        var officers = officers.sortedWith(compareBy({ !it.isAssigned() }, { it.getAptitudeSpec().order }))
         for (officer in officers) {
 
             var aptitudeSpec = SCSpecStore.getAptitudeSpec(officer.aptitudeId)
             var aptitudePlugin = aptitudeSpec!!.getPlugin()
 
+            var categories = aptitudePlugin.categories
+
+            var extra = 0f
+            if (categories.isNotEmpty()) extra += 20f
             scrollerElement.addSpacer(10f)
-            var officerElement = scrollerElement.addLunaElement(width - 10, 96f + 36).apply {
+            var officerElement = scrollerElement.addLunaElement(width - 10, 96f + 36 + extra).apply {
                 enableTransparency = true
                 backgroundAlpha = 0.025f
                 borderAlpha = 0.1f
@@ -371,6 +377,67 @@ class SCBarDelegatePanel(var plugin: SCStartBarEventDialogDelegate, var officers
                 }
             }
 
+            if (categories.isNotEmpty()) {
+
+                var anchor = inner.addLunaElement(20f, 20f).apply {
+                    renderBackground = false
+                    renderBorder = false
+                }
+                anchor.elementPanel.position.belowLeft(officerPickerElement.elementPanel, 8f)
+
+                var categoryNames = ArrayList<String>()
+                var categoryColors = ArrayList<Color>()
+                var categoryText = ""
+
+                for (category in categories) {
+                    categoryNames.add(category.name)
+                    categoryColors.add(Misc.getTextColor())
+
+                    categoryText += "${category.name}, "
+                }
+
+                categoryText = categoryText.trim()
+                categoryText = categoryText.trim { it == ',' }
+
+                var extraS = "y"
+                if (categories.size >= 2) extraS = "ies"
+
+                var label = inner.addPara("Categor$extraS: $categoryText", 0f, Misc.getGrayColor(), Misc.getHighlightColor())
+                //label.position.rightOfMid(categoryHelp.elementPanel, 5f)
+                label.position.rightOfMid(anchor.elementPanel, -16f)
+
+                label.setHighlight("Categor$extraS:",*categoryNames.toTypedArray())
+                label.setHighlightColors(aptitudePlugin.color, *categoryColors.toTypedArray())
+
+                var length = label.computeTextWidth(label.text)
+
+                var categoryBackground = inner.addLunaElement(length + 8 + 4, 24f).apply {
+                    enableTransparency = true
+                    renderBackground = false
+                    renderBorder = false
+                    /*  backgroundAlpha = 0.025f
+                      borderAlpha = 0.4f
+                      backgroundColor = aptitudePlugin.color
+                      borderColor = aptitudePlugin.color*/
+                }
+
+                categoryBackground.elementPanel.position.rightOfMid(anchor.elementPanel, -16f - 4)
+
+                categoryBackground.onClick {
+                    Global.getSoundPlayer().playUISound("ui_button_pressed", 1f, 1f)
+                    selectedOfficer = officer
+                }
+
+                inner.addTooltip(categoryBackground.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 250f) { tooltip ->
+                    tooltip.addPara("Some aptitudes are part of a category. You can not assign multiple officers of the same category at the same time.", 0f,
+                        Misc.getTextColor(), Misc.getHighlightColor(), "category", "can not assign two officers of the same category at the same time")
+                }
+
+                /*     var categoryHelp = HelpIconElement(Misc.getBasePlayerColor(), inner, 20f, 20f)
+                     categoryHelp.elementPanel.position.rightOfMid(anchor.elementPanel, length - 20f + 4)*/
+            }
+
+            //Para
             var paraAnchorElement = inner.addLunaElement(0f, 0f)
             paraAnchorElement.position.aboveLeft(originSkillElement.elementPanel, 6f)
 
@@ -396,7 +463,7 @@ class SCBarDelegatePanel(var plugin: SCStartBarEventDialogDelegate, var officers
             addText("Confirm")
             centerText()
             blink = false
-            position.inTR(150f, 14f)
+            position.inTR(150f + 35, 14f)
         }
 
         confirmButton.advance {
@@ -430,6 +497,19 @@ class SCBarDelegatePanel(var plugin: SCStartBarEventDialogDelegate, var officers
         cancelButton.onClick {
             cancelButton.playClickSound()
             callbacks!!.dismissDialog()
+        }
+
+        var helpIcon = HelpIconElement(Misc.getBasePlayerColor(), buttonElement, 35f, 35f)
+        helpIcon.elementPanel.position.rightOfMid(cancelButton.elementPanel, 6f)
+
+        buttonElement.addTooltip(helpIcon.elementPanel, TooltipMakerAPI.TooltipLocation.ABOVE, 400f) { tooltip ->
+            tooltip.addPara("Executive Officers are a different class of officer than your standard ship piloting one. Unlike those, they specify in providing fleet-wide effects. Only 3 of them can be active at once. \n\n" +
+                    "You can occasionally find them on a colonies comm-directory, but they may also appear in other places, like cryo-pods on derelict ships. \n\n" +
+                    "" +
+                    "You can not have multiple officers of the same aptitude active at once. " +
+                    "Additionally, some officers aptitudes are part of a category. Officers of the same category, for example \"Logistical\", can also not be used together. ",
+                0f, Misc.getTextColor(), Misc.getHighlightColor(), "Executive Officers", "comm-directory", "cryo-pods",
+                "can not have multiple officers of the same aptitude active", "category", "Logistical")
         }
 
     }

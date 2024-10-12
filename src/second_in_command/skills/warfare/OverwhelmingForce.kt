@@ -37,7 +37,7 @@ class OverwhelmingForce : SCBaseSkillPlugin() {
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
 
-        var engine = Global.getCombatEngine()
+        var engine = Global.getCombatEngine() ?: return
         if (engine.listenerManager.getListeners(OverwhelmingForceDMGListener::class.java).none { (it as OverwhelmingForceDMGListener).side == ship!!.owner }) {
             engine.listenerManager.addListener(OverwhelmingForceDMGListener(ship!!.owner))
         }

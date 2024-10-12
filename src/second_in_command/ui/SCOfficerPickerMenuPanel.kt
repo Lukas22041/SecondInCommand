@@ -473,14 +473,14 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
          helpIcon.elementPanel.position.rightOfMid(cancelButton.elementPanel, 6f)
 
             buttonElement.addTooltip(helpIcon.elementPanel, TooltipMakerAPI.TooltipLocation.ABOVE, 400f) { tooltip ->
-                tooltip.addPara("This screen can be used to assign, dismiss or re-name officers under your command. \n\n" +
+                tooltip.addPara("This screen can be used to assign, dismiss or re-name executive officers under your command. \n\n" +
                         "" +
-                        "Executive Officers are a different class of officer than your standard ship piloting one. " +
+                        "Executive Officers are a different class of officer than your standard ship piloting one. Unlike those, they specify in providing fleet-wide effects. Only 3 of them can be active at once. \n" + "\n" +
                         "You can occasionally find them on a colonies comm-directory, but they may also appear in other places, like cryo-pods on derelict ships. \n\n" +
                         "" +
-                        "You can not have multiple officers of the same aptitude active at once. \n\n" +
+                        "You can not have multiple officers of the same aptitude active at once. " +
                         "Additionally, some officers aptitudes are part of a category. Officers of the same category, for example \"Logistical\", can also not be used together. ",
-                    0f, Misc.getTextColor(), Misc.getHighlightColor(), "assign", "dismiss", "re-name", "comm-directory", "cryo-pods",
+                    0f, Misc.getTextColor(), Misc.getHighlightColor(), "assign", "dismiss", "re-name", "Executive Officers","comm-directory", "cryo-pods",
                     "can not have multiple officers of the same aptitude active", "category", "Logistical")
             }
     }
