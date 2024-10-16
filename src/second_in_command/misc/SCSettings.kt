@@ -10,7 +10,7 @@ class SCSettings : LunaSettingsListener {
 
     companion object {
 
-        var maxLevel = 5
+        var maxLevel = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_officerMaxLevel")!! //Grabs Max level as an Int from Lunalib Config (I think? I don't actually know Java, Kotlin or anything that's going on right now. Where am i again?)
 
         var xpPerLevel = listOf<Float>(
            /* 0f, //LV0
@@ -24,6 +24,14 @@ class SCSettings : LunaSettingsListener {
             150000f, //LV2
             450000f, //LV3
             1350000f, //LV4
+            4050000f, //LV5 //Assuming that the x3 modifier per level starting at LV3 stays true
+            12150000f, //LV6
+            36450000f, //LV7
+            109350000f, //LV8
+            328050000f, //LV9
+            984150000f  //LV10 //Unsure if this is needed since it cut off at Level 4 by default.
+            // A better idea might be to have some math that goes: "LVCost = LVCost_Base * (3^level)"
+            //Idk how to implement that though, like I said, I don't actually know any of these languages. Idek if I'll be able to get the src to compile properly lel
 
           /*  0f, //LV0
             80000f, //LV1
