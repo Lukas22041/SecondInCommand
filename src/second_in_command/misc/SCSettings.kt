@@ -24,7 +24,7 @@ class SCSettings : LunaSettingsListener {
             150000f, //LV2
             450000f, //LV3
             1350000f, //LV4
-            4050000f, //LV5 //Assuming that the x3 modifier per level starting at LV3 stays true
+            4050000f, //LV5 //Assuming that the x3 modifier per level starting at LV3 stays true from here on
             12150000f, //LV6
             36450000f, //LV7
             109350000f, //LV8
