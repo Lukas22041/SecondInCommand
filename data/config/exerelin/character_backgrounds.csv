@@ -1,0 +1,2 @@
+id,name,shortDescription,longDescription,order,iconPath,plugin
+sc_associates,Associates,,,40,graphics/secondInCommand/background_associates.png,second_in_command.misc.backgrounds.AssociatesBackground

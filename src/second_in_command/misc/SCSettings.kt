@@ -10,7 +10,12 @@ class SCSettings : LunaSettingsListener {
 
     companion object {
 
-        var maxLevel = 5
+        var baseMaxLevel = 5
+
+        fun getMaxLevel() : Int  {
+            var level = baseMaxLevel
+            return level
+        }
 
         var xpPerLevel = listOf<Float>(
            /* 0f, //LV0
@@ -24,6 +29,8 @@ class SCSettings : LunaSettingsListener {
             150000f, //LV2
             450000f, //LV3
             1350000f, //LV4
+
+            /*2500000f, //LV5, “Associates” Background only.*/
 
           /*  0f, //LV0
             80000f, //LV1

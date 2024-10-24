@@ -3,6 +3,7 @@ package second_in_command.specs
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.characters.PersonAPI
 import second_in_command.SCData
+import second_in_command.SCUtils
 import second_in_command.misc.SCSettings
 
 class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
@@ -61,7 +62,7 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
         return list
     }
 
-    fun getMaxLevel() : Int = SCSettings.maxLevel
+    fun getMaxLevel() : Int = SCSettings.getMaxLevel()
 
     fun getXPMult() : Float {
         var mult = 1f
@@ -77,6 +78,8 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
         if (playerLevel >= 6) levelMult += 0.1f
         if (playerLevel >= 8) levelMult += 0.2f
         mult *= levelMult
+
+        if (SCUtils.isAssociatesBackgroundActive()) mult *= 0.70f; //Reduces XP for “Associates” background
 
         if (!isAssigned()) mult *= inactiveXPMult
         return mult

@@ -4,6 +4,8 @@ import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.BaseEveryFrameCombatPlugin
 import com.fs.starfarer.api.input.InputEventAPI
+import second_in_command.SCUtils
+import second_in_command.skills.strikecraft.scripts.SynchronisedSkillScript
 import second_in_command.skills.synchronised.scripts.SynchronisedScript
 
 class CombatHandler : BaseEveryFrameCombatPlugin() {
@@ -20,8 +22,23 @@ class CombatHandler : BaseEveryFrameCombatPlugin() {
         }
     }
 
+    var addedSynchronised = false;
+
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?) {
         super.advance(amount, events)
+
+        var engine = Global.getCombatEngine()
+        if (engine != null) {
+            if (Global.getCurrentState() != GameState.TITLE) {
+
+                if (!addedSynchronised && SCUtils.getPlayerData()?.isSkillActive("sc_strikecraft_synchronised") == true) {
+                    addedSynchronised = true;
+                    engine.addPlugin(SynchronisedSkillScript())
+                }
+
+            }
+        }
+
 
     }
 

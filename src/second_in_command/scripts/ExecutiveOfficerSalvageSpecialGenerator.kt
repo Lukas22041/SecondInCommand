@@ -11,6 +11,7 @@ import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
 import org.magiclib.kotlin.getSalvageSpecial
 import org.magiclib.kotlin.setSalvageSpecial
+import second_in_command.SCUtils
 import second_in_command.interactions.ExecutiveOfficerRescueSpecial
 import second_in_command.specs.SCAptitudeSpec
 import second_in_command.specs.SCOfficer
@@ -20,6 +21,8 @@ import second_in_command.specs.SCSpecStore
 class ExecutiveOfficerSalvageSpecialGenerator {
 
     fun generate() {
+
+        if (SCUtils.isAssociatesBackgroundActive()) return //Don't add executives when this background is active
 
         var entitiesInSector = Global.getSector().starSystems.flatMap { it.customEntities }
 

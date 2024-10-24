@@ -1,3 +1,13 @@
+Version 1.2.4
+Save Compatible
+
+- Added a Nexerelin Background that starts you off with 3 random officers, which you can never replace.
+- The Strikecraft Aptitude now allows picking two of its capstones instead of just one.
+- Added the "Synchronised" skill to Strikecraft, a skill that lets the player link to their own fighters, piloted fighters gain several boosts.
+- Fixed a crash with the Re-Entry skill
+
+
+
 Version 1.2.3
 Save Compatible
 

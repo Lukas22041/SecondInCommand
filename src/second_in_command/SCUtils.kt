@@ -7,6 +7,7 @@ import com.fs.starfarer.api.campaign.InteractionDialogAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import exerelin.campaign.backgrounds.CharacterBackgroundUtils
 import lunalib.lunaExtensions.addLunaElement
 import second_in_command.specs.SCBaseSkillPlugin
 import second_in_command.specs.SCOfficer
@@ -188,6 +189,10 @@ object SCUtils {
         return bonus
     }
 
+    fun isAssociatesBackgroundActive() : Boolean {
+        if (!Global.getSettings().modManager.isModEnabled("nexerelin")) return false
+        return CharacterBackgroundUtils.isBackgroundActive("sc_associates")
+    }
 
     @JvmStatic
     fun showSkillOverview(dialog: InteractionDialogAPI, officer: SCOfficer) {

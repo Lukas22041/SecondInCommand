@@ -4,6 +4,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.ui.BaseTooltipCreator
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCUtils
 import second_in_command.specs.SCOfficer
 import second_in_command.ui.SCSkillMenuPanel
 import second_in_command.ui.elements.OfficerXPBar
@@ -36,7 +37,10 @@ class OfficerTooltipCreator(var officer: SCOfficer?, var isAtColony: Boolean, va
             tooltip.addSpacer(10f)
 
             tooltip!!.addPara("Left-click to select an executive officer to assign. Right-click to un-assign officers.",
-                0f, Misc.getTextColor(), Misc.getHighlightColor(), "Left-click", "Right-click")
+                    0f, Misc.getTextColor(), Misc.getHighlightColor(), "Left-click", "Right-click")
+
+
+
 
 
             return
@@ -91,9 +95,11 @@ class OfficerTooltipCreator(var officer: SCOfficer?, var isAtColony: Boolean, va
         tooltip.addPara("All officers gain experience from battles. Inactive officers also earn experience, but at $inactiveGain%% of the normal rate.", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "gain experience from battles" ,"$inactiveGain%")
 
-        tooltip.addSpacer(10f)
 
-        addCRWarning(tooltip)
+        if (!SCUtils.isAssociatesBackgroundActive())  {
+            tooltip.addSpacer(10f)
+            addCRWarning(tooltip)
+        }
 
         /* if (officer!!.getAptitudePlugin().getRequiresDock()) {
              tooltip.addSpacer(10f)
@@ -116,8 +122,17 @@ class OfficerTooltipCreator(var officer: SCOfficer?, var isAtColony: Boolean, va
             label.setHighlightColors(Misc.getHighlightColor(), Misc.getStoryOptionColor(), Misc.getNegativeHighlightColor())
 
             tooltip.addSpacer(10f)
-            tooltip!!.addPara("Left-click to select an executive officer to assign. Right-click to un-assign officers.",
-                0f, Misc.getTextColor(), Misc.getHighlightColor(), "Left-click", "Right-click")
+
+
+            if (!SCUtils.isAssociatesBackgroundActive()) {
+                tooltip!!.addPara("Left-click to select an executive officer to assign. Right-click to un-assign officers.",
+                    0f, Misc.getTextColor(), Misc.getHighlightColor(), "Left-click", "Right-click")
+            } else {
+                tooltip!!.addPara("Due to the background you have chosen, this officer can not be removed or replaced. Instead clicking on their portrait will allow you to change their name and portrait.",
+                    0f, Misc.getTextColor(), Misc.getHighlightColor(), "this officer can not be removed or replaced","name", "portrait")
+            }
+
+
         }
 
         tooltip.addSpacer(30f)

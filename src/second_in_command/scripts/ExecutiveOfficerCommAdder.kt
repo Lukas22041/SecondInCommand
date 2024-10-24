@@ -29,6 +29,9 @@ class ExecutiveOfficerCommAdder : EconomyTickListener {
     }
 
     override fun reportEconomyMonthEnd() {
+
+        if (SCUtils.isAssociatesBackgroundActive()) return //Don't add executives when this background is active
+
         var markets = Global.getSector().economy.marketsCopy
 
         for ((entry, market) in previousPeople) {

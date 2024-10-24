@@ -2,7 +2,6 @@ package second_in_command.ui
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.RepLevel
-import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.CustomPanelAPI
@@ -10,14 +9,15 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
+import lunalib.lunaExtensions.addLunaTextfield
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.input.Keyboard
 import second_in_command.SCData
-import second_in_command.misc.clearChildren
-import second_in_command.misc.getHeight
-import second_in_command.misc.getWidth
+import second_in_command.SCUtils
+import second_in_command.misc.*
 import second_in_command.specs.*
 import second_in_command.ui.elements.*
+import second_in_command.ui.panels.AssosciatesManagePanelPlugin
 import second_in_command.ui.tooltips.OfficerTooltipCreator
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
 
@@ -210,6 +210,12 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
                 officerPickerElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
                 return@onClick
             }*/
+
+            if (SCUtils.isAssociatesBackgroundActive()) {
+                openResrictedOfficerManagementPanel(panel, subpanelParent, officer!!)
+                officerPickerElement.playClickSound()
+                return@onClick
+            }
 
             if (it.isRMBEvent) {
 
@@ -615,6 +621,119 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
             Global.getSector().campaignUI.messageDisplay.addMessage("Applied a $cost% penalty to all ships combat-readiness due to changing officers outside of the range of a colony.",
             Misc.getBasePlayerColor(), "$cost%", Misc.getHighlightColor(), )
         }
+    }
+
+    fun openResrictedOfficerManagementPanel(panel: CustomPanelAPI, subpanelParent: CustomPanelAPI, officer: SCOfficer) {
+        var plugin = AssosciatesManagePanelPlugin(panel)
+
+        var width = 316f
+        var height = 170f
+
+        var managementPanel = this.panel.createCustomPanel(width, height, plugin)
+        plugin.panel = managementPanel
+        panel.addComponent(managementPanel)
+        managementPanel.position.inMid()
+
+        var element = managementPanel.createUIElement(width, height, false)
+        managementPanel.addUIElement(element)
+
+        var portraitElement = element.addLunaElement(128f, 128f)
+        portraitElement.position.inTL(20f, 20f)
+
+        portraitElement.render {
+            var path = officer.person.portraitSprite
+            var sprite = Global.getSettings().getAndLoadSprite(path)
+
+            sprite.setSize(128f, 128f)
+            sprite.alphaMult = 1f
+            sprite.setNormalBlend()
+            sprite.render(portraitElement.elementPanel.position.x, portraitElement.elementPanel.position.y)
+
+            if (portraitElement.isHovering) {
+                sprite.setAdditiveBlend()
+                sprite.alphaMult = 0.3f
+                sprite.render(portraitElement.elementPanel.position.x, portraitElement.elementPanel.position.y)
+            }
+        }
+
+        portraitElement.onHoverEnter {
+            portraitElement.playScrollSound()
+        }
+
+        portraitElement.onClick {
+            portraitElement.playClickSound()
+            SCOfficerPickerMenuPanel.openPortraitPicker(officer.person, this)
+        }
+
+        element.addTooltip(portraitElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 350f ) {
+            it.addPara("Click to change the officers portrait. You can pick from any portrait that is available for the player at the start of the game.", 0f)
+        }
+
+        var nameElement = element.addLunaTextfield(officer.person.nameString, false, 128f, 30f).apply {
+            enableTransparency = true
+        }
+        //nameElement.position.inTMid(20f)
+        nameElement.position.rightOfTop(portraitElement.elementPanel, 20f)
+
+        nameElement.advance {
+            var officerName = officer.person.nameString
+            if (officerName != nameElement.getText()) {
+                var space = nameElement.getText().indexOf(" ")
+
+                if (space == -1) {
+                    officer.person.name.first = nameElement.getText()
+                } else {
+                    var first = nameElement.getText().substring(0, space)
+                    var last = nameElement.getText().substring(space+1, nameElement.getText().length)
+                    var fullname = "$first $last"
+
+                    if (last == "") {
+                        fullname = first
+                    }
+
+                    officer.person.name.first = first
+                    officer.person.name.last = last
+                    //nameElement.changePara(fullname)
+
+                }
+            }
+        }
+
+        var dismissButton = ConfirmCancelButton(Misc.getGrayColor(), element, 128f, 30f).apply {
+            addText("Dismiss")
+            centerText()
+            blink = false
+            position.belowLeft(nameElement.elementPanel, 20f)
+        }
+
+        dismissButton.onClick {
+            dismissButton.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
+        }
+
+        element.addTooltip(dismissButton.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 300f) { tooltip ->
+            tooltip.addPara("This officer can not be removed from the fleet.",
+                0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
+        }
+
+        var closeButton = ConfirmCancelButton(Misc.getGrayColor(), element, 128f, 30f).apply {
+            addText("Close")
+            centerText()
+            blink = false
+            position.belowLeft(dismissButton.elementPanel, 20f)
+        }
+
+        closeButton.onClick {
+            closeButton.playClickSound()
+            plugin.close()
+        }
+
+        plugin.onClose = {
+            var slot = data.getOfficersAssignedSlot(officer!!)
+
+            recreateAptitudeRow(subpanelParent, officer, slot!!)
+
+        }
+
     }
 
 }

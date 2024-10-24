@@ -35,6 +35,90 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
     var lastScroller = 0f
 
+    companion object {
+        fun openPortraitPicker(officer: PersonAPI, menu: SCSkillMenuPanel) {
+            var plugin = BackgroundPanelPlugin(menu.panel)
+
+            var width = 530f
+            var height = 500f
+
+            var portraitPanel = menu.panel.createCustomPanel(width, height, plugin)
+            plugin.panel = portraitPanel
+            menu.panel.addComponent(portraitPanel)
+            portraitPanel.position.inMid()
+
+            var element = portraitPanel!!.createUIElement(width, height, true)
+            element.position.inTL(0f, 0f)
+
+            var lastElement: UIPanelAPI? = null
+            var lastRowElement: UIPanelAPI? = null
+            var elementPerRow = 5
+            var currentCount = 0
+            var size = 96f
+
+            var portraits = ArrayList<String>()
+            portraits += Global.getSector().playerFaction.factionSpec.getAllPortraits(FullName.Gender.MALE)
+            portraits += Global.getSector().playerFaction.factionSpec.getAllPortraits(FullName.Gender.FEMALE)
+            portraits = portraits.distinct() as ArrayList<String>
+
+            for (portrait in portraits) {
+
+                var luna = element.addLunaSpriteElement(portrait, LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, size, 0f).apply {
+                    enableTransparency = true
+                    width = 0f
+                    height = 0f
+                    getSprite().alphaMult = 0.6f
+
+                    advance {
+                        if (isHovering) {
+
+                            getSprite().alphaMult = 1f
+                        }
+                        else {
+
+                            getSprite().alphaMult = 0.7f
+                        }
+                    }
+
+                    onClick {
+                        plugin.close()
+                        officer.portraitSprite = portrait
+                        playClickSound()
+                    }
+
+                    onHoverEnter {
+                        playScrollSound()
+                    }
+                }
+
+                luna.position.setSize(size, size)
+                luna.getSprite().setSize(size, size)
+
+                if (currentCount == 0) {
+                    element.addSpacer(size + 10f)
+                    if (lastRowElement != null) {
+                        luna.elementPanel.position.belowLeft(lastRowElement, 10f)
+                    }
+                    lastRowElement = luna.elementPanel
+                }
+                else {
+                    luna.elementPanel.position.rightOfMid(lastElement!!, 10f)
+                }
+
+                currentCount++
+
+                if (currentCount == elementPerRow) {
+                    currentCount = 0
+                }
+
+                lastElement = luna.elementPanel
+            }
+
+            portraitPanel.addUIElement(element)
+
+        }
+    }
+
     fun init() {
         recreatePanel()
 
@@ -525,7 +609,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
         portraitElement.onClick {
             portraitElement.playClickSound()
-            openPortraitPicker(officer.person)
+            openPortraitPicker(officer.person, menu)
         }
 
         element.addTooltip(portraitElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 350f ) {
@@ -600,87 +684,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
     }
 
-    fun openPortraitPicker(officer: PersonAPI) {
-        var plugin = BackgroundPanelPlugin(menu.panel)
 
-        var width = 530f
-        var height = 500f
-
-        var portraitPanel = menu.panel.createCustomPanel(width, height, plugin)
-        plugin.panel = portraitPanel
-        menu.panel.addComponent(portraitPanel)
-        portraitPanel.position.inMid()
-
-        var element = portraitPanel!!.createUIElement(width, height, true)
-        element.position.inTL(0f, 0f)
-
-        var lastElement: UIPanelAPI? = null
-        var lastRowElement: UIPanelAPI? = null
-        var elementPerRow = 5
-        var currentCount = 0
-        var size = 96f
-
-        var portraits = ArrayList<String>()
-        portraits += Global.getSector().playerFaction.factionSpec.getAllPortraits(FullName.Gender.MALE)
-        portraits += Global.getSector().playerFaction.factionSpec.getAllPortraits(FullName.Gender.FEMALE)
-        portraits = portraits.distinct() as ArrayList<String>
-
-        for (portrait in portraits) {
-
-            var luna = element.addLunaSpriteElement(portrait, LunaSpriteElement.ScalingTypes.STRETCH_SPRITE, size, 0f).apply {
-                enableTransparency = true
-                width = 0f
-                height = 0f
-                getSprite().alphaMult = 0.6f
-
-                advance {
-                    if (isHovering) {
-
-                        getSprite().alphaMult = 1f
-                    }
-                    else {
-
-                        getSprite().alphaMult = 0.7f
-                    }
-                }
-
-                onClick {
-                    plugin.close()
-                    officer.portraitSprite = portrait
-                    playClickSound()
-                }
-
-                onHoverEnter {
-                    playScrollSound()
-                }
-            }
-
-            luna.position.setSize(size, size)
-            luna.getSprite().setSize(size, size)
-
-            if (currentCount == 0) {
-                element.addSpacer(size + 10f)
-                if (lastRowElement != null) {
-                    luna.elementPanel.position.belowLeft(lastRowElement, 10f)
-                }
-                lastRowElement = luna.elementPanel
-            }
-            else {
-                luna.elementPanel.position.rightOfMid(lastElement!!, 10f)
-            }
-
-            currentCount++
-
-            if (currentCount == elementPerRow) {
-                currentCount = 0
-            }
-
-            lastElement = luna.elementPanel
-        }
-
-        portraitPanel.addUIElement(element)
-
-    }
 
     fun selectOfficer(officer: SCOfficer) {
 

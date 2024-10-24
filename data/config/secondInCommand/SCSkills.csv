@@ -47,7 +47,9 @@ sc_strikecraft_system_proficiency,System Proficiency,graphics/secondInCommand/st
 sc_strikecraft_swarm_deployment,Swarm Deployment,graphics/secondInCommand/strikecraft/swarm_deployment.png,1,second_in_command.skills.strikecraft.SwarmDeployment
 sc_strikecraft_reconfiguration,Reconfiguration,graphics/secondInCommand/strikecraft/reconfiguration.png,,second_in_command.skills.strikecraft.Reconfiguration
 sc_strikecraft_advanced_maneuvers,Advanced Maneuvers,graphics/secondInCommand/strikecraft/advanced_maneuvers.png,2,second_in_command.skills.strikecraft.AdvancedManeuvers
+sc_strikecraft_synchronised,Synchronised,graphics/secondInCommand/strikecraft/synchronised.png,,second_in_command.skills.strikecraft.Synchronised
 sc_strikecraft_barrage,Barrage,graphics/secondInCommand/strikecraft/barrage.png,2,second_in_command.skills.strikecraft.Barrage
+,,,,
 ,,,,
 #Technology,,,,
 sc_technology_flux_regulation,Flux Regulation,graphics/secondInCommand/technology/flux_regulation.png,1,second_in_command.skills.technology.FluxRegulation

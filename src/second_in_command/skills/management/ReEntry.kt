@@ -26,7 +26,7 @@ class ReEntry : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
-        var time = Global.getCombatEngine().getTotalElapsedTime(false)
+        var time = Global.getCombatEngine()?.getTotalElapsedTime(false) ?: return
 
         if (time >= 60 && Global.getCombatEngine()?.ships?.contains(ship) == false) {
             ship!!.mutableStats.maxSpeed.modifyFlat("sc_re_entry", 75f)

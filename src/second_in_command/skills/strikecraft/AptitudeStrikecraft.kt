@@ -23,9 +23,10 @@ class AptitudeStrikecraft : SCBaseAptitudePlugin() {
         section1.addSkill("sc_strikecraft_swarm_deployment")
         addSection(section1)
 
-        var section2 = SCAptitudeSection(false, 4, "leadership4")
+        var section2 = SCAptitudeSection(true, 3, "leadership4")
         section2.addSkill("sc_strikecraft_reconfiguration")
         section2.addSkill("sc_strikecraft_advanced_maneuvers")
+        section2.addSkill("sc_strikecraft_synchronised")
         section2.addSkill("sc_strikecraft_barrage")
         addSection(section2)
 
