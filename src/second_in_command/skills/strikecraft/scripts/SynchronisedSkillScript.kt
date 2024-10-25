@@ -185,8 +185,9 @@ class SynchronisedSkillScript : BaseEveryFrameCombatPlugin() {
             if (replenishedShips.contains(current) && !deplenishedShips.contains(current)) {
                 deplenishedShips.add(new)
                 for (weapon in current.allWeapons) {
-                    weapon.ammo -= weapon.spec.maxAmmo
-                    weapon.ammo = MathUtils.clamp(weapon.ammo, 0, Int.MAX_VALUE) //Make sure it doesn't get below 0
+                    /*weapon.ammo -= weapon.spec.maxAmmo
+                    weapon.ammo = MathUtils.clamp(weapon.ammo, 0, Int.MAX_VALUE) //Make sure it doesn't get below 0*/
+                    weapon.ammo = MathUtils.clamp(weapon.ammo, 0, weapon.maxAmmo)
                 }
             }
         }
