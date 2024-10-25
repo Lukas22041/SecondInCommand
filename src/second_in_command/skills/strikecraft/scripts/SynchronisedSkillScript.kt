@@ -31,6 +31,7 @@ class SynchronisedSkillScript : BaseEveryFrameCombatPlugin() {
     var alpha = 0f
 
     var replenishedShips = ArrayList<ShipAPI>()
+    var deplenishedShips = ArrayList<ShipAPI>()
 
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?) {
         interval.advance(amount)
@@ -178,6 +179,17 @@ class SynchronisedSkillScript : BaseEveryFrameCombatPlugin() {
         }
 
         var oldStats = current.mutableStats
+
+        //Remove Ammo on leave
+        if (current.isFighter) {
+            if (replenishedShips.contains(current) && !deplenishedShips.contains(current)) {
+                deplenishedShips.add(new)
+                for (weapon in current.allWeapons) {
+                    weapon.ammo -= weapon.spec.maxAmmo
+                    weapon.ammo = MathUtils.clamp(weapon.ammo, 0, Int.MAX_VALUE) //Make sure it doesn't get below 0
+                }
+            }
+        }
 
         oldStats.shieldDamageTakenMult.unmodify("sc_synchronised")
         oldStats.hullDamageTakenMult.unmodify("sc_synchronised")

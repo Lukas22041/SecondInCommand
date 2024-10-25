@@ -23,9 +23,10 @@ class Synchronised : SCBaseSkillPlugin() {
 
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("Once per every fighter, switching control to it restores all of its ammunition, including missiles", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Once per fighter, switching control to it restores all of its ammunition, including missiles", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - The restored ammunition can go over the fighters maximum capacity", 0f, Misc.getTextColor(), Misc.getHighlightColor())
         tooltip.addPara("   - The restored amount is based on the weapons base capacity", 0f, Misc.getTextColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - The restored ammunition is removed once the player stops controlling the fighter", 0f, Misc.getTextColor(), Misc.getHighlightColor())
 
         tooltip.addSpacer(10f)
 

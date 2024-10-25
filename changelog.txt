@@ -1,6 +1,7 @@
 Version 1.2.5
 Save Compatible
 
+- The "Synchronised" skill now removes the restored ammunition if the player stops controlling the fighter.
 - Fixed a crash that occured when entering missions.
 
 
