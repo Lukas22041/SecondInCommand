@@ -31,9 +31,11 @@ class CombatHandler : BaseEveryFrameCombatPlugin() {
         if (engine != null) {
             if (Global.getCurrentState() != GameState.TITLE) {
 
-                if (!addedSynchronised && SCUtils.getPlayerData()?.isSkillActive("sc_strikecraft_synchronised") == true) {
-                    addedSynchronised = true;
-                    engine.addPlugin(SynchronisedSkillScript())
+                if (Global.getSector()?.playerFleet?.fleetData != null) {
+                    if (!addedSynchronised && SCUtils.getPlayerData()?.isSkillActive("sc_strikecraft_synchronised") == true) {
+                        addedSynchronised = true;
+                        engine.addPlugin(SynchronisedSkillScript())
+                    }
                 }
 
             }

@@ -1,3 +1,10 @@
+Version 1.2.5
+Save Compatible
+
+- Fixed a crash that occured when entering missions.
+
+
+
 Version 1.2.4
 Save Compatible
 
