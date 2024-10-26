@@ -1,3 +1,12 @@
+Version 1.2.6
+Save Compatible
+
+- Fixed an issue which made "Increases/Reduces chance for dmods" effects not work.
+- Slightly reduced the dmod reduction from "Continious Repairs"
+- Fixed "Point Defense" no longer mentioning its boost to fighters deployed from the ship.
+
+
+
 Version 1.2.5
 Save Compatible
 

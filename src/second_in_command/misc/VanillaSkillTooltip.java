@@ -54,7 +54,12 @@ public class VanillaSkillTooltip extends BaseTooltipCreator {
             tooltip.addPara(skill.getScopeStr2(), 0);
         }*/
 
-        tooltip.addPara("Affects: piloted ship", 0f, Misc.getGrayColor(), Misc.getBasePlayerColor(), "piloted ship");
+        String extra = "";
+        if (skill.getId().equals("point_defense")) {
+            extra += " and fighters from the piloted ship";
+        }
+
+        tooltip.addPara("Affects: piloted ship" + extra, 0f, Misc.getGrayColor(), Misc.getBasePlayerColor(), "piloted ship", "fighters from the piloted ship");
         tooltip.addSpacer(10f);
 
 

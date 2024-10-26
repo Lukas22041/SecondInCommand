@@ -60,4 +60,19 @@ public abstract class SCBaseSkillPlugin {
 
     /**Called when the corrosponding officer is un-assigned */
     public void onDeactivation(SCData data) { }
+
+
+
+
+
+
+
+
+    /**Might be useful for some rare effects that will not work when executed from the normal methods. This is for player fleet effects only.
+     * It's executed from an invisible skill added to the player, which will be called for every ship in the fleet
+     * It can also be useful in cases where the ship is for some reason not considered part of the player fleet for that moment, which can be during ship recovery
+     * You should not use this unless you really need it*/
+    public void callEffectsFromSeparateSkill(MutableShipStatsAPI stats, ShipAPI.HullSize hullSize, String id) {
+
+    }
 }

@@ -43,9 +43,13 @@ class ScrappyMaintenance : SCBaseSkillPlugin() {
         var cr = 0.03f * dmods
         var repairRate = 5f * dmods
 
-        stats.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, 1.5f)
+
         stats.maxCombatReadiness.modifyFlat(id, cr, "Scrappy maintenance")
         stats.baseCRRecoveryRatePercentPerDay.modifyPercent(id, repairRate)
+    }
+
+    override fun callEffectsFromSeparateSkill(stats: MutableShipStatsAPI, hullSize: ShipAPI.HullSize, id: String) {
+        stats.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, 1.5f)
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI, variant: ShipVariantAPI, id: String?) {
