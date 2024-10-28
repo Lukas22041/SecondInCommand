@@ -103,7 +103,7 @@ class SCAddOfficersToFleetInteraction : BaseCommandPlugin() {
             background.elementPanel.position.belowLeft(offsetElement.elementPanel, offset)
 
             var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())
-            var originSkillElement = SkillWidgetElement(originSkill!!.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), element, 58f, 58f)
+            var originSkillElement = SkillWidgetElement(originSkill!!.id, aptitudePlugin.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), element, 58f, 58f)
             element.addTooltipTo(SCSkillTooltipCreator(data, originSkill.getPlugin(), aptitudePlugin, 0, false), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
             //originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
             originSkillElement.elementPanel.position.rightOfMid(background.elementPanel, 20f)
@@ -133,7 +133,7 @@ class SCAddOfficersToFleetInteraction : BaseCommandPlugin() {
                 var isFirst = activeWithoutOrigin.first() == skill
                 var isLast = activeWithoutOrigin.last() == skill
 
-                var skillElement = SkillWidgetElement(skill.getId(), true, false, true, skill.getIconPath(), "", aptitudePlugin.getColor(), element, 58f, 58f)
+                var skillElement = SkillWidgetElement(skill.getId(), aptitudePlugin.id, true, false, true, skill.getIconPath(), "", aptitudePlugin.getColor(), element, 58f, 58f)
 
                 skillElement.onClick {
                     skillElement.playClickSound()

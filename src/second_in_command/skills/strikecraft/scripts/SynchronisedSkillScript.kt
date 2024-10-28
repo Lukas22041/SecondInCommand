@@ -2,18 +2,11 @@ package second_in_command.skills.strikecraft.scripts
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.*
-import com.fs.starfarer.api.graphics.SpriteAPI
+import com.fs.starfarer.api.combat.listeners.AdvanceableListener
 import com.fs.starfarer.api.input.InputEventAPI
 import com.fs.starfarer.api.util.IntervalUtil
-import com.fs.starfarer.api.util.Misc
-import org.dark.shaders.util.ShaderLib
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.input.Keyboard
-import org.lwjgl.opengl.GL11
-import org.lwjgl.opengl.GL13
-import org.lwjgl.opengl.GL20
-import org.lwjgl.util.vector.Vector2f
-import org.lwjgl.util.vector.Vector3f
 import second_in_command.misc.getAndLoadSprite
 import java.awt.Color
 import java.util.LinkedHashMap
@@ -26,7 +19,6 @@ class SynchronisedSkillScript : BaseEveryFrameCombatPlugin() {
     var selectedShip: ShipAPI? = null
     var lastSelectedShip: ShipAPI? = null
 
-    var interval = IntervalUtil(0.1f, 0.1f)
     var rotation = MathUtils.getRandomNumberInRange(0f, 90f)
     var alpha = 0f
 
@@ -34,7 +26,6 @@ class SynchronisedSkillScript : BaseEveryFrameCombatPlugin() {
     var deplenishedShips = ArrayList<ShipAPI>()
 
     override fun advance(amount: Float, events: MutableList<InputEventAPI>?) {
-        interval.advance(amount)
 
         if (!Global.getCombatEngine().isPaused) {
             rotation -= 10f * amount
@@ -46,11 +37,23 @@ class SynchronisedSkillScript : BaseEveryFrameCombatPlugin() {
         //Switch to original on ship death
         var playership = Global.getCombatEngine().playerShip
         if (playership != null && !playership.isAlive) {
-            if (originalShip != null) {
-                switchShip(playership, originalShip!!)
+
+
+            var fighters = Global.getCombatEngine().ships.filter { it.isFighter && it.owner == 0 && it != playership && it.isAlive && MathUtils.getDistance(it, playership) <= 1600 }.sortedBy { MathUtils.getDistance(it, playership) }
+
+            //Swap to nearest fighter, or original ship if theres none
+            if (fighters.isNotEmpty()) {
+                var swap = fighters.first()
+                switchShip(playership, swap)
+            } else {
+                if (originalShip != null && playership != originalShip) {
+                    switchShip(playership, originalShip!!)
+                }
             }
 
         }
+
+        applyEffectsToNearbyShips()
 
         if (playership != null && Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
 
@@ -88,6 +91,33 @@ class SynchronisedSkillScript : BaseEveryFrameCombatPlugin() {
         }
         alpha = alpha.coerceIn(0f, 1f)
 
+    }
+
+    fun applyEffectsToNearbyShips() {
+        var playership = Global.getCombatEngine().playerShip
+
+
+
+        if (playership != null && playership.isFighter) {
+            var iter = Global.getCombatEngine().shipGrid.getCheckIterator(playership.location, 800f, 800f)
+            for (obj in iter) {
+                if (obj is ShipAPI) {
+                    if (obj.isFighter && obj.owner == playership.owner && obj != playership) {
+
+                        if (MathUtils.getDistance(obj, playership) <= 500) {
+                            var listener = obj.getListeners(NearbyShipBuffListener::class.java).firstOrNull()
+                            listener?.duration = 0.1f
+
+                            if (listener == null) {
+                                obj.addListener(NearbyShipBuffListener(obj))
+                            }
+                        }
+
+
+                    }
+                }
+            }
+        }
     }
 
     fun getValidShips() : List<ShipAPI> {
@@ -228,6 +258,10 @@ class SynchronisedSkillScript : BaseEveryFrameCombatPlugin() {
         Global.getCombatEngine().addPlugin(TemporarySlowdown(3f, 0.25f))
 
         selectedShip = null
+
+        if (new.isFighter) {
+            applyEffectsToNearbyShips()
+        }
     }
 
 
@@ -299,5 +333,65 @@ class SynchronisedSkillScript : BaseEveryFrameCombatPlugin() {
         var selected: WeaponGroupAPI? = null
     }
 
+}
+
+class NearbyShipBuffListener(var ship: ShipAPI) : AdvanceableListener {
+
+    var duration = 0.1f
+
+    init {
+        var stats = ship.mutableStats
+
+        stats.shieldDamageTakenMult.modifyMult("sc_synchronised_nearby", 0.915f)
+        stats.hullDamageTakenMult.modifyMult("sc_synchronised_nearby", 0.915f)
+        stats.armorDamageTakenMult.modifyMult("sc_synchronised_nearby", 0.915f)
+
+        stats.ballisticWeaponDamageMult.modifyMult("sc_synchronised_nearby", 1.1f)
+        stats.energyWeaponDamageMult.modifyMult("sc_synchronised_nearby", 1.1f)
+
+        stats.ballisticRoFMult.modifyMult("sc_synchronised_nearby", 1.165f)
+        stats.energyRoFMult.modifyMult("sc_synchronised_nearby", 1.165f)
+        stats.missileRoFMult.modifyMult("sc_synchronised_nearby", 1.165f)
+
+        stats.ballisticAmmoRegenMult.modifyMult("sc_synchronised_nearby", 1.165f)
+        stats.energyAmmoRegenMult.modifyMult("sc_synchronised_nearby", 1.165f)
+        stats.missileAmmoRegenMult.modifyMult("sc_synchronised_nearby", 1.165f)
+
+        stats.ballisticWeaponFluxCostMod.modifyMult("sc_synchronised_nearby", 0.835f)
+        stats.energyWeaponFluxCostMod.modifyMult("sc_synchronised_nearby", 0.835f)
+        stats.missileWeaponFluxCostMod.modifyMult("sc_synchronised_nearby", 0.835f)
+    }
+
+    override fun advance(amount: Float) {
+        duration -= 1 * amount
+
+        ship.setJitterUnder(this, Color(0, 230, 150), 0.15f, 10, 2f, 7f)
+
+        if (duration <= 0) {
+
+            var stats = ship.mutableStats
+
+            stats.shieldDamageTakenMult.unmodify("sc_synchronised_nearby")
+            stats.hullDamageTakenMult.unmodify("sc_synchronised_nearby")
+            stats.armorDamageTakenMult.unmodify("sc_synchronised_nearby")
+
+            stats.ballisticWeaponDamageMult.unmodify("sc_synchronised_nearby")
+            stats.energyWeaponDamageMult.unmodify("sc_synchronised_nearby")
+
+            stats.ballisticRoFMult.unmodify("sc_synchronised_nearby")
+            stats.energyRoFMult.unmodify("sc_synchronised_nearby")
+            stats.missileRoFMult.unmodify("sc_synchronised_nearby")
+
+            stats.ballisticAmmoRegenMult.unmodify("sc_synchronised_nearby")
+            stats.energyAmmoRegenMult.unmodify("sc_synchronised_nearby")
+            stats.missileAmmoRegenMult.unmodify("sc_synchronised_nearby")
+
+            stats.ballisticWeaponFluxCostMod.unmodify("sc_synchronised_nearby")
+            stats.energyWeaponFluxCostMod.unmodify("sc_synchronised_nearby")
+            stats.missileWeaponFluxCostMod.unmodify("sc_synchronised_nearby")
+
+            ship.removeListener(this)
+        }
+    }
 }
 

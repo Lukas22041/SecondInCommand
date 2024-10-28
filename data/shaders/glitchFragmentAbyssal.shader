@@ -30,9 +30,9 @@ void main() {
   	color.g = texture(tex, uv + vec2(offset(64.0, uv) * 0.03 * 0.0, 0.0)).g;
   	color.b = texture(tex, uv + vec2(offset(64.0, uv) * 0.03, 0.0)).b;
 
-	color.r *= colorMult.r;
-	color.g *= colorMult.g;
-	color.b *= colorMult.b;
+	color.r *= colorMult.r * 1.1;
+	color.g *= colorMult.g * 0.9;
+	color.b *= colorMult.b * 0.9;
 
 	color.a *= alphaMult;
    	gl_FragColor = color;

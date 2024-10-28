@@ -6,7 +6,6 @@ import com.fs.starfarer.api.combat.BaseEveryFrameCombatPlugin
 import com.fs.starfarer.api.input.InputEventAPI
 import second_in_command.SCUtils
 import second_in_command.skills.strikecraft.scripts.SynchronisedSkillScript
-import second_in_command.skills.synchronised.scripts.SynchronisedScript
 
 class CombatHandler : BaseEveryFrameCombatPlugin() {
 

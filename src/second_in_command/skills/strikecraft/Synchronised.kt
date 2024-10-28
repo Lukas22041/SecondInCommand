@@ -35,6 +35,10 @@ class Synchronised : SCBaseSkillPlugin() {
         tooltip.addPara("   - The fighter gains 30%% increased non-missile damage ", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "30%")
         tooltip.addPara("   - The fighter gains 50%% increased fire rate", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "50%")
         tooltip.addPara("   - The fighter gains 50%% decreased weapon flux usage", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "50%")
+        tooltip.addPara("   - Allied fighters in a range of 500 units receive 1/3 of the bonuses aswell", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "500", "1/3")
+
+        tooltip.addSpacer(10f)
+
 
 
     }

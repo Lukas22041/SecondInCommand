@@ -227,7 +227,7 @@ object SCUtils {
             var isFirst = skills.first() == skill
             var isLast = skills.last() == skill
 
-            var skillElement = SkillWidgetElement(skill.getId(), true, false, true, skill.getIconPath(), "", aptitudePlugin.getColor(), element, 40f, 40f)
+            var skillElement = SkillWidgetElement(skill.getId(), aptitudePlugin.id, true, false, true, skill.getIconPath(), "", aptitudePlugin.getColor(), element, 40f, 40f)
 
             skillElement.onClick {
                 skillElement.playClickSound()

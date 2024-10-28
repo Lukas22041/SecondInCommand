@@ -2,18 +2,32 @@ package second_in_command.ui.elements
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.IntervalUtil
 import lunalib.lunaUI.elements.LunaElement
+import org.dark.shaders.util.ShaderLib
+import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL13
+import org.lwjgl.opengl.GL20
+import org.lwjgl.util.vector.Vector3f
 import second_in_command.misc.SCSettings
 import java.awt.Color
 
-class SkillWidgetElement(var id: String, var activated: Boolean, var canChangeState: Boolean, var preAcquired: Boolean, var iconPath: String, var soundId: String, var color: Color, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
+class SkillWidgetElement(var id: String, var aptitudeId: String, var activated: Boolean, var canChangeState: Boolean, var preAcquired: Boolean, var iconPath: String, var soundId: String, var color: Color, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
 
     var sprite = Global.getSettings().getSprite(iconPath)
     var inactiveBorder = Global.getSettings().getSprite("graphics/secondInCommand/skillBorderInactive.png")
     var activeBorder = Global.getSettings().getSprite("graphics/secondInCommand/skillBorderActive.png")
 
     var hoverFade = 0f
+    var time = 0f
+
+    companion object {
+        var shader = 0;
+    }
+
+    var glitchInterval = IntervalUtil(3f, 300f)
+    var glitchDuration = -1f
 
     //var border = Global.getSettings().getSprite("test")
 
@@ -21,6 +35,21 @@ class SkillWidgetElement(var id: String, var activated: Boolean, var canChangeSt
         enableTransparency = true
         backgroundAlpha = 0f
         borderAlpha = 0f
+
+        if (aptitudeId == "rat_abyssal" && shader == 0) {
+            shader = ShaderLib.loadShader(
+                Global.getSettings().loadText("data/shaders/baseVertex.shader"),
+                Global.getSettings().loadText("data/shaders/glitchFragmentAbyssal.shader"))
+            if (shader != 0) {
+                GL20.glUseProgram(shader)
+
+                GL20.glUniform1i(GL20.glGetUniformLocation(shader, "tex"), 0)
+
+                GL20.glUseProgram(0)
+            } else {
+                var test = ""
+            }
+        }
 
         onHoverEnter {
             playSound("ui_button_mouseover")
@@ -40,12 +69,24 @@ class SkillWidgetElement(var id: String, var activated: Boolean, var canChangeSt
     override fun advance(amount: Float) {
         super.advance(amount)
 
+        time += 1 * amount
+
         if (isHovering) {
             hoverFade += 10f * amount
         } else {
             hoverFade -= 3f * amount
         }
         hoverFade = hoverFade.coerceIn(0f, 1f)
+
+        glitchInterval.advance(amount)
+        if (glitchInterval.intervalElapsed()) {
+            glitchDuration = MathUtils.getRandomNumberInRange(0.75f, 2f)
+        }
+
+        if (glitchDuration >= 0) {
+            glitchDuration -= 1 * amount
+        }
+
     }
 
     override fun render(alphaMult: Float) {
@@ -53,6 +94,7 @@ class SkillWidgetElement(var id: String, var activated: Boolean, var canChangeSt
 
        /* var mult = 1f
         if (!activated) mult = 0.5f*/
+
 
         sprite.setNormalBlend()
         sprite.setSize(width-8, height-8)
@@ -82,17 +124,39 @@ class SkillWidgetElement(var id: String, var activated: Boolean, var canChangeSt
         }
 
 
-
-
-
         sprite.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
 
+
+        //Glitch Effect for Abyssal
+
+        if (aptitudeId == "rat_abyssal" && activated && glitchDuration > 0 && shader != 0) {
+
+
+            GL20.glUseProgram(shader)
+            var mult = Vector3f(sprite.color.red / 255f, sprite.color.green / 255f, sprite.color.blue / 255f)
+            GL20.glUniform3f(GL20.glGetUniformLocation(shader, "colorMult"), mult.x, mult.y, mult.z)
+            GL20.glUniform1f(GL20.glGetUniformLocation(shader, "iTime"), time)
+            GL20.glUniform1f(GL20.glGetUniformLocation(shader, "alphaMult"), alphaMult)
+
+            //Bind Sprite
+            GL13.glActiveTexture(GL13.GL_TEXTURE0 + 0)
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, sprite.textureId)
+
+            sprite.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
+
+            GL20.glUseProgram(0)
+
+        }
+
+
         if (activated) {
+
             activeBorder.setNormalBlend()
             activeBorder.color = color
             activeBorder.setSize(width, height)
             activeBorder.alphaMult = alphaMult
             activeBorder.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
+
 
             activeBorder.setAdditiveBlend()
             activeBorder.color = color
@@ -117,10 +181,13 @@ class SkillWidgetElement(var id: String, var activated: Boolean, var canChangeSt
             inactiveBorder.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
         }
 
+
+
         sprite.setAdditiveBlend()
         sprite.setSize(width-8, height-8)
         sprite.alphaMult = alphaMult * 0.5f * hoverFade
         sprite.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
+
     }
 
     override fun renderBelow(alphaMult: Float) {
