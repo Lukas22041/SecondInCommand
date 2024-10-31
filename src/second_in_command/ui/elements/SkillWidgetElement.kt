@@ -26,7 +26,7 @@ class SkillWidgetElement(var id: String, var aptitudeId: String, var activated: 
         var shader = 0;
     }
 
-    var glitchInterval = IntervalUtil(3f, 300f)
+    var glitchInterval = IntervalUtil(3f, 180f)
     var glitchDuration = -1f
 
     //var border = Global.getSettings().getSprite("test")

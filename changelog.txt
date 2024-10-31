@@ -1,8 +1,18 @@
+Version 1.2.7
+Save Compatible
+
+- The "Synchronisation" skill now applies some of its effects to nearby fighters when piloting one.
+- The "Synchronisation" skill now moves you to another nearby fighter if the piloted fighter is destroyed, but only if they are close enough.
+- Added a bunch of loading/title screen tips.
+- Added some minor vfx to the icons of a specific aptitude.
+
+
+
 Version 1.2.6
 Save Compatible
 
 - Fixed an issue which made "Increases/Reduces chance for dmods" effects not work.
-- Slightly reduced the dmod reduction from "Continious Repairs"
+- Slightly reduced the dmod reduction from "Continuous Repairs"
 - Fixed "Point Defense" no longer mentioning its boost to fighters deployed from the ship.
 
 

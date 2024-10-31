@@ -1,12 +1,12 @@
 {
     "masterVersionFile":"https://raw.githubusercontent.com/Lukas22041/SecondInCommand/main/SecondInCommand.version",
-    "modName":"Second in Command",
+    "modName":"Second-in-Command",
 	"modThreadId":30407,
     "modVersion":
     {
         "major":1,
         "minor":2,
-        "patch":6 # Can be a number, character or string (1, 2, a, b, "-RC2", etc)
+        "patch":7 # Can be a number, character or string (1, 2, a, b, "-RC2", etc)
     },
 	
 	#Link towards a direct download, fetched from the online version file

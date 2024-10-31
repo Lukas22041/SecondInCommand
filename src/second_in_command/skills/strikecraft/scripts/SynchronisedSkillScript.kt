@@ -42,7 +42,7 @@ class SynchronisedSkillScript : BaseEveryFrameCombatPlugin() {
             var fighters = Global.getCombatEngine().ships.filter { it.isFighter && it.owner == 0 && it != playership && it.isAlive && MathUtils.getDistance(it, playership) <= 1600 }.sortedBy { MathUtils.getDistance(it, playership) }
 
             //Swap to nearest fighter, or original ship if theres none
-            if (fighters.isNotEmpty()) {
+            if (fighters.isNotEmpty() && playership.isFighter) {
                 var swap = fighters.first()
                 switchShip(playership, swap)
             } else {
@@ -104,7 +104,7 @@ class SynchronisedSkillScript : BaseEveryFrameCombatPlugin() {
                 if (obj is ShipAPI) {
                     if (obj.isFighter && obj.owner == playership.owner && obj != playership) {
 
-                        if (MathUtils.getDistance(obj, playership) <= 500) {
+                        if (MathUtils.getDistance(obj, playership) <= 600) {
                             var listener = obj.getListeners(NearbyShipBuffListener::class.java).firstOrNull()
                             listener?.duration = 0.1f
 
