@@ -53,7 +53,7 @@ class FocusedLensesListener : DamageDealtModifier {
 
         //Apply extra damage
         val dam = (damage.damage * damage.dpsDuration) * 0.2f
-        Global.getCombatEngine()!!.applyDamage(target, point, dam, damage.type, 0f, false, false, null)
+        Global.getCombatEngine()!!.applyDamage(target, point, dam, damage.type, 0f, false, false, param.source)
 
         //Reduce damage dealt
         damage.modifier.modifyMult("sc_focused_lens", 0.8f)
