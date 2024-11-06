@@ -21,6 +21,10 @@ class CommandAndConquer : SCBaseSkillPlugin() {
         tooltip.addPara("+3 command points in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("50%% faster command point recovery in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
+        if (data.isPlayer) {
+            tooltip.addPara("Deployment points bonus from objectives is at least 5%% of the battle size, even if holding no objectives", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        }
+
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
@@ -31,6 +35,10 @@ class CommandAndConquer : SCBaseSkillPlugin() {
         data.commander.stats.commandPoints.modifyFlat("sc_command_and_conquer", 3f)
         data.commander.stats.dynamic.getMod(Stats.COMMAND_POINT_RATE_FLAT).modifyFlat("sc_command_and_conquer", 0.5f)
 
+        if (data.isPlayer) {
+            data.commander.stats.getDynamic().getMod(Stats.DEPLOYMENT_POINTS_MIN_FRACTION_OF_BATTLE_SIZE_BONUS_MOD)
+                .modifyFlat("sc_command_and_conquer", 0.05f)
+        }
 
     }
 
@@ -40,6 +48,10 @@ class CommandAndConquer : SCBaseSkillPlugin() {
         data.commander.stats.commandPoints.modifyFlat("sc_command_and_conquer", 3f)
         data.commander.stats.dynamic.getMod(Stats.COMMAND_POINT_RATE_FLAT).modifyFlat("sc_command_and_conquer", 0.5f)
 
+        if (data.isPlayer) {
+            data.commander.stats.getDynamic().getMod(Stats.DEPLOYMENT_POINTS_MIN_FRACTION_OF_BATTLE_SIZE_BONUS_MOD)
+                .modifyFlat("sc_command_and_conquer", 0.05f)
+        }
 
     }
 
@@ -48,6 +60,11 @@ class CommandAndConquer : SCBaseSkillPlugin() {
 
         data.commander.stats.commandPoints.unmodify("sc_command_and_conquer")
         data.commander.stats.dynamic.getMod(Stats.COMMAND_POINT_RATE_FLAT).unmodify("sc_command_and_conquer")
+
+        if (data.isPlayer) {
+            data.commander.stats.getDynamic().getMod(Stats.DEPLOYMENT_POINTS_MIN_FRACTION_OF_BATTLE_SIZE_BONUS_MOD)
+                .unmodify("sc_command_and_conquer")
+        }
     }
 
 }

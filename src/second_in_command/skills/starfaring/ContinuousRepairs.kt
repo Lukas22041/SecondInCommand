@@ -4,17 +4,17 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.BaseCampaignEventListener
 import com.fs.starfarer.api.campaign.CargoAPI
 import com.fs.starfarer.api.campaign.FleetEncounterContextPlugin
-import com.fs.starfarer.api.campaign.comm.CommMessageAPI.MessageClickAction
+import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.DModManager
-import com.fs.starfarer.api.impl.campaign.ids.HullMods
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.impl.campaign.ids.Tags
-import com.fs.starfarer.api.impl.campaign.intel.MessageIntel
+import com.fs.starfarer.api.impl.campaign.intel.BaseIntelPlugin
 import com.fs.starfarer.api.impl.campaign.skills.FieldRepairsScript
+import com.fs.starfarer.api.ui.SectorMapAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import com.fs.starfarer.api.util.WeightedRandomPicker
@@ -22,6 +22,7 @@ import second_in_command.SCData
 import second_in_command.SCUtils
 import second_in_command.misc.baseOrModSpec
 import second_in_command.specs.SCBaseSkillPlugin
+import java.awt.Color
 
 class ContinuousRepairs : SCBaseSkillPlugin() {
 
@@ -31,7 +32,7 @@ class ContinuousRepairs : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("Ships lost in combat have a 60/60/50/40 percent chance to avoid d-mods, based on hullsize", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Ships lost in combat have a 70/70/50/40 percent chance to avoid d-mods, based on hullsize", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("Every 240 deployment points worth of opponents defeated remove a random d-mod from a random ship", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - This effect can trigger multiple times from the same battle", 0f, Misc.getTextColor(), Misc.getHighlightColor())
         tooltip.addPara("   - This count is being kept track of between battles", 0f, Misc.getTextColor(), Misc.getHighlightColor())
@@ -52,8 +53,8 @@ class ContinuousRepairs : SCBaseSkillPlugin() {
 
     override fun callEffectsFromSeparateSkill(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?) {
         when (hullSize) {
-            ShipAPI.HullSize.FRIGATE -> stats!!.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, 0.4f)
-            ShipAPI.HullSize.DESTROYER -> stats!!.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, 0.4f)
+            ShipAPI.HullSize.FRIGATE -> stats!!.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, 0.3f)
+            ShipAPI.HullSize.DESTROYER -> stats!!.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, 0.3f)
             ShipAPI.HullSize.CRUISER -> stats!!.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, 0.5f)
             ShipAPI.HullSize.CAPITAL_SHIP -> stats!!.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, 0.6f)
         }
@@ -129,11 +130,49 @@ class ContinuousRepairsListener() : BaseCampaignEventListener(false) {
                         DModManager.removeDMod(pick.variant, hmodPick)
 
                         val spec = DModManager.getMod(hmodPick)
-                        val intel = MessageIntel(pick.shipName + " - repaired " + spec.displayName,
+                        /*val intel = MessageIntel(pick.shipName + " - repaired " + spec.displayName,
                             Misc.getBasePlayerColor())
                         intel.icon = Global.getSettings().getSpriteName("intel", "repairs_finished")
-                        Global.getSector().campaignUI.addMessage(intel, MessageClickAction.REFIT_TAB, pick)
+                        Global.getSector().campaignUI.addMessage(intel, MessageClickAction.REFIT_TAB, pick)*/
 
+
+                        //Intel
+                        var intel = object : BaseIntelPlugin() {
+
+                            init {
+                                endAfterDelay(30f)
+                            }
+
+                            override fun getName(): String {
+                                return "Skill - Continuous Repairs"
+                            }
+
+                            override fun getIcon(): String {
+                                return "graphics/secondInCommand/starfaring/continuous_repairs.png"
+                            }
+
+                            override fun hasSmallDescription(): Boolean {
+                                return false
+                            }
+
+                            override fun addBulletPoints(info: TooltipMakerAPI?, mode: IntelInfoPlugin.ListInfoMode?, isUpdate: Boolean, tc: Color?, initPad: Float) {
+                                info!!.addPara("${pick.shipName} - removed ${spec.displayName}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${spec.displayName}")
+                            }
+
+                            override fun getTitleColor(mode: IntelInfoPlugin.ListInfoMode?): Color {
+                                return Misc.getBasePlayerColor()
+                            }
+
+                            override fun getIntelTags(map: SectorMapAPI?): MutableSet<String> {
+                                var tags = super.getIntelTags(map)
+                                tags.add("Skills")
+                                return tags
+                            }
+                        }
+
+                        Global.getSector().intelManager.addIntel(intel)
+
+                        //Restore Visuals
                         val remainingdmods = DModManager.getNumDMods(pick.variant)
                         if (remainingdmods <= 0) {
                             FieldRepairsScript.restoreToNonDHull(pick.variant)

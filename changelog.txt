@@ -1,3 +1,17 @@
+Version 1.2.8
+Save Compatible
+
+- Skills like Continuous Repairs and Privateering now keep intel of their effects under the "Skills" category for 30 days.
+- The "Reconfiguration" Skill no longer negates the deployment point penalty on ships with less than 7 deployment points.
+- "Deep Dive" now provides 20% increased peak performance time for phase ships.
+- Increased both of "Well Organised" Bonuses from 25% to 33%.
+- "Command and Conquer" now provides a 5% increase to the minimum deployment points from objectives in battles.
+- Slightly increased the dmod avoidance chance from "Continuous Repairs" for frigates and destroyers.
+- Fixed "Limit Breaker" affecting Sierra, though it did not actually give her more skills.
+- Fixed yet another rare on game load crash.
+
+
+
 Version 1.2.7
 Save Compatible
 

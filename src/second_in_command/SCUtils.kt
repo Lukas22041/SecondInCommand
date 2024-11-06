@@ -60,7 +60,17 @@ object SCUtils {
 
     @JvmStatic
     fun getFleetData(fleet: CampaignFleetAPI) : SCData{
-        var data = fleet.memoryWithoutUpdate.get(FLEET_DATA_KEY) as SCData?
+        if (fleet.fleetData == null) return SCData(fleet) //Return dummy data
+
+        var data: SCData?
+
+        try {
+            data = fleet.memoryWithoutUpdate.get(FLEET_DATA_KEY) as SCData?
+        } catch (e: Throwable) {
+            return SCData(fleet) //Return Dummy Data
+        }
+
+        //var data = fleet.memoryWithoutUpdate.get(FLEET_DATA_KEY) as SCData?
 
         //Playerfleet data should always be grabbed from tbe player person instead, and its data should always be updated to match
         if (/*data == null && */fleet.isPlayerFleet) {

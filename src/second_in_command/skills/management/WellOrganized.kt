@@ -15,13 +15,13 @@ class WellOrganized : SCBaseSkillPlugin() {
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
-        tooltip.addPara("-25%% required minimum crew for all ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("-25%% crew lost during deployment", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("-33%% required minimum crew for all ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("-33%% crew lost during deployment", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        stats!!.minCrewMod.modifyMult(id, 0.75f)
-        stats.crewLossMult.modifyMult(id, 0.75f)
+        stats!!.minCrewMod.modifyMult(id, 0.666f)
+        stats.crewLossMult.modifyMult(id, 0.666f)
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {

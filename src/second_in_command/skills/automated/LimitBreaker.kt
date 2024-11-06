@@ -46,6 +46,7 @@ class LimitBreaker : SCBaseSkillPlugin() {
 
                 if (core.isDefault) continue
                 if (!core.isAICore) continue
+                if (core.id == "sotf_sierra") continue
 
                 if (core.memoryWithoutUpdate.get("\$sc_limit_break_level") == true) continue
 

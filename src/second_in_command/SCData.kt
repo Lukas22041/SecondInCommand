@@ -168,6 +168,9 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
         //Check for incompatibilities
         var categories = officer.getAptitudePlugin().categories
         for (other in getActiveOfficers()) {
+
+            if (other.aptitudeId == officer.aptitudeId) return //Dont allow multiple XOs of the same aptitude
+
             var otherCategories = other.getAptitudePlugin().categories
 
             if (categories.any { otherCategories.contains(it) }) {
