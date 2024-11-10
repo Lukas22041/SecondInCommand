@@ -18,7 +18,8 @@ class ProvisionalReplacements : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("All ships are much more likely to be recoverable if lost in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        //tooltip.addPara("All ships are much more likely to be recoverable if lost in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+30%% of hull and armor damage taken repaired after combat ends, at no cost", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("The supply recovery cost reduction from d-mods also applies to the ships monthly supply cost", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - In essence, this applies a 20%% reduction in monthly supply cost per d-mod", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "20%")
 
@@ -49,6 +50,9 @@ class ProvisionalReplacements : SCBaseSkillPlugin() {
             mult *= 0.8f
         }
         stats!!.suppliesPerMonth.modifyMult(id, mult)
+
+        stats!!.dynamic.getMod(Stats.INSTA_REPAIR_FRACTION).modifyFlat(id, 0.30f)
+
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
@@ -57,17 +61,17 @@ class ProvisionalReplacements : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-        data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat("sc_provisional_replacements", 1.5f)
+        //data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat("sc_provisional_replacements", 1.5f)
 
     }
 
     override fun onActivation(data: SCData) {
-        data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat("sc_provisional_replacements", 1.5f)
+        //data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat("sc_provisional_replacements", 1.5f)
 
     }
 
     override fun onDeactivation(data: SCData) {
-        data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).unmodify("sc_provisional_replacements")
+        //data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).unmodify("sc_provisional_replacements")
 
     }
 

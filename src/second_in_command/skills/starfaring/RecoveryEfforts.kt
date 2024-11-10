@@ -18,7 +18,7 @@ class RecoveryEfforts : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("All of your ships are almost always recoverable if lost in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+50%% repair rate outside of combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+40%% repair rate outside of combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+25%% of hull and armor damage taken repaired after combat ends, at no cost", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
@@ -33,13 +33,13 @@ class RecoveryEfforts : SCBaseSkillPlugin() {
 
     override fun advance(data: SCData, amount: Float) {
         data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat("sc_recovery_efforts", 2f)
-        data.commander.stats.repairRateMult.modifyPercent("sc_recovery_efforts", 50f)
+        data.commander.stats.repairRateMult.modifyPercent("sc_recovery_efforts", 40f)
 
     }
 
     override fun onActivation(data: SCData) {
         data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat("sc_recovery_efforts", 2f)
-        data.commander.stats.repairRateMult.modifyPercent("sc_recovery_efforts", 50f)
+        data.commander.stats.repairRateMult.modifyPercent("sc_recovery_efforts", 40f)
 
     }
 

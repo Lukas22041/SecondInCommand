@@ -52,9 +52,9 @@ class Preservation : SCBaseSkillPlugin() {
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
-        if (data.isPlayer) {
+        /*if (data.isPlayer) {
             stats.dynamic.getStat(Stats.INDIVIDUAL_SHIP_RECOVERY_MOD).modifyMult(id, 1.5f)
-        }
+        }*/
 
 
         stats.dynamic.getStat(Stats.DMOD_EFFECT_MULT).modifyMult(id, 0.75f)
@@ -73,16 +73,18 @@ class Preservation : SCBaseSkillPlugin() {
 
     }
 
-    override fun advance(data: SCData, amunt: Float?) {
-        
+    override fun advance(data: SCData, amount: Float) {
+        data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat("sc_preservation", 1.5f)
+
     }
 
     override fun onActivation(data: SCData) {
+        data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat("sc_preservation", 1.5f)
 
     }
 
     override fun onDeactivation(data: SCData) {
-
+        data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).unmodify("sc_preservation")
     }
 
 

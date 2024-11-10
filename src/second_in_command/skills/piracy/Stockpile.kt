@@ -16,12 +16,16 @@ class Stockpile : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
+        tooltip.addPara("-5%% supply and fuel consumption", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+30%% cargo capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+30%% fuel capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+        stats!!.suppliesPerMonth.modifyMult(id, 0.95f)
+        stats!!.fuelUseMod.modifyMult(id, 0.95f)
+
         stats!!.cargoMod.modifyPercent(id, 30f)
         stats!!.fuelMod.modifyPercent(id, 30f)
     }

@@ -1,3 +1,22 @@
+Version 1.2.9
+
+- "Derelict Fortifications" now provides +10 effective armor per dmod.
+- "Continuous Repairs" chance to avoid dmods has been decreased to 60/60/40/30 (from 70/70/50/40)
+- Reduced "Ad Astra"'s fuel & hazard damage reduction from 30% to 25%.
+- Reduced "Recovery Efforts" repair rate boost from 50% to 40%
+- Reduced "Expedition"'s cargo & fuel capacity buffs from 25% to 20%
+- "Generous Donation" now provides +1 burn speed at which the fleet is considered to be moving slowly.
+- "Low-grade Deployment" now improves the chance for ships to be recoverable.
+- "Stockpile" now reduces fuel and supply consumption by 5%.
+- "Privateering" now has a base bounty of 600 instead of 500.
+- "Provisional Replacements" no longer provides an increased chance to recover ships.
+- "Provisional Replacements" now repairs 30% hull and armor damage after combat at no cost.
+- Some grammar corrections for the loading screen tips, thanks to shmone-else.
+- Fixed defense fleets like derelict defenses regenerating with different skills when closing the interaction & interacting with them again.
+- Fixed "Trapped Prey" counting nearby fighters as allies for the target ship.
+
+
+
 Version 1.2.8
 Save Compatible
 
