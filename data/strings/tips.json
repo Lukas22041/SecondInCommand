@@ -2,24 +2,24 @@
 	tips:[
 
 
-{"freq":2, "tip":"[Second-in-Command] Executive Officers can most commonly be found on a colonies comm directory, but you can rarely find them through exploration as well."},
-{"freq":2, "tip":"[Second-in-Command] Make sure to experiment! Most combinations of aptitudes will atleast somewhat work, and through continued trial and error you may find a combination that really suits your fleet."},
-{"freq":2, "tip":"[Second-in-Command] The skill system with this mod is more mutable. If you find a new set of ships that you like, make sure to check if you can accomedate their strengths through executive officers that you arent using yet."},
-{"freq":2, "tip":"[Second-in-Command] Your combat skills can be respecced by pressing R on the combat icon at the cost of one story point. Your executive officers skills can be respecced by pressing R on their portrait at the cost of four story points."},
-{"freq":2, "tip":"[Second-in-Command] Try to increase your arsenal of executive officers whenever you can, aside from the innitial hiring cost, there is no downside to collecting them early."},
+{"freq":2, "tip":"[Second-in-Command] Executive Officers can most commonly be found on a colony's comm directory, but you can rarely find them through exploration as well."},
+{"freq":2, "tip":"[Second-in-Command] Make sure to experiment! Most combinations of aptitudes will at least somewhat work, and through continued trial and error you may find a combination that really suits your fleet."},
+{"freq":2, "tip":"[Second-in-Command] The skill system with this mod is more mutable. If you find a new set of ships that you like, make sure to check if you can accommodate their strengths through executive officers that you aren't using yet."},
+{"freq":2, "tip":"[Second-in-Command] Your combat skills can be respecced by pressing R on the combat icon at the cost of one story point. Your executive officer's skills can be respecced by pressing R on their portrait at the cost of four story points."},
+{"freq":2, "tip":"[Second-in-Command] Try to increase your arsenal of executive officers whenever you can. Aside from the initial hiring cost, there is no downside to collecting them early."},
 {"freq":2, "tip":"[Second-in-Command] Many aptitudes can be used for a multitude of reasons. Both \"Technical\" and \"Warfare\" don't necessarily need to be used for high or lowtech fleets"},
-{"freq":2, "tip":"[Second-in-Command] Aptitudes don't need to effect your entire fleet to be of use. Using \"Smallcraft\" does not require your fleet to be only frigates and destroyers."},
+{"freq":2, "tip":"[Second-in-Command] Aptitudes don't need to affect your entire fleet to be of use. Using \"Smallcraft\" does not require your fleet to be only frigates and destroyers."},
 
-{"freq":2, "tip":"[Second-in-Command] Using a logistical officer may feel required, but a well build fleet can run fine without one. Extensive use of logistical hullmods may be worth it for the additional combat skills you could acquire."},
-{"freq":2, "tip":"[Second-in-Command] The Piracy aptitude provides a more active style of Logistics, where as the Starfaring aptitude provides a passive but convenient set of skills."},
+{"freq":2, "tip":"[Second-in-Command] Using a logistical officer may feel required, but a well-built fleet can run fine without one. Extensive use of logistical hullmods may be worth it for the additional combat skills you could acquire."},
+{"freq":2, "tip":"[Second-in-Command] The Piracy aptitude provides a more active style of Logistics, whereas the Starfaring aptitude provides a passive but convenient set of skills."},
 
-{"freq":2, "tip":"[Second-in-Command] D-Mods are harder to remove with Second-in-Command. As such the most common options with dealing with them is to minimise how many you acquire through Starfarings \"Continous Repair\", or make the best out of them with the \"Improvisation\" aptitude."},
+{"freq":2, "tip":"[Second-in-Command] D-Mods are harder to remove with Second-in-Command. As such the most common options with dealing with them is to minimise how many you acquire through Starfaring's \"Continuous Repair\", or make the best out of them with the \"Improvisation\" aptitude."},
 
-{"freq":2, "tip":"[Second-in-Command] When planning an Automated fleet, you can essentialy think of your effective automated ship points as doubled, as that number is how many ships you can field with half of the penalty still negated. 40-50% combat readiness is enough for most automated ships."},
-{"freq":2, "tip":"[Second-in-Command] The \"Automation\" and \"Technical\" aptitudes can be combined for additional automated points, but skills that lower deployment points also proof very effective in reducing the amount of automation points required. "},
-{"freq":2, "tip":"[Second-in-Command] Skills that require an officer assigned to a ship are also be activated by AI Cores."},
+{"freq":2, "tip":"[Second-in-Command] When planning an Automated fleet, you can essentially think of your effective automated ship points as doubled, as that number is how many ships you can field with half of the penalty still negated. 40-50% combat readiness is enough for most automated ships."},
+{"freq":2, "tip":"[Second-in-Command] The \"Automation\" and \"Technical\" aptitudes can be combined for additional automated points, but skills that lower deployment point costs also prove very effective in reducing the amount of automation points required. "},
+{"freq":2, "tip":"[Second-in-Command] Skills that require an officer assigned to a ship are also activated by AI Cores."},
 
-{"freq":2, "tip":"[Second-in-Command] If you want a tougher time, hard difficulty can be enabled in the mods LunaLib configurations, allowing enemy fleets to acquire just as many skills as your own fleet could have at maximum."},
+{"freq":2, "tip":"[Second-in-Command] If you want a tougher time, hard difficulty can be enabled in the mod’s LunaLib configurations, allowing enemy fleets to acquire just as many skills as your own fleet could have at maximum."},
 
      ],
 }

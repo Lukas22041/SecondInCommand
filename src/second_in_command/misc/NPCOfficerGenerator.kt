@@ -1,9 +1,14 @@
 package second_in_command.misc
 
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
+import org.magiclib.kotlin.getSalvageSeed
+import org.magiclib.kotlin.getSourceMarket
 import org.magiclib.kotlin.isAutomated
 import second_in_command.SCData
 import second_in_command.SCUtils
@@ -11,6 +16,7 @@ import second_in_command.specs.SCBaseAptitudePlugin
 import second_in_command.specs.SCBaseSkillPlugin
 import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
+import java.util.*
 
 object NPCOfficerGenerator {
 
@@ -32,6 +38,52 @@ object NPCOfficerGenerator {
 
 
     fun generateRandom(data: SCData, fleet: CampaignFleetAPI) {
+
+        //var seed = 0L
+
+       // var fleetSeed = fleet.getMemoryWithoutUpdate().getLong(MemFlags.SALVAGE_SEED) as Long?
+
+       /* if (fleetSeed == 0L) {
+            if (fleet.getSourceMarket() != null) {
+                var marketSeed = fleet.getSourceMarket()?.primaryEntity?.getSalvageSeed()
+                if (marketSeed != null) {
+                    seed = marketSeed
+                }
+            }
+        }*/
+
+       /* if (seed == 0L) {
+            seed = fleet.getSalvageSeed() //Force it to generate the salvage seed if other options werent sucessful
+
+        }*/
+
+    /*    val hash = fleet.id.hashCode()*/
+
+        //var seed = fleet.getSalvageSeed()
+
+
+
+
+        var sSeed = Global.getSector().seedString
+
+        var seed = (fleet.id + sSeed).hashCode().toLong()
+
+        //Required to keep the skills from defense fleets consistent
+        //Instead of grabbing the fleets salvage seed, which is re-randomised each time you interact, grab the interaction targets
+        //Use ID of entities instead of salvage seeds, combined with sector seed so that fleets in different playthroughs have different skills.
+        var playerLoc = Global.getSector().currentLocation
+        for (entity in playerLoc.allEntities) {
+            var defFleet = entity.memoryWithoutUpdate.getFleet("\$defenderFleet")
+            if (defFleet != null) {
+                if (defFleet == fleet) {
+                    //seed = entity.getSalvageSeed()
+                    seed = (entity.id + sSeed).hashCode().toLong()
+                    break;
+                }
+            }
+        }
+
+        var random = Random(seed)
 
         var flagship = fleet.flagship
         var isOmega = fleet.faction.id == Factions.OMEGA
@@ -69,8 +121,9 @@ object NPCOfficerGenerator {
             combatFP *= 0.666f
         }
 
-        var divide = MathUtils.getRandomNumberInRange(20f, 22f)
-        var maxSkillCount = MathUtils.getRandomNumberInRange(minSkills, maxSkills)
+
+        var divide = getRandomNumberInRange(random, 20f, 22f)
+        var maxSkillCount = getRandomNumberInRange(random, minSkills, maxSkills)
 
         var skillCount = (combatFP / divide).toInt()
         skillCount = MathUtils.clamp(skillCount, 1, maxSkillCount) //Minimum of atleast 1 skill per fleet
@@ -78,17 +131,17 @@ object NPCOfficerGenerator {
         var aptitudeCount = 1
         aptitudeCount = when (skillCount) {
             1 -> 1
-            2 -> pickAptitudeCount(1f, 0.25f, 0f)
-            3 -> pickAptitudeCount(1f, 0.4f, 0f)
-            4 -> pickAptitudeCount(1f, 0.8f, 0.3f)
-            5 -> pickAptitudeCount(1f, 1.2f, 0.4f)
-            6 -> pickAptitudeCount(0.2f, 1f, 0.5f)
-            7 -> pickAptitudeCount(0f, 1f, 0.6f)
-            8 -> pickAptitudeCount(0f, 1f, 0.7f)
-            9 -> pickAptitudeCount(0f, 1f, 1f)
-            10 -> pickAptitudeCount(0f, 0.5f, 1f)
-            11 -> pickAptitudeCount(0f, 0.2f, 1f)
-            12 -> pickAptitudeCount(0f, 0.1f, 1f)
+            2 -> pickAptitudeCount(random, 1f, 0.25f, 0f)
+            3 -> pickAptitudeCount(random, 1f, 0.4f, 0f)
+            4 -> pickAptitudeCount(random, 1f, 0.8f, 0.3f)
+            5 -> pickAptitudeCount(random, 1f, 1.2f, 0.4f)
+            6 -> pickAptitudeCount(random, 0.2f, 1f, 0.5f)
+            7 -> pickAptitudeCount(random, 0f, 1f, 0.6f)
+            8 -> pickAptitudeCount(random, 0f, 1f, 0.7f)
+            9 -> pickAptitudeCount(random, 0f, 1f, 1f)
+            10 -> pickAptitudeCount(random, 0f, 0.5f, 1f)
+            11 -> pickAptitudeCount(random, 0f, 0.2f, 1f)
+            12 -> pickAptitudeCount(random, 0f, 0.1f, 1f)
             13 -> 3
             14 -> 3
             15 -> 3
@@ -98,6 +151,8 @@ object NPCOfficerGenerator {
 
 
         var aptitudePicker = WeightedRandomPicker<SCBaseAptitudePlugin>()
+        aptitudePicker.random = random
+
         var aptitudes = ArrayList<SCBaseAptitudePlugin>()
 
 
@@ -153,7 +208,7 @@ object NPCOfficerGenerator {
 
         var officers = ArrayList<SCOfficer>()
         for (aptitude in aptitudes) {
-            var officer = SCUtils.createRandomSCOfficer(aptitude.getId(), fleet.faction)
+            var officer = SCUtils.createRandomSCOfficer(aptitude.getId(), fleet.faction, random)
 
             if (isBoss || isAutomated) {
                 officer.person.portraitSprite = flagship.captain.portraitSprite
@@ -168,6 +223,7 @@ object NPCOfficerGenerator {
         for (i in 0 until skillCount) {
 
             var unlockable = WeightedRandomPicker<PotentialPick>()
+            unlockable.random = random
 
             for (officer in officers) {
 
@@ -233,8 +289,10 @@ object NPCOfficerGenerator {
 
     }
 
-    fun pickAptitudeCount(oneWeight: Float, twoWeight: Float, threeWeight: Float) : Int {
+    fun pickAptitudeCount(random: Random, oneWeight: Float, twoWeight: Float, threeWeight: Float) : Int {
         var picker = WeightedRandomPicker<Int>()
+        picker.random = random
+
         picker.add(1, oneWeight)
         picker.add(2, twoWeight)
         picker.add(3, threeWeight)
@@ -246,6 +304,19 @@ object NPCOfficerGenerator {
     }
 
     fun generateOmega(data: SCData, fleet: CampaignFleetAPI) {
+
+    }
+
+    fun getRandomNumberInRange(random: Random, min: Float, max: Float) : Float {
+        return random.nextFloat() * (max - min) + min
+    }
+
+    fun getRandomNumberInRange(random: Random, min: Int, max: Int) : Int {
+        return if (min >= max) {
+            if (min == max) {
+                min
+            } else random.nextInt(min - max + 1) + max
+        } else random.nextInt(max - min + 1) + min
 
     }
 }

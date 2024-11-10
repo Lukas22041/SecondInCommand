@@ -16,6 +16,7 @@ import second_in_command.ui.elements.FullDialogAptitudeBackgroundElement
 import second_in_command.ui.elements.SkillSeperatorElement
 import second_in_command.ui.elements.SkillWidgetElement
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
+import java.util.Random
 
 object SCUtils {
 
@@ -128,6 +129,13 @@ object SCUtils {
     @JvmStatic
     fun createRandomSCOfficer(aptitudeId: String, faction: FactionAPI) : SCOfficer {
         var person = faction.createRandomPerson()
+        var officer = SCOfficer(person, aptitudeId)
+        return officer
+    }
+
+    @JvmStatic
+    fun createRandomSCOfficer(aptitudeId: String, faction: FactionAPI, random: Random) : SCOfficer {
+        var person = faction.createRandomPerson(random)
         var officer = SCOfficer(person, aptitudeId)
         return officer
     }
