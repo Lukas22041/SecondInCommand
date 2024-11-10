@@ -1,4 +1,5 @@
 Version 1.2.9
+Save Compatible
 
 - "Derelict Fortifications" now provides +10 effective armor per dmod.
 - "Continuous Repairs" chance to avoid dmods has been decreased to 60/60/40/30 (from 70/70/50/40)
