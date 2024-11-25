@@ -31,11 +31,11 @@ class Synchronised : SCBaseSkillPlugin() {
         tooltip.addSpacer(10f)
 
         tooltip.addPara("Fighters piloted by yourself will not receive your skills, but receive several bonuses", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("   - The fighter gains 25%% damage resistance ", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "25%")
+        tooltip.addPara("   - The fighter gains 25%% damage resistance", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "25%")
         tooltip.addPara("   - The fighter gains 30%% increased non-missile damage ", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "30%")
         tooltip.addPara("   - The fighter gains 50%% increased fire rate", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "50%")
         tooltip.addPara("   - The fighter gains 50%% decreased weapon flux usage", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "50%")
-        tooltip.addPara("   - Allied fighters in a range of 600 units receive 1/3 of the bonuses aswell", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "600", "1/3")
+        tooltip.addPara("   - Allied fighters in a range of 600 units receive 1/3 of the bonuses as well", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "600", "1/3")
 
         tooltip.addSpacer(10f)
 

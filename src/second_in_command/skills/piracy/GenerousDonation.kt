@@ -13,12 +13,12 @@ import second_in_command.specs.SCBaseSkillPlugin
 class GenerousDonation : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "salvage procedures"
+        return "fleet and salvage procedures"
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+50%% post-battle salvage ", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+50%% post-battle salvage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+25%% to the chance that opponents drop their weapons after being destroyed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+1 to burn level at which the fleet is considered to be moving slowly*", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 

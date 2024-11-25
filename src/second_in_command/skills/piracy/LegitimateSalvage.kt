@@ -17,9 +17,9 @@ class LegitimateSalvage : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+20%% post-battle salvage ", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+20%% post-battle salvage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+15%% to the chance that opponents drop their weapons after being destroyed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+30%% resources - but not rare items, such as blueprints - recovered from abandoned stations and other derelicts ", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+30%% resources - but not rare items, such as blueprints - recovered from abandoned stations and other derelicts", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 

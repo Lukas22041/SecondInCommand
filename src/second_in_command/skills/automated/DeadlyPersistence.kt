@@ -26,7 +26,7 @@ class DeadlyPersistence : SCBaseSkillPlugin() {
         tooltip.addPara("+20%% to the ships active vent rate", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         //tooltip.addPara("-10%% on the cooldown of the ships system", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addSpacer(10f)
-        tooltip.addPara("*The effect can stack with others of the same kind, two of them would add up to a minimum of 20%%", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "20%")
+        tooltip.addPara("*The effect can stack with others of the same kind, two of them would add up to a minimum of 20%%.", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "20%")
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {

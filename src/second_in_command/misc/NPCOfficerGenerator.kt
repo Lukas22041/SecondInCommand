@@ -101,7 +101,7 @@ object NPCOfficerGenerator {
         if (isBoss) combatFP += 120f
         if (isOmega) combatFP += 80f
         if (hasSupercap) combatFP += 80f
-        if (isAutomated) combatFP += 20f
+        if (isAutomated) combatFP += 10f
         //if (isStation) combatFP += 40f
 
         var minSkills = 11
@@ -111,8 +111,8 @@ object NPCOfficerGenerator {
             minSkills = 15
             maxSkills = 15
 
-            combatFP *= 1.33f
-            combatFP += 60
+            combatFP *= 1.25f
+            combatFP += 50
         }
         else if (SCSettings.difficulty == "Easy") {
             minSkills = 8
@@ -122,7 +122,7 @@ object NPCOfficerGenerator {
         }
 
 
-        var divide = getRandomNumberInRange(random, 20f, 22f)
+        var divide = getRandomNumberInRange(random, 20f, 24f)
         var maxSkillCount = getRandomNumberInRange(random, minSkills, maxSkills)
 
         var skillCount = (combatFP / divide).toInt()

@@ -23,7 +23,7 @@ class LimitBreaker : SCBaseSkillPlugin() {
 
         tooltip.addPara("Increases the level of all AI cores by 1", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - If this officer is unassigned, the level is reduced back to the default", 0f, Misc.getTextColor(), Misc.getHighlightColor())
-        tooltip.addPara("   - If the core has more skills than possible at that level, it removes them automatically.", 0f, Misc.getTextColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - If the core has more skills than possible at that level, it removes them automatically", 0f, Misc.getTextColor(), Misc.getHighlightColor())
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
@@ -102,6 +102,7 @@ class LimitBreaker : SCBaseSkillPlugin() {
                 var core = member.captain ?: continue
                 if (core.isDefault) continue
                 if (!core.isAICore) continue
+                if (core.id == "sotf_sierra") continue
 
                 if (core.memoryWithoutUpdate.get("\$sc_limit_break_level") == false) continue
 

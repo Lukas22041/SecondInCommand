@@ -1,3 +1,15 @@
+Version 1.2.10
+Save Compatible
+
+- Added the "Unrestricted Associates" config to the Lunalib settings, which enables the background to pick any aptitude.
+- Reduced "Wide-Range-Transmission" from 4 to 3 skills.
+- Nerfed the "Electronic Warfare" skill and made its tooltip more clearly mention the effect.
+- Slightly decreased the amount of skills on average for NPC fleets.
+- Remnants get slightly less additional skills than before.
+- Fixed an issue that made unequiping "Limit Breaker" reduce Sierras level.
+
+
+
 Version 1.2.9
 Save Compatible
 

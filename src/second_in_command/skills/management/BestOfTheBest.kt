@@ -20,7 +20,7 @@ class BestOfTheBest : SCBaseSkillPlugin() {
 
         tooltip.addPara("Able to build 1 more permanent hullmod* in to ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - If this officer is unassigned, s-mods over the limit are made inactive", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
-        tooltip.addPara("   - Re-assigning this officer re-actives them.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
+        tooltip.addPara("   - Re-assigning this officer re-actives them", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
 
         tooltip.addSpacer(10f)
 

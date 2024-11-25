@@ -20,7 +20,7 @@ class Salvaging : SCBaseSkillPlugin() {
 
         tooltip.addPara("+50%% resources - but not rare items, such as blueprints - recovered from abandoned stations and derelicts", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+20%% post battle salvage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("-75%% crew lost in non-combat operations ", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("-75%% crew lost in non-combat operations", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 

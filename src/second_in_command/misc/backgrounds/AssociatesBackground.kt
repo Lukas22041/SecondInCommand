@@ -7,6 +7,7 @@ import com.fs.starfarer.api.util.Misc
 import exerelin.campaign.backgrounds.BaseCharacterBackground
 import exerelin.utilities.NexFactionConfig
 import second_in_command.SCUtils
+import second_in_command.misc.SCSettings
 import second_in_command.misc.randomAndRemove
 import second_in_command.specs.SCBaseAptitudePlugin
 import second_in_command.specs.SCSpecStore
@@ -30,8 +31,11 @@ class AssociatesBackground : BaseCharacterBackground() {
         var hc = Misc.getHighlightColor()
         var nc = Misc.getNegativeHighlightColor()
 
+        var text = "Only aptitudes that are available as a starting option can be randomly selected for this."
+        if (SCSettings.unrestrictedAssociates!!) text = ""
+
         var label = tooltip.addPara(
-                    "You start the game with three random executive officers of different aptitudes. Those officers can never be replaced or removed from your fleet. Only aptitudes that are available as a starting option can be randomly selected for this.\n\n" +
+                    "You start the game with three random executive officers of different aptitudes. Those officers can never be replaced or removed from your fleet. $text\n\n" +
                     "The players previous experience provides them with an additional skill point for their \"Combat\" aptitude. Due to the executive officers particular nature, their experience gain is reduced by 30%.\n\n" +
                     "This background is not recommended if this is your first time using the \"Second-in-Command\" mod. ", 0f)
 
@@ -56,7 +60,9 @@ class AssociatesBackground : BaseCharacterBackground() {
         var data = SCUtils.getPlayerData()
 
         var aptitudes = SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }.toMutableList()
-        aptitudes = aptitudes.filter { it.tags.contains("startingOption") }.toMutableList() //Only pick aptitudes available from the starting interaction
+        if (!SCSettings.unrestrictedAssociates!!) {
+            aptitudes = aptitudes.filter { it.tags.contains("startingOption") }.toMutableList() //Only pick aptitudes available from the starting interaction
+        }
 
         var picks = ArrayList<SCBaseAptitudePlugin>()
 

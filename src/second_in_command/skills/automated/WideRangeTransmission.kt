@@ -21,8 +21,8 @@ class WideRangeTransmission : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("Deployed fighters now gain a copy of their mother-ships core", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("   - Those copies can hold at most 4 of the cores original skills", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "4")
-        tooltip.addPara("   - These skills are randomly selected if there are more than 4", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "4")
+        tooltip.addPara("   - Those copies can hold at most 3 of the cores original skills", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "3")
+        tooltip.addPara("   - These skills are randomly selected if there are more than 3", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "3")
         tooltip.addPara("   - Skills that are unique to a specific core can not be copied", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
 
     }
@@ -41,7 +41,7 @@ class WideRangeTransmission : SCBaseSkillPlugin() {
             var filtered = skills.filter { it.level > 0f && !it.skill.isAptitudeEffect && !it.skill.hasTag("npc_only") && !it.skill.hasTag("player_only") && !it.skill.hasTag("ai_core_only")}.toMutableList()
             var copySkills = ArrayList<String>()
 
-            for (i in 0 until 4) {
+            for (i in 0 until 3) {
                 if (filtered.isEmpty()) continue
                 var pick = filtered.randomAndRemove()
                 copySkills.add(pick.skill.id)

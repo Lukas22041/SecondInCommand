@@ -13,6 +13,7 @@ sc_fleetDifficulty,Difficulty,Radio,Normal,"Easy,Normal,Hard","Difficulty select
 ,,,,,,,,
 sc_miscChanges,Misc,Header,Misc,,,,,
 sc_highContrast,High Contrast Icons,Boolean,false,,Increases the constrast between active and unacquired skill icons in the skill menu. Activate this config if you have difficulties spotting the differences.,,,
+sc_unrestrictedAssociates,Unrestricted Associates,Boolean,false,,"Enables the ""Associates"" background to pick any Aptitude, even if not accessible as a starting Aptitude. Mostly relevant for cross-mod aptitudes.",,,
 ,,,,,,,,
 sc_vanillaChanges,Vanilla Changes,Header,Vanilla Changes,,,,,
 sc_provideTransverse,"Start with ""Transeverse Jump""",Boolean,true,,"As Transverse Jump ability is no longer provided by a skill, the mod automaticly starts you with it. Disabling this config only makes it available through methods outside of the skill system. ",,,
