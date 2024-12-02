@@ -1,3 +1,13 @@
+Version 1.2.11
+Save Compatible
+
+- Re-added & Improved the Automated Points widget in the fleet screen.
+- "Together as One" and "Trapped Prey" will no longer count modules for their conditions.
+- Added the "sic_fleet_encounter2" fleet tag that lets a mod delay the displaying of officers to "BeginFleetEncounter2".
+- Fixed "Countermeasures" missing the additional context about ECM.
+
+
+
 Version 1.2.10
 Save Compatible
 

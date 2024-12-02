@@ -10,6 +10,7 @@
 			"effectBasedOnLevel":false,
 			"effects":[
 				{"type":"ALL_SHIPS_IN_FLEET", "script":"second_in_command.skills.misc.UtilitySkill"},
+				{"type":"ALL_SHIPS_IN_FLEET", "script":"second_in_command.skills.misc.UtilitySkill$AutomatedItem"},
 			]
 		},
 	],

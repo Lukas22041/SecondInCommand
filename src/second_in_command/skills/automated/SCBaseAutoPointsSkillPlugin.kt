@@ -78,7 +78,7 @@ abstract class SCBaseAutoPointsSkillPlugin : SCBaseSkillPlugin() {
 
     override fun advance(data: SCData, amunt: Float?) {
         if (data.isNPC) return
-        Global.getSector().playerPerson.stats.dynamic.getMod("sc_auto_dp").modifyFlat("${spec.id}", getProvidedPoints().toFloat())
+        Global.getSector().playerPerson.stats.dynamic.getMod("sc_auto_dp").modifyFlat("${spec.id}", getProvidedPoints().toFloat(), spec.name)
     }
 
     override fun onDeactivation(data: SCData) {

@@ -26,7 +26,13 @@ SCStoreSkillpoints false
 NGCDone",,,
 ,,,,,,
 #Encounter,,,,,,
-sc_FleetEncounter,BeginFleetEncounter,!$player.sc_fleet_encountered score:1000000,"$player.sc_fleet_encountered = true 0
+sc_FleetEncounter,BeginFleetEncounter,"!SCCheckForEncounterTag
+!$player.sc_fleet_encountered score:1000000","$player.sc_fleet_encountered = true 0
+FireBest BeginFleetEncounter
+FireAll SCFleetEncounterScript
+",,,
+sc_FleetEncounter2,BeginFleetEncounter2,"SCCheckForEncounterTag
+!$player.sc_fleet_encountered score:1000000","$player.sc_fleet_encountered = true 0
 FireBest BeginFleetEncounter
 FireAll SCFleetEncounterScript
 ",,,

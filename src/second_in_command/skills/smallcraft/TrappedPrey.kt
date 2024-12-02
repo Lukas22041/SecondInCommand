@@ -63,6 +63,7 @@ class TrappedPreyScript(var owner: Int) : BaseEveryFrameCombatPlugin() {
                 var target = entry as ShipAPI
 
                 if (!target.isAlive) continue
+                if (target.parentStation != null) continue
 
                 //Check for nearby allies
                 if (target.owner == ship.owner && target != ship) {

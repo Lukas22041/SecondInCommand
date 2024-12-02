@@ -68,6 +68,7 @@ class TogetherAsOneScript(var ship: ShipAPI) : AdvanceableListener {
             if (ally == ship) continue
             if (!ally.isAlive) continue
             if (ship.owner != ally.owner) continue
+            if (ship.parentStation != null) continue
 
             if (!ally.isFrigate && !ally.isDestroyer) continue
             if (MathUtils.getDistance(ally, ship) >= 1200) continue
