@@ -26,7 +26,7 @@ class ListAptitudesCommand : BaseCommand {
             return BaseCommand.CommandResult.WRONG_CONTEXT
         }
 
-        var aptitudes = SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }
+        var aptitudes = SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }.filter { !it.tags.contains("restricted") }
 
         Console.showMessage("")
         for (aptitude in aptitudes) {

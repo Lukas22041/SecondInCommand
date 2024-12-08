@@ -16,6 +16,7 @@ sc_highContrast,High Contrast Icons,Boolean,false,,Increases the constrast betwe
 sc_unrestrictedAssociates,Unrestricted Associates,Boolean,false,,"Enables the ""Associates"" background to pick any Aptitude, even if not accessible as a starting Aptitude. Mostly relevant for cross-mod aptitudes.",,,
 ,,,,,,,,
 sc_vanillaChanges,Vanilla Changes,Header,Vanilla Changes,,,,,
+sc_reducedDmodOverlay,Reduce Visual Impact of D-Mods,Boolean,false,,"Reduces the visual impact of dmods on a ships sprite if the ship has less or equal to [2] dmods, and does not have the [Structural Damage] dmod. This configuration exists as dmods are a bit harder to get rid of in the mod.",,,
 sc_provideTransverse,"Start with ""Transeverse Jump""",Boolean,true,,"As Transverse Jump ability is no longer provided by a skill, the mod automaticly starts you with it. Disabling this config only makes it available through methods outside of the skill system. ",,,
 sc_provideNeutrino,"Start with ""Neutrino Detector""",Boolean,true,,"As the Neutrino Detector ability is no longer provided by a skill, the mod automaticly starts you with it. Disabling this config only makes it available through methods outside of the skill system.",,,
 sc_provideRemote,"Start with ""Remote Survey""",Boolean,true,,"As the Neutrino Detector ability is no longer provided by a skill, the mod automaticly starts you with it. Disabling this config only makes it available through methods outside of the skill system.",,,

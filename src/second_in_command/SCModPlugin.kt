@@ -7,6 +7,7 @@ import lunalib.lunaDebug.LunaDebug
 import lunalib.lunaSettings.LunaSettings
 import second_in_command.misc.NPCFleetInflater
 import second_in_command.misc.SCSettings
+import second_in_command.misc.SpecialEventHandler
 import second_in_command.misc.snippets.AddAllOfficersSnippet
 import second_in_command.misc.snippets.AddXPToOfficersSnippet
 import second_in_command.scripts.*
@@ -101,6 +102,8 @@ class SCModPlugin : BaseModPlugin() {
         if (SCSettings.spawnWithRemoteSurvey && !Global.getSector().characterData.abilities.contains(Abilities.REMOTE_SURVEY)) {
             Global.getSector().characterData.addAbility(Abilities.REMOTE_SURVEY)
         }
+
+        SpecialEventHandler.checkEvents()
     }
 
     override fun onNewGame() {

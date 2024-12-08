@@ -1,3 +1,14 @@
+Version 1.2.12
+Save Compatible
+
+- Added a config that enables reducing the visual impact of dmods, if the ship has less than 2 dmods and does not have Structural Damage.
+  - As peoples opinion on this was relatively split, it is disabled by default.
+- Fixed effects that modified the chance for dmods only using the stat of one of the skills if you have multiple (Mending/Continuous Repairs)
+- Fixed Starmapping not correctly displaying its stat change when hovering over the sensor details.
+- Fixed the ESC Shortcut missing for in the hiring dialog option.
+
+
+
 Version 1.2.11
 Save Compatible
 

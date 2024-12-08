@@ -59,7 +59,7 @@ class AssociatesBackground : BaseCharacterBackground() {
     override fun onNewGameAfterTimePass(factionSpec: FactionSpecAPI?, factionConfig: NexFactionConfig?) {
         var data = SCUtils.getPlayerData()
 
-        var aptitudes = SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }.toMutableList()
+        var aptitudes = SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }.filter { !it.tags.contains("restricted") }.toMutableList()
         if (!SCSettings.unrestrictedAssociates!!) {
             aptitudes = aptitudes.filter { it.tags.contains("startingOption") }.toMutableList() //Only pick aptitudes available from the starting interaction
         }

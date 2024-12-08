@@ -29,7 +29,7 @@ class UtilitySkill : SCBaseVanillaShipSkill() {
     override fun apply(stats: MutableShipStatsAPI?, hullSize: ShipAPI.HullSize?, id: String?, level: Float) {
         if (Global.getSector()?.playerFleet?.fleetData != null) {
             for (skill in SCUtils.getPlayerData().getAllActiveSkillsPlugins()) {
-                skill.callEffectsFromSeparateSkill(stats, hullSize, id)
+                skill.callEffectsFromSeparateSkill(stats, hullSize, "${skill.id}_$id")
             }
         }
     }

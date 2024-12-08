@@ -5,9 +5,12 @@ import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.fleet.FleetMemberAPI
+import com.fs.starfarer.api.impl.campaign.DModManager
+import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCUtils
+import second_in_command.misc.SCSettings
 import second_in_command.scripts.AutomatedShipsManager
 import second_in_command.skills.PlayerLevelEffects
 
@@ -49,6 +52,17 @@ class SCControllerHullmod : BaseHullMod() {
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
+
+
+        //Dmod overlay
+        if (SCSettings.reducedDmodOverlay) {
+            if (!ship!!.variant.hasHullMod("comp_structure") && DModManager.getNumDMods(ship!!.variant) in 1..2) {
+                ship.setDHullOverlay("graphics/damage/dmod_overlay_sic_very_light.png")
+            }
+        }
+
+
+
         var member = ship?.mutableStats?.fleetMember ?: return
         var fleet = member.fleetData?.fleet ?: return
 
@@ -56,6 +70,7 @@ class SCControllerHullmod : BaseHullMod() {
             //Fix for battles where you join an ally, as those set the members fleet to theirs.
             fleet = Global.getSector().playerFleet
         }
+
 
         var fleetData = fleet.fleetData ?: return //Have to do this, as during deserialisation fleetData can be null, causing save corruptions
         var data = SCUtils.getFleetData(fleet)

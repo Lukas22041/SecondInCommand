@@ -36,6 +36,7 @@ class AddAllOfficersSnippet : LunaSnippet() {
 
         for (aptitude in aptitudes) {
             if (aptitude.getId() == "sc_fake_combat_aptitude") continue
+            if (aptitude.tags.contains("restricted")) continue
 
             var officer = SCUtils.createRandomSCOfficer(aptitude.getId())
             data.addOfficerToFleet(officer)

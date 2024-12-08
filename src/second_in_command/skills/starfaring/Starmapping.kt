@@ -30,11 +30,11 @@ class Starmapping : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-        data.fleet.stats.sensorRangeMod.modifyPercent("sc_starmapping", 20f)
+        data.fleet.stats.sensorRangeMod.modifyPercent("sc_starmapping", 20f, "Starmapping")
     }
 
     override fun onActivation(data: SCData) {
-        data.fleet.stats.sensorRangeMod.modifyPercent("sc_starmapping", 20f)
+        data.fleet.stats.sensorRangeMod.modifyPercent("sc_starmapping", 20f, "Starmapping")
     }
 
     override fun onDeactivation(data: SCData) {

@@ -36,12 +36,13 @@ class AddExecutiveCommand : BaseCommand {
 
         if (input == "all") {
             for (aptitude in aptitudes) {
+                if (aptitude.tags.contains("restricted")) continue
                 var officer = SCUtils.createRandomSCOfficer(aptitude.id)
                 officers.add(officer)
             }
         } else {
             var aptitude = aptitudes.find { it.name.lowercase() == args || it.id.lowercase() == args }
-            if (aptitude != null) {
+            if (aptitude != null && !aptitude.tags.contains("restricted")) {
                 var officer = SCUtils.createRandomSCOfficer(aptitude.id)
                 officers.add(officer)
             }
