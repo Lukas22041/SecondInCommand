@@ -119,6 +119,11 @@ public class VanillaSkillTooltip extends BaseTooltipCreator {
                     Misc.getTextColor(), Misc.getHighlightColor(), hullmodSpec.getDisplayName());
         }
 
+        if (skill.getId().equals("polarized_armor")) {
+            tooltip.addSpacer(10f);
+            tooltip.addPara("*Ships without a shield or a phase cloak are treated as always having 50%% hard flux", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "50%");
+        }
+
         if (requiredSkillPoints >= 2) {
             tooltip.addSpacer(10f);
             tooltip.addPara("Requires " + requiredSkillPoints + " skill points.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor());

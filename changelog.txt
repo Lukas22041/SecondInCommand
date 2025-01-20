@@ -1,3 +1,13 @@
+Version 1.2.13
+Save Compatible
+
+- Best of the Best now provides a 30% ship mastery bonus instead if the Ship Mastery System mod is installed. 
+- Potentialy fixed an issue that caused the "Ad Astra" skill to make slow-burn not avoid hyperspace storms.
+- Fixed an issue that rarely prevented the save from loading because ???
+- Fixed Polarized Armor missing a part of its tooltip.
+
+
+
 Version 1.2.12
 Save Compatible
 

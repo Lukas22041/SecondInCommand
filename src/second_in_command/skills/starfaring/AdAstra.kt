@@ -34,7 +34,10 @@ class AdAstra : SCBaseSkillPlugin() {
 
     override fun advance(data: SCData, amount: Float) {
         if (data.fleet.isInHyperspace) {
-            data.fleet.stats.addTemporaryModFlat(0.1f, "sc_ad_astra", "Ad Astra", 2f, data.fleet.stats.fleetwideMaxBurnMod)
+            data.fleet.stats.fleetwideMaxBurnMod.modifyFlat("sc_ad_astra",2f, "Ad Astra")
+        }
+        else {
+            data.fleet.stats.fleetwideMaxBurnMod.unmodifyFlat("sc_ad_astra")
         }
     }
 
