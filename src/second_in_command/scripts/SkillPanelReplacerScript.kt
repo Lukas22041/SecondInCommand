@@ -2,6 +2,9 @@ package second_in_command.scripts
 
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.ui.ButtonAPI
+import com.fs.starfarer.api.ui.LabelAPI
+import com.fs.starfarer.api.ui.UIComponentAPI
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.campaign.CampaignState
 import com.fs.state.AppDriver
@@ -47,13 +50,18 @@ class SkillPanelReplacerScript : EveryFrameScript {
 
         var corePanels = core.getChildrenCopy().filter { it is UIPanelAPI } as List<UIPanelAPI>
         var innerPanels = corePanels.map { it.getChildrenCopy().find { children -> ReflectionUtils.hasMethodOfName("canReassign", children) }}
-        var panel = innerPanels.filterNotNull().firstOrNull() ?: return
+        var panel = innerPanels.filterNotNull().firstOrNull() as UIPanelAPI? ?: return
         var parent = panel.getParent() ?: return
 
         parent.removeComponent(panel)
 
+       /* var panelChildren = panel.getChildrenCopy()
+        var seedTextElement = panelChildren.find { ReflectionUtils.hasMethodOfName("createStoryPointsLabel", it) }
+        var seedElement = panelChildren.find { ReflectionUtils.hasMethodOfName("getTextLabel", it) }
+        var copyButton = panelChildren.find { it is ButtonAPI && it.text == "copy" }*/
+
         var scData = SCUtils.getPlayerData()
-        var skillPanel = SCSkillMenuPanel(parent, scData, false)
+        var skillPanel = SCSkillMenuPanel(parent, scData, false,/* seedTextElement as LabelAPI, seedElement as UIComponentAPI, copyButton as UIComponentAPI*/)
         skillPanel.init()
     }
 

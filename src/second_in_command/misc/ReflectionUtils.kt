@@ -64,6 +64,12 @@ object ReflectionUtils {
         return instancesOfFields.any { getFieldNameHandle.invoke(it) == name }
     }
 
+    fun hasVariableOfType(type: Class<*>, instance: Any) : Boolean {
+
+        val instancesOfFields: Array<out Any> = instance.javaClass.getDeclaredFields()
+        return instancesOfFields.any { getFieldTypeHandle.invoke(it) == type }
+    }
+
     fun instantiate(clazz: Class<*>, vararg arguments: Any?) : Any?
     {
         val args = arguments.map { it!!::class.javaPrimitiveType ?: it!!::class.java }
@@ -118,6 +124,13 @@ object ReflectionUtils {
 
         if (method == null) return null
         return ReflectedMethod(method)
+    }
+
+    //Useful for some classes with just one field
+    fun getFirstDeclaredField(instanceToGetFrom: Any): Any? {
+        var field: Any? = instanceToGetFrom.javaClass.declaredFields[0]
+        setFieldAccessibleHandle.invoke(field, true)
+        return getFieldHandle.invoke(field, instanceToGetFrom)
     }
 
     fun createClassThroughCustomLoader(claz: Class<*>) : MethodHandle

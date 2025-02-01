@@ -1,3 +1,12 @@
+Version 1.2.14
+Save Compatible
+
+- The name of an officers aptitude is now colored in the Comm Directory.
+- Added the "Domain sector registry" intel, which displays the sectors seed as SiC removes the relevant UI element from the skill screen.
+- The "Neural Junction" skill now makes the player count as an 0.5 automated points mult instead of a 2x mult.
+
+
+
 Version 1.2.13
 Save Compatible
 

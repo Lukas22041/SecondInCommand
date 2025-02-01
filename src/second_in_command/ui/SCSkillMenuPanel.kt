@@ -5,7 +5,9 @@ import com.fs.starfarer.api.campaign.RepLevel
 import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.CustomPanelAPI
+import com.fs.starfarer.api.ui.LabelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.ui.UIComponentAPI
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
@@ -21,7 +23,7 @@ import second_in_command.ui.panels.AssosciatesManagePanelPlugin
 import second_in_command.ui.tooltips.OfficerTooltipCreator
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
 
-class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Boolean) {
+class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Boolean,/* var seedTextElement: LabelAPI, var seedElement: UIComponentAPI, var copyButton: UIComponentAPI*/) {
 
 
     lateinit var panel: CustomPanelAPI
@@ -89,33 +91,6 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
         element = panel.createUIElement(width, height, true)
         panel.addUIElement(element)
 
-    /*    var descriptionPanel = panel.createCustomPanel(width, height, null)
-        panel.addComponent(descriptionPanel)
-        var descriptionElement = descriptionPanel.createUIElement(width, height, false)
-        descriptionPanel.addUIElement(descriptionElement)
-        descriptionElement.position.inTL(20f, 40f)
-
-        var para = descriptionElement.addPara("The character menu allows investing skill points in to different skills of your choice.  \n" +
-                "It is separated in to two sections, one for your personal skills, and one for the skills of your executive officers. \n" +
-                "\n" +
-                "Executive officers can be found throughout the world, and all of them have an aptitude they excel at.\n" +
-                "You can assign up to three executive officers at a time, each one provides a whole row of skills to choose from. \n" +
-                "Some officers may only be re-assigned when docked at a colony. \n" +
-                "", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "skill points", "executive officers", "all of them have an aptitude they excel at", "up to three")*/
-
-
-        //element.addPara("Test Paragraph", 0f)
-
-       /* var previous: CustomPanelAPI? = null
-        for (skill in SCSpecStore.getSkillSpecs()) {
-            element.addSpacer(5f)
-            var next = SkillWidgetElement(false, true, skill.iconPath, Color(107,175,0,255), element, 72f, 72f)
-            if (previous != null) {
-                next.elementPanel.position.rightOfTop(previous, 6f)
-            }
-            previous = next.elementPanel
-        }*/
-
         //addPlayerAptitudePanel()
 
         var playerPanel = SCPlayerPanel(this, data)
@@ -123,6 +98,16 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
 
 
         addAptitudePanel()
+
+      /*  element.addCustom(seedTextElement as UIComponentAPI, 0f)
+
+        element.addCustom(seedElement as UIComponentAPI, 0f)
+
+        element.addCustom(copyButton as UIComponentAPI, 0f)
+
+        copyButton.position.inTL(width-copyButton.getWidth()-26, height-copyButton.getHeight()-7)
+        seedElement.position.leftOfTop(copyButton, 3f)
+        seedTextElement.position.leftOfTop(seedElement, 3f)*/
 
 
 

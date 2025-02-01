@@ -12,6 +12,7 @@ import second_in_command.misc.snippets.AddAllOfficersSnippet
 import second_in_command.misc.snippets.AddXPToOfficersSnippet
 import second_in_command.scripts.*
 import second_in_command.specs.SCSpecStore
+import second_in_command.ui.intel.SectorSeedIntel
 import java.lang.Exception
 
 class SCModPlugin : BaseModPlugin() {
@@ -84,6 +85,8 @@ class SCModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(SCNeuralJunctionScript())
         Global.getSector().addTransientScript(VanillaSkillsDisabler())
         Global.getSector().addTransientScript(AutomatedShipsManager())
+        Global.getSector().addTransientScript(CommDirectoryRecolorScript())
+        //Global.getSector().addTransientScript(SectorSeedAdderScript())
         Global.getSector().listenerManager.addListener(NPCFleetInflater(), true)
 
         Global.getSector().addTransientListener(SCCampaignEventListener())
@@ -104,6 +107,10 @@ class SCModPlugin : BaseModPlugin() {
         }
 
         SpecialEventHandler.checkEvents()
+
+        if (!Global.getSector().intelManager.hasIntelOfClass(SectorSeedIntel::class.java)) {
+            Global.getSector().intelManager.addIntel(SectorSeedIntel(), true)
+        }
     }
 
     override fun onNewGame() {
