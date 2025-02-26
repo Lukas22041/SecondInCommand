@@ -2,6 +2,7 @@ package second_in_command.scripts
 
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CoreUITabId
 import com.fs.starfarer.api.ui.ButtonAPI
 import com.fs.starfarer.api.ui.LabelAPI
 import com.fs.starfarer.api.ui.UIComponentAPI
@@ -27,6 +28,8 @@ class SkillPanelReplacerScript : EveryFrameScript {
     override fun advance(amount: Float) {
 
         if (!Global.getSector().isPaused) return
+        if (Global.getSector().campaignUI.currentCoreTab != CoreUITabId.CHARACTER) return
+
 
         var state = AppDriver.getInstance().currentState
         if (state !is CampaignState) return
@@ -45,6 +48,7 @@ class SkillPanelReplacerScript : EveryFrameScript {
         if (core == null) {
             core = ReflectionUtils.invoke("getCore", state) as UIPanelAPI?
         }
+
 
         if (core == null) return
 

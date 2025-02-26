@@ -8,6 +8,8 @@ import com.fs.starfarer.api.characters.PersonAPI
 import com.fs.starfarer.api.ui.ButtonAPI
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.LabelAPI
+import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.ui.UIComponentAPI
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.campaign.CampaignState
 import com.fs.starfarer.campaign.CommDirectory
@@ -83,8 +85,21 @@ class CommDirectoryRecolorScript : EveryFrameScript {
                                                     buttonChild.text = "Executive Officer (${aptitude.name})"
                                                     buttonChild.setHighlight("${aptitude.name}")
                                                     buttonChild.setHighlightColors(color)
+
+
+
+                                                   /* var panel = Global.getSettings().createCustom(200f, 200f, null)
+                                                    buttonPanel.addComponent(panel)
+
+                                                    var element = panel.createUIElement(200f, 200f, false)
+                                                    panel.addUIElement(element)
+                                                    panel.position.inTL(0f, 0f)
+
+                                                    element.addPara("test", 0f).position.belowLeft(buttonChild as UIComponentAPI, 0f)*/
                                                 }
                                             }
+
+
                                         }
 
                                     }

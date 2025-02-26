@@ -1,3 +1,10 @@
+Version 1.2.15
+Save Compatible
+
+- Performance Improvements for when the campaign is paused / in menus.
+
+
+
 Version 1.2.14
 Save Compatible
 
