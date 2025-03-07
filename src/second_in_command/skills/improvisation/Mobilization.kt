@@ -18,6 +18,7 @@ class Mobilization : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
+        tooltip.addPara("Civilian and Militarised ships have a 25%% reduction in fuel usage.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("Ships with the \"Militarized Subsystems\" hullmod gain the following effects: ", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - The ships top speed is increased by 10%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "10%")
         tooltip.addPara("   - The ships flux dissipation and capacity is increased by 10%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "10%")
@@ -26,6 +27,10 @@ class Mobilization : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+
+        if (variant.hasHullMod(HullMods.CIVGRADE) || variant.hasHullMod(HullMods.MILITARIZED_SUBSYSTEMS)) {
+            stats.fuelUseMod.modifyMult(id, 0.75f)
+        }
 
         if (variant.hasHullMod(HullMods.MILITARIZED_SUBSYSTEMS)) {
             stats.maxSpeed.modifyPercent(id, 10f)

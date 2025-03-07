@@ -147,6 +147,18 @@ object NPCOfficerGenerator {
             15 -> 3
             else -> 3
         }
+        if (SCSettings.enable4thSlot && random.nextFloat() >= 0.15) {
+            if (aptitudeCount == 1) skillCount += 1
+            if (aptitudeCount == 2) skillCount += MathUtils.getRandomNumberInRange(1,2)
+            if (aptitudeCount == 3) skillCount += MathUtils.getRandomNumberInRange(2,4)
+
+            maxSkillCount += 4
+            if (SCSettings.difficulty == "Hard") maxSkillCount += 1
+
+            skillCount = MathUtils.clamp(skillCount, 1, maxSkillCount) //Minimum of atleast 1 skill per fleet
+
+            aptitudeCount += 1
+        }
 
 
 

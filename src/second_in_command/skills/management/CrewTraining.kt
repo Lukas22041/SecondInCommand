@@ -43,8 +43,8 @@ class CrewTraining : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+10%% maximum combat readiness for all ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("   - The bonus is increased by 5%% for any ship with an officer assigned to it", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "5%")
+        tooltip.addPara("+15%% maximum combat readiness for all ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        //tooltip.addPara("   - The bonus is increased by 5%% for any ship with an officer assigned to it", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "5%")
 
       /*  tooltip.addSpacer(10f)
 
@@ -55,12 +55,13 @@ class CrewTraining : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        var cr = 0.10f
+        //var cr = 0.10f
+        var cr = 0.15f
 
-        var captain = stats!!.fleetMember?.captain
-        if (captain != null && !captain.isDefault/* && !captain.isAICore*/) {
+       /* var captain = stats!!.fleetMember?.captain
+        if (captain != null && !captain.isDefault*//* && !captain.isAICore*//*) {
             cr += 0.05f
-        }
+        }*/
 
         stats!!.maxCombatReadiness.modifyFlat("sc_crew_training", cr, "Crew Training")
 

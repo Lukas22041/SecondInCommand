@@ -34,6 +34,7 @@ class ContinuousRepairs : SCBaseSkillPlugin() {
 
         tooltip.addPara("Ships lost in combat have a 60/60/40/30 percent chance to avoid d-mods, based on hullsize", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("Every 240 deployment points worth of opponents defeated remove a random d-mod from a random ship", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - Defeated capital ships provide twice as much towards this score", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "capital ships", "twice")
         tooltip.addPara("   - This effect can trigger multiple times from the same battle", 0f, Misc.getTextColor(), Misc.getHighlightColor())
         tooltip.addPara("   - This count is being kept track of between battles", 0f, Misc.getTextColor(), Misc.getHighlightColor())
         tooltip.addPara("   - Ignores ships with the Rugged Construction hullmod", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Rugged Construction")
@@ -99,6 +100,7 @@ class ContinuousRepairsListener() : BaseCampaignEventListener(false) {
 
             for (data in plugin.loserData.ownCasualties) {
                 dp += data.member.deploymentPointsCost
+                if (data.member.isCapital) dp += data.member.deploymentPointsCost
             }
 
             while (dp >= required) {

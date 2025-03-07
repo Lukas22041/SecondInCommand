@@ -46,6 +46,7 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
         activeOfficers.add(null)
         activeOfficers.add(null)
         activeOfficers.add(null)
+        activeOfficers.add(null)
 
         fleet.addEventListener(this)
 
@@ -215,6 +216,7 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
         if (getOfficerInSlot(0) == officer) return 0
         if (getOfficerInSlot(1) == officer) return 1
         if (getOfficerInSlot(2) == officer) return 2
+        if (getOfficerInSlot(3) == officer) return 3
 
         return null
     }
@@ -231,6 +233,11 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
 
 
     override fun advance(amount: Float) {
+
+        //1.3.0 Update fix
+        if (activeOfficers.size <= 3) {
+            activeOfficers.add(null)
+        }
 
         for (skill in getAllActiveSkillsPlugins()) {
             skill.advance(this, amount)

@@ -20,6 +20,7 @@ class Countermeasures : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
+        tooltip.addPara("-10%% sensor profile", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("Every deployed ship contributes ${PER_SHIP_BONUS.toInt()}%% to the ECM rating* of the fleet", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("All ships have slightly improved autofire accuracy", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addSpacer(10f)
@@ -45,6 +46,8 @@ class Countermeasures : SCBaseSkillPlugin() {
 
     }
 
-
+    override fun advance(data: SCData?, amunt: Float?) {
+        data!!.fleet.stats.detectedRangeMod.modifyMult("sc_countermeasures", 0.9f, "Countermeasures")
+    }
 
 }

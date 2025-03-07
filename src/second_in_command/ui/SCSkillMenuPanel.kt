@@ -36,6 +36,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
 
     companion object {
         var crCost = 0.20f
+        var lastScrollerY = 0f
     }
 
     fun init() {
@@ -121,18 +122,30 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
         var subpanel = Global.getSettings().createCustom(width, height, null)
         element.addCustom(subpanel, 0f)
         subpanel.position.inTL(20f, 285+5f+15)
-        var subelement = subpanel.createUIElement(width, height, false)
-        subpanel.addUIElement(subelement)
 
-        subelement.addSectionHeading("Executive Officers", Alignment.MID, 0f).apply {
+
+        var headerElement = subpanel.createUIElement(width, 20f, false)
+        subpanel.addUIElement(headerElement)
+        headerElement.position.inTL(0f, 0f)
+
+        headerElement.addSectionHeading("Executive Officers", Alignment.MID, 0f).apply {
             position.inTL(-10f, 0f)
             position.setSize(width-20, 20f)
         }
 
 
+        var scrollerPanel = Global.getSettings().createCustom(width - 20, 400f, null)
+        subpanel.addComponent(scrollerPanel)
+        scrollerPanel.position.inTL(0f, 25f)
+        if (SCSettings.enable4thSlot) scrollerPanel.position.inTL(-10f, 25f)
+
+
+
+        var subelement = scrollerPanel.createUIElement(width - 20, 400f, true)
+
         if (!title) {
 
-            subelement.addSpacer(30f)
+            subelement.addSpacer(23f)
 
             addAptitudeRowParent(subelement, data.getOfficerInSlot(0), 0)
 
@@ -143,6 +156,19 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
             subelement.addSpacer(30f)
 
             addAptitudeRowParent(subelement, data.getOfficerInSlot(2), 2)
+
+            if (SCSettings.enable4thSlot) {
+                subelement.addSpacer(30f)
+
+                addAptitudeRowParent(subelement, data.getOfficerInSlot(3), 3)
+
+                subelement.addSpacer(23f)
+
+                subelement.addLunaElement(0f, 0f).advance {
+                    lastScrollerY = subelement.externalScroller.yOffset
+                }
+            }
+
         } else {
 
             subelement.addSpacer(20f)
@@ -150,6 +176,10 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
             subelement.addPara("Executive Officers can only be selected in the campaign.", 0f, Misc.getTextColor(), Misc.getHighlightColor())
         }
 
+        scrollerPanel.addUIElement(subelement)
+        if (SCSettings.enable4thSlot) {
+            subelement.externalScroller.yOffset = lastScrollerY
+        }
 
 
     }

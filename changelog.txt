@@ -1,3 +1,26 @@
+Version 1.3.0
+Save Compatible
+
+- Added an optional toggle for a 4th XO slot. Also enables Enemies to have up to 4 XOs.
+
+-> Skill Changes:
+- Pristine Condition: Now also reduces the chance for Dmods by 20%.
+- Crew Training: Now applies its 15% Combat readiness at all times, no longer increasing by 5% for just ships with officers.
+- Well Organised: Now also makes normal officers spawn more frequently in comm directories.
+- Low Profile: Now grants +1 to the fleets "move slowly" modifier, but has its sensor reduction decreased from 30% to 25%
+- Huntsman: Now provides a 20% bonus to raid effectiveness.
+- Countermeasures: Now also applies a 10% sensor profile reduction.
+- Overprepared: Now also provides a 10% reduction in monthly supply use.
+- Mobilisation: Civilian & Militarised Ships now also have a 25% reduction in fuel use.
+- Continuous Repairs: Defeated Capital Ships now provide twice as much DP towards the DP score.
+- Generous Donation: Removed the +1 slow burn modifier, but increased the post-battle salvage boost by 10%.
+- Neural Junction: Increased the players multiplier from 0.5x to 1x, as i feel like i over-buffed it (used to be 2x)
+
+Goal with this batch of skill changes is to slightly improve logistical capabilities outside of the dedicated aptitudes, 
+to make runs where you decide not to use one a bit less clunky and also make certain skills a better choice than before.
+
+
+
 Version 1.2.15
 Save Compatible
 
