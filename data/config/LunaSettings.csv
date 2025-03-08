@@ -5,7 +5,7 @@ sc_playerMaxLevel,Player Max Level,Int,15,,"Sets the max level of the player som
 sc_playerXPMult,Player & Officer XP Mult,Double,1,,Modifies how much experience both the [player] and [vanilla officers] gain. This does not effect executive officers.,0.1,5,
 ,,,,,,,,
 sc_officerHeader,Executive Officers,Header,Executive Officers,,,,,
-sc_enable4thSlot,Enbable 4th Slot,Boolean,false,,"Enables a fourth slot for active officers. [The mod is not designed around this option, so please do not send any feedback to me if you are using it]. Also enables NPCs to get up to 4 Officers as well.",,,
+sc_enable4thSlot,Enable 4th Slot,Boolean,false,,"Enables a fourth slot for active officers. [The mod is not designed around this option, so please do not send any feedback to me if you are using it]. Also enables NPCs to get up to 4 Officers as well.",,,
 sc_officerXPMult,XP Mult,Double,1,,Modifies how much experience executive officers gain per battle.,0.1,5,
 ,,,,,,,,
 sc_npcHeader,NPC Fleets,Header,NPC Fleets,,,,,
