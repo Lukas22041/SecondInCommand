@@ -6,7 +6,7 @@ Save Compatible
 
 -> Skill changes:
 - Distanced Support: Removed top speed increase from the skill.
-- Advanced Maneuvers: Removed top speed increase, now improves target leading accuracy.
+- Advanced Maneuvers: Removed top speed increase, now also improves target leading accuracy.
 
 
 
