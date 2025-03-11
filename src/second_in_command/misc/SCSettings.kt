@@ -1,9 +1,11 @@
 package second_in_command.misc
 
+import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import lunalib.lunaSettings.LunaSettings
 import lunalib.lunaSettings.LunaSettingsListener
 import second_in_command.SCUtils
+import second_in_command.misc.backgrounds.AssociatesBackground
 
 class SCSettings : LunaSettingsListener {
 
@@ -78,6 +80,11 @@ class SCSettings : LunaSettingsListener {
         xpGainMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_officerXPMult")!!
 
         enable4thSlot = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_enable4thSlot")!!
+        if (Global.getCurrentState() == GameState.CAMPAIGN) {
+            AssociatesBackground.fillMissingSlot()
+            SCUtils.getPlayerData().remove4thOfficer()
+        }
+
         playerXPMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_playerXPMult")!!
         Global.getSettings().setFloat("xpGainMult", playerXPMult)
 

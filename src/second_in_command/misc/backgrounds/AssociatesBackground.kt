@@ -9,6 +9,7 @@ import exerelin.utilities.NexFactionConfig
 import second_in_command.SCUtils
 import second_in_command.misc.SCSettings
 import second_in_command.misc.randomAndRemove
+import second_in_command.specs.SCAptitudeSpec
 import second_in_command.specs.SCBaseAptitudePlugin
 import second_in_command.specs.SCSpecStore
 
@@ -90,7 +91,54 @@ class AssociatesBackground : BaseCharacterBackground() {
         Global.getSector().characterData.person.stats.points += 1
 
         Global.getSector().memoryWithoutUpdate.set("\$sc_selectedStart", true) //Prevent Initial Hiring Dialog from showing up
+
+        fillMissingSlot()
     }
+
+
+    companion object {
+        //Called if you have an associates run with 4XOs active
+        fun fillMissingSlot() {
+            var data = SCUtils.getPlayerData()
+
+            if (!SCUtils.isAssociatesBackgroundActive()) return
+            if (!SCSettings.enable4thSlot) return
+            if (data.getAssignedOfficers().filterNotNull().size > 3) return
+
+            var aptitudes = SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }.filter { !it.tags.contains("restricted") }.toMutableList()
+            if (!SCSettings.unrestrictedAssociates!!) {
+                aptitudes = aptitudes.filter { it.tags.contains("startingOption") }.toMutableList() //Only pick aptitudes available from the starting interaction
+            }
+
+            aptitudes = aptitudes.filter { !data.hasAptitudeInFleet(it.id) }.toMutableList()
+
+            var picks = ArrayList<SCBaseAptitudePlugin>()
+
+            for (aptitude in aptitudes) {
+
+                var valid = true
+
+                for (category in aptitude.categories) {
+                    for (active in data.getActiveOfficers()) {
+                        if (active.getAptitudePlugin().categories.contains(category)) {
+                            valid = false
+                        }
+                    }
+                }
+                if (valid) picks.add(aptitude)
+            }
+
+            var pick = picks.randomOrNull() ?: return
+
+            var officer = SCUtils.createRandomSCOfficer(pick.id)
+            officer.person.memoryWithoutUpdate.set("\$sc_associatesOfficer", true)
+
+            data.addOfficerToFleet(officer);
+            data.setOfficerInEmptySlotIfAvailable(officer)
+        }
+    }
+
+
 
 
 

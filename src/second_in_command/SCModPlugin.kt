@@ -8,6 +8,7 @@ import lunalib.lunaSettings.LunaSettings
 import second_in_command.misc.NPCFleetInflater
 import second_in_command.misc.SCSettings
 import second_in_command.misc.SpecialEventHandler
+import second_in_command.misc.backgrounds.AssociatesBackground
 import second_in_command.misc.snippets.AddAllOfficersSnippet
 import second_in_command.misc.snippets.AddXPToOfficersSnippet
 import second_in_command.scripts.*
@@ -111,6 +112,9 @@ class SCModPlugin : BaseModPlugin() {
         if (!Global.getSector().intelManager.hasIntelOfClass(SectorSeedIntel::class.java)) {
             Global.getSector().intelManager.addIntel(SectorSeedIntel(), true)
         }
+
+        AssociatesBackground.fillMissingSlot()
+        SCUtils.getPlayerData().remove4thOfficer()
     }
 
     override fun onNewGame() {

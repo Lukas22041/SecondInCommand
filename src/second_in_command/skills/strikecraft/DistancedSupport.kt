@@ -17,7 +17,7 @@ class DistancedSupport : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("+40%% engagement range", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+15%% top speed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        //tooltip.addPara("+15%% top speed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
@@ -33,9 +33,9 @@ class DistancedSupport : SCBaseSkillPlugin() {
     override fun applyEffectsToFighterSpawnedByShip(data: SCData, fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
         var stats = fighter!!.mutableStats
 
-        stats.maxSpeed.modifyPercent(id, 15f)
+        /*stats.maxSpeed.modifyPercent(id, 15f)
         stats.acceleration.modifyPercent(id, 15f * 2f)
-        stats.deceleration.modifyPercent(id, 15f * 2f)
+        stats.deceleration.modifyPercent(id, 15f * 2f)*/
     }
 
 }
