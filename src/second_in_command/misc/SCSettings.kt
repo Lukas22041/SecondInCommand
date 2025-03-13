@@ -81,7 +81,9 @@ class SCSettings : LunaSettingsListener {
 
         enable4thSlot = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_enable4thSlot")!!
         if (Global.getCurrentState() == GameState.CAMPAIGN) {
-            AssociatesBackground.fillMissingSlot()
+            if (Global.getSettings().modManager.isModEnabled("nexerelin")) {
+                AssociatesBackground.fillMissingSlot()
+            }
             SCUtils.getPlayerData().remove4thOfficer()
         }
 

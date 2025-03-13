@@ -113,7 +113,10 @@ class SCModPlugin : BaseModPlugin() {
             Global.getSector().intelManager.addIntel(SectorSeedIntel(), true)
         }
 
-        AssociatesBackground.fillMissingSlot()
+        if (Global.getSettings().modManager.isModEnabled("nexerelin")) {
+            AssociatesBackground.fillMissingSlot()
+        }
+
         SCUtils.getPlayerData().remove4thOfficer()
     }
 
