@@ -169,7 +169,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
                 activated = true
             }
 
-            var skillElement = SkillWidgetElement(skill, "combat", activated, !preacquired, preacquired, skillSpec.spriteName, "combat2", color, subelement, 72f, 72f)
+            var skillElement = SkillWidgetElement(skill, "combat", activated, !preacquired, preacquired, skillSpec.spriteName, "combat2", color, 0, null, subelement, 72f, 72f)
             skillElement.elementPanel.position.rightOfTop(previous, 16f)
             previous = skillElement.elementPanel
             skillElements.add(skillElement)

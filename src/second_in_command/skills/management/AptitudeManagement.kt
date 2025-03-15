@@ -15,7 +15,8 @@ class AptitudeManagement : SCBaseAptitudePlugin() {
 
         var section1 = SCAptitudeSection(true, 0, "leadership1")
         section1.addSkill("sc_management_top_condition")
-        section1.addSkill("sc_management_well_organized")
+        //section1.addSkill("sc_management_well_organized")
+        section1.addSkill("sc_common_slot")
         section1.addSkill("sc_management_authority")
         section1.addSkill("sc_management_re_entry")
         section1.addSkill("sc_management_command_and_conquer")

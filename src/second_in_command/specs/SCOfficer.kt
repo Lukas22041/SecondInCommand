@@ -14,6 +14,7 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
     }
 
     var activeSkillIDs = mutableSetOf<String>()
+    var commonSkillSlots = HashMap<Int, String?>() //index, skillid
 
     var skillPoints = 1
     private var experiencePoints: Float = 0f
@@ -29,6 +30,27 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
         return getAptitudeSpec().getPlugin()
     }
 
+    fun setCommonInSlot(slot: Int, skillId: String) {
+
+        if (data != null) {
+            for (officer in data!!.getOfficersInFleet()) {
+                for ((index, skill) in HashMap(officer.commonSkillSlots)) {
+                    if (skill == skillId) {
+                        if (officer.isAssigned()) {
+                            var plugin = SCSpecStore.getSkillSpec(skillId)!!.getPlugin()
+                            plugin.onDeactivation(data)
+                        }
+                        officer.commonSkillSlots[index] = null
+                    }
+                }
+            }
+        }
+
+        commonSkillSlots.set(slot, skillId)
+
+        var plugin = SCSpecStore.getSkillSpec(skillId)!!.getPlugin()
+        plugin.onActivation(data)
+    }
 
 
     fun addSkill(skillId: String) {
@@ -43,12 +65,19 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
 
 
     fun getSkillSpecs() : List<SCSkillSpec> {
-        return activeSkillIDs.map { SCSpecStore.getSkillSpec(it)!! }
+        var ids = ArrayList(activeSkillIDs)
+        for ((slot, skill) in commonSkillSlots) {
+            if (skill != null) {
+                ids.add(skill)
+            }
+        }
+
+        return ids.map { SCSpecStore.getSkillSpec(it)!! }
     }
 
-    fun getSkillPlugins() : List<SCBaseSkillPlugin> {
+    /*fun getSkillPlugins() : List<SCBaseSkillPlugin> {
         return getSkillSpecs().map { it.getPlugin() }
-    }
+    }*/
 
     fun getActiveSkillPlugins() : List<SCBaseSkillPlugin> {
         //Changed as this made the origin skill apply last

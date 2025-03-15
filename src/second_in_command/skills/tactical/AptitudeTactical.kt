@@ -18,7 +18,8 @@ class AptitudeTactical : SCBaseAptitudePlugin() {
         section1.addSkill("sc_tactical_rapid_response")
         section1.addSkill("sc_tactical_pristine_condition")
         section1.addSkill("sc_tactical_tactical_drills")
-        section1.addSkill("sc_tactical_efficient_ordnance")
+        //section1.addSkill("sc_tactical_efficient_ordnance")
+        section1.addSkill("sc_common_slot")
         //section1.addSkill("sc_tactical_superiority")
         addSection(section1)
 

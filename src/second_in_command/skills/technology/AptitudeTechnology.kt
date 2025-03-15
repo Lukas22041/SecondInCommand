@@ -20,7 +20,8 @@ class AptitudeTechnology : SCBaseAptitudePlugin() {
         section1.addSkill("sc_technology_unlocked_engines")
         section1.addSkill("sc_technology_advanced_weaponry")
         section1.addSkill("sc_technology_deep_dive")
-        section1.addSkill("sc_technology_reinforced_grid")
+        //section1.addSkill("sc_technology_reinforced_grid")
+        section1.addSkill("sc_common_slot")
 
         addSection(section1)
 

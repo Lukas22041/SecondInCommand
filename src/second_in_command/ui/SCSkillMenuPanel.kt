@@ -22,6 +22,7 @@ import second_in_command.ui.elements.*
 import second_in_command.ui.panels.AssosciatesManagePanelPlugin
 import second_in_command.ui.tooltips.OfficerTooltipCreator
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
+import java.awt.Color
 
 class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Boolean,/* var seedTextElement: LabelAPI, var seedElement: UIComponentAPI, var copyButton: UIComponentAPI*/) {
 
@@ -349,8 +350,8 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
         var sections = aptitudePlugin.getSections()
 
         var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())
-        var originSkillElement = SkillWidgetElement(originSkill!!.id, aptitudePlugin.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), subelement, 72f, 72f)
-        subelement.addTooltipTo(SCSkillTooltipCreator(data, originSkill.getPlugin(), aptitudePlugin, 0, false), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
+        var originSkillElement = SkillWidgetElement(originSkill!!.id, aptitudePlugin.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), 0, officer, subelement, 72f, 72f)
+        subelement.addTooltipTo(SCSkillTooltipCreator(data, officer, originSkill.getPlugin(), aptitudePlugin, 0, false, 0), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
         //originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
         originSkillElement.elementPanel.position.rightOfMid(background.elementPanel, 20f)
 
@@ -366,6 +367,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
         var previousSections = ArrayList<SCAptitudeSection>()
         var skillElements = ArrayList<SkillWidgetElement>()
         var previous: CustomPanelAPI = originGap.elementPanel
+        var commonSlotIndex = 0
         for (section in sections) {
 
             var isLastSection = sections.last() == section
@@ -392,12 +394,14 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
                     activated = true
                 }
 
-                var skillElement = SkillWidgetElement(skill, aptitudePlugin.id, activated, !preacquired, preacquired, skillPlugin!!.getIconPath(), section.soundId, aptitudePlugin.getColor(), subelement, 72f, 72f)
+                var aptColor = aptitudePlugin.color
+                if (skill == "sc_common_slot") aptColor = Misc.interpolateColor(Color.WHITE, aptitudePlugin.color, 0.6f)
+                var skillElement = SkillWidgetElement(skill, aptitudePlugin.id, activated, !preacquired, preacquired, skillPlugin!!.getIconPath(), section.soundId, aptColor, commonSlotIndex, officer, subelement, 72f, 72f)
                 skillElements.add(skillElement)
                 section.activeSkillsInUI.add(skillElement)
                 usedWidth += 72f
 
-                var tooltip = SCSkillTooltipCreator(data, skillPlugin, aptitudePlugin, section.requiredPreviousSkills, !section.canChooseMultiple)
+                var tooltip = SCSkillTooltipCreator(data, officer, skillPlugin, aptitudePlugin, section.requiredPreviousSkills, !section.canChooseMultiple, commonSlotIndex)
                 subelement.addTooltipTo(tooltip, skillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
                 section.tooltips.add(tooltip)
 
@@ -438,7 +442,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
                     underline.position.belowLeft(firstSkillThisSection.elementPanel, 2f)
                 }
 
-
+                if (skill == "sc_common_slot") commonSlotIndex += 1
             }
         }
 

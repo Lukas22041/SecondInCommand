@@ -7,6 +7,7 @@ import com.fs.starfarer.api.campaign.InteractionDialogAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import exerelin.campaign.backgrounds.CharacterBackgroundUtils
 import lunalib.lunaExtensions.addLunaElement
 import second_in_command.specs.SCBaseSkillPlugin
@@ -16,6 +17,7 @@ import second_in_command.ui.elements.FullDialogAptitudeBackgroundElement
 import second_in_command.ui.elements.SkillSeperatorElement
 import second_in_command.ui.elements.SkillWidgetElement
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
+import java.awt.Color
 import java.util.Random
 
 object SCUtils {
@@ -241,17 +243,20 @@ object SCUtils {
 
         var first: CustomPanelAPI? = null
         var previous: CustomPanelAPI = background.elementPanel
+        var commonSlotIndex = 0
         for (skill in skills) {
             var isFirst = skills.first() == skill
             var isLast = skills.last() == skill
 
-            var skillElement = SkillWidgetElement(skill.getId(), aptitudePlugin.id, true, false, true, skill.getIconPath(), "", aptitudePlugin.getColor(), element, 40f, 40f)
+            var aptColor = aptitudePlugin.color
+            if (skill.id == "sc_common_slot") aptColor = Misc.interpolateColor(Color.WHITE, aptitudePlugin.color, 0.6f)
+            var skillElement = SkillWidgetElement(skill.getId(), aptitudePlugin.id, true, false, true, skill.getIconPath(), "", aptColor, commonSlotIndex, officer, element, 40f, 40f)
 
             skillElement.onClick {
                 skillElement.playClickSound()
             }
 
-            var tooltip = SCSkillTooltipCreator(data, skill, aptitudePlugin, 0, false)
+            var tooltip = SCSkillTooltipCreator(data, officer, skill, aptitudePlugin, 0, false, commonSlotIndex)
             element.addTooltipTo(tooltip, skillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
 
             if (previous != background.elementPanel) {
@@ -267,6 +272,9 @@ object SCUtils {
                 seperator.elementPanel.position.rightOfTop(skillElement.elementPanel, 1f)
                 previous = seperator.elementPanel
             }
+
+            if (skill.id == "sc_common_slot") commonSlotIndex += 1
+
         }
 
         var paraElement = element.addLunaElement(100f, 20f).apply {

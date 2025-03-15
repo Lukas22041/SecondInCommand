@@ -276,8 +276,8 @@ class SCBarDelegatePanel(var plugin: SCStartBarEventDialogDelegate, var officers
             var sections = aptitudePlugin.getSections()
 
             var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())
-            var originSkillElement = SkillWidgetElement(originSkill!!.id, aptitudePlugin.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), inner, 72f, 72f)
-            inner.addTooltipTo(SCSkillTooltipCreator(data, originSkill.getPlugin(), aptitudePlugin, 0, false), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
+            var originSkillElement = SkillWidgetElement(originSkill!!.id, aptitudePlugin.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), 0, officer, inner, 72f, 72f)
+            inner.addTooltipTo(SCSkillTooltipCreator(data, officer, originSkill.getPlugin(), aptitudePlugin, 0, false, 0), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
             //originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
             originSkillElement.elementPanel.position.rightOfMid(background.elementPanel, 20f)
 
@@ -294,6 +294,7 @@ class SCBarDelegatePanel(var plugin: SCStartBarEventDialogDelegate, var officers
             var previousSections = ArrayList<SCAptitudeSection>()
             var skillElements = ArrayList<SkillWidgetElement>()
             var previous: CustomPanelAPI = originGap.elementPanel
+            var commonSlotIndex = 0
             for (section in sections) {
 
                 var isLastSection = sections.last() == section
@@ -320,7 +321,9 @@ class SCBarDelegatePanel(var plugin: SCStartBarEventDialogDelegate, var officers
                         activated = true
                     }
 
-                    var skillElement = SkillWidgetElement(skill, aptitudePlugin.id, activated, false, preacquired, skillPlugin!!.getIconPath(), section.soundId, aptitudePlugin.getColor(), inner, 72f, 72f)
+                    var aptColor = aptitudePlugin.color
+                    if (skill == "sc_common_slot") aptColor = Misc.interpolateColor(Color.WHITE, aptitudePlugin.color, 0.6f)
+                    var skillElement = SkillWidgetElement(skill, aptitudePlugin.id, activated, false, preacquired, skillPlugin!!.getIconPath(), section.soundId, aptColor, commonSlotIndex, officer, inner, 72f, 72f)
                     skillElement.onClick {
                         Global.getSoundPlayer().playUISound("ui_button_pressed", 1f, 1f)
                         selectedOfficer = officer
@@ -329,7 +332,7 @@ class SCBarDelegatePanel(var plugin: SCStartBarEventDialogDelegate, var officers
                     section.activeSkillsInUI.add(skillElement)
                     usedWidth += 72f
 
-                    var tooltip = SCSkillTooltipCreator(data, skillPlugin, aptitudePlugin, section.requiredPreviousSkills, !section.canChooseMultiple)
+                    var tooltip = SCSkillTooltipCreator(data, officer, skillPlugin, aptitudePlugin, section.requiredPreviousSkills, !section.canChooseMultiple, commonSlotIndex)
 
                     if (section.requiredPreviousSkills != 0) {
                         tooltip.sectionMeetsRequirements = false
@@ -373,7 +376,7 @@ class SCBarDelegatePanel(var plugin: SCStartBarEventDialogDelegate, var officers
                         underline.position.belowLeft(firstSkillThisSection.elementPanel, 2f)
                     }
 
-
+                    if (skill == "sc_common_slot") commonSlotIndex += 1
                 }
             }
 

@@ -1,5 +1,13 @@
 id,name,iconPath,npcSpawnWeight,plugin
 ,,,,
+#Commons,,,,
+sc_common_slot,Skill Slot,graphics/secondInCommand/common/common_slot.png,1,second_in_command.skills.common.CommonSlotPlugin
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
 #Tactical,,,,
 sc_tactical_focused_fire,Focused Fire,graphics/secondInCommand/tactical/focused_fire.png,1,second_in_command.skills.tactical.FocusedFire
 sc_tactical_spotters,Spotters,graphics/secondInCommand/tactical/spotters.png,1,second_in_command.skills.tactical.Spotters

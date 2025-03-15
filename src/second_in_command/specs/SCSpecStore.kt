@@ -5,6 +5,7 @@ import org.apache.log4j.Level
 import org.lazywizard.lazylib.ext.json.getFloat
 import second_in_command.SCUtils
 import second_in_command.misc.loadTextureCached
+import second_in_command.skills.common.SCBaseCommonSkillPlugin
 import java.awt.Color
 
 object SCSpecStore {
@@ -23,6 +24,9 @@ object SCSpecStore {
     @JvmStatic
     fun getSkillSpec(specId: String) = skillSpecs.find { it.id == specId }
 
+    private var commonSkillSpecs = ArrayList<SCSkillSpec>()
+    @JvmStatic
+    fun getCommonSkillSpecs() = commonSkillSpecs
 
     private var categorySpecs = ArrayList<SCCategorySpec>()
     @JvmStatic
@@ -122,8 +126,13 @@ object SCSpecStore {
 
             val pluginPath = row.getString("plugin")
 
+
             var spec = SCSkillSpec(id, name, iconPath, npcSpawnWeight, order, modName, pluginPath)
             skillSpecs.add(spec)
+
+            if (Global.getSettings().scriptClassLoader.loadClass(pluginPath).newInstance() is SCBaseCommonSkillPlugin) {
+                commonSkillSpecs.add(spec)
+            }
         }
 
         logger.debug("Second in Command: Loaded ${skillSpecs.count()} Skill Specs.")

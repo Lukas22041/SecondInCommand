@@ -6,11 +6,16 @@ import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.specs.SCBaseAptitudePlugin
 import second_in_command.specs.SCBaseSkillPlugin
+import second_in_command.specs.SCOfficer
+import second_in_command.specs.SCSpecStore
+import java.awt.Color
 
-class SCSkillTooltipCreator(var data: SCData, var skill: SCBaseSkillPlugin, var aptitude: SCBaseAptitudePlugin, var requiredSkillPoints: Int, var pickOnlyOne: Boolean) : BaseTooltipCreator() {
+class SCSkillTooltipCreator(var data: SCData, var officer: SCOfficer?, var skill: SCBaseSkillPlugin, var aptitude: SCBaseAptitudePlugin, var requiredSkillPoints: Int, var pickOnlyOne: Boolean, var commonSlotIndex: Int) : BaseTooltipCreator() {
 
 
     var sectionMeetsRequirements = true
+    var isCommon = skill.id == "sc_common_slot"
+    var commonSkillId = officer?.commonSkillSlots?.get(commonSlotIndex)
 
     override fun isTooltipExpandable(tooltipParam: Any?): Boolean {
         //return skill.spec.modname != "SecondInCommand"
@@ -23,9 +28,27 @@ class SCSkillTooltipCreator(var data: SCData, var skill: SCBaseSkillPlugin, var 
 
     override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
 
+        var aptColor = aptitude.color
+        if (isCommon) aptColor = Misc.interpolateColor(Color.WHITE, aptColor, 0.6f)
+
         var isOrigin = skill.getId() == aptitude.getOriginSkillId()
 
-        tooltip!!.addTitle(skill.getName(), aptitude.getColor())
+        if (isCommon && commonSkillId != null && skill.id != commonSkillId) {
+            skill = SCSpecStore.getSkillSpec(commonSkillId!!)!!.getPlugin()
+        }
+
+        if (isCommon && commonSkillId != null) tooltip!!.addTitle("Skill Slot - ${skill.name}", aptColor)
+        else tooltip!!.addTitle(skill.getName(), aptColor)
+
+        if (isCommon) {
+            tooltip.addSpacer(10f)
+            tooltip.addPara("If acquired, this slot enables selecting a common skill. " +
+                    "Common skills are a selection of abilities that every officer has access to, but only one officer can make use of at a time. Press Left-click to select a skill.", 0f,
+                Misc.getTextColor(), Misc.getHighlightColor(), "common skill","Left-click")
+        }
+
+        if (isCommon && commonSkillId == null) return
+
 
         var affectsString = skill.getAffectsString()
 

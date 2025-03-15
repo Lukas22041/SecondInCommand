@@ -17,6 +17,7 @@ import second_in_command.misc.baseOrModSpec
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.*
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
+import java.awt.Color
 
 class SCAddOfficersToFleetInteraction : BaseCommandPlugin() {
     override fun execute(ruleId: String?, dialog: InteractionDialogAPI?, params: MutableList<Misc.Token>?, memoryMap: MutableMap<String, MemoryAPI>?): Boolean {
@@ -103,8 +104,8 @@ class SCAddOfficersToFleetInteraction : BaseCommandPlugin() {
             background.elementPanel.position.belowLeft(offsetElement.elementPanel, offset)
 
             var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())
-            var originSkillElement = SkillWidgetElement(originSkill!!.id, aptitudePlugin.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), element, 58f, 58f)
-            element.addTooltipTo(SCSkillTooltipCreator(data, originSkill.getPlugin(), aptitudePlugin, 0, false), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
+            var originSkillElement = SkillWidgetElement(originSkill!!.id, aptitudePlugin.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), 0, officer, element, 58f, 58f)
+            element.addTooltipTo(SCSkillTooltipCreator(data, officer, originSkill.getPlugin(), aptitudePlugin, 0, false, 0), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
             //originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
             originSkillElement.elementPanel.position.rightOfMid(background.elementPanel, 20f)
 
@@ -129,17 +130,20 @@ class SCAddOfficersToFleetInteraction : BaseCommandPlugin() {
                 previous = seperator.elementPanel
             }
 
+            var commonSlotIndex = 0
             for (skill in activeWithoutOrigin) {
                 var isFirst = activeWithoutOrigin.first() == skill
                 var isLast = activeWithoutOrigin.last() == skill
 
-                var skillElement = SkillWidgetElement(skill.getId(), aptitudePlugin.id, true, false, true, skill.getIconPath(), "", aptitudePlugin.getColor(), element, 58f, 58f)
+                var aptColor = aptitudePlugin.color
+                if (skill.id == "sc_common_slot") aptColor = Misc.interpolateColor(Color.WHITE, aptitudePlugin.color, 0.6f)
+                var skillElement = SkillWidgetElement(skill.getId(), aptitudePlugin.id, true, false, true, skill.getIconPath(), "", aptColor, commonSlotIndex, officer, element, 58f, 58f)
 
                 skillElement.onClick {
                     skillElement.playClickSound()
                 }
 
-                var tooltip = SCSkillTooltipCreator(data, skill, aptitudePlugin, 0, false)
+                var tooltip = SCSkillTooltipCreator(data, officer, skill, aptitudePlugin, 0, false, commonSlotIndex)
                 element.addTooltipTo(tooltip, skillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
 
 
@@ -150,6 +154,9 @@ class SCAddOfficersToFleetInteraction : BaseCommandPlugin() {
                     seperator.elementPanel.position.rightOfTop(skillElement.elementPanel, 3f)
                     previous = seperator.elementPanel
                 }
+
+                if (skill.id == "sc_common_slot") commonSlotIndex += 1
+
             }
         }
 

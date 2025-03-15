@@ -3,6 +3,7 @@ package second_in_command.ui.elements
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
+import com.fs.starfarer.api.util.Misc
 import lunalib.lunaUI.elements.LunaElement
 import org.dark.shaders.util.ShaderLib
 import org.lazywizard.lazylib.MathUtils
@@ -10,10 +11,14 @@ import org.lwjgl.opengl.GL11
 import org.lwjgl.opengl.GL13
 import org.lwjgl.opengl.GL20
 import org.lwjgl.util.vector.Vector3f
+import org.magiclib.kotlin.setBrightness
 import second_in_command.misc.SCSettings
+import second_in_command.misc.getAndLoadSprite
+import second_in_command.specs.SCOfficer
+import second_in_command.specs.SCSpecStore
 import java.awt.Color
 
-class SkillWidgetElement(var id: String, var aptitudeId: String, var activated: Boolean, var canChangeState: Boolean, var preAcquired: Boolean, var iconPath: String, var soundId: String, var color: Color, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
+class SkillWidgetElement(var id: String, var aptitudeId: String, var activated: Boolean, var canChangeState: Boolean, var preAcquired: Boolean, var iconPath: String, var soundId: String, var color: Color, var commonSlotIndex: Int, var officer: SCOfficer?, tooltip: TooltipMakerAPI, width: Float, height: Float) : LunaElement(tooltip, width, height) {
 
     var sprite = Global.getSettings().getSprite(iconPath)
     var inactiveBorder = Global.getSettings().getSprite("graphics/secondInCommand/skillBorderInactive.png")
@@ -21,6 +26,9 @@ class SkillWidgetElement(var id: String, var aptitudeId: String, var activated: 
 
     var hoverFade = 0f
     var time = 0f
+
+    var isCommon = id == "sc_common_slot"
+    var commonSkillId = officer?.commonSkillSlots?.get(commonSlotIndex)
 
     companion object {
         var shader = 0;
@@ -35,6 +43,12 @@ class SkillWidgetElement(var id: String, var aptitudeId: String, var activated: 
         enableTransparency = true
         backgroundAlpha = 0f
         borderAlpha = 0f
+
+        if (isCommon && commonSkillId != null && commonSkillId != id) {
+            id = commonSkillId!!
+            var spec = SCSpecStore.getSkillSpec(commonSkillId!!)
+            sprite = Global.getSettings().getAndLoadSprite(spec!!.iconPath)
+        }
 
         if (aptitudeId == "rat_abyssal" && shader == 0) {
             shader = ShaderLib.loadShader(
@@ -123,7 +137,8 @@ class SkillWidgetElement(var id: String, var aptitudeId: String, var activated: 
             }
         }
 
-
+        if (isCommon) sprite.color = Misc.interpolateColor(sprite.color, color, 0.5f)
+        //if (id == "sc_common_slot") sprite.color = color.setBrightness(sprite.color.red)
         sprite.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
 
 
@@ -181,8 +196,9 @@ class SkillWidgetElement(var id: String, var aptitudeId: String, var activated: 
             inactiveBorder.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
         }
 
-
-
+        if (isCommon) sprite.color = color
+        //if (id == "sc_common_slot") sprite.color = color.setBrightness(sprite.color.red )
+        //if (id == "sc_common_slot") sprite.color = color
         sprite.setAdditiveBlend()
         sprite.setSize(width-8, height-8)
         sprite.alphaMult = alphaMult * 0.5f * hoverFade
