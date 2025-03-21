@@ -1,3 +1,10 @@
+Version 1.3.3
+Safe Compatible
+
+- Added the "unmanageable" tag for aptitudes, enabling crossmod aptitudes to prevent their characters from being modified through the "Manage" button.
+
+
+
 Version 1.3.2
 Save Compatible
 

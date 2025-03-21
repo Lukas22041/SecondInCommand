@@ -13,6 +13,7 @@ import lunalib.lunaExtensions.addLunaSpriteElement
 import lunalib.lunaExtensions.addLunaTextfield
 import lunalib.lunaUI.elements.LunaSpriteElement
 import second_in_command.SCData
+import second_in_command.misc.addNegativePara
 import second_in_command.misc.addTooltip
 import second_in_command.misc.getAndLoadSprite
 import second_in_command.specs.SCAptitudeSection
@@ -491,15 +492,30 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
         manageButton.advance {
             if (selectedOfficer != null) {
-                var plugin = SCSpecStore.getAptitudeSpec(selectedOfficer!!.aptitudeId)!!.getPlugin()
-                manageButton.color = plugin.getColor()
-                manageButton.blink = true
+
+                var aptitude = selectedOfficer!!.getAptitudeSpec()
+                var plugin = aptitude.getPlugin()
+                if (aptitude.tags.contains("unmanageable")) {
+                    manageButton.color = Misc.getGrayColor()
+                    manageButton.blink = false
+                } else {
+                    var plugin = SCSpecStore.getAptitudeSpec(selectedOfficer!!.aptitudeId)!!.getPlugin()
+                    manageButton.color = plugin.getColor()
+                    manageButton.blink = true
+                }
+
             }
         }
 
         manageButton.onClick {
 
             if (selectedOfficer == null) {
+                Global.getSoundPlayer().playUISound("ui_button_disabled_pressed", 1f, 1f)
+                return@onClick
+            }
+
+            var aptitude = selectedOfficer!!.getAptitudeSpec()
+            if (aptitude.tags.contains("unmanageable")) {
                 Global.getSoundPlayer().playUISound("ui_button_disabled_pressed", 1f, 1f)
                 return@onClick
             }
@@ -533,6 +549,12 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
         buttonElement.addTooltip(manageButton.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 250f) { tooltip ->
             tooltip.addPara("Change the name or dismiss an officer, or change their portrait. ", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "name", "dismiss", "portrait")
+
+            var aptitude = selectedOfficer!!.getAptitudeSpec()
+            if (aptitude.tags.contains("unmanageable")) {
+                tooltip.addSpacer(10f)
+                tooltip.addNegativePara("This officer can not be managed")
+            }
         }
 
         //Cancel
