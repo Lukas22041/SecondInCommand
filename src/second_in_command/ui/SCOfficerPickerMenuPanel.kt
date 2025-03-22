@@ -550,11 +550,14 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
         buttonElement.addTooltip(manageButton.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 250f) { tooltip ->
             tooltip.addPara("Change the name or dismiss an officer, or change their portrait. ", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "name", "dismiss", "portrait")
 
-            var aptitude = selectedOfficer!!.getAptitudeSpec()
-            if (aptitude.tags.contains("unmanageable")) {
-                tooltip.addSpacer(10f)
-                tooltip.addNegativePara("This officer can not be managed")
+            if (selectedOfficer != null) {
+                var aptitude = selectedOfficer!!.getAptitudeSpec()
+                if (aptitude.tags.contains("unmanageable")) {
+                    tooltip.addSpacer(10f)
+                    tooltip.addNegativePara("This officer can not be managed")
+                }
             }
+
         }
 
         //Cancel

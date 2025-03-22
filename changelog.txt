@@ -1,3 +1,10 @@
+Version 1.3.4
+Safe Compatible
+
+- Fixed a crash that occured when hovering over the manage button while no officer is selected.
+
+
+
 Version 1.3.3
 Safe Compatible
 
