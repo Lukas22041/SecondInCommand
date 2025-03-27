@@ -29,6 +29,7 @@ class Tenacity : SCBaseSkillPlugin() {
             ShipAPI.HullSize.DESTROYER -> stats!!.effectiveArmorBonus.modifyFlat(id, 100f)
             ShipAPI.HullSize.CRUISER -> stats!!.effectiveArmorBonus.modifyFlat(id, 125f)
             ShipAPI.HullSize.CAPITAL_SHIP -> stats!!.effectiveArmorBonus.modifyFlat(id, 150f)
+            else -> null
         }
 
     }

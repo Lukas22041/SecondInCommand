@@ -58,6 +58,7 @@ class ContinuousRepairs : SCBaseSkillPlugin() {
             ShipAPI.HullSize.DESTROYER -> stats!!.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, 0.4f)
             ShipAPI.HullSize.CRUISER -> stats!!.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, 0.6f)
             ShipAPI.HullSize.CAPITAL_SHIP -> stats!!.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, 0.7f)
+            else -> null
         }
     }
 
