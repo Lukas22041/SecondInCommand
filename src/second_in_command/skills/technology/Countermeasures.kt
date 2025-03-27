@@ -50,4 +50,8 @@ class Countermeasures : SCBaseSkillPlugin() {
         data!!.fleet.stats.detectedRangeMod.modifyMult("sc_countermeasures", 0.9f, "Countermeasures")
     }
 
+    override fun onDeactivation(data: SCData?) {
+        data!!.fleet.stats.detectedRangeMod.unmodify("sc_countermeasures")
+    }
+
 }
