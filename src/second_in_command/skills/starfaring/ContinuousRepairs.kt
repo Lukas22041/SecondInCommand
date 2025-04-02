@@ -89,6 +89,41 @@ class ContinuousRepairs : SCBaseSkillPlugin() {
 
 }
 
+
+class ContinousIntel(var pick: FleetMemberAPI, var specId: String) : BaseIntelPlugin() {
+
+    init {
+        endAfterDelay(30f)
+    }
+
+    override fun getName(): String {
+        return "Skill - Continuous Repairs"
+    }
+
+    override fun getIcon(): String {
+        return "graphics/secondInCommand/starfaring/continuous_repairs.png"
+    }
+
+    override fun hasSmallDescription(): Boolean {
+        return false
+    }
+
+    override fun addBulletPoints(info: TooltipMakerAPI?, mode: IntelInfoPlugin.ListInfoMode?, isUpdate: Boolean, tc: Color?, initPad: Float) {
+        var spec = Global.getSettings().getHullModSpec(specId)
+        info!!.addPara("${pick.shipName} - removed ${spec.displayName}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${spec.displayName}")
+    }
+
+    override fun getTitleColor(mode: IntelInfoPlugin.ListInfoMode?): Color {
+        return Misc.getBasePlayerColor()
+    }
+
+    override fun getIntelTags(map: SectorMapAPI?): MutableSet<String> {
+        var tags = super.getIntelTags(map)
+        tags.add("Skills")
+        return tags
+    }
+}
+
 class ContinuousRepairsListener() : BaseCampaignEventListener(false) {
 
     var required = 240
@@ -140,38 +175,7 @@ class ContinuousRepairsListener() : BaseCampaignEventListener(false) {
 
 
                         //Intel
-                        var intel = object : BaseIntelPlugin() {
-
-                            init {
-                                endAfterDelay(30f)
-                            }
-
-                            override fun getName(): String {
-                                return "Skill - Continuous Repairs"
-                            }
-
-                            override fun getIcon(): String {
-                                return "graphics/secondInCommand/starfaring/continuous_repairs.png"
-                            }
-
-                            override fun hasSmallDescription(): Boolean {
-                                return false
-                            }
-
-                            override fun addBulletPoints(info: TooltipMakerAPI?, mode: IntelInfoPlugin.ListInfoMode?, isUpdate: Boolean, tc: Color?, initPad: Float) {
-                                info!!.addPara("${pick.shipName} - removed ${spec.displayName}", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${spec.displayName}")
-                            }
-
-                            override fun getTitleColor(mode: IntelInfoPlugin.ListInfoMode?): Color {
-                                return Misc.getBasePlayerColor()
-                            }
-
-                            override fun getIntelTags(map: SectorMapAPI?): MutableSet<String> {
-                                var tags = super.getIntelTags(map)
-                                tags.add("Skills")
-                                return tags
-                            }
-                        }
+                        var intel = ContinousIntel(pick, spec.id)
 
                         Global.getSector().intelManager.addIntel(intel)
 

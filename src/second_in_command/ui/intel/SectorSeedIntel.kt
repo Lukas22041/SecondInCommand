@@ -37,10 +37,6 @@ class SectorSeedIntel() : BaseIntelPlugin() {
 
     override fun createSmallDescription(info: TooltipMakerAPI?, width: Float, height: Float) {
         info!!.addSpacer(10f)
-
-
-
-
     }
 
     override fun hasSmallDescription(): Boolean {

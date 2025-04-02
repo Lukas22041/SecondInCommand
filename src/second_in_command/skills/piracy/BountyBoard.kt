@@ -34,11 +34,9 @@ class BountyBoard : SCBaseSkillPlugin() {
         tooltip.addPara("   - The payment is halved for civilian targets", 0f, Misc.getTextColor(), Misc.getHighlightColor(),
             "halved")
 
-
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-
 
     }
 
@@ -64,6 +62,41 @@ class BountyBoard : SCBaseSkillPlugin() {
         }
     }
 
+}
+
+class BountyBoardIntel(var payment: Float) : BaseIntelPlugin() {
+
+    init {
+        endAfterDelay(30f)
+    }
+
+    override fun getName(): String {
+        return "Skill - Privateering"
+    }
+
+    override fun getIcon(): String {
+        return "graphics/secondInCommand/piracy/bounty_board.png"
+    }
+
+    override fun hasSmallDescription(): Boolean {
+        return false
+    }
+
+    override fun addBulletPoints(info: TooltipMakerAPI?, mode: IntelInfoPlugin.ListInfoMode?, isUpdate: Boolean, tc: Color?, initPad: Float) {
+
+        var paymentString = Misc.getDGSCredits(payment)
+        info!!.addPara("Gained $paymentString credits from the recent encounter.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "$paymentString")
+    }
+
+    override fun getTitleColor(mode: IntelInfoPlugin.ListInfoMode?): Color {
+        return Misc.getBasePlayerColor()
+    }
+
+    override fun getIntelTags(map: SectorMapAPI?): MutableSet<String> {
+        var tags = super.getIntelTags(map)
+        tags.add("Skills")
+        return tags
+    }
 }
 
 class BountyBoardSkillListener() : FleetEventListener {
@@ -101,40 +134,7 @@ class BountyBoardSkillListener() : FleetEventListener {
 
         Global.getSector().playerFleet.cargo.credits.add(payment)
 
-        var intel = object : BaseIntelPlugin() {
-
-            init {
-                endAfterDelay(30f)
-            }
-
-            override fun getName(): String {
-                return "Skill - Privateering"
-            }
-
-            override fun getIcon(): String {
-                return "graphics/secondInCommand/piracy/bounty_board.png"
-            }
-
-            override fun hasSmallDescription(): Boolean {
-                return false
-            }
-
-            override fun addBulletPoints(info: TooltipMakerAPI?, mode: IntelInfoPlugin.ListInfoMode?, isUpdate: Boolean, tc: Color?, initPad: Float) {
-
-                var paymentString = Misc.getDGSCredits(payment)
-                info!!.addPara("Gained $paymentString credits from the recent encounter.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "$paymentString")
-            }
-
-            override fun getTitleColor(mode: IntelInfoPlugin.ListInfoMode?): Color {
-                return Misc.getBasePlayerColor()
-            }
-
-            override fun getIntelTags(map: SectorMapAPI?): MutableSet<String> {
-                var tags = super.getIntelTags(map)
-                tags.add("Skills")
-                return tags
-            }
-        }
+        var intel = BountyBoardIntel(payment)
 
         Global.getSector().intelManager.addIntel(intel)
 

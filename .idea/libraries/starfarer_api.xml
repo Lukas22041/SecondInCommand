@@ -22,7 +22,6 @@
       <root url="jar://$PROJECT_DIR$/../LunaLib/jars/LunaLib-Kotlin.jar!/" />
       <root url="jar://$PROJECT_DIR$/../LazyLib/jars/LazyLib.jar!/" />
       <root url="jar://$PROJECT_DIR$/../LazyLib/jars/LazyLib-Kotlin.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../LazyLib/jars/LazyLib-Console.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Console Commands/jars/lw_Console.jar!/" />
       <root url="jar://$PROJECT_DIR$/../GraphicsLib/jars/Graphics.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Nexerelin/jars/ExerelinCore.jar!/" />
