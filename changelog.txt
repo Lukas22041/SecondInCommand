@@ -1,6 +1,6 @@
 Version 1.4.1 (Potentialy not save compatible)
-The new Starsector Hotfix may not be entirely compatible with saves that used prior versions of the mod. 
-If you have issues on load, downgrade to the prior starsector version until you are done with your saves. Not entirely confirmed if this issue appears on most saves though.
+The new starsector version will very likely break with older versions of this mod, especialy if you had the "Continiuous Repairs" skill, and installing this version wont fix that. 
+So i recommend to stay on the version you are currently using until your done with your playthrough.
 
 - Made some fixes to prevent cases like those mentioned above for future versions.
 
