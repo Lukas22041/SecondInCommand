@@ -1,3 +1,10 @@
+Version 1.4.2 
+Save Compatible
+
+- Added the "Fighters" category to the Strikecraft aptitude for compatibility.
+
+
+
 Version 1.4.1 (Potentialy not save compatible)
 The new starsector version will very likely break with older versions of this mod, especialy if you had the "Continiuous Repairs" skill, and installing this version wont fix that. 
 So i recommend to stay on the version you are currently using until your done with your playthrough.

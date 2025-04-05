@@ -1,5 +1,6 @@
 id,name,color
 #Categories are used to make two aptitudes not compatible with eachother,,
 ,,
+sc_cat_strikecraft,Fighters,"175,135,0,255"
 sc_cat_logistical,Logistical,"175,135,0,255"
 sc_cat_automated,Automated,"0, 166, 175,255"
