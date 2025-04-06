@@ -2,6 +2,7 @@ package second_in_command;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.CampaignFleetAPI;
+import com.fs.starfarer.api.campaign.SpecialItemSpecAPI;
 import com.fs.starfarer.api.characters.FullName;
 import com.fs.starfarer.api.characters.PersonAPI;
 import second_in_command.specs.SCOfficer;
@@ -9,6 +10,8 @@ import second_in_command.specs.SCOfficer;
 public class Runcodes {
 
     public void test() {
+
+
 
        /* //Get the SiC Data for the fleet. Replace the fleet variable with your target fleet here
         CampaignFleetAPI fleet;
