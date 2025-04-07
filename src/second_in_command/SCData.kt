@@ -6,12 +6,14 @@ import com.fs.starfarer.api.campaign.BattleAPI
 import com.fs.starfarer.api.campaign.CampaignEventListener
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.campaign.listeners.FleetEventListener
+import com.fs.starfarer.api.impl.SharedUnlockData
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
 import second_in_command.misc.NPCOfficerGenerator
 import second_in_command.misc.SCSettings
 import second_in_command.misc.backgrounds.AssociatesBackground
 import second_in_command.misc.baseOrModSpec
+import second_in_command.misc.codex.CodexHandler
 import second_in_command.misc.logger
 import second_in_command.skills.PlayerLevelEffects
 import second_in_command.specs.SCBaseSkillPlugin
@@ -133,6 +135,10 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
     fun addOfficerToFleet(officer: SCOfficer) {
         officer.data = this
         officers.add(officer)
+
+        if (this.isPlayer) {
+            CodexHandler.reportPlayerAwareOfThing(officer.aptitudeId, CodexHandler.APTITUDE_SET, CodexHandler.getAptitudEntryId(officer.aptitudeId),true)
+        }
     }
 
     fun removeOfficerFromFleet(officer: SCOfficer) {

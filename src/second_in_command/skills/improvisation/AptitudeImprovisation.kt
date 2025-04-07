@@ -1,12 +1,20 @@
 package second_in_command.skills.improvisation
 
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.misc.levelBetween
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCBaseAptitudePlugin
 
 class AptitudeImprovisation : SCBaseAptitudePlugin() {
+
+    override fun addCodexDescription(tooltip: TooltipMakerAPI) {
+        tooltip.addPara("Improvisation provides the ability to make use out of d-mods. Their downside become easier to manage, and provide benefits for the fleet. " +
+                "It also has some skills to provide benefits to hullmods that perform larger changes to how a ship works. ",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "Improvisation", "")
+    }
 
     override fun getOriginSkillId(): String {
         return "sc_improvisation_salvaged_armor"

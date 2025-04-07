@@ -1,6 +1,7 @@
 package second_in_command.scripts
 
 import com.fs.starfarer.api.EveryFrameScript
+import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.AICoreOfficerPlugin
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
@@ -18,11 +19,12 @@ class AutomatedShipsManager : EveryFrameScript {
     companion object {
         @JvmStatic
         fun get() : AutomatedShipsManager {
-            var manager = Global.getSector().transientScripts.find { it is AutomatedShipsManager } as AutomatedShipsManager?
+            if (Global.getCurrentState() == GameState.TITLE) return AutomatedShipsManager()
+            var manager = Global.getSector()?.transientScripts?.find { it is AutomatedShipsManager } as AutomatedShipsManager?
 
             if (manager == null) {
                 manager = AutomatedShipsManager()
-                Global.getSector().transientScripts.add(manager)
+                Global.getSector()?.transientScripts?.add(manager)
             }
 
             return manager
@@ -74,6 +76,7 @@ class AutomatedShipsManager : EveryFrameScript {
     }
 
     fun getUsedDP() : Float{
+        if (Global.getCurrentState() == GameState.TITLE) return 0f
         var fleet = Global.getSector()?.playerFleet ?: return 0f //Can be null during Deserialization :)
         var points = 0f
 

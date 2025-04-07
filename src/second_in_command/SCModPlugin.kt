@@ -9,6 +9,7 @@ import second_in_command.misc.NPCFleetInflater
 import second_in_command.misc.SCSettings
 import second_in_command.misc.SpecialEventHandler
 import second_in_command.misc.backgrounds.AssociatesBackground
+import second_in_command.misc.codex.CodexHandler
 import second_in_command.misc.snippets.AddAllOfficersSnippet
 import second_in_command.misc.snippets.AddXPToOfficersSnippet
 import second_in_command.scripts.*
@@ -18,8 +19,19 @@ import java.lang.Exception
 
 class SCModPlugin : BaseModPlugin() {
 
-    override fun onApplicationLoad() {
+    override fun onAboutToStartGeneratingCodex() {
+        CodexHandler.onAboutToStartGeneratingCodex()
+    }
 
+    override fun onAboutToLinkCodexEntries() {
+        CodexHandler.onAboutToLinkCodexEntries()
+    }
+
+    override fun onCodexDataGenerated() {
+        CodexHandler.onCodexDataGenerated()
+    }
+
+    override fun onApplicationLoad() {
         LunaSettings.addSettingsListener(SCSettings())
 
         LunaDebug.addSnippet(AddAllOfficersSnippet())

@@ -1,12 +1,20 @@
 package second_in_command.skills.strikecraft
 
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.misc.levelBetween
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCBaseAptitudePlugin
 
 class AptitudeStrikecraft : SCBaseAptitudePlugin() {
+
+    override fun addCodexDescription(tooltip: TooltipMakerAPI) {
+        tooltip.addPara("Strikecraft is the most fighter centric aptitude in the mod. " +
+                "It comes with some methods of improving the strength of fighters, but also some that change how you may use them.  ",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "Strikecraft", "")
+    }
 
     override fun getOriginSkillId(): String {
         return "sc_strikecraft_fighter_uplink"

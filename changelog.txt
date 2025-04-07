@@ -1,5 +1,16 @@
 Version 1.4.2 
 Save Compatible
+REQUIRES LUNALIB 2.0.3 OR NEWER
+
+- Added a Codex entry describing the mod itself.
+- Added a codex entry for every aptitude, including modded ones, though some will be missing descriptions.
+- Aptitudes that are not offered in the starting dialog will not show up in codex until found within a playthrough.
+- Fixed codex entries for vanilla skills being visible.
+
+
+
+Version 1.4.2 
+Save Compatible
 
 - Added the "Fighters" category to the Strikecraft aptitude for compatibility.
 

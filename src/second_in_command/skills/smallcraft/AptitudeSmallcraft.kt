@@ -1,12 +1,20 @@
 package second_in_command.skills.smallcraft
 
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.misc.levelBetween
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCBaseAptitudePlugin
 
 class AptitudeSmallcraft : SCBaseAptitudePlugin() {
+
+    override fun addCodexDescription(tooltip: TooltipMakerAPI) {
+        tooltip.addPara("Smallcraft is an aptitude all about frigates and destroyers. " +
+                "It is especially helpful for Wolfpack fleets, but can also come of use in any fleet with a lot of smaller ships. ",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "Smallcraft", "")
+    }
 
     override fun getOriginSkillId(): String {
         return "sc_smallcraft_wolfpack_tactics"

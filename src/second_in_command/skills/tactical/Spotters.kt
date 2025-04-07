@@ -1,5 +1,6 @@
 package second_in_command.skills.tactical
 
+import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
@@ -18,6 +19,7 @@ class Spotters : SCBaseSkillPlugin() {
     }
 
     fun getFleetDP(fleet: CampaignFleetAPI) : Float {
+        if (Global.getCurrentState() == GameState.TITLE) return 0f
         var DP = 0f
         for (member in fleet.fleetData.membersListCopy) {
             if (!member.isFrigate && !member.isDestroyer) continue

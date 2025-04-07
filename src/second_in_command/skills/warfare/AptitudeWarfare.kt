@@ -2,11 +2,19 @@ package second_in_command.skills.warfare
 
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCBaseAptitudePlugin
 
 class AptitudeWarfare : SCBaseAptitudePlugin() {
+
+    override fun addCodexDescription(tooltip: TooltipMakerAPI) {
+        tooltip.addPara("Warfare is an aptitude most closely associated with low-tech, but it comes in use for most fleets that want to pack some extra defenses. " +
+                "It also comes with additional skills to improve the performance of ballistic and missile weapons. ",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "Warfare", "")
+    }
 
     override fun getOriginSkillId(): String {
         return "sc_warfare_iron_sight"
