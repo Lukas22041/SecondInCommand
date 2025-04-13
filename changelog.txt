@@ -4,7 +4,7 @@ Save Compatible
 - Aptitudes should now always show at the top of the Skills category in codex.
 - The aptitudes should now have the correct order in the codex.
 - Codex now only shows other aptitudes of the same category in the "Related" section in codex.
-- Fixed a weird odd ConcurrentModificationException error that appears to most commonly happen together with MoreMilitaryMissions
+- Fixed an odd ConcurrentModificationException error that appears to most commonly happen together with MoreMilitaryMissions
 
 
 
