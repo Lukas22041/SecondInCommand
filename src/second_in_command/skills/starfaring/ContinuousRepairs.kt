@@ -164,7 +164,7 @@ class ContinuousRepairsListener() : BaseCampaignEventListener(false) {
                     }
 
                     var hmodPick = foundDmods.randomOrNull()
-                    if (hmodPick != null) {
+                    if (hmodPick != null && pick.variant != null) {
                         DModManager.removeDMod(pick.variant, hmodPick)
 
                         val spec = DModManager.getMod(hmodPick)

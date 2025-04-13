@@ -52,7 +52,8 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
         activeOfficers.add(null)
         activeOfficers.add(null)
 
-        fleet.addEventListener(this)
+        //Causes a ConcurrentModificationError with MoreMilitaryMissions for some reason
+        //fleet.addEventListener(this)
 
         officers.clear()
 
@@ -250,6 +251,11 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
 
 
     override fun advance(amount: Float) {
+
+        //Has to be done to avoid ConcurrentModificationExceptions errors
+        if (!fleet.eventListeners.contains(this) && !fleet.isDespawning) {
+            fleet.addEventListener(this)
+        }
 
         //1.3.0 Update fix
         if (activeOfficers.size <= 3) {

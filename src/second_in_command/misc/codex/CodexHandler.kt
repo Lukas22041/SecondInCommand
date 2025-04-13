@@ -93,14 +93,22 @@ object CodexHandler {
         generateAptitudeEntries()
 
 
-        var relatedAptitudes = ArrayList<String>()
+        //var relatedAptitudes = ArrayList<String>()
 
-        relatedAptitudes.add(LunaCodex.getModEntryId("second_in_command"))
+        //relatedAptitudes.add(LunaCodex.getModEntryId("second_in_command"))
         for (aptitude in SCSpecStore.getAptitudeSpecs()) {
-            relatedAptitudes.add(getAptitudEntryId(aptitude.id))
+           // relatedAptitudes.add(getAptitudEntryId(aptitude.id))
+
+            CodexDataV2.makeRelated(LunaCodex.getModEntryId("second_in_command"), getAptitudEntryId(aptitude.id))
+
+            for (other in SCSpecStore.getAptitudeSpecs()) {
+                if (aptitude.categories.any { other.categories.contains(it) }) {
+                    CodexDataV2.makeRelated(getAptitudEntryId(aptitude.id), getAptitudEntryId(other.id))
+                }
+            }
         }
 
-        CodexDataV2.makeRelated(*relatedAptitudes.toTypedArray())
+        //CodexDataV2.makeRelated(*relatedAptitudes.toTypedArray())
 
 
       /*  var relateds = ArrayList<String>()
@@ -147,7 +155,12 @@ object CodexHandler {
     fun generateAptitudeEntries() {
         var skillsCategory = CodexDataV2.ROOT.children.find { it.id == CodexDataV2.CAT_SKILLS }
 
-        for (aptitude in SCSpecStore.getAptitudeSpecs()) {
+        var children = ArrayList(skillsCategory!!.children)
+        for (child in children) {
+            skillsCategory.children.remove(child)
+        }
+
+        for (aptitude in SCSpecStore.getAptitudeSpecs().sortedBy { it.order }) {
             var plugin = aptitude.getPlugin()
 
             if (aptitude.tags.contains("hide_in_codex")) continue
@@ -160,6 +173,10 @@ object CodexHandler {
 
             skillsCategory!!.addChild(aptitudeEntry)
             CodexDataV2.ENTRIES.put(aptitudeEntry.id, aptitudeEntry)
+        }
+
+        for (child in children) {
+            skillsCategory.addChild(child)
         }
 
         //CodexDataV2.makeRelated()
