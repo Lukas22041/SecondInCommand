@@ -1,6 +1,7 @@
 package second_in_command.specs
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.ModSpecAPI
 import java.awt.Color
 
 data class SCAptitudeSpec(
@@ -11,7 +12,7 @@ data class SCAptitudeSpec(
     var color: Color,
     var tags: List<String>,
     var order: Int,
-    var modname: String,
+    var modSpec: ModSpecAPI,
     var pluginPath: String) {
 
     fun getPlugin() : SCBaseAptitudePlugin {

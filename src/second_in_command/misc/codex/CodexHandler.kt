@@ -12,19 +12,15 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaCodex.LunaCodex
-import lunalib.lunaExtensions.addLunaElement
 import lunalib.lunaExtensions.addLunaSpriteElement
 import lunalib.lunaUI.elements.LunaSpriteElement
 import second_in_command.SCData
-import second_in_command.misc.addPara
-import second_in_command.misc.addTooltip
 import second_in_command.misc.getAndLoadSprite
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCAptitudeSpec
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.*
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
-import java.awt.Color
 import kotlin.math.max
 import kotlin.math.min
 
@@ -167,7 +163,7 @@ object CodexHandler {
 
             var aptitudeEntry = AptitudeEntry(aptitude, getAptitudEntryId(plugin.id), plugin.name, plugin.originSkillPlugin.iconPath)
 
-            if (!aptitude.tags.contains("startingOption")) {
+            if (!aptitude.tags.contains("startingOption") && !aptitude.tags.contains("always_show_in_codex")) {
                 aptitudeEntry.addTag(Tags.CODEX_UNLOCKABLE)
             }
 
@@ -194,6 +190,10 @@ object CodexHandler {
 class AptitudeEntry(var aptitudeSpec: SCAptitudeSpec, id: String, title: String, icon: String) : CodexEntryV2(id,  title, icon) {
     override fun isCategory(): Boolean {
         return false
+    }
+
+    override fun getSourceMod(): ModSpecAPI? {
+        return aptitudeSpec.modSpec
     }
 
     override fun createTitleForList(info: TooltipMakerAPI?, width: Float, mode: CodexEntryPlugin.ListMode?) {

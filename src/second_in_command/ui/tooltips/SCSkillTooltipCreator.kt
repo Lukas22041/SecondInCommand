@@ -1,6 +1,7 @@
 package second_in_command.ui.tooltips
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.impl.codex.CodexDataV2
 import com.fs.starfarer.api.ui.BaseTooltipCreator
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
@@ -29,6 +30,8 @@ class SCSkillTooltipCreator(var data: SCData, var skill: SCBaseSkillPlugin, var 
 
         tooltip!!.addTitle(skill.getName(), aptitude.getColor())
 
+        if (!Global.getSettings().isShowingCodex) tooltip.codexEntryId = CodexHandler.getAptitudEntryId(aptitude.id)
+
         var affectsString = skill.getAffectsString()
 
         tooltip.addSpacer(10f)
@@ -51,11 +54,10 @@ class SCSkillTooltipCreator(var data: SCData, var skill: SCBaseSkillPlugin, var 
             tooltip.addPara("You can only pick one skill in this section.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
         }
 
-        var modname = aptitude.spec.modname
-        if (modname != "SecondInCommand" /*&& expanded*/) {
+        if (aptitude.spec.modSpec.id != "second_in_command") {
             tooltip.addSpacer(10f)
             //tooltip.addPara("Skill added by \"$modname\"", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-            tooltip.addPara("[$modname]", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "$")
+            tooltip.addPara("[${aptitude.spec.modSpec.name}]", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "$")
         }
 
         tooltip.addSpacer(2f)

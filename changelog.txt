@@ -1,3 +1,13 @@
+Version 1.4.5
+Save Compatible
+
+- Added "always_show_in_codex" tag, to show aptitudes in codex even if their not available in the bar event.
+- The codex should now correctly show what mod an aptitude is from.
+- Can now press F2 on combat & xo skills to show their codex entries.
+- Modnames on aptitude descriptions should now show the mod name, not mod folder name
+
+
+
 Version 1.4.4
 Save Compatible
 

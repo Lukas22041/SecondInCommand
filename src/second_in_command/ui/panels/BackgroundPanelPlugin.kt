@@ -100,7 +100,7 @@ class BackgroundPanelPlugin(private var parent: UIPanelAPI) : CustomUIPanelPlugi
         {
             if (event.isConsumed) continue
             if (panel == null) continue
-            if (event.isKeyUpEvent && event.eventValue == Keyboard.KEY_ESCAPE)
+            if (event.isKeyDownEvent && event.eventValue == Keyboard.KEY_ESCAPE)
             {
                 event.consume()
                 close()

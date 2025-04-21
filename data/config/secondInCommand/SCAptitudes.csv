@@ -1,6 +1,12 @@
 id,name,categories,spawnWeight,color,tags,order,plugin
 #All aptitudes require a matching entry in default_ranks.json: executive_officer_aptitudeId,,#can not use multiple aptitudes of the same category,"#Used for Procgen, not for NPCs. NPCs are decided in the plugin",,,,
 ,,,,,,,
+,,,,,startingOption = appears in the starting bar dialog,,
+,,,,,always_show_in_codex = show in codex even if not a starting aptitude,,
+,,,,,"hide_in_codex = do not show in codex, ever",,
+,,,,,restricted = do not show in codex & have commands/debug utilities not consider it,,
+,,,,,,,
+#Base Aptitudes,,,,,,,
 sc_tactical,Tactical,,1.0,"230,181,2,255","startingOption,",100,second_in_command.skills.tactical.AptitudeTactical
 sc_management,Management,,1.0,"107,175,0,255","startingOption,",200,second_in_command.skills.management.AptitudeManagement
 sc_smallcraft,Smallcraft,,1.0,"203, 230, 2,255","startingOption,",300,second_in_command.skills.smallcraft.AptitudeSmallcraft
@@ -14,3 +20,4 @@ sc_automated,Automation,sc_cat_automated,1.0,"0, 166, 175,255","startingOption,"
 ,,,,,,,
 #Season Aptitude,,,,,,,
 sc_christmas,Christmas,sc_cat_logistical,0,"149, 245, 237, 255",hide_in_codex,100000,second_in_command.skills.special.christmas.AptitudeChristmas
+,,,,,,,

@@ -89,10 +89,11 @@ object SCSpecStore {
             var tags = row.getString("tags").split(",").map { it.trim() }
 
             var modName = filterModPath(row.getString("fs_rowSource"))
+            var modSpec = Global.getSettings().modManager.enabledModsCopy.find { it.dirName == modName }!!
 
             val pluginPath = row.getString("plugin")
 
-            var spec = SCAptitudeSpec(id, name, categories, spawnWeight, color, tags, specsOrder, modName, pluginPath)
+            var spec = SCAptitudeSpec(id, name, categories, spawnWeight, color, tags, specsOrder, modSpec, pluginPath)
             aptitudeSpecs.add(spec)
         }
 
