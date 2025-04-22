@@ -30,7 +30,7 @@ class SCSkillTooltipCreator(var data: SCData, var skill: SCBaseSkillPlugin, var 
 
         tooltip!!.addTitle(skill.getName(), aptitude.getColor())
 
-        if (!Global.getSettings().isShowingCodex) tooltip.codexEntryId = CodexHandler.getAptitudEntryId(aptitude.id)
+        /*if (!Global.getSettings().isShowingCodex) */tooltip.codexEntryId = CodexHandler.getAptitudEntryId(aptitude.id)
 
         var affectsString = skill.getAffectsString()
 
