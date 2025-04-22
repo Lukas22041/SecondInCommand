@@ -1,6 +1,7 @@
 Version 1.4.6
 Save Compatible
 
+- Fixed a crash with the codex that happened for unexplainable reasons.
 
 
 
