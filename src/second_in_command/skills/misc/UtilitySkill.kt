@@ -91,10 +91,15 @@ class UtilitySkill : SCBaseVanillaShipSkill() {
                         0f, Misc.getTextColor(), Misc.getHighlightColor(), "100%", "100%", "50%")
 
 
-                    if (autoSkills.isNotEmpty()) tooltip.addSpacer(10f)
+                    var stat = Global.getSector().playerPerson.stats.dynamic.getMod("sc_auto_dp")
+                    var bonuses = stat.flatBonuses
+
+                    if (bonuses.isNotEmpty()) tooltip.addSpacer(10f)
 
 
 
+
+                    var entries = HashMap<String, Int>()
 
                     for (skill in autoSkills.sortedByDescending { it.getProvidedPoints() }) {
                         var points = skill.getProvidedPoints()
@@ -102,9 +107,27 @@ class UtilitySkill : SCBaseVanillaShipSkill() {
                         var autoString = "   +$points"
                         autoString += "   ${skill.name} Skill"
 
-                        tooltip.addPara(autoString, 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+$points")
+                        entries.put(autoString, points)
+
+                        //tooltip.addPara(autoString, 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+$points")
                     }
 
+
+                    for (bonus in bonuses) {
+                        if (!bonus.key.contains("_external")) continue
+                        var points = bonus.value.value.toInt()
+
+                        var autoString = "   +$points"
+                        autoString += "   ${bonus.value.desc}"
+
+                        entries.put(autoString, points)
+
+                        //tooltip.addPara(autoString, 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+$points")
+                    }
+
+                    for (entry in entries.toList().sortedByDescending { it.second }) {
+                        tooltip.addPara(entry.first, 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+${entry.second}")
+                    }
 
 
                     tooltip.addSpacer(10f)

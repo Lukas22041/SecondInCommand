@@ -13,8 +13,6 @@
       <root url="jar://$PROJECT_DIR$/../../starsector-core/log4j-1.2.9.jar!/" />
       <root url="jar://$PROJECT_DIR$/../../starsector-core/lwjgl_util.jar!/" />
       <root url="jar://$PROJECT_DIR$/../../starsector-core/lwjgl.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../../starsector-core/starfarer_obf.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../../starsector-core/starfarer.api.jar!/" />
       <root url="jar://$PROJECT_DIR$/../../starsector-core/xstream-1.4.10.jar!/" />
       <root url="jar://$PROJECT_DIR$/../MagicLib/jars/MagicLib-Kotlin.jar!/" />
       <root url="jar://$PROJECT_DIR$/../MagicLib/jars/MagicLib.jar!/" />
@@ -26,6 +24,8 @@
       <root url="jar://$PROJECT_DIR$/../GraphicsLib/jars/Graphics.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Nexerelin/jars/ExerelinCore.jar!/" />
       <root url="jar://D:/Downloads/Programming/StarsectorModding/CompileReferences/ShipMasterySystem.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../starsector-core/starfarer.api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../starsector-core/starfarer_obf.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="https://fractalsoftworks.com/starfarer.api/" />

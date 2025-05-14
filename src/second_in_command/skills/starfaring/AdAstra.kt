@@ -46,7 +46,7 @@ class AdAstra : SCBaseSkillPlugin() {
     }
 
     override fun onDeactivation(data: SCData) {
-
+        data.fleet.stats.fleetwideMaxBurnMod.unmodifyFlat("sc_ad_astra")
     }
 
 }
