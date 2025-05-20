@@ -54,11 +54,12 @@ class SCSkillTooltipCreator(var data: SCData, var skill: SCBaseSkillPlugin, var 
             tooltip.addPara("You can only pick one skill in this section.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
         }
 
-        if (aptitude.spec.modSpec.id != "second_in_command") {
+        //RATs Whichmod feature is capable of showing this much better now.
+        /*if (aptitude.spec.modSpec.id != "second_in_command") {
             tooltip.addSpacer(10f)
             //tooltip.addPara("Skill added by \"$modname\"", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
             tooltip.addPara("[${aptitude.spec.modSpec.name}]", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "$")
-        }
+        }*/
 
         tooltip.addSpacer(2f)
 

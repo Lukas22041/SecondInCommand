@@ -37,17 +37,17 @@ class Outmanoeuvred : SCBaseSkillPlugin() {
 
     override fun advance(data: SCData, amount: Float) {
         data.fleet.stats.fleetwideMaxBurnMod.modifyFlat("sc_outmaneuvered", 1f, "Outmanoeuvred")
-        Global.getSector().playerFleet.stats.accelerationMult.modifyPercent("sc_outmaneuvered", 20f, "Outmanoeuvred")
+        data.fleet.stats.accelerationMult.modifyPercent("sc_outmaneuvered", 20f, "Outmanoeuvred")
     }
 
     override fun onActivation(data: SCData) {
         data.fleet.stats.fleetwideMaxBurnMod.modifyFlat("sc_outmaneuvered", 1f, "Outmanoeuvred")
-        Global.getSector().playerFleet.stats.accelerationMult.modifyPercent("sc_outmaneuvered", 20f, "Outmanoeuvred")
+        data.fleet.stats.accelerationMult.modifyPercent("sc_outmaneuvered", 20f, "Outmanoeuvred")
     }
 
     override fun onDeactivation(data: SCData) {
         data.fleet.stats.fleetwideMaxBurnMod.unmodify("sc_outmaneuvered")
-        Global.getSector().playerFleet.stats.accelerationMult.unmodify("sc_outmaneuvered")
+        data.fleet.stats.accelerationMult.unmodify("sc_outmaneuvered")
     }
 
 }

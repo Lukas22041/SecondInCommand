@@ -1,3 +1,11 @@
+Version 1.4.8
+Save Compatible
+
+- Removed the text below cross-mod aptitudes that mentions which mod an aptitude from, as its mentioned in codex already.
+- Fixed an issue that made the "Outmanoeuvred"s maneuverability boost essentialy always active for the player.
+
+
+
 Version 1.4.7
 Save Compatible
 
