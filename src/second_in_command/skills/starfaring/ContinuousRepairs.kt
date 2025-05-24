@@ -93,7 +93,16 @@ class ContinuousRepairs : SCBaseSkillPlugin() {
 class ContinousIntel(var pick: FleetMemberAPI, var specId: String) : BaseIntelPlugin() {
 
     init {
+        Global.getSector().addScript(this)
         endAfterDelay(30f)
+    }
+
+    override fun notifyEnded() {
+        Global.getSector().removeScript(this)
+    }
+
+    override fun advance(amount: Float) {
+        super.advance(amount)
     }
 
     override fun getName(): String {
@@ -154,7 +163,7 @@ class ContinuousRepairsListener() : BaseCampaignEventListener(false) {
 
                     var dmodSpecs = Global.getSettings().allHullModSpecs.filter { it.hasTag(Tags.HULLMOD_DMOD) }
 
-                    var hmods = pick.variant.permaMods
+                    var hmods = pick.variant.permaMods + pick.variant.hullMods
 
                     var foundDmods = ArrayList<String>()
                     for (hmod in hmods) {

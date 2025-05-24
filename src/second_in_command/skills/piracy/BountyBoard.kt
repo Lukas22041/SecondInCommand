@@ -67,7 +67,12 @@ class BountyBoard : SCBaseSkillPlugin() {
 class BountyBoardIntel(var payment: Float) : BaseIntelPlugin() {
 
     init {
+        Global.getSector().addScript(this)
         endAfterDelay(30f)
+    }
+
+    override fun notifyEnded() {
+        Global.getSector().removeScript(this)
     }
 
     override fun getName(): String {
