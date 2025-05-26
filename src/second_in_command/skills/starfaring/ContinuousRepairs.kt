@@ -101,10 +101,6 @@ class ContinousIntel(var pick: FleetMemberAPI, var specId: String) : BaseIntelPl
         Global.getSector().removeScript(this)
     }
 
-    override fun advance(amount: Float) {
-        super.advance(amount)
-    }
-
     override fun getName(): String {
         return "Skill - Continuous Repairs"
     }
