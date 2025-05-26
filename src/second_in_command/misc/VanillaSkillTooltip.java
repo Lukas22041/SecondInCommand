@@ -118,7 +118,7 @@ public class VanillaSkillTooltip extends BaseTooltipCreator {
         }
 
         for (HullModSpecAPI hullmodSpec: hullmodSpecs) {
-            tooltip.addPara("Hull mod: " + hullmodSpec.getDisplayName() + " - " + ReflectionUtils.INSTANCE.invoke("getShortDesc", hullmodSpec, new Array[]{}, false) , 0f,
+            tooltip.addPara("Hull mod: " + hullmodSpec.getDisplayName() + " - " + ReflectionUtils.invoke("getShortDesc", hullmodSpec, new Array[]{}, null, null) , 0f,
                     Misc.getTextColor(), Misc.getHighlightColor(), hullmodSpec.getDisplayName());
         }
 

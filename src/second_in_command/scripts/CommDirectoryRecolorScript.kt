@@ -73,7 +73,7 @@ class CommDirectoryRecolorScript : EveryFrameScript {
                                         var buttonPanel = ReflectionUtils.getFirstDeclaredField(renderer)
                                         if (buttonPanel is UIPanelAPI) {
                                             var buttonChildren = buttonPanel.getChildrenCopy()
-                                            var entry = ReflectionUtils.get(ReflectionUtils.getFieldsOfType(buttonPanel, CommDirectoryEntry::class.java).first(), buttonPanel) as CommDirectoryEntryAPI
+                                            var entry = ReflectionUtils.get(null, buttonPanel, CommDirectoryEntry::class.java) as CommDirectoryEntryAPI
 
                                             var person = entry.entryData as PersonAPI
                                             var aptitudeId = person.memoryWithoutUpdate.getString("\$sc_officer_aptitude") ?: continue

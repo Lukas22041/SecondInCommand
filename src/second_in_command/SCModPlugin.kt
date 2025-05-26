@@ -6,6 +6,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Abilities
 import lunalib.lunaDebug.LunaDebug
 import lunalib.lunaSettings.LunaSettings
 import second_in_command.misc.NPCFleetInflater
+import second_in_command.misc.ReflectionUtils
 import second_in_command.misc.SCSettings
 import second_in_command.misc.SpecialEventHandler
 import second_in_command.misc.backgrounds.AssociatesBackground
@@ -81,8 +82,16 @@ class SCModPlugin : BaseModPlugin() {
         }
     }
 
-    override fun onGameLoad(newGame: Boolean) {
+    class TestClass(var name: String) {
 
+        var name3: String = ""
+
+        fun combine(toAdd1: String, toAdd2: String) : String {
+            return name + toAdd1 + toAdd2
+        }
+    }
+
+    override fun onGameLoad(newGame: Boolean) {
         if (!Global.getSector().playerPerson.stats.hasSkill("sc_utility_skill")) {
             Global.getSector().playerPerson.stats.setSkillLevel("sc_utility_skill", 2f)
         }
