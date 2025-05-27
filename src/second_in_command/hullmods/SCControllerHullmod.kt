@@ -138,15 +138,17 @@ class SCControllerHullmod : BaseHullMod() {
         var fleetData = fleet.fleetData ?: return //Have to do this, as during deserialisation fleetData can be null, causing save corruptions
         var data = SCUtils.getFleetData(fleet)
 
-        var skills = SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()
+        //Deprecated
+        /*var skills = SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()
         for (skill in skills) {
             skill.advanceInCampaign(data, member, amount)
-        }
+        }*/
 
         if (data.isPlayer) {
             PlayerLevelEffects.advanceInCampaign(data, member, amount)
         }
     }
+
 
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
         var member = ship?.fleetMember ?: return

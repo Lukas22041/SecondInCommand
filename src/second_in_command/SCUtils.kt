@@ -230,8 +230,8 @@ object SCUtils {
 
         var aptitudePlugin = officer.getAptitudePlugin()
 
-        aptitudePlugin.clearSections()
-        aptitudePlugin.createSections()
+        /*aptitudePlugin.clearSections()
+        aptitudePlugin.createSections()*/
         var skills = mutableListOf<SCBaseSkillPlugin>()
         skills.add(aptitudePlugin.getOriginSkillPlugin())
         skills.addAll(aptitudePlugin.getSections().flatMap { it.getSkills() }.map { SCSpecStore.getSkillSpec(it)!!.getPlugin() })

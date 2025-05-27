@@ -67,9 +67,6 @@ class Preservation : SCBaseSkillPlugin() {
     }
 
     override fun advanceInCombat(data: SCData, ship: ShipAPI, amount: Float?) {
-    }
-
-    override fun advanceInCampaign(data: SCData?, member: FleetMemberAPI?, amount: Float?) {
 
     }
 

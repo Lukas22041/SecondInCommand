@@ -181,7 +181,7 @@ internal object ReflectionUtils {
         return methodsCache.getOrPut(key) {
             var targetMethod: Any? = null
 
-            var methods = (clazz.methods + clazz.declaredMethods) as Array<out Any>
+            var methods = ((clazz.methods + clazz.declaredMethods)).toSet() as Set<Any>
             for (method in methods) {
 
                 if (methodName != null) {

@@ -11,7 +11,6 @@ data class SCSkillSpec(
     var modname: String,
     var pluginPath: String) {
 
-
     private var plugin = Global.getSettings().scriptClassLoader.loadClass(this.pluginPath).newInstance() as SCBaseSkillPlugin
 
     init {

@@ -26,7 +26,6 @@ class AptitudePiracy : SCBaseAptitudePlugin() {
     }
 
     override fun createSections() {
-
         var section1 = SCAptitudeSection(true, 0, "technology1")
         section1.addSkill("sc_piracy_legitimate_salvage")
         section1.addSkill("sc_piracy_low_grade_deployment")
@@ -43,7 +42,6 @@ class AptitudePiracy : SCBaseAptitudePlugin() {
         section2.addSkill("sc_piracy_bounty_board")
         section2.addSkill("sc_piracy_provisional_replacements")
         addSection(section2)
-
     }
 
     override fun getMarketSpawnweight(market: MarketAPI): Float {

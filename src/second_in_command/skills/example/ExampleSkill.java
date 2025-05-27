@@ -28,4 +28,5 @@ public class ExampleSkill extends SCBaseSkillPlugin {
     public void applyEffectsBeforeShipCreation(SCData data, MutableShipStatsAPI stats, ShipVariantAPI variant, ShipAPI.HullSize hullSize, String id) {
         stats.getMaxCombatReadiness().modifyFlat(id, 0.15f);
     }
+
 }

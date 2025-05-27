@@ -242,8 +242,8 @@ class AptitudeEntry(var aptitudeSpec: SCAptitudeSpec, id: String, title: String,
 
 
         var aptitudePlugin = aptitudeSpec.getPlugin()
-        aptitudePlugin.clearSections()
-        aptitudePlugin.createSections()
+        /*aptitudePlugin.clearSections()
+        aptitudePlugin.createSections()*/
 
         var color = aptitudePlugin.color
 

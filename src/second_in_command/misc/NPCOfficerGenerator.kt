@@ -242,8 +242,8 @@ object NPCOfficerGenerator {
 
                 var aptitude = officer.getAptitudePlugin()
 
-                aptitude.clearSections()
-                aptitude.createSections()
+                /*aptitude.clearSections()
+                aptitude.createSections()*/
                 var sections = aptitude.getSections()
 
                 var skillsInAptitude = sections.flatMap { it.getSkills() }

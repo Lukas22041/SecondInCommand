@@ -15,10 +15,17 @@ data class SCAptitudeSpec(
     var modSpec: ModSpecAPI,
     var pluginPath: String) {
 
+    private var plugin: SCBaseAptitudePlugin? = null
+
     fun getPlugin() : SCBaseAptitudePlugin {
-        var plugin = Global.getSettings().scriptClassLoader.loadClass(this.pluginPath).newInstance() as SCBaseAptitudePlugin
+        if (plugin == null) {
+            plugin = Global.getSettings().scriptClassLoader.loadClass(this.pluginPath).newInstance() as SCBaseAptitudePlugin
+            plugin!!.spec = this
+        }
+        return plugin!!
+      /*  var plugin = Global.getSettings().scriptClassLoader.loadClass(this.pluginPath).newInstance() as SCBaseAptitudePlugin
         plugin.spec = this
-        return plugin
+        return plugin*/
     }
 
 }

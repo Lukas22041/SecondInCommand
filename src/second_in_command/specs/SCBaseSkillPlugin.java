@@ -46,8 +46,7 @@ public abstract class SCBaseSkillPlugin {
 
     public void applyEffectsToFighterSpawnedByShip(SCData data, ShipAPI fighter, ShipAPI ship, String id) { }
 
-    /**Ship specific campaign advance*/
-    public void advanceInCampaign(SCData data, FleetMemberAPI member, Float amount) { }
+
 
     /**Non-ship specific campaign advance*/
     public void advance(SCData data, Float amunt) { }
@@ -75,4 +74,21 @@ public abstract class SCBaseSkillPlugin {
     public void callEffectsFromSeparateSkill(MutableShipStatsAPI stats, ShipAPI.HullSize hullSize, String id) {
 
     }
+
+
+
+
+
+
+
+
+
+
+
+    /**Ship specific campaign advance
+     * @deprecated
+     * Deprecated and no longer called due to barely any use, but high performance impact. Use the advance function and iterate over fleet members instead.
+     * */
+    @Deprecated()
+    public void advanceInCampaign(SCData data, FleetMemberAPI member, Float amount) { }
 }
