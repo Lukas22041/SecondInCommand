@@ -1,3 +1,14 @@
+Version 1.4.10
+Save Compatible
+
+- Improved performance by improving certain code and removing uneeded functions.
+- Now caches Reflection calls to improve on performance.
+
+For Mod Authors
+SCBaseSkillPlugin.advanceInCampaign() has been deprecated, and will no longer be called due to low use but high performance impact.
+
+
+
 Version 1.4.9
 Save Compatible
 
