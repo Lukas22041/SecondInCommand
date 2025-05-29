@@ -1,3 +1,11 @@
+Version 1.4.11
+Save Compatible
+
+- Reimplemented a method that was removed, as some mods appear to have used it and were crashing from it missing. 
+-> That function is now deprecated though and will no longer do anything.
+
+
+
 Version 1.4.10
 Save Compatible
 

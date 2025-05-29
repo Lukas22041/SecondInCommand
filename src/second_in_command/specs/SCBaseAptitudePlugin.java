@@ -108,8 +108,10 @@ public abstract class SCBaseAptitudePlugin {
         return list;
     }
 
-    /*//Internal Use Only
+    //Internal Use Only
+    /**@deprecated Does Nothing now. The aptitude itself no longer keeps sections around after creating it to prevent memory leaks*/
+    @Deprecated
     public final void clearSections() {
-        sections.clear();
-    }*/
+        //sections.clear();
+    }
 }
