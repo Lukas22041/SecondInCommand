@@ -4,11 +4,12 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.impl.campaign.FleetEncounterContext
 
+//No longer used
 class SCCampaignEventListener : BaseCampaignEventListener(false) {
 
 
     override fun reportEncounterLootGenerated(plugin: FleetEncounterContextPlugin?, loot: CargoAPI?) {
-        if (plugin !is FleetEncounterContext) return
+       /* if (plugin !is FleetEncounterContext) return
 
 
 
@@ -38,7 +39,7 @@ class SCCampaignEventListener : BaseCampaignEventListener(false) {
                 officer.addXP(xp)
             }
 
-        }
+        }*/
 
     }
 }

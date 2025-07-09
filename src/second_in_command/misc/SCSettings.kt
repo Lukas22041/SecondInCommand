@@ -12,10 +12,10 @@ class SCSettings : LunaSettingsListener {
 
     companion object {
 
-        var baseMaxLevel = 5
-
+        private var baseMaxLevel = 5
         fun getMaxLevel() : Int  {
             var level = baseMaxLevel
+            if (additionalLevel) level += 1
             return level
         }
 
@@ -32,7 +32,7 @@ class SCSettings : LunaSettingsListener {
             450000f, //LV3
             1350000f, //LV4
 
-            /*2500000f, //LV5, “Associates” Background only.*/
+            2500000f, //LV5,
 
           /*  0f, //LV0
             80000f, //LV1
@@ -43,7 +43,15 @@ class SCSettings : LunaSettingsListener {
 
 
         var enable4thSlot = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_enable4thSlot")!!
+        var additionalLevel = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_enableAdditionalLevel")!!
         var xpGainMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_officerXPMult")!!
+
+        var progressionMode = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_progressionMode")!!
+        var progressionSlot1Level = LunaSettings.getInt(SCUtils.MOD_ID, "sc_progressionLevelSlot1")
+        var progressionSlot2Level = LunaSettings.getInt(SCUtils.MOD_ID, "sc_progressionLevelSlot2")
+        var progressionSlot3Level = LunaSettings.getInt(SCUtils.MOD_ID, "sc_progressionLevelSlot3")
+        var progressionSlot4Level = LunaSettings.getInt(SCUtils.MOD_ID, "sc_progressionLevelSlot4")
+
 
         var playerXPMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_playerXPMult")!!
 
@@ -53,6 +61,8 @@ class SCSettings : LunaSettingsListener {
         @JvmStatic
         var playerMaxLevel = LunaSettings.getInt(SCUtils.MOD_ID, "sc_playerMaxLevel")
 
+        @JvmStatic
+        var autoPointsMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_autoPointsMult")!!
 
         //Misc
         var highConstrastIcons = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_highContrast")
@@ -86,6 +96,13 @@ class SCSettings : LunaSettingsListener {
             }
             SCUtils.getPlayerData().remove4thOfficer()
         }
+        additionalLevel = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_enableAdditionalLevel")!!
+        progressionMode = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_progressionMode")!!
+
+        progressionSlot1Level = LunaSettings.getInt(SCUtils.MOD_ID, "sc_progressionLevelSlot1")
+        progressionSlot2Level = LunaSettings.getInt(SCUtils.MOD_ID, "sc_progressionLevelSlot2")
+        progressionSlot3Level = LunaSettings.getInt(SCUtils.MOD_ID, "sc_progressionLevelSlot3")
+        progressionSlot4Level = LunaSettings.getInt(SCUtils.MOD_ID, "sc_progressionLevelSlot4")
 
         playerXPMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_playerXPMult")!!
         Global.getSettings().setFloat("xpGainMult", playerXPMult)
@@ -95,6 +112,7 @@ class SCSettings : LunaSettingsListener {
 
         playerMaxLevel = LunaSettings.getInt(SCUtils.MOD_ID, "sc_playerMaxLevel")
 
+        autoPointsMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_autoPointsMult")!!
 
         highConstrastIcons = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_highContrast")
         unrestrictedAssociates = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_unrestrictedAssociates")

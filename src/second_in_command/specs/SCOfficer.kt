@@ -2,6 +2,9 @@ package second_in_command.specs
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.characters.PersonAPI
+import com.fs.starfarer.api.impl.campaign.intel.MessageIntel
+import com.fs.starfarer.api.util.DelayedActionScript
+import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.SCUtils
 import second_in_command.misc.SCSettings
@@ -67,7 +70,7 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
     fun getXPMult() : Float {
         var mult = 1f
         //mult *= 0.5f //Default reduction in XP, shouldnt be the same as the players gain
-        mult *= 0.80f //Default reduction in XP, shouldnt be the same as the players gain
+        mult *= 0.70f //Default reduction in XP, shouldnt be the same as the players gain
         mult *= SCSettings.xpGainMult
 
         var player = Global.getSector().playerPerson
@@ -97,7 +100,26 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
     fun addXP(xp: Float) {
         experiencePoints += xp * getXPMult()
 
+        if (getCurrentLevel() == getMaxLevel()) experiencePoints = 0f
+
+        var priorLevel = level
         levelUpIfNeeded()
+        var currentLevel = level
+
+        //Level increased, send message that an active officer leveled up.
+        if (priorLevel != currentLevel && SCUtils.getPlayerData().getActiveOfficers().contains(this)) {
+            Global.getSector().addScript(object: DelayedActionScript(0.05f) {
+                override fun doAction() {
+                    val intel = MessageIntel()
+                    intel.icon = person.portraitSprite
+                    intel.sound = intel.commMessageSound
+                    intel.addLine("Your executive officer ${person.nameString} (${getAptitudePlugin().name}) has\nadvanced to level $currentLevel.", Misc.getBasePlayerColor(),
+                        arrayOf("${person.nameString}", getAptitudePlugin().name, "$currentLevel"),
+                        Misc.getHighlightColor(), getAptitudePlugin().color, Misc.getHighlightColor())
+                    Global.getSector().campaignUI.addMessage(intel)
+                }
+            })
+        }
     }
 
     fun resetLevel() {

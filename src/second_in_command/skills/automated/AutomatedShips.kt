@@ -16,6 +16,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.SCUtils
+import second_in_command.misc.SCSettings
 import second_in_command.scripts.AutomatedShipsManager
 import second_in_command.skills.technology.MakeshiftDrones
 import second_in_command.specs.SCBaseSkillPlugin
@@ -23,7 +24,7 @@ import kotlin.math.roundToInt
 
 class AutomatedShips : SCBaseAutoPointsSkillPlugin() {
     override fun getProvidedPoints(): Int {
-        return 120
+        return (120 * SCSettings.autoPointsMult).toInt()
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {

@@ -111,7 +111,8 @@ class SCModPlugin : BaseModPlugin() {
         //Global.getSector().addTransientScript(SectorSeedAdderScript())
         Global.getSector().listenerManager.addListener(NPCFleetInflater(), true)
 
-        Global.getSector().addTransientListener(SCCampaignEventListener())
+        //Global.getSector().addTransientListener(SCCampaignEventListener())
+        Global.getSector().addTransientScript(SCXPTracker())
 
         Global.getSector().registerPlugin(SCCampaignPlugin())
 

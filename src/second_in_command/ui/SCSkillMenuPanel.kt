@@ -210,8 +210,18 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
             color = officer.getAptitudePlugin().getColor()
         }
 
+        var isProgressionMode = SCSettings.progressionMode
+        var level = Global.getSector().playerPerson.stats.level
+        var progressionLevel = when(slotId) {
+            0 -> SCSettings.progressionSlot1Level!!
+            1 -> SCSettings.progressionSlot2Level!!
+            2 -> SCSettings.progressionSlot3Level!!
+            3 -> SCSettings.progressionSlot4Level!!
+            else -> 0
+        }
+        var isLocked = officer == null && isProgressionMode && level < progressionLevel
         var officerPickerElement = SCOfficerPickerElement(officer?.person, color, subelement, 96f, 96f)
-
+        officerPickerElement.isProgressionLocked = isLocked
 
 
         var menu = this
@@ -259,6 +269,12 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
                 return@onClick
             }
 
+            //Dont allow editing a locked slot
+            if (isLocked) {
+                officerPickerElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
+                return@onClick
+            }
+
             var pickerMenu = SCOfficerPickerMenuPanel(menu, officerPickerElement, subpanelParent, slotId, data, isAtColony)
             pickerMenu.init()
             officerPickerElement.playClickSound()
@@ -270,7 +286,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
             }
         }
 
-        officerPickerElement.onInput {events ->
+        officerPickerElement.onInput { events ->
             if (officerPickerElement.isHovering && officer != null) {
                 for (event in events!!) {
                     if (event.isConsumed) continue
@@ -309,8 +325,14 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
             }
         }
 
-
-        subelement.addTooltipTo(OfficerTooltipCreator(officer, isAtColony, false), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
+        if (!isLocked) {
+            subelement.addTooltipTo(OfficerTooltipCreator(officer, isAtColony, false), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
+        } else {
+            subelement.addTooltip(officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 350f) { tooltip ->
+                tooltip.addPara("This slot is locked until the player has reached level $progressionLevel and can not be used until then.", 0f
+                ,Misc.getTextColor(), Misc.getHighlightColor(), "$progressionLevel")
+            }
+        }
 
         var offset = 10f
         var offsetElement = subelement.addLunaElement(0f, 0f)

@@ -53,7 +53,9 @@ class OfficerTooltipCreator(var officer: SCOfficer?, var isAtColony: Boolean, va
         var xPos = width / 2 - title.computeTextWidth(title.text) / 2
         title.position.inTL(xPos, 5f)
 
-        var bar = OfficerXPBar(officer!!.getExperiencePoints(), officer!!.getRequiredXP(), plugin.getColor(), tooltip!!, 180f, 25f).apply {
+        var required = officer!!.getRequiredXP()
+        if (officer!!.getCurrentLevel() == officer!!.getMaxLevel()) required = 0f
+        var bar = OfficerXPBar(officer!!.getExperiencePoints(), required, plugin.getColor(), tooltip!!, 180f, 25f).apply {
             position.inTMid(25f)
         }
 

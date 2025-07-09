@@ -1,3 +1,18 @@
+Version 1.5.0
+Save Compatible
+
+- Added "Progression Mode", which restricts slots to player level milestones, can be enabled in the configs.
+- Added a config for multiplying automated ship points between 0.5x-3x.
+--> Cross-Mod automated aptitudes need to be updated to be effected by this. 
+- Added a config for increasing the maximum level of XOs by 1.
+- XOs should now gain Experience from all sources, no longer just combat.
+--> Slightly reduced the experience XOs gain to compensate for this change.
+--> This should also fix some instances were no XP was provided from some battles.
+- Active XOs now trigger an intel notification when they leveled up.
+- "Electronic Warfare" now also works on non-automated ships, but the extra capture range has been reduced from 500 to 300 units.
+
+
+
 Version 1.4.11
 Save Compatible
 
