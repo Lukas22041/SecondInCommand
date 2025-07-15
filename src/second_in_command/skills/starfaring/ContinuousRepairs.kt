@@ -94,7 +94,7 @@ class ContinousIntel(var pick: FleetMemberAPI, var specId: String) : BaseIntelPl
 
     init {
         Global.getSector().addScript(this)
-        endAfterDelay(30f)
+        endAfterDelay(14f)
     }
 
     override fun notifyEnded() {

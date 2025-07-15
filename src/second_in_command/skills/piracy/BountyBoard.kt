@@ -68,7 +68,7 @@ class BountyBoardIntel(var payment: Float) : BaseIntelPlugin() {
 
     init {
         Global.getSector().addScript(this)
-        endAfterDelay(30f)
+        endAfterDelay(14f)
     }
 
     override fun notifyEnded() {
