@@ -9,12 +9,14 @@ import com.fs.starfarer.api.impl.campaign.DModManager
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
+import second_in_command.SCModPlugin
 import second_in_command.SCUtils
 import second_in_command.misc.SCSettings
 import second_in_command.scripts.AutomatedShipsManager
 import second_in_command.skills.PlayerLevelEffects
 
 class SCControllerHullmod : BaseHullMod() {
+
 
     companion object {
         fun ensureAddedControllerToFleet() {

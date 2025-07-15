@@ -14,6 +14,7 @@ import second_in_command.misc.codex.CodexHandler
 import second_in_command.misc.snippets.AddAllOfficersSnippet
 import second_in_command.misc.snippets.AddXPToOfficersSnippet
 import second_in_command.scripts.*
+import second_in_command.skills.engineering.scripts.CompactStorageScript
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.intel.SectorSeedIntel
 import java.lang.Exception
@@ -82,15 +83,6 @@ class SCModPlugin : BaseModPlugin() {
         }
     }
 
-    class TestClass(var name: String) {
-
-        var name3: String = ""
-
-        fun combine(toAdd1: String, toAdd2: String) : String {
-            return name + toAdd1 + toAdd2
-        }
-    }
-
     override fun onGameLoad(newGame: Boolean) {
         if (!Global.getSector().playerPerson.stats.hasSkill("sc_utility_skill")) {
             Global.getSector().playerPerson.stats.setSkillLevel("sc_utility_skill", 2f)
@@ -108,6 +100,10 @@ class SCModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(VanillaSkillsDisabler())
         Global.getSector().addTransientScript(AutomatedShipsManager())
         Global.getSector().addTransientScript(CommDirectoryRecolorScript())
+
+        var compactStorageListener = CompactStorageScript()
+        Global.getSector().addTransientScript(compactStorageListener)
+        Global.getSector().listenerManager.addListener(compactStorageListener, true)
         //Global.getSector().addTransientScript(SectorSeedAdderScript())
         Global.getSector().listenerManager.addListener(NPCFleetInflater(), true)
 

@@ -17,12 +17,13 @@ class FuelOptimisation : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+1 maximum burn level", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("-20%% fuel usage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-
+        stats!!.fuelUseMod.modifyMult(id, 0.80f)
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
@@ -30,15 +31,15 @@ class FuelOptimisation : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-
+        data.fleet.stats.fleetwideMaxBurnMod.modifyFlat("sc_fuel_optimisation", 1f, "Fuel Optimisation Skill")
     }
 
     override fun onActivation(data: SCData) {
-
+        data.fleet.stats.fleetwideMaxBurnMod.modifyFlat("sc_fuel_optimisation", 1f, "Fuel Optimisation Skill")
     }
 
     override fun onDeactivation(data: SCData) {
-        
+        data.fleet.stats.fleetwideMaxBurnMod.unmodify("sc_fuel_optimisation")
     }
 
 }
