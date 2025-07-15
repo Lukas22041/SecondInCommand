@@ -1,11 +1,13 @@
 package second_in_command.skills.starfaring
 
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.campaign.ui.trade.CargoItemStack
 import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
 

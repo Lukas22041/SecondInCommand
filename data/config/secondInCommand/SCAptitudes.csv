@@ -14,6 +14,7 @@ sc_strikecraft,Strikecraft,sc_cat_strikecraft,1.0,"2, 230, 139,255","startingOpt
 sc_technology,Technical,,1.0,"0,121,216,255","startingOption,",500,second_in_command.skills.technology.AptitudeTechnology
 sc_warfare,Warfare,,1.0,"224, 167, 88, 255","startingOption,",550,second_in_command.skills.warfare.AptitudeWarfare
 sc_improvisation,Improvisation,,1.0,"181, 100, 2,255","startingOption,",600,second_in_command.skills.improvisation.AptitudeImprovisation
+sc_engineering,Engineering,sc_cat_logistical,1.0,"175, 192, 204, 255","startingOption,",690,second_in_command.skills.engineering.AptitudeEngineering
 sc_starfaring,Starfaring,sc_cat_logistical,1.0,"164, 0, 209,255","startingOption,",700,second_in_command.skills.starfaring.AptitudeStarfaring
 sc_piracy,Piracy,sc_cat_logistical,1.0,"200,0,0,255","startingOption,",800,second_in_command.skills.piracy.AptitudePiracy
 sc_automated,Automation,sc_cat_automated,1.0,"0, 166, 175,255","startingOption,",900,second_in_command.skills.automated.AptitudeAutomated
