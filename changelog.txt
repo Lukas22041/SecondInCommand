@@ -1,4 +1,4 @@
-Version 1.6.0
+Version 1.6.1
 Save Compatible
 
 - Nerfed "Prepare for the worst" CR Buff from 15% to 10% and the flat CR recovery rate from 5% to 4%.

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+//TODO Check if this can be removed in later versions, it only exists to fix a bug where the Malfunction chance is shown as "Serious" even when stat modifiers make that not the case.
 public class SCCRPluginImpl implements CombatReadinessPlugin {
 
     public static float NO_SYSTEM_THRESHOLD = 0.0f;
