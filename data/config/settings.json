@@ -3,6 +3,7 @@
 	 "plugins":{		
 		#"SCSkillPanelReplacerTitle":"second_in_command.scripts.SkillPanelReplacerScriptTitlescreen",
 		"SCCombatHandler":"second_in_command.scripts.CombatHandler",
+		"combatReadinessPlugin":"second_in_command.scripts.SCCRPluginImpl", # Replacement to fix issues that make it not work right with "Solid Construction"
 	},	
 	
 	

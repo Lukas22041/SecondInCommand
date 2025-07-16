@@ -1,6 +1,16 @@
 Version 1.6.0
 Save Compatible
 
+- Nerfed "Prepare for the worst" CR Buff from 15% to 10% and the flat CR recovery rate from 5% to 4%.
+- Improved the description of "Solid Construction" to be more clear about its effects.
+- Fixed a bug that made the malfunction chance display as "Serious" when it shouldnt with Solid Construction.
+- Fixed a bug that made the CR improvement from "Prepare for the worst" not display correctly.
+
+
+
+Version 1.6.0
+Save Compatible
+
 - Added the "Engineering" Aptitude, a new Aptitude for the Logistical Category
 - Slightly increased the chance for a colony to have an executive officer to hire.
 - Decreased the duration that skill-related intel stays around for from 30 to 14 days.

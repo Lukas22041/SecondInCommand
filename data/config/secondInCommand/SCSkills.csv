@@ -97,7 +97,7 @@ sc_engineering_salvaging_equipment,Salvaging Equipment,graphics/secondInCommand/
 sc_engineering_cooling_systems,Cooling Systems,graphics/secondInCommand/engineering/cooling_systems.png,1,second_in_command.skills.engineering.CoolingSystems
 sc_engineering_shock_absorption,Shock Absorption,graphics/secondInCommand/engineering/shock_absorption.png,1,second_in_command.skills.engineering.ShockAbsorption
 sc_engineering_resiliency,Resiliency,graphics/secondInCommand/engineering/resiliency.png,1,second_in_command.skills.engineering.Resiliency
-sc_engineering_solid_construction,Solid Construction,graphics/secondInCommand/engineering/solid_construction.png,1,second_in_command.skills.engineering.SolidConstruction
+sc_engineering_solid_construction,Solid Construction,graphics/secondInCommand/engineering/solid_construction.png,0.5,second_in_command.skills.engineering.SolidConstruction
 sc_engineering_prepare_for_the_worst,Prepare for the worst,graphics/secondInCommand/engineering/prepare_for_the_worst.png,1,second_in_command.skills.engineering.PrepareForTheWorst
 ,,,,
 #Starfaring,,,,
