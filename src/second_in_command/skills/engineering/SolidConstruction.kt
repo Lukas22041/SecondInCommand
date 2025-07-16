@@ -19,7 +19,7 @@ import java.awt.Color
 class SolidConstruction : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "fleet"
+        return "all ships in the fleet"
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {

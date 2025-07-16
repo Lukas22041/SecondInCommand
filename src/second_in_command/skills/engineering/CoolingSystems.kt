@@ -12,17 +12,23 @@ import second_in_command.specs.SCBaseSkillPlugin
 class CoolingSystems : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "fleet"
+        return "all ships in the fleet"
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% weapon fire rate", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% ballistic and energy ammo recharge rate", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
-    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+    override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+        stats.missileRoFMult.modifyPercent(id, 10f)
+        stats.ballisticRoFMult.modifyPercent(id, 10f)
+        stats.energyRoFMult.modifyPercent(id, 10f)
 
+        stats.ballisticAmmoRegenMult.modifyPercent(id, 10f)
+        stats.energyAmmoRegenMult.modifyPercent(id, 10f)
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {

@@ -12,17 +12,19 @@ import second_in_command.specs.SCBaseSkillPlugin
 class ShockAbsorption : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "fleet"
+        return "all ships in the fleet"
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% flux dissipation", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+25%% EMP damage resistance", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-
+        stats!!.fluxDissipation.modifyMult(id, 1.1f)
+        stats!!.empDamageTakenMult.modifyMult(id, 0.75f)
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
