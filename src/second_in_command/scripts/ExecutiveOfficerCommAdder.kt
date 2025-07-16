@@ -41,14 +41,14 @@ class ExecutiveOfficerCommAdder : EconomyTickListener {
         previousPeople.clear()
 
         //var chance = 0.5f
-        var chance = 0.75f
+        var chance = 0.8f
         for (market in markets) {
             if (market == null || market.isHidden) continue
 
             if (Random().nextFloat() >= chance) continue
 
             var count = 1
-            if (Random().nextFloat() >= 0.6f) count = 2
+            if (Random().nextFloat() >= 0.55f) count = 2
 
             for (i in 0 until count) {
                 var aptitudes = SCSpecStore.getAptitudeSpecs()

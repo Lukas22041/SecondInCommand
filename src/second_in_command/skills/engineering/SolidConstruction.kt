@@ -26,8 +26,8 @@ class SolidConstruction : SCBaseSkillPlugin() {
 
         tooltip.addPara("The threshold at which low combat readiness causes negative effects is reduced to 30%%", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("Ships can no longer acquire more than 2 d-mods through battle", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("   - Any additional d-mod over the first 2 is automatically removed after battle", 0f, Misc.getTextColor(), Misc.getHighlightColor())
-        tooltip.addPara("   - Does not remove d-mods on ships with more than 2 d-mods, but prevents acquiring more.", 0f, Misc.getTextColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - Any additional d-mods after the first 2 are automatically removed after battle", 0f, Misc.getTextColor(), Misc.getHighlightColor())
+        tooltip.addPara("   - Does not remove d-mods on ships with more than 2 d-mods, but prevents acquiring more", 0f, Misc.getTextColor(), Misc.getHighlightColor())
 
     }
 

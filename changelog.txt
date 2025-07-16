@@ -1,3 +1,13 @@
+Version 1.6.0
+Save Compatible
+
+- Added the "Engineering" Aptitude, a new Aptitude for the Logistical Category
+- Slightly increased the chance for a colony to have an executive officer to hire.
+- Decreased the duration that skill-related intel stays around for from 30 to 14 days.
+- Improved the description of the "Scrappy Maintenance" skill.
+
+
+
 Version 1.5.0
 Save Compatible
 
