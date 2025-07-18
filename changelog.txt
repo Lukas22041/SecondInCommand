@@ -1,3 +1,10 @@
+Version 1.6.2
+Save Compatible
+
+- Fixed "Compact Storage" reduction in storage space useage not working correctly.
+
+
+
 Version 1.6.1
 Save Compatible
 

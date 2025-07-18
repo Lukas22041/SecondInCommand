@@ -56,8 +56,8 @@ class CompactStorageScript : EveryFrameScript, ColonyInteractionListener {
                     var spec = Global.getSettings().getWeaponSpec(obfStack.data as String)
                     var space = when (spec.size) {
                         WeaponAPI.WeaponSize.SMALL -> 1f
-                        WeaponAPI.WeaponSize.MEDIUM -> 2f
-                        WeaponAPI.WeaponSize.LARGE -> 3f
+                        WeaponAPI.WeaponSize.MEDIUM -> 1f
+                        WeaponAPI.WeaponSize.LARGE -> 2f
                         else -> 1f
                     }
 
