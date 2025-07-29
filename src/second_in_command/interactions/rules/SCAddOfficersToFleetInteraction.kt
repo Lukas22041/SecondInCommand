@@ -25,7 +25,7 @@ class SCAddOfficersToFleetInteraction : BaseCommandPlugin() {
         //May not work for defender fleets? unsure.
         if (fleet !is CampaignFleetAPI) return true
 
-        if (!SCSettings.canNPCsSpawnWithSkills && !SCUtils.hasFleetData(fleet)) return true
+        //if (!SCSettings.canNPCsSpawnWithSkills && !SCUtils.hasFleetData(fleet)) return true
 
         var members = fleet.fleetData.membersListCopy
         var flagship = fleet.flagship

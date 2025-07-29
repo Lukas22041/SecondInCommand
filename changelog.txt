@@ -1,3 +1,11 @@
+Version 1.6.3
+Save Compatible
+
+- Removed the integration with Ship Mastery System, as the mod no longer makes changes to skills.
+- Fixed an issue that made the "Can NPCs spawn with skills" config not work correctly.
+
+
+
 Version 1.6.2
 Save Compatible
 

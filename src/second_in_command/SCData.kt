@@ -74,7 +74,7 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
 
             clearCommanderSkills()
 
-            if (!fleet.hasTag("sc_do_not_generate_skills")) {
+            if (SCSettings.canNPCsSpawnWithSkills && !fleet.hasTag("sc_do_not_generate_skills")) {
                 generateNPCOfficers()
             }
 

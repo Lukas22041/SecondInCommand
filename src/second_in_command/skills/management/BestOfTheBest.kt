@@ -16,14 +16,14 @@ import shipmastery.util.Utils
 class BestOfTheBest : SCBaseSkillPlugin() {
 
     //Compat for the Ship Mastery mod. Does not match the skill changes exactly as it would be to powerful.
-    var shipMasteryMode = false
-    var masteryBuff = 0f
+    //var shipMasteryMode = false
+    //var masteryBuff = 0f
 
     init {
-        if (Global.getSettings().modManager.isModEnabled("shipmasterysystem")) {
+       /* if (Global.getSettings().modManager.isModEnabled("shipmasterysystem")) {
             shipMasteryMode = true
             masteryBuff = BestOfTheBest.MASTERY_BONUS
-        }
+        }*/
     }
 
     override fun getAffectsString(): String {
@@ -32,9 +32,9 @@ class BestOfTheBest : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        if (shipMasteryMode) {
+        /*if (shipMasteryMode) {
             tooltip.addPara("${String.format(Strings.Misc.bestOfTheBestDesc, Utils.asPercent(masteryBuff))}%", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        } else {
+        } else {*/
             tooltip.addPara("Able to build 1 more permanent hullmod* in to ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
             tooltip.addPara("   - If this officer is unassigned, s-mods over the limit are made inactive", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
             tooltip.addPara("   - Re-assigning this officer re-actives them", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "")
@@ -43,18 +43,18 @@ class BestOfTheBest : SCBaseSkillPlugin() {
 
             tooltip.addPara("*The base maximum number of permanent hullmods you're able to build into a ship is ${Misc.MAX_PERMA_MODS}." +
                     "", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "${Misc.MAX_PERMA_MODS}")
-        }
+        //}
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
-        if (shipMasteryMode) {
+        /*if (shipMasteryMode) {
 
         }
-        else {
+        else {*/
             stats!!.dynamic.getMod(Stats.MAX_PERMANENT_HULLMODS_MOD).modifyFlat("sc_best_of_the_best", 1f)
-        }
+        //}
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
@@ -62,42 +62,42 @@ class BestOfTheBest : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amunt: Float) {
-        data.commander.stats.getDynamic().getMod("sms_global_mastery_strength_mod").modifyPercent("sc_best_of_the_best", masteryBuff * 100f)
+        //data.commander.stats.getDynamic().getMod("sms_global_mastery_strength_mod").modifyPercent("sc_best_of_the_best", masteryBuff * 100f)
     }
 
     override fun onActivation(data: SCData) {
 
-        if (!shipMasteryMode) {
-            if (!data.isNPC) {
-                for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
-                    var stats = member.stats
-                    var variant = member.variant
+        //if (!shipMasteryMode) {
+        if (!data.isNPC) {
+            for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
+                var stats = member.stats
+                var variant = member.variant
 
-                    stats!!.dynamic.getMod(Stats.MAX_PERMANENT_HULLMODS_MOD).modifyFlat("sc_best_of_the_best", 1f)
+                stats!!.dynamic.getMod(Stats.MAX_PERMANENT_HULLMODS_MOD).modifyFlat("sc_best_of_the_best", 1f)
 
 
-                    for (tag in ArrayList(variant.tags)) {
-                        if (tag.startsWith("sc_inactive_smods_")) {
-                            var hmodId = tag.replace("sc_inactive_smods_", "")
+                for (tag in ArrayList(variant.tags)) {
+                    if (tag.startsWith("sc_inactive_smods_")) {
+                        var hmodId = tag.replace("sc_inactive_smods_", "")
 
-                            variant.addPermaMod(hmodId, true)
-                            variant.removeTag(tag)
-                        }
+                        variant.addPermaMod(hmodId, true)
+                        variant.removeTag(tag)
                     }
-
-                    variant.removePermaMod("sc_inactive_smods")
                 }
+
+                variant.removePermaMod("sc_inactive_smods")
             }
         }
+        /*}
         else {
             data.commander.stats.getDynamic().getMod("sms_global_mastery_strength_mod").modifyPercent("sc_best_of_the_best", masteryBuff * 100f)
-        }
+        }*/
 
     }
 
     override fun onDeactivation(data: SCData) {
 
-        if (!shipMasteryMode) {
+        //if (!shipMasteryMode) {
             if (!data.isNPC) {
                 var base = Global.getSettings().getFloat("maxPermanentHullmods")
 
@@ -125,10 +125,10 @@ class BestOfTheBest : SCBaseSkillPlugin() {
 
                 }
             }
-        }
+        /*}
         else {
             data.commander.stats.getDynamic().getMod("sms_global_mastery_strength_mod").unmodify("sc_best_of_the_best")
-        }
+        }*/
 
     }
 }
