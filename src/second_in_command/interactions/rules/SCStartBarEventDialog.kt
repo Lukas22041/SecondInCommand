@@ -8,11 +8,13 @@ import com.fs.starfarer.api.combat.EngagementResultAPI
 import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin
 import com.fs.starfarer.api.impl.campaign.rulecmd.FireAll
+import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
 import second_in_command.SCUtils
+import second_in_command.misc.addPara
 import second_in_command.misc.addTooltip
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCOfficer
@@ -50,7 +52,7 @@ class SCStartBarEventDialogDelegate(var original: InteractionDialogPlugin) : Int
 
         var aptitudes = SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }.filter { it.getTags().contains("startingOption") }
         for (aptitude in aptitudes) {
-            var officer = SCUtils.createRandomSCOfficer(aptitude.getId())
+            var officer = SCUtils.createRandomSCOfficer(aptitude.getId(), dialog.interactionTarget.market.faction)
             officers.add(officer)
         }
 
@@ -118,6 +120,12 @@ class SCStartBarEventDialogDelegate(var original: InteractionDialogPlugin) : Int
             textPanel.addPara("As part of a special promotion, the first contract signed through our company will be paid in full by ourself, see it as a sign of good-will for future deals!\". You continue to hear him out, and gain a potential picture of what may be driving their struggling business. " +
                     "He continues \"Right here i've got a list of available offers, feel free to choose one of them!\"")
 
+            var tooltip = textPanel.beginTooltip()
+
+            tooltip.addPara("The list of officers is separated in to \"Recommended\" and \"Advanced\" officers. Both may be viable for your fleet, but the recommended selection will be applicable to most fleets. ",
+                0f, Misc.getGrayColor(), Misc.getHighlightColor(), "\"Recommended\"", "\"Advanced\"")
+
+            textPanel.addTooltip()
 
             optionPanel.addOption("Choose an officer", "ACCEPT")
             optionPanel.addOption("Decline his offer", "DECLINE")
@@ -176,6 +184,7 @@ class SCBarDelegatePanel(var plugin: SCStartBarEventDialogDelegate, var officers
 
     var selectedOfficer: SCOfficer? = null
 
+
     override fun init(panel: CustomPanelAPI?, callbacks: CustomVisualDialogDelegate.DialogCallbacks?) {
 
 
@@ -190,13 +199,27 @@ class SCBarDelegatePanel(var plugin: SCStartBarEventDialogDelegate, var officers
 
         var data = SCUtils.getPlayerData()
 
-        var officers = officers.sortedWith(compareBy({ !it.isAssigned() }, { it.getAptitudeSpec().order }))
+        var recommended = mutableListOf(
+            "sc_tactical",
+            "sc_management",
+            "sc_engineering",
+            "sc_starfaring",
+        )
+
+        //Recommended Header
+        scrollerElement.addSpacer(10f)
+        var recommendedHeader = scrollerElement.addSectionHeading("Recommended by the Seller", Alignment.MID, 0f)
+        recommendedHeader.position.setXAlignOffset(10f)
+        recommendedHeader.position.setSize(recommendedHeader.position.width - 25, recommendedHeader.position.height)
+
+        var officers = officers.sortedWith(compareBy({ !recommended.contains(it.aptitudeId ) }, { !it.isAssigned() }, { it.getAptitudeSpec().order }))
         for (officer in officers) {
 
             var aptitudeSpec = SCSpecStore.getAptitudeSpec(officer.aptitudeId)
             var aptitudePlugin = aptitudeSpec!!.getPlugin()
 
             var categories = aptitudePlugin.categories
+
 
             var extra = 0f
             if (categories.isNotEmpty()) extra += 20f
@@ -443,6 +466,23 @@ class SCBarDelegatePanel(var plugin: SCStartBarEventDialogDelegate, var officers
 
             var officerPara = inner.addPara("${officer.person.nameString} - 1 SP", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "1")
             officerPara.position.rightOfBottom(paraAnchorElement.elementPanel, 0f)
+
+
+
+
+
+            //Non-Recommmended Header
+            if (recommended.contains(officer.aptitudeId)) {
+                recommended.remove(officer.aptitudeId)
+                if (recommended.isEmpty()) {
+                    //Recommended Header
+                    scrollerElement.addSpacer(10f)
+                    var nonRecommendedHeader = scrollerElement.addSectionHeading("Advanced & Specialized Officers", Alignment.MID, 0f)
+                    nonRecommendedHeader.position.setXAlignOffset(10f)
+                    nonRecommendedHeader.position.setSize(nonRecommendedHeader.position.width - 25, nonRecommendedHeader.position.height)
+                }
+            }
+
         }
 
         scrollerElement.addSpacer(10f)

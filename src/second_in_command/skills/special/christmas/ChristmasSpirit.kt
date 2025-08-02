@@ -23,10 +23,11 @@ class ChristmasSpirit : SCBaseSkillPlugin() {
         tooltip.addPara("+50%% post-battle salvage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+20%% to the chance that opponents drop their weapons after being destroyed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+30%% cargo and fuel capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+2 to burn level at which the fleet is considered to be moving slowly*", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("This officer will depart from the fleet after the 26th december.", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "depart", "26th")
+        tooltip.addPara("This officer will depart from the fleet after the 27th december.", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "depart", "27th")
 
     }
 
@@ -45,6 +46,8 @@ class ChristmasSpirit : SCBaseSkillPlugin() {
         data.fleet.stats.dynamic.getStat(Stats.BATTLE_SALVAGE_MULT_FLEET).modifyFlat("sc_christmas_spirit", 0.5f)
         data.fleet.stats.dynamic.getMod(Stats.ENEMY_WEAPON_RECOVERY_MOD).modifyFlat("sc_christmas_spirit", 0.2f)
         data.fleet.stats.dynamic.getMod(Stats.ENEMY_WING_RECOVERY_MOD).modifyFlat("sc_christmas_spirit", 0.2f)
+        data.fleet.stats.dynamic.getMod(Stats.MOVE_SLOW_SPEED_BONUS_MOD).modifyFlat("sc_christmas_spirit", 2f, "Christmas Spirit")
+
     }
 
     override fun onActivation(data: SCData) {
@@ -53,6 +56,7 @@ class ChristmasSpirit : SCBaseSkillPlugin() {
         data.fleet.stats.dynamic.getStat(Stats.BATTLE_SALVAGE_MULT_FLEET).modifyFlat("sc_christmas_spirit", 0.5f)
         data.fleet.stats.dynamic.getMod(Stats.ENEMY_WEAPON_RECOVERY_MOD).modifyFlat("sc_christmas_spirit", 0.2f)
         data.fleet.stats.dynamic.getMod(Stats.ENEMY_WING_RECOVERY_MOD).modifyFlat("sc_christmas_spirit", 0.2f)
+        data.fleet.stats.dynamic.getMod(Stats.MOVE_SLOW_SPEED_BONUS_MOD).modifyFlat("sc_christmas_spirit", 2f, "Christmas Spirit")
     }
 
     override fun onDeactivation(data: SCData) {
@@ -61,5 +65,6 @@ class ChristmasSpirit : SCBaseSkillPlugin() {
         data.fleet.stats.dynamic.getStat(Stats.BATTLE_SALVAGE_MULT_FLEET).unmodify("sc_christmas_spirit")
         data.fleet.stats.dynamic.getMod(Stats.ENEMY_WEAPON_RECOVERY_MOD).unmodify("sc_christmas_spirit")
         data.fleet.stats.dynamic.getMod(Stats.ENEMY_WING_RECOVERY_MOD).unmodify("sc_christmas_spirit")
+        data.fleet.stats.dynamic.getMod(Stats.MOVE_SLOW_SPEED_BONUS_MOD).unmodify("sc_christmas_spirit")
     }
 }

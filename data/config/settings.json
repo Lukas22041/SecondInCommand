@@ -31,6 +31,7 @@
 		"sc_other": {
 			"dmod_overlay_very_light":"graphics/damage/dmod_overlay_sic_very_light.png",
 			"seb":"graphics/secondInCommand/special/christmas/seb.png",
+			"kanta":"graphics/secondInCommand/special/christmas/kanta.png",
 		}
  	}
  }

@@ -44,7 +44,6 @@ class CommandAndConquer : SCBaseSkillPlugin() {
 
     override fun advance(data: SCData, amount: Float) {
 
-
         data.commander.stats.commandPoints.modifyFlat("sc_command_and_conquer", 3f)
         data.commander.stats.dynamic.getMod(Stats.COMMAND_POINT_RATE_FLAT).modifyFlat("sc_command_and_conquer", 0.5f)
 
@@ -56,7 +55,6 @@ class CommandAndConquer : SCBaseSkillPlugin() {
     }
 
     override fun onDeactivation(data: SCData) {
-
 
         data.commander.stats.commandPoints.unmodify("sc_command_and_conquer")
         data.commander.stats.dynamic.getMod(Stats.COMMAND_POINT_RATE_FLAT).unmodify("sc_command_and_conquer")
