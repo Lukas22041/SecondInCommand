@@ -1,7 +1,7 @@
 Version 1.6.4
 Save Compatible
 
-- The starting bar event now seperate the list of officer in to "Recommended" and "Advanced" option to be more beginner friendly.
+- The starting bar event now seperates the list of officer in to "Recommended" and "Advanced" option to be more beginner friendly.
 - The starting bar event should now only have officers with faction relevant portraits.
 
 
