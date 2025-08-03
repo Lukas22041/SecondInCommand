@@ -153,6 +153,17 @@ class SCControllerHullmod : BaseHullMod() {
 
 
     override fun advanceInCombat(ship: ShipAPI?, amount: Float) {
+
+       /* println()
+        for (ship in Global.getCombatEngine().ships) {
+            if (ship.owner == 0) continue
+            if (ship.isFighter) continue
+            var data = ship.fleetMember.fleetData
+            println("${ship.fleetMember}_"+data)
+            println(data?.fleet)
+            println()
+        }*/
+
         var member = ship?.fleetMember ?: return
         var fleet = member.fleetData?.fleet ?: return
 

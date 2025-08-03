@@ -20,6 +20,9 @@ import java.util.*
 
 object NPCOfficerGenerator {
 
+    //Fleet key, sets how many skills should be generated for this fleet manualy
+    var SKILL_COUNT_OVERWRITE_KEY = "\$sic_skill_gen_overwrite"
+
     fun isBossFleet(fleet: CampaignFleetAPI) : Boolean {
         var flagship = fleet.flagship
         var bossShips = listOf("ziggurat", "tesseract", "hmi_spookyboi_base", "rat_genesis")
@@ -127,6 +130,12 @@ object NPCOfficerGenerator {
 
         var skillCount = (combatFP / divide).toInt()
         skillCount = MathUtils.clamp(skillCount, 1, maxSkillCount) //Minimum of atleast 1 skill per fleet
+
+        //Overwrite skill count if available
+        var skillCountOverwrite = fleet.memoryWithoutUpdate.get(SKILL_COUNT_OVERWRITE_KEY)
+        if (skillCountOverwrite is Int) {
+            skillCount = skillCountOverwrite
+        }
 
         var aptitudeCount = 1
         aptitudeCount = when (skillCount) {

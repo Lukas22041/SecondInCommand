@@ -4,8 +4,8 @@
 		#"SCSkillPanelReplacerTitle":"second_in_command.scripts.SkillPanelReplacerScriptTitlescreen",
 		"SCCombatHandler":"second_in_command.scripts.CombatHandler",
 		"combatReadinessPlugin":"second_in_command.scripts.SCCRPluginImpl", # Replacement to fix issues that make it not work right with "Solid Construction"
+		"simulatorPlugin":"second_in_command.ui.sim.SiCSimPlugin",
 	},	
-	
 	
 	"ruleCommandPackages":[
 		"second_in_command.interactions.rules",
@@ -21,6 +21,9 @@
 	"commanderLevelForOneSkill":98,
 	 
 	"graphics":{
+		"simulator":{
+			"sim_executive_match":"graphics/ui/sim_executive_match.png",		
+		},
 		"sc_ui":{
 			"skillBorderInactive":"graphics/secondInCommand/skillBorderInactive.png",
 			"skillBorderActive":"graphics/secondInCommand/skillBorderActive.png",
