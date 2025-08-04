@@ -1,3 +1,10 @@
+Version 1.6.5
+Save Compatible
+
+- Added options for generating executive officers for opponents in the combat simulator.
+
+
+
 Version 1.6.4
 Save Compatible
 
