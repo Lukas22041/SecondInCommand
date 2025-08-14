@@ -1,6 +1,7 @@
 package second_in_command.skills.warfare
 
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
@@ -54,6 +55,10 @@ class AptitudeWarfare : SCBaseAptitudePlugin() {
         return mult
     }
 
-
+    override fun getMarketSpawnweight(market: MarketAPI): Float {
+        var weight = spec.spawnWeight
+        if (market.faction.id == Factions.HEGEMONY) weight *= 1.25f
+        return weight
+    }
 
 }

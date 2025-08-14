@@ -13,10 +13,12 @@ import org.lazywizard.lazylib.MathUtils
 import org.magiclib.kotlin.setSalvageSpecial
 import second_in_command.SCUtils
 import second_in_command.interactions.ExecutiveOfficerRescueSpecial
+import second_in_command.misc.SCSettings
 import second_in_command.specs.SCAptitudeSpec
 import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class ExecutiveOfficerCommAdder : EconomyTickListener {
@@ -40,29 +42,45 @@ class ExecutiveOfficerCommAdder : EconomyTickListener {
 
         previousPeople.clear()
 
+        if (SCSettings.commRarity == SCSettings.CommRarity.None) return
+
         //var chance = 0.5f
-        var chance = 0.8f
+        //var chance = 0.8f
+        var chance = when(SCSettings.commRarity)  {
+            SCSettings.CommRarity.None -> 0f
+            SCSettings.CommRarity.Rare -> 0.35f
+            SCSettings.CommRarity.Normal -> 0.8f
+            SCSettings.CommRarity.Common -> 0.9f
+        }
         for (market in markets) {
             if (market == null || market.isHidden) continue
 
             if (Random().nextFloat() >= chance) continue
 
             var count = 1
-            if (Random().nextFloat() >= 0.55f) count = 2
+            if (Random().nextFloat() >= 0.55f && SCSettings.commRarity != SCSettings.CommRarity.Rare) count += 1
+            if (Random().nextFloat() >= 0.75f && SCSettings.commRarity == SCSettings.CommRarity.Rare) count += 1
+            if (Random().nextFloat() >= 0.6f && SCSettings.commRarity == SCSettings.CommRarity.Common) count += 1
+
+            var alreadyPicked = ArrayList<String>()
 
             for (i in 0 until count) {
                 var aptitudes = SCSpecStore.getAptitudeSpecs()
                 var picker = WeightedRandomPicker<SCAptitudeSpec>()
 
                 for (aptitude in aptitudes) {
+                    if (alreadyPicked.contains(aptitude.id)) continue
                     var weight = aptitude.getPlugin().getMarketSpawnweight(market)
                     if (SCUtils.getPlayerData().hasAptitudeInFleet(aptitude.id)) weight *= 0.6f
                     picker.add(aptitude, weight)
                 }
 
+                if (picker.isEmpty) break
+
                 //aptitudes.forEach { picker.add(it, it.getPlugin().getMarketSpawnweight(market)) }
 
                 var pick = picker.pick()
+                alreadyPicked.add(pick.id)
 
                 var officer = market.faction.createRandomPerson()
                 officer.setFaction(Factions.INDEPENDENT)

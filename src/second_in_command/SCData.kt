@@ -197,16 +197,19 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
             }
         }
 
-        if (getOfficerInSlot(0) == null) {
+        var isProgressionMode = SCSettings.progressionMode
+        var level = Global.getSector().playerPerson.stats.level
+
+        if (getOfficerInSlot(0) == null && (!isProgressionMode || level >= SCSettings.progressionSlot1Level!!)) {
             setOfficerInSlot(0, officer)
         }
-        else if (getOfficerInSlot(1) == null) {
+        else if (getOfficerInSlot(1) == null && (!isProgressionMode || level >= SCSettings.progressionSlot2Level!!)) {
             setOfficerInSlot(1, officer)
         }
-        else if (getOfficerInSlot(2) == null) {
+        else if (getOfficerInSlot(2) == null && (!isProgressionMode || level >= SCSettings.progressionSlot3Level!!)) {
             setOfficerInSlot(2, officer)
         }
-        else if (getOfficerInSlot(3) == null && SCSettings.enable4thSlot) {
+        else if (getOfficerInSlot(3) == null && SCSettings.enable4thSlot && (!isProgressionMode || level >= SCSettings.progressionSlot4Level!!)) {
             setOfficerInSlot(3, officer)
         }
     }

@@ -1,8 +1,11 @@
 package second_in_command.skills.starfaring
 
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.campaign.econ.MarketAPI
+import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import org.magiclib.kotlin.isPirateFaction
 import second_in_command.SCData
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCBaseAptitudePlugin
@@ -42,7 +45,13 @@ class AptitudeStarfaring : SCBaseAptitudePlugin() {
         addSection(section3)
 
 
+    }
 
+    override fun getMarketSpawnweight(market: MarketAPI): Float {
+        var weight = spec.spawnWeight
+        if (market.faction.id == Factions.PIRATES) weight *= 0.75f
+        else if (market.faction.isPirateFaction()) weight *= 0.80f
+        return weight
     }
 
     override fun getNPCFleetSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {

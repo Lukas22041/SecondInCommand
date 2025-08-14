@@ -93,6 +93,28 @@ internal object ReflectionUtils {
         return getMethod(methodName, instance.javaClass, returnType, parameterCount, args)!!.invoke(instance, *arguments)
     }
 
+    //Should be updated to the cached variant at some point
+    @JvmStatic
+    fun invokeStatic(parameterCount: Int, methodName: String, instance: Class<*>, vararg arguments: Any?) : Any?
+    {
+        var method: Any? = null
+
+        val clazz = instance
+        //val args = arguments.map { it!!::class.javaPrimitiveType ?: it::class.java }
+        //val methodType = MethodType.methodType(Void.TYPE, args)
+
+        for (obj: Any in clazz.methods)  {
+            var parameters = ReflectionUtils.invoke("getParameterTypes", obj) as Array<Class<*>>
+            var name = ReflectionUtils.invoke("getName", obj)
+            if (name == methodName && parameters.size == parameterCount) {
+                method = obj
+            }
+        }
+        //method = clazz.getDeclaredMethod(methodName, *methodType.parameterArray())
+
+        return invokeMethodHandle.invoke(method, instance, arguments)
+    }
+
     //Cache for field names to reduce reflection calls during UI Crawling
     fun hasVariableOfName(name: String, instance: Any) : Boolean {
         var clazz = instance.javaClass

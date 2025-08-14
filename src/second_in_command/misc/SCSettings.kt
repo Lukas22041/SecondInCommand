@@ -9,6 +9,13 @@ import second_in_command.misc.backgrounds.AssociatesBackground
 
 class SCSettings : LunaSettingsListener {
 
+    enum class CommRarity {
+        None, Rare, Normal, Common
+    }
+
+    enum class DerelictRarity {
+        None, Rare, Normal, Common
+    }
 
     companion object {
 
@@ -46,11 +53,31 @@ class SCSettings : LunaSettingsListener {
         var additionalLevel = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_enableAdditionalLevel")!!
         var xpGainMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_officerXPMult")!!
 
+
+        var startBarEventEnabled = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_startEvent")!!
+        var commRarity = when(LunaSettings.getString(SCUtils.MOD_ID, "sc_officerCommRarity")!!) {
+            "None" -> CommRarity.None
+            "Rare" -> CommRarity.Rare
+            "Normal" -> CommRarity.Normal
+            "Common" -> CommRarity.Common
+            else -> CommRarity.Normal
+        }
+        var derelictRarity = when(LunaSettings.getString(SCUtils.MOD_ID, "sc_officerDerelictRarity")!!) {
+            "None" -> DerelictRarity.None
+            "Rare" -> DerelictRarity.Rare
+            "Normal" -> DerelictRarity.Normal
+            "Common" -> DerelictRarity.Common
+            else -> DerelictRarity.Normal
+        }
+
+
+
         var progressionMode = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_progressionMode")!!
         var progressionSlot1Level = LunaSettings.getInt(SCUtils.MOD_ID, "sc_progressionLevelSlot1")
         var progressionSlot2Level = LunaSettings.getInt(SCUtils.MOD_ID, "sc_progressionLevelSlot2")
         var progressionSlot3Level = LunaSettings.getInt(SCUtils.MOD_ID, "sc_progressionLevelSlot3")
         var progressionSlot4Level = LunaSettings.getInt(SCUtils.MOD_ID, "sc_progressionLevelSlot4")
+
 
 
         var playerXPMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_playerXPMult")!!
@@ -98,6 +125,22 @@ class SCSettings : LunaSettingsListener {
         }
         additionalLevel = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_enableAdditionalLevel")!!
         progressionMode = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_progressionMode")!!
+
+        startBarEventEnabled = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_startEvent")!!
+        commRarity = when(LunaSettings.getString(SCUtils.MOD_ID, "sc_officerCommRarity")!!) {
+            "None" -> CommRarity.None
+            "Rare" -> CommRarity.Rare
+            "Normal" -> CommRarity.Normal
+            "Common" -> CommRarity.Common
+            else -> CommRarity.Normal
+        }
+        derelictRarity = when(LunaSettings.getString(SCUtils.MOD_ID, "sc_officerDerelictRarity")!!) {
+            "None" -> DerelictRarity.None
+            "Rare" -> DerelictRarity.Rare
+            "Normal" -> DerelictRarity.Normal
+            "Common" -> DerelictRarity.Common
+            else -> DerelictRarity.Normal
+        }
 
         progressionSlot1Level = LunaSettings.getInt(SCUtils.MOD_ID, "sc_progressionLevelSlot1")
         progressionSlot2Level = LunaSettings.getInt(SCUtils.MOD_ID, "sc_progressionLevelSlot2")

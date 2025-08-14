@@ -1,9 +1,12 @@
 package second_in_command.skills.automated
 
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.campaign.econ.MarketAPI
+import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.magiclib.kotlin.isAutomated
+import org.magiclib.kotlin.isPirateFaction
 import second_in_command.SCData
 import second_in_command.misc.addPara
 import second_in_command.specs.SCAptitudeSection
@@ -52,6 +55,14 @@ class AptitudeAutomated : SCBaseAptitudePlugin() {
         section3.addSkill("sc_automated_neural_junction")
         addSection(section3)
 
+    }
+
+    override fun getMarketSpawnweight(market: MarketAPI): Float {
+        var weight = spec.spawnWeight
+        if (market.faction.id == Factions.LUDDIC_PATH) weight *= 0.4f
+        if (market.faction.id == Factions.LUDDIC_CHURCH) weight *= 0.6f
+        if (market.faction.id == Factions.TRITACHYON) weight *= 1.25f
+        return weight
     }
 
     override fun getNPCFleetSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {

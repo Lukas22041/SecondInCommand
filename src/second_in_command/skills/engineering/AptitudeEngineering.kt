@@ -41,6 +41,13 @@ class AptitudeEngineering : SCBaseAptitudePlugin() {
         addSection(section2)
     }
 
+    override fun getMarketSpawnweight(market: MarketAPI): Float {
+        var weight = spec.spawnWeight
+        if (market.faction.id == Factions.PIRATES) weight *= 0.8f
+        else if (market.faction.isPirateFaction()) weight *= 0.85f
+        return weight
+    }
+
     override fun getNPCFleetSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
         return 0.6f
     }

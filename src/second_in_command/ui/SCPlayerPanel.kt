@@ -7,11 +7,14 @@ import com.fs.starfarer.api.ui.BaseTooltipCreator
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.ui.impl.StandardTooltipV2
+import com.fs.starfarer.ui.impl.StandardTooltipV2Expandable
 import lunalib.lunaExtensions.addLunaElement
 import lunalib.lunaUI.elements.LunaElement
 import lunalib.lunaUI.elements.LunaSpriteElement
 import org.lwjgl.input.Keyboard
 import second_in_command.SCData
+import second_in_command.misc.ReflectionUtils
 import second_in_command.misc.VanillaSkillTooltip
 import second_in_command.misc.clearChildren
 import second_in_command.misc.loadTextureCached
@@ -72,8 +75,6 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
 
         var background = PlayerAptitudeBackgroundElement(color, subelement)
         background.elementPanel.position.inTL(10f, 12f)
-
-
 
         //Aptitude Icon
         var path = "graphics/secondInCommand/combat_icon.png"
@@ -173,6 +174,12 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
             skillElement.elementPanel.position.rightOfTop(previous, 16f)
             previous = skillElement.elementPanel
             skillElements.add(skillElement)
+
+           /* var testTooltip = ReflectionUtils.invokeStatic(8, "createSkillTooltip", StandardTooltipV2::class.java,
+                skillSpec, Global.getSector().playerPerson.stats,
+                800f, 10f, true, false, 1000, null)
+
+            ReflectionUtils.invokeStatic(2, "addTooltipBelow", StandardTooltipV2Expandable::class.java, skillElement.elementPanel, testTooltip)*/
 
             var skillTooltip = VanillaSkillTooltip.addToTooltip(subelement, player, skillSpec, getSkillPointCost(skill))
 

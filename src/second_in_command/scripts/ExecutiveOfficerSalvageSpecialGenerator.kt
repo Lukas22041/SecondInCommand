@@ -13,6 +13,7 @@ import org.magiclib.kotlin.getSalvageSpecial
 import org.magiclib.kotlin.setSalvageSpecial
 import second_in_command.SCUtils
 import second_in_command.interactions.ExecutiveOfficerRescueSpecial
+import second_in_command.misc.SCSettings
 import second_in_command.specs.SCAptitudeSpec
 import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
@@ -23,12 +24,19 @@ class ExecutiveOfficerSalvageSpecialGenerator {
     fun generate() {
 
         if (SCUtils.isAssociatesBackgroundActive()) return //Don't add executives when this background is active
+        if (SCSettings.derelictRarity == SCSettings.DerelictRarity.None) return
 
         var entitiesInSector = Global.getSector().starSystems.flatMap { it.customEntities }
 
         var entitiesWithPods = entitiesInSector.filter { isSalvagePod(it) }
 
-        var maximum = (entitiesWithPods.count() * 0.4f).toInt()
+        var percent = when(SCSettings.derelictRarity) {
+            SCSettings.DerelictRarity.None -> 0f
+            SCSettings.DerelictRarity.Rare -> 0.2f
+            SCSettings.DerelictRarity.Normal -> 0.4f
+            SCSettings.DerelictRarity.Common -> 0.6f
+        }
+        var maximum = (entitiesWithPods.count() * percent).toInt()
 
         var suitableEntities = entitiesInSector.filter { entity -> isSuitable(entity) }
         suitableEntities = suitableEntities.shuffled()
