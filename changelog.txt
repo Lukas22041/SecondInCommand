@@ -1,3 +1,10 @@
+Version 1.6.7
+Save Compatible
+
+-> Performance improvement for skills that reduce the effect of d-mods.
+
+
+
 Version 1.6.6
 Save Compatible
 
