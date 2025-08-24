@@ -18,9 +18,13 @@ class SkillWidgetElement(var id: String, var aptitudeId: String, var activated: 
     var sprite = Global.getSettings().getSprite(iconPath)
     var inactiveBorder = Global.getSettings().getSprite("graphics/secondInCommand/skillBorderInactive.png")
     var activeBorder = Global.getSettings().getSprite("graphics/secondInCommand/skillBorderActive.png")
+    var eliteStars = Global.getSettings().getSprite("graphics/secondInCommand/elite_stars.png")
+    var eliteBackground = Global.getSettings().getSprite("graphics/secondInCommand/elite_background.png")
 
     var hoverFade = 0f
     var time = 0f
+
+    var isElite = false
 
     companion object {
         var shader = 0;
@@ -127,6 +131,14 @@ class SkillWidgetElement(var id: String, var aptitudeId: String, var activated: 
         sprite.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
 
 
+        if (isElite) {
+            eliteBackground.setNormalBlend()
+            eliteBackground.color = color.darker()
+            eliteBackground.setSize(width, height)
+            eliteBackground.alphaMult = alphaMult * 0.7f
+            eliteBackground.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
+        }
+
         //Glitch Effect for Abyssal
 
         if (aptitudeId == "rat_abyssal" && activated && glitchDuration > 0 && shader != 0) {
@@ -181,13 +193,20 @@ class SkillWidgetElement(var id: String, var aptitudeId: String, var activated: 
             inactiveBorder.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
         }
 
-
-
         sprite.setAdditiveBlend()
         sprite.setSize(width-8, height-8)
         sprite.alphaMult = alphaMult * 0.5f * hoverFade
         sprite.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
 
+        if (isElite) {
+
+
+            eliteStars.setNormalBlend()
+            //eliteStars.color = color
+            eliteStars.setSize(width, height)
+            eliteStars.alphaMult = alphaMult
+            eliteStars.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt()+1f)
+        }
     }
 
     override fun renderBelow(alphaMult: Float) {

@@ -6,6 +6,7 @@ import com.fs.starfarer.api.ui.BaseTooltipCreator
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
+import second_in_command.misc.addPara
 import second_in_command.misc.codex.CodexHandler
 import second_in_command.specs.SCBaseAptitudePlugin
 import second_in_command.specs.SCBaseSkillPlugin
@@ -39,6 +40,12 @@ class SCSkillTooltipCreator(var data: SCData, var skill: SCBaseSkillPlugin, var 
         tooltip.addSpacer(10f)
 
         skill.addTooltip(data, tooltip)
+
+        var elite = false
+        if (elite) {
+            tooltip.addSpacer(10f)
+            tooltip.addPara("This skill is elite, making it stronger than its normal variant", 0f, Misc.getStoryOptionColor(),Misc.getStoryOptionColor())
+        }
 
         if (!sectionMeetsRequirements || pickOnlyOne) {
             tooltip.addSpacer(10f)

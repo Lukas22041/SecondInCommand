@@ -18,7 +18,7 @@ class UnlockedEngines : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("Increases the ships top speed by 20/20/15/10 based the its hullsize", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Increases the ships top speed by 20/20/15/10 based on its hull size", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
 
     }
