@@ -58,7 +58,6 @@ class SCAddOfficersToFleetInteraction : BaseCommandPlugin() {
 
             tooltip.addSpacer(10f)
 
-
             var width = 500f
             var height = 96f
             var panel = Global.getSettings().createCustom(width, height, null)

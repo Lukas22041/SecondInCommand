@@ -38,7 +38,7 @@ class CoordinatedManeuvers : SCBaseSkillPlugin() {
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
         var officer = stats?.fleetMember?.captain ?: return
-        if (officer.isDefault || officer.isAICore) return
+        if (officer.isDefault) return
 
         var navBonus = 0f
         navBonus = when (hullSize) {

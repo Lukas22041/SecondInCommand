@@ -29,7 +29,7 @@ class MassBombardment : SCBaseSkillPlugin() {
         stats!!.missileRoFMult.modifyPercent(id, 30f)
         stats!!.missileAmmoBonus.modifyPercent(id, 40f)
         stats!!.missileAmmoRegenMult.modifyPercent(id, 40f)
-        stats!!.missileWeaponDamageMult.modifyPercent(id, 0.85f)
+        stats!!.missileWeaponDamageMult.modifyMult(id, 0.85f)
 
     }
 

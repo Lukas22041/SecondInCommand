@@ -1,7 +1,15 @@
+Version 1.6.8
+Save Compatible
+
+- Fixed "Coordinated Maneuvers" not working with AI cores.
+- Fixed "Mass Bombardment" not applying its damage decrease correctly.
+
+
+
 Version 1.6.7
 Save Compatible
 
--> Performance improvement for skills that reduce the effect of d-mods.
+- Performance improvement for skills that reduce the effect of d-mods.
 
 
 
