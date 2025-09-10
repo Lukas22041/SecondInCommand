@@ -38,7 +38,7 @@ class AssociatesBackground : BaseCharacterBackground() {
         var label = tooltip.addPara(
                     "You start the game with three random executive officers of different aptitudes. Those officers can never be replaced or removed from your fleet. $text\n\n" +
                     "The players previous experience provides them with an additional skill point for their \"Combat\" aptitude. Due to the executive officers particular nature, their experience gain is reduced by 30%.\n\n" +
-                    "This background is not recommended if this is your first time using the \"Second-in-Command\" mod. ", 0f)
+                    "This background is not recommended if this is your first time using the \"Second-in-Command\" mod. This start ignores the \"Progression Mode\" that can be enabled in the configs.", 0f)
 
         label.setHighlight("three random executive officers", "can never be replaced or removed", "additional skill point", "Combat", "30%", "This background is not recommended if this is your first time using the \"Second-in-Command\" mod." )
         label.setHighlightColors(hc, nc, hc, hc, nc, nc)
@@ -85,7 +85,7 @@ class AssociatesBackground : BaseCharacterBackground() {
             officer.person.memoryWithoutUpdate.set("\$sc_associatesOfficer", true)
 
             data.addOfficerToFleet(officer);
-            data.setOfficerInEmptySlotIfAvailable(officer)
+            data.setOfficerInEmptySlotIfAvailable(officer, true)
         }
 
         Global.getSector().characterData.person.stats.points += 1
@@ -102,8 +102,10 @@ class AssociatesBackground : BaseCharacterBackground() {
             var data = SCUtils.getPlayerData()
 
             if (!SCUtils.isAssociatesBackgroundActive()) return
-            if (!SCSettings.enable4thSlot) return
-            if (data.getAssignedOfficers().filterNotNull().size > 3) return
+            //if (!SCSettings.enable4thSlot) return
+            var max = 3
+            if (SCSettings.enable4thSlot) max = 4
+            if (data.getAssignedOfficers().filterNotNull().size >= max) return
 
             var aptitudes = SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }.filter { !it.tags.contains("restricted") }.toMutableList()
             if (!SCSettings.unrestrictedAssociates!!) {
@@ -134,7 +136,7 @@ class AssociatesBackground : BaseCharacterBackground() {
             officer.person.memoryWithoutUpdate.set("\$sc_associatesOfficer", true)
 
             data.addOfficerToFleet(officer);
-            data.setOfficerInEmptySlotIfAvailable(officer)
+            data.setOfficerInEmptySlotIfAvailable(officer, true)
         }
     }
 

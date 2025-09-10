@@ -236,7 +236,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
                 return@onClick
             }*/
 
-            if (SCUtils.isAssociatesBackgroundActive()) {
+            if (SCUtils.isAssociatesBackgroundActive() && officer != null) {
                 openResrictedOfficerManagementPanel(panel, subpanelParent, officer!!)
                 officerPickerElement.playClickSound()
                 return@onClick

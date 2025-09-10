@@ -182,7 +182,7 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
         return getOfficersInFleet().any { it.aptitudeId == aptitudeId }
     }
 
-    fun setOfficerInEmptySlotIfAvailable(officer: SCOfficer) {
+    fun setOfficerInEmptySlotIfAvailable(officer: SCOfficer, ignoreProgressionMode: Boolean = false) {
 
         //Check for incompatibilities
         var categories = officer.getAptitudePlugin().categories
@@ -200,16 +200,16 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
         var isProgressionMode = SCSettings.progressionMode
         var level = Global.getSector().playerPerson.stats.level
 
-        if (getOfficerInSlot(0) == null && (!isProgressionMode || level >= SCSettings.progressionSlot1Level!!)) {
+        if (getOfficerInSlot(0) == null && (!isProgressionMode || level >= SCSettings.progressionSlot1Level!! || ignoreProgressionMode)) {
             setOfficerInSlot(0, officer)
         }
-        else if (getOfficerInSlot(1) == null && (!isProgressionMode || level >= SCSettings.progressionSlot2Level!!)) {
+        else if (getOfficerInSlot(1) == null && (!isProgressionMode || level >= SCSettings.progressionSlot2Level!! || ignoreProgressionMode)) {
             setOfficerInSlot(1, officer)
         }
-        else if (getOfficerInSlot(2) == null && (!isProgressionMode || level >= SCSettings.progressionSlot3Level!!)) {
+        else if (getOfficerInSlot(2) == null && (!isProgressionMode || level >= SCSettings.progressionSlot3Level!! || ignoreProgressionMode)) {
             setOfficerInSlot(2, officer)
         }
-        else if (getOfficerInSlot(3) == null && SCSettings.enable4thSlot && (!isProgressionMode || level >= SCSettings.progressionSlot4Level!!)) {
+        else if (getOfficerInSlot(3) == null && SCSettings.enable4thSlot && (!isProgressionMode || level >= SCSettings.progressionSlot4Level!! || ignoreProgressionMode)) {
             setOfficerInSlot(3, officer)
         }
     }
