@@ -182,7 +182,11 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
         return getOfficersInFleet().any { it.aptitudeId == aptitudeId }
     }
 
-    fun setOfficerInEmptySlotIfAvailable(officer: SCOfficer, ignoreProgressionMode: Boolean = false) {
+    fun setOfficerInEmptySlotIfAvailable(officer: SCOfficer) {
+        setOfficerInEmptySlotIfAvailable(officer, false)
+    }
+
+    fun setOfficerInEmptySlotIfAvailable(officer: SCOfficer, ignoreProgressionMode: Boolean) {
 
         //Check for incompatibilities
         var categories = officer.getAptitudePlugin().categories
