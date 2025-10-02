@@ -1,13 +1,15 @@
 package second_in_command.misc.commands
 
 import org.lazywizard.console.BaseCommand
+import org.lazywizard.console.BaseCommandWithSuggestion
 import org.lazywizard.console.CommonStrings
 import org.lazywizard.console.Console
+import second_in_command.SCData
 import second_in_command.SCUtils
 import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
 
-class LevelExecutiveCommand : BaseCommand {
+class LevelExecutiveCommand : BaseCommandWithSuggestion {
     /**
      * Called when the player enters your command.
      *
@@ -59,5 +61,12 @@ class LevelExecutiveCommand : BaseCommand {
         Console.showMessage("")
 
         return BaseCommand.CommandResult.SUCCESS
+    }
+
+    override fun getSuggestions(parameter: Int, previous: MutableList<String>, context: BaseCommand.CommandContext): MutableList<String> {
+        if (parameter != 0 || !context.isInCampaign) return ArrayList()
+        var list = SCUtils.getPlayerData().getOfficersInFleet().map { it.person.nameString }.toMutableList()
+        list.add("all")
+        return list
     }
 }

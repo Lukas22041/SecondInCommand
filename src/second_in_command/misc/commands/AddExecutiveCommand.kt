@@ -1,13 +1,14 @@
 package second_in_command.misc.commands
 
 import org.lazywizard.console.BaseCommand
+import org.lazywizard.console.BaseCommandWithSuggestion
 import org.lazywizard.console.CommonStrings
 import org.lazywizard.console.Console
 import second_in_command.SCUtils
 import second_in_command.specs.SCOfficer
 import second_in_command.specs.SCSpecStore
 
-class AddExecutiveCommand : BaseCommand {
+class AddExecutiveCommand : BaseCommandWithSuggestion {
     /**
      * Called when the player enters your command.
      *
@@ -66,5 +67,12 @@ class AddExecutiveCommand : BaseCommand {
 
 
         return BaseCommand.CommandResult.SUCCESS
+    }
+
+    override fun getSuggestions(parameter: Int, previous: MutableList<String>?, context: BaseCommand.CommandContext?): MutableList<String> {
+        if (parameter != 0) return ArrayList()
+        var list = SCSpecStore.getAptitudeSpecs().filter { !it.getPlugin().tags.contains("restricted") }.map { it.id }.toMutableList()
+        list.add("all")
+        return list
     }
 }

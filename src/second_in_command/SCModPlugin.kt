@@ -21,6 +21,17 @@ import java.lang.Exception
 
 class SCModPlugin : BaseModPlugin() {
 
+    init {
+        //Provide a better crash message when using an outdated version, not just the "missing interface" one
+        var console = Global.getSettings().modManager.getModSpec("lw_console")
+        if (console != null) {
+            if (console.version.contains("2024") || console.version.contains("2025") || console.version.contains("2023")) {
+                throw Exception("\n\nYour version of console commands (${console.version}) is outdated. " +
+                        "Version 4.0.4 or above is required. Older versions used a different version format, and mod-managers may not link to the correct version. \n")
+            }
+        }
+    }
+
     override fun onAboutToStartGeneratingCodex() {
         CodexHandler.onAboutToStartGeneratingCodex()
     }
@@ -42,6 +53,8 @@ class SCModPlugin : BaseModPlugin() {
         SCSpecStore.loadCategoriesFromCSV()
         SCSpecStore.loadAptitudeSpecsFromCSV()
         SCSpecStore.loadSkillSpecsFromCSV()
+
+
 
         checkForIncompatibilities()
     }

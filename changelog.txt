@@ -1,3 +1,11 @@
+Version 1.6.11
+Save Compatible
+
+- Added autocomplete support for the "LevelExecutive" and "AddExecutive" Commands
+- Updated command syntax to better match console-commands 4.0
+
+
+
 Version 1.6.10
 Save Compatible
 
