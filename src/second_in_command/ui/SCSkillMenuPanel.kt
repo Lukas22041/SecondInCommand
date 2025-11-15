@@ -5,9 +5,7 @@ import com.fs.starfarer.api.campaign.RepLevel
 import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.CustomPanelAPI
-import com.fs.starfarer.api.ui.LabelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
-import com.fs.starfarer.api.ui.UIComponentAPI
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
@@ -31,12 +29,14 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
     var width = 0f
     var height = 0f
     var isAtColony = false
+    var isAptitudeTabSelected = true
 
     var rowParents = HashMap<Int, CustomPanelAPI>()
+    var subpanel: CustomPanelAPI? = null
 
     companion object {
         var crCost = 0.20f
-        var lastScrollerY = 0f
+        var lastAptitudeScrollerY = 0f
     }
 
     fun init() {
@@ -98,7 +98,8 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
         playerPanel.init()
 
 
-        addAptitudePanel()
+        addHeaderPanel()
+        //addAptitudePanel()
 
       /*  element.addCustom(seedTextElement as UIComponentAPI, 0f)
 
@@ -116,26 +117,76 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
 
     }
 
+    fun addHeaderPanel() {
 
-    fun addAptitudePanel() {
-
-        var subpanel = Global.getSettings().createCustom(width, height, null)
-        element.addCustom(subpanel, 0f)
-        subpanel.position.inTL(20f, 285+5f+15)
+        var headerSubpanel = Global.getSettings().createCustom(width, height, null)
+        element.addCustom(headerSubpanel, 0f)
+        headerSubpanel!!.position.inTL(20f, 285+5f+15)
 
 
-        var headerElement = subpanel.createUIElement(width, 20f, false)
-        subpanel.addUIElement(headerElement)
+        var headerElement = headerSubpanel!!.createUIElement(width, 20f, false)
+        headerSubpanel!!.addUIElement(headerElement)
         headerElement.position.inTL(0f, 0f)
 
-        headerElement.addSectionHeading("Executive Officers", Alignment.MID, 0f).apply {
+        headerElement.addSectionHeading("", Alignment.MID, 0f).apply {
             position.inTL(-10f, 0f)
             position.setSize(width-20, 20f)
         }
 
+        /*var executiveButton = ClickableTextButton("Executive Officers", Misc.getBasePlayerColor(), headerElement, 200f, 20f)
+        executiveButton.position.inTL(headerElement.widthSoFar/2-executiveButton.width/2-15, 1f)*/
+
+        var executiveButton = ClickableTextButton("Executive Officers", Misc.getBasePlayerColor(), headerElement, 200f, 20f)
+        executiveButton.position.inTL(headerElement.widthSoFar/2-(executiveButton.width)-15, 1f)
+
+
+        var otherSkillsButton = ClickableTextButton("Non-Executive Skills", Misc.getBasePlayerColor(), headerElement, 200f, 20f)
+        otherSkillsButton.position.inTL(headerElement.widthSoFar/2-15, 1f)
+
+        executiveButton.onClick {
+            executiveButton.playClickSound()
+            if (!isAptitudeTabSelected) {
+                isAptitudeTabSelected = true
+                executiveButton.active = true
+                otherSkillsButton.active = false
+                addAptitudePanel()
+            }
+        }
+
+        otherSkillsButton.onClick {
+            otherSkillsButton.playClickSound()
+            if (isAptitudeTabSelected) {
+                isAptitudeTabSelected = false
+                executiveButton.active = false
+                otherSkillsButton.active = true
+                addNonExecutivePanel()
+            }
+        }
+
+        if (isAptitudeTabSelected) {
+            executiveButton.active = true
+            addAptitudePanel()
+        } else {
+            addNonExecutivePanel()
+            otherSkillsButton.active = true
+        }
+
+    }
+
+
+    fun addAptitudePanel() {
+
+        if (subpanel != null) {
+            element.removeComponent(subpanel)
+        }
+
+        subpanel = Global.getSettings().createCustom(width, height, null)
+        element.addComponent(subpanel)
+        subpanel!!.position.inTL(20f, 285+5f+15)
+
 
         var scrollerPanel = Global.getSettings().createCustom(width - 20, 400f, null)
-        subpanel.addComponent(scrollerPanel)
+        subpanel!!.addComponent(scrollerPanel)
         scrollerPanel.position.inTL(0f, 25f)
         if (SCSettings.enable4thSlot) scrollerPanel.position.inTL(-10f, 25f)
 
@@ -165,7 +216,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
                 subelement.addSpacer(23f)
 
                 subelement.addLunaElement(0f, 0f).advance {
-                    lastScrollerY = subelement.externalScroller.yOffset
+                    lastAptitudeScrollerY = subelement.externalScroller.yOffset
                 }
             }
 
@@ -178,7 +229,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
 
         scrollerPanel.addUIElement(subelement)
         if (SCSettings.enable4thSlot) {
-            subelement.externalScroller.yOffset = lastScrollerY
+            subelement.externalScroller.yOffset = lastAptitudeScrollerY
         }
 
 
@@ -529,6 +580,21 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
         spPara.position.rightOfBottom(paraAnchorElement.elementPanel, 120f)*/
 
     }
+
+
+
+
+
+    fun addNonExecutivePanel() {
+        if (subpanel != null) {
+            element.removeComponent(subpanel)
+        }
+    }
+
+
+
+
+
 
     fun calculateRemainingSP(offficer: SCOfficer, skills: ArrayList<SkillWidgetElement>) : Int {
         var newSkills = skills.filter { !offficer.activeSkillIDs.contains(it.id) && it.activated }
