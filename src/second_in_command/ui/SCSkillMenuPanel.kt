@@ -2,6 +2,7 @@ package second_in_command.ui
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.RepLevel
+import com.fs.starfarer.api.characters.SkillSpecAPI
 import com.fs.starfarer.api.impl.campaign.ids.Sounds
 import com.fs.starfarer.api.ui.Alignment
 import com.fs.starfarer.api.ui.CustomPanelAPI
@@ -15,13 +16,17 @@ import org.lwjgl.input.Keyboard
 import second_in_command.SCData
 import second_in_command.SCUtils
 import second_in_command.misc.*
-import second_in_command.specs.*
+import second_in_command.specs.SCAptitudeSection
+import second_in_command.specs.SCOfficer
+import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.*
 import second_in_command.ui.panels.AssosciatesManagePanelPlugin
 import second_in_command.ui.tooltips.OfficerTooltipCreator
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
 
-class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Boolean,/* var seedTextElement: LabelAPI, var seedElement: UIComponentAPI, var copyButton: UIComponentAPI*/) {
+class SCSkillMenuPanel(var parent: UIPanelAPI,
+                       var data: SCData,
+                       var title: Boolean/* var seedTextElement: LabelAPI, var seedElement: UIComponentAPI, var copyButton: UIComponentAPI*/) {
 
 
     lateinit var panel: CustomPanelAPI
@@ -29,7 +34,6 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
     var width = 0f
     var height = 0f
     var isAtColony = false
-    var isAptitudeTabSelected = true
 
     var rowParents = HashMap<Int, CustomPanelAPI>()
     var subpanel: CustomPanelAPI? = null
@@ -37,6 +41,8 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
     companion object {
         var crCost = 0.20f
         var lastAptitudeScrollerY = 0f
+        var lastVanillaAptitudeScrollerY = 0f
+        var isAptitudeTabSelected = true
     }
 
     fun init() {
@@ -128,48 +134,62 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
         headerSubpanel!!.addUIElement(headerElement)
         headerElement.position.inTL(0f, 0f)
 
-        headerElement.addSectionHeading("", Alignment.MID, 0f).apply {
+        var isVanillaSectionEnabled = getVanillaSystemAptitudes().isNotEmpty()
+
+        headerElement.addSectionHeading(if (isVanillaSectionEnabled) "" else "Executive Officers", Alignment.MID, 0f).apply {
             position.inTL(-10f, 0f)
             position.setSize(width-20, 20f)
         }
 
-        /*var executiveButton = ClickableTextButton("Executive Officers", Misc.getBasePlayerColor(), headerElement, 200f, 20f)
-        executiveButton.position.inTL(headerElement.widthSoFar/2-executiveButton.width/2-15, 1f)*/
+        if (isVanillaSectionEnabled) {
+            var executiveButton = ClickableTextButton("Executive Officers", Misc.getBasePlayerColor(), headerElement, 200f, 20f)
+            executiveButton.position.inTL(headerElement.widthSoFar/2-(executiveButton.width)-15, 1f)
 
-        var executiveButton = ClickableTextButton("Executive Officers", Misc.getBasePlayerColor(), headerElement, 200f, 20f)
-        executiveButton.position.inTL(headerElement.widthSoFar/2-(executiveButton.width)-15, 1f)
-
-
-        var otherSkillsButton = ClickableTextButton("Non-Executive Skills", Misc.getBasePlayerColor(), headerElement, 200f, 20f)
-        otherSkillsButton.position.inTL(headerElement.widthSoFar/2-15, 1f)
-
-        executiveButton.onClick {
-            executiveButton.playClickSound()
-            if (!isAptitudeTabSelected) {
-                isAptitudeTabSelected = true
-                executiveButton.active = true
-                otherSkillsButton.active = false
-                addAptitudePanel()
+            headerElement.addTooltip(executiveButton.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 450f) { tooltip ->
+                tooltip.addPara("Executive officers provide fleetwide skills. They can be hired at the comm directory of colonies or found in derelict ships. " +
+                        "")
             }
-        }
 
-        otherSkillsButton.onClick {
-            otherSkillsButton.playClickSound()
+
+            var otherSkillsButton = ClickableTextButton("Non-Executive Skills", Misc.getBasePlayerColor(), headerElement, 200f, 20f)
+            otherSkillsButton.position.inTL(headerElement.widthSoFar/2-15, 1f)
+
+            headerElement.addTooltip(otherSkillsButton.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 450f) { tooltip ->
+                tooltip.addPara("Section for modded skills not managed by Second-in-Command which use the vanilla skill system. Skills displayed here can not be acquired through skill points, " +
+                        "and can only be viewed, but some mods may provide separate ways to unlock some of those skills. ")
+            }
+
+            executiveButton.onClick {
+                executiveButton.playClickSound()
+                if (!isAptitudeTabSelected) {
+                    isAptitudeTabSelected = true
+                    executiveButton.active = true
+                    otherSkillsButton.active = false
+                    addAptitudePanel()
+                }
+            }
+
+            otherSkillsButton.onClick {
+                otherSkillsButton.playClickSound()
+                if (isAptitudeTabSelected) {
+                    isAptitudeTabSelected = false
+                    executiveButton.active = false
+                    otherSkillsButton.active = true
+                    addVanillaSkillsPanel()
+                }
+            }
+
             if (isAptitudeTabSelected) {
-                isAptitudeTabSelected = false
-                executiveButton.active = false
+                executiveButton.active = true
+                addAptitudePanel()
+            } else {
+                addVanillaSkillsPanel()
                 otherSkillsButton.active = true
-                addNonExecutivePanel()
             }
+        } else {
+            addAptitudePanel()
         }
 
-        if (isAptitudeTabSelected) {
-            executiveButton.active = true
-            addAptitudePanel()
-        } else {
-            addNonExecutivePanel()
-            otherSkillsButton.active = true
-        }
 
     }
 
@@ -582,13 +602,121 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
     }
 
 
+    fun getVanillaSystemAptitudes() : List<SkillSpecAPI> {
+        var skills = Global.getSettings().skillIds
+        var aptitudes = skills.map { Global.getSettings().getSkillSpec(it) }.filter { it.isAptitudeEffect }
+        aptitudes = aptitudes.filter { !it.hasTag("npc_only") }
+        aptitudes = aptitudes.filter { it.id != "aptitude_combat" && it.id != "aptitude_leadership" && it.id != "aptitude_technology" && it.id != "aptitude_industry"}
+        aptitudes = aptitudes.sortedBy { it.governingAptitudeOrder }
+        return aptitudes
+    }
 
-
-
-    fun addNonExecutivePanel() {
+    fun addVanillaSkillsPanel() {
         if (subpanel != null) {
             element.removeComponent(subpanel)
         }
+
+        subpanel = Global.getSettings().createCustom(width, height, null)
+        element.addComponent(subpanel)
+        subpanel!!.position.inTL(20f, 285+5f+15)
+
+        var scrollerPanel = Global.getSettings().createCustom(width - 20, 400f, null)
+        subpanel!!.addComponent(scrollerPanel)
+        scrollerPanel.position.inTL(-10f, 25f)
+
+        var subelement = scrollerPanel.createUIElement(width - 20, 400f, true)
+
+        var aptitudes = getVanillaSystemAptitudes()
+
+        subelement.addSpacer(10f)
+        for (aptitude in aptitudes) {
+            addVanillaSkillSection(aptitude, subelement)
+        }
+
+        subelement.addLunaElement(0f, 0f).advance {
+            lastVanillaAptitudeScrollerY = subelement.externalScroller.yOffset
+        }
+
+        scrollerPanel.addUIElement(subelement)
+        subelement.externalScroller.yOffset = lastVanillaAptitudeScrollerY
+
+    }
+
+    fun addVanillaSkillSection(aptitude: SkillSpecAPI, targetedElelement: TooltipMakerAPI) {
+        var subpanel = Global.getSettings().createCustom(width, 96f, null)
+        targetedElelement.addCustom(subpanel, 0f)
+
+        var subelement = subpanel.createUIElement(width, 96f, false)
+        subpanel.addUIElement(subelement)
+
+        var color = aptitude.governingAptitudeColor
+
+        var aptitudeElement = VanillaAptitudeSkillWidgetElement(aptitude.id, aptitude.spriteName, color, subelement, 110f, 70f)
+
+        var anchor = subelement.addLunaElement(0f, 0f)
+        anchor.position.belowLeft(aptitudeElement.elementPanel, 10f)
+
+        subelement.setParaFont("graphics/fonts/victor14.fnt")
+        var namePara = subelement.addPara(aptitude.name, 0f, color, color)
+        namePara.position.rightOfMid(anchor.elementPanel, aptitudeElement.width-namePara.computeTextWidth(namePara.text))
+
+        var background = VanillaAptitudeBackgroundElement(color, subelement)
+        background.position.rightOfMid(aptitudeElement.elementPanel, 1f)
+
+        var gap = SkillGapElement(color, subelement, 2f)
+        gap.renderArrow = true
+        gap.position.rightOfMid(aptitudeElement.elementPanel, 10f)
+
+
+        var skillIds = Global.getSettings().skillIds
+        var skills = skillIds.map { Global.getSettings().getSkillSpec(it) }.filter { it.governingAptitudeId == aptitude.governingAptitudeId }
+        skills = skills.filter { !it.hasTag("npc_only") && !it.hasTag("ai_core_only") && !it.hasTag("deprecated") && !it.isAptitudeEffect }
+        skills = skills.sortedBy { it.order }
+
+        var playerStats = Global.getSector().playerPerson.stats
+        var previous: UIPanelAPI = background.elementPanel
+        for (skill in skills) {
+            var skillLevel = playerStats.getSkillLevel(skill.id)
+            var activated = skillLevel >= 1f
+            var isFirst = skill == skills.first()
+            var isLast = skill == skills.last()
+
+            var skillElement = SkillWidgetElement(skill.id, aptitude.id, activated, activated, false, skill.spriteName, "combat1", color, subelement, 72f, 72f)
+
+            //Only works on combat skills
+           /* var skillTooltip = ReflectionUtils.invokeStatic(9, "createSkillTooltip", StandardTooltipV2::class.java,
+                skill, playerStats,
+                800f, 10f, true, false, 1000, null, null)
+
+            ReflectionUtils.invokeStatic(2, "addTooltipBelow", StandardTooltipV2Expandable::class.java, skillElement.elementPanel, skillTooltip)*/
+
+
+            //Fake person that will always have the selected skill leveled, so that the description doesnt look off
+            val fake = Global.getFactory().createPerson()
+            fake.stats.setSkillLevel(skill.id, 2f)
+            var tip = VanillaSkillTooltipForVanillaSection(subelement, fake, skill)
+
+            subelement.addTooltipTo(tip, skillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, false)
+
+            skillElement.onClick {
+                skillElement.playClickSound()
+            }
+
+            if (isFirst) {
+                skillElement.position.rightOfMid(previous, 55f)
+            } else {
+                skillElement.position.rightOfMid(previous, 7f)
+            }
+
+            if (!isLast) {
+                var seperator = SkillSeperatorElement(color, subelement)
+                seperator.position.rightOfTop(skillElement.elementPanel, 3f)
+
+            }
+            previous = skillElement.elementPanel
+
+        }
+
     }
 
 
@@ -721,8 +849,10 @@ class SCSkillMenuPanel(var parent: UIPanelAPI, var data: SCData, var title: Bool
 
             var cost = (crCost * 100).toInt()
 
-            Global.getSector().campaignUI.messageDisplay.addMessage("Applied a $cost% penalty to all ships combat-readiness due to changing officers outside of the range of a colony.",
-            Misc.getBasePlayerColor(), "$cost%", Misc.getHighlightColor(), )
+            Global.getSector().campaignUI.messageDisplay.addMessage(
+                "Applied a $cost% penalty to all ships combat-readiness due to changing officers outside of the range of a colony.",
+                Misc.getBasePlayerColor(), "$cost%", Misc.getHighlightColor(),
+            )
         }
     }
 

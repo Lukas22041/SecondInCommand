@@ -27,6 +27,7 @@
 		"sc_ui":{
 			"skillBorderInactive":"graphics/secondInCommand/skillBorderInactive.png",
 			"skillBorderActive":"graphics/secondInCommand/skillBorderActive.png",
+			"skillBorderVanillaAptitude":"graphics/secondInCommand/skillBorderVanillaAptitude.png",
 			"skillEliteStars":"graphics/secondInCommand/elite_background.png",
 			"skillEliteBorder":"graphics/secondInCommand/elite_stars.png",
 			"no_officer":"graphics/secondInCommand/no_officer.png",
