@@ -18,13 +18,14 @@ class Overclock : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+15%% damage dealt by energy weapons", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% damage dealt by energy and ballistic weapons", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
         if (Misc.isAutomated(stats)) {
-            stats!!.energyWeaponDamageMult.modifyPercent(id, 15f)
+            stats!!.energyWeaponDamageMult.modifyPercent(id, 10f)
+            stats!!.ballisticWeaponDamageMult.modifyPercent(id, 10f)
         }
     }
 

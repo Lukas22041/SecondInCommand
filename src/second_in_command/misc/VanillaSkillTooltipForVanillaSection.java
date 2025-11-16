@@ -70,7 +70,7 @@ public class VanillaSkillTooltipForVanillaSection extends BaseTooltipCreator {
             tooltip.addPara(skill.getScopeStr2(), 0);
         }*/
 
-        tooltip.setParaFont(Fonts.ORBITRON_12);
+        //tooltip.setParaFont(Fonts.ORBITRON_12);
         LabelAPI description = tooltip.addPara(skill.getDescription(), 0f);
         if (!skill.getAuthor().isBlank()) {
             LabelAPI author = tooltip.addPara("- " + skill.getAuthor(), 0f, Misc.getGrayColor(), Misc.getGrayColor());
@@ -78,7 +78,7 @@ public class VanillaSkillTooltipForVanillaSection extends BaseTooltipCreator {
             anchor.getPosition().belowLeft((UIComponentAPI) description, 10f);
             author.getPosition().rightOfMid(anchor.getElementPanel(), getTooltipWidth(null)-author.computeTextWidth(author.getText())-30f);
         }
-        tooltip.setParaFont(Fonts.DEFAULT_SMALL);
+       // tooltip.setParaFont(Fonts.DEFAULT_SMALL);
 
         tooltip.addSpacer(10f);
 

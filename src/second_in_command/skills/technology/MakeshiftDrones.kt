@@ -16,6 +16,6 @@ import second_in_command.specs.SCBaseSkillPlugin
 
 class MakeshiftDrones : SCBaseAutoPointsSkillPlugin() {
     override fun getProvidedPoints(): Int {
-        return (60 * SCSettings.autoPointsMult).toInt()
+        return (90 * SCSettings.autoPointsMult).toInt()
     }
 }

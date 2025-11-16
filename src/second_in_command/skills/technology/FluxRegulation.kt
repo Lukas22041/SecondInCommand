@@ -30,8 +30,8 @@ class FluxRegulation : SCBaseSkillPlugin() {
         tooltip.addSpacer(10f)
 
         tooltip.addPara("Capacitors and Vents provide more flux capacity and dissipation", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("   +20 extra flux capacity per capacitor on the ship", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+20")
-        tooltip.addPara("   +2 extra flux dissipation per vent on the ship", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+2")
+        tooltip.addPara("   +10 extra flux capacity per capacitor on the ship", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+10")
+        tooltip.addPara("   +1 extra flux dissipation per vent on the ship", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+1")
 
     }
 
@@ -39,8 +39,8 @@ class FluxRegulation : SCBaseSkillPlugin() {
 
         var vents = stats!!.variant.numFluxVents
         var caps = stats!!.variant.numFluxCapacitors
-        var fluxIncrease = 2f * vents
-        var capsIncrease = 20f * caps
+        var fluxIncrease = 1f * vents
+        var capsIncrease = 10f * caps
 
         stats.fluxDissipation.modifyFlat(id, fluxIncrease)
         stats.fluxCapacity.modifyFlat(id, capsIncrease)

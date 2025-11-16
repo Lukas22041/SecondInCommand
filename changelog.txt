@@ -1,3 +1,22 @@
+Version 1.7.0
+Save Compatible
+
+- Added Support for displaying modded skills that make use of the vanilla skill screen.
+ -> Button for it appears only if some mod has an aptitude to display.
+ -> Can not be used to acquire skills, just display them and track if an external event activated them.
+ -> Main purpose is to fully support the "Quality Perks" mod now, but should work with anything similar.
+
+- "Makeshift Drones" now provides 90 autopoints instead of 60.
+- "Tenacity" now only provides 75 effective armor for all hull sizes, intead of 75/100/125/150.
+- "Flux Regulation" now provides 10/1 capacity/dissipation per capacitor/vent instead of 20/2
+- "Defensive Protocols" now increases normal armor instead of effective armor and provides 10% more hitpoints.
+- "Optimised Shields" now reduces active shield flux generation by 25% instead of 50%.
+- "Compact Storage" now increases cargo capacity by 30% instead of 20%.
+- "Overclock" now also works for ballistic weapons, but has been reduced to a 10% damage increase.
+ -> Overclock will likely be changed more in a future update.
+ 
+ 
+
 Version 1.6.11
 Save Compatible
 
