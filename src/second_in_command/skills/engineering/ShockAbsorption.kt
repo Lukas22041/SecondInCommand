@@ -23,7 +23,7 @@ class ShockAbsorption : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        stats!!.fluxDissipation.modifyMult(id, 1.1f)
+        stats!!.fluxDissipation.modifyPercent(id, 10f)
         stats!!.empDamageTakenMult.modifyMult(id, 0.75f)
     }
 
