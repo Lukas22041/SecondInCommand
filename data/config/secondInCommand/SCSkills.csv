@@ -100,6 +100,19 @@ sc_engineering_resiliency,Resiliency,graphics/secondInCommand/engineering/resili
 sc_engineering_solid_construction,Solid Construction,graphics/secondInCommand/engineering/solid_construction.png,0.5,second_in_command.skills.engineering.SolidConstruction
 sc_engineering_prepare_for_the_worst,Prepare for the worst,graphics/secondInCommand/engineering/prepare_for_the_worst.png,1,second_in_command.skills.engineering.PrepareForTheWorst
 ,,,,
+#Scavenging,,,,
+sc_scavenging_another_mans_treasure,Another Man's Treasure,graphics/secondInCommand/scavenging/another_mans_treasure.png,0,second_in_command.skills.scavenging.AnotherMansTreasure
+sc_scavenging_field_recycling,Field Recyling,graphics/secondInCommand/scavenging/field_recycling.png,0,second_in_command.skills.scavenging.FieldRecyling
+sc_scavenging_makeshift_measures,Makeshift Measures,graphics/secondInCommand/scavenging/makeshift_measures.png,0,second_in_command.skills.scavenging.MakeshiftMeasures
+sc_scavenging_scrapforge_constructs,Scrapforge Constructs,graphics/secondInCommand/scavenging/scrapforge_constructs.png,0,second_in_command.skills.scavenging.ScrapforgeConstructs
+sc_scavenging_explorer,Explorer,graphics/secondInCommand/scavenging/explorer.png,0,second_in_command.skills.scavenging.Explorer
+sc_scavenging_pinpointing,Pinpointing,graphics/secondInCommand/scavenging/pinpointing.png,0,second_in_command.skills.scavenging.Pinpointing
+sc_scavenging_immediate_action,Immediate Action,graphics/secondInCommand/scavenging/immediate_action.png,0,second_in_command.skills.scavenging.ImmediateAction
+sc_scavenging_scrapheap,Scrapheap,graphics/secondInCommand/scavenging/scrapheap.png,0,second_in_command.skills.scavenging.Scrapheap
+sc_scavenging_safe_transport,Safe Transport,graphics/secondInCommand/scavenging/safe_transport.png,0,second_in_command.skills.scavenging.SafeTransport
+sc_scavenging_hyperspatial_drifter,Hyperspatial Drifter,graphics/secondInCommand/scavenging/hyperspatial_drifter.png,0,second_in_command.skills.scavenging.HyperspatialDrifter
+,,,,
+,,,,
 #Starfaring,,,,
 sc_starfaring_ad_astra,Ad Astra,graphics/secondInCommand/starfaring/ad_astra.png,1,second_in_command.skills.starfaring.AdAstra
 sc_starfaring_bulk_transport,Bulk Transport,graphics/secondInCommand/starfaring/bulk_transport.png,0.33,second_in_command.skills.starfaring.BulkTransport
