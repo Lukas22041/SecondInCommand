@@ -20,8 +20,8 @@ class AnotherMansTreasure : SCBaseSkillPlugin() {
 
         var scrapCount = 0
 
-        tooltip.addPara("Salvaging abandoned stations, derelicts or salvaging after combat now also scavenges Scrap", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("Scrap is a resource that does not take up inventory space, that can be used by other skills within the aptitude", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Salvaging now also scavenges Scrap", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Scrap is a resource that does not take up inventory space, which can be used by other skills within the aptitude", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("It is displayed above the ability hotbar, tracked as a percentage of your maximum scrap storage (max 100%%)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
         tooltip.addSpacer(10f)
