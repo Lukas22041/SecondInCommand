@@ -16,6 +16,7 @@ import second_in_command.misc.baseOrModSpec
 import second_in_command.misc.codex.CodexHandler
 import second_in_command.misc.logger
 import second_in_command.skills.PlayerLevelEffects
+import second_in_command.skills.scavenging.scripts.ScrapManager
 import second_in_command.specs.SCBaseSkillPlugin
 import second_in_command.specs.SCOfficer
 import java.lang.Exception
@@ -28,8 +29,18 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
     var faction = fleet.faction
     var commander = fleet.commander
 
+    //Part of SCData so that all fleets support scrap, and so that scrap decay exists if the aptitude is not active.
+    var scrapManager = ScrapManager(fleet)
+
     private var officers = ArrayList<SCOfficer>()
     private var activeOfficers = ArrayList<SCOfficer?>()
+
+    fun readResolve() : SCData {
+        if (scrapManager == null) {
+            scrapManager = ScrapManager(fleet)
+        }
+        return this
+    }
 
     init {
 
@@ -235,6 +246,10 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
         return getAssignedOfficers().filter { it != null }.flatMap { it!!.getActiveSkillPlugins().map { it.getId() } }.contains(skillId)
     }
 
+    fun isAptitudeActive(aptitudeId: String) : Boolean {
+        return getAssignedOfficers().any { it?.aptitudeId == aptitudeId }
+    }
+
     fun getOfficersAssignedSlot(officer: SCOfficer) : Int? {
         if (!officer.isAssigned()) return null
 
@@ -262,6 +277,10 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
         //Has to be done to avoid ConcurrentModificationExceptions errors
         if (!fleet.eventListeners.contains(this) && !fleet.isDespawning) {
             fleet.addEventListener(this)
+        }
+
+        if (!fleet.hasScriptOfClass(ScrapManager::class.java)) {
+            fleet.addScript(scrapManager)
         }
 
         //1.3.0 Update fix

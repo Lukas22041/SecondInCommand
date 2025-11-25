@@ -15,6 +15,7 @@ import second_in_command.misc.snippets.AddAllOfficersSnippet
 import second_in_command.misc.snippets.AddXPToOfficersSnippet
 import second_in_command.scripts.*
 import second_in_command.skills.engineering.scripts.CompactStorageScript
+import second_in_command.skills.scavenging.scripts.ScavengingHotbarUIScript
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.intel.SectorSeedIntel
 import java.lang.Exception
@@ -113,6 +114,7 @@ class SCModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(VanillaSkillsDisabler())
         Global.getSector().addTransientScript(AutomatedShipsManager())
         Global.getSector().addTransientScript(CommDirectoryRecolorScript())
+        Global.getSector().addTransientScript(ScavengingHotbarUIScript())
 
         var compactStorageListener = CompactStorageScript()
         Global.getSector().addTransientScript(compactStorageListener)
