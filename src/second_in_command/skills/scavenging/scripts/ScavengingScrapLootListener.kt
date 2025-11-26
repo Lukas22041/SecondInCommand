@@ -8,15 +8,15 @@ import second_in_command.SCUtils
 
 class ScavengingScrapLootListener : ShowLootListener {
 
-    var lastScrapGainedForLootScreen: Int? = null
+    var lastScrapGainedForLootScreen: Float? = null
 
     override fun reportAboutToShowLootToPlayer(loot: CargoAPI?, dialog: InteractionDialogAPI?) {
 
         var data = SCUtils.getPlayerData()
         if (data.isAptitudeActive("sc_scavenging")) {
-            var scrapGain = 20
+            var scrapGain = 20f
             var manager = data.scrapManager
-            scrapGain = MathUtils.clamp(scrapGain, 0, manager.getMaxScrap()-manager.getCurrentScrap())
+            scrapGain = MathUtils.clamp(scrapGain, 0f, manager.getMaxScrap()-manager.getCurrentScrap())
             manager.adjustScrap(scrapGain)
             lastScrapGainedForLootScreen = scrapGain
         }

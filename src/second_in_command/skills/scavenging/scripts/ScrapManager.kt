@@ -9,32 +9,32 @@ import org.lwjgl.input.Keyboard
 //Manager for Scavenging Scrap system.
 class ScrapManager(var fleet: CampaignFleetAPI) : EveryFrameScript {
 
-    private var currentScrap: Int = 50
+    private var currentScrap: Float = 50f
     private var maxScrap = StatBonus()
 
-    private var scrapConsumptionThisFrame = 0
+    private var scrapConsumptionThisFrame = 0f
     private var keepConsumptionForFrame = false
 
-    fun getMaxScrap() : Int {
-        return maxScrap.computeEffective(100f).toInt();
+    fun getMaxScrap() : Float {
+        return maxScrap.computeEffective(100f);
     }
 
-    fun getCurrentScrap() : Int {
+    fun getCurrentScrap() : Float {
         return currentScrap
     }
 
-    fun adjustScrap(change: Int) {
+    fun adjustScrap(change: Float) {
         currentScrap += change;
-        currentScrap = MathUtils.clamp(currentScrap, 0, getMaxScrap())
+        currentScrap = MathUtils.clamp(currentScrap, 0f, getMaxScrap())
     }
 
-    fun getScrapAboutToBeConsumed() : Int {
+    fun getScrapAboutToBeConsumed() : Float {
         return scrapConsumptionThisFrame
     }
 
-    fun setScrapConsumptionThisFrame(consumption: Int) {
+    fun setScrapConsumptionThisFrame(consumption: Float) {
         scrapConsumptionThisFrame = consumption
-        scrapConsumptionThisFrame = MathUtils.clamp(scrapConsumptionThisFrame, 0, getCurrentScrap())
+        scrapConsumptionThisFrame = MathUtils.clamp(scrapConsumptionThisFrame, 0f, getCurrentScrap())
         keepConsumptionForFrame = true
     }
 
@@ -47,7 +47,7 @@ class ScrapManager(var fleet: CampaignFleetAPI) : EveryFrameScript {
         if (keepConsumptionForFrame) {
             keepConsumptionForFrame = false
         } else {
-            scrapConsumptionThisFrame = 0;
+            scrapConsumptionThisFrame = 0f;
         }
     }
 

@@ -7,7 +7,7 @@ import lunalib.lunaUI.elements.LunaSpriteElement
 import second_in_command.SCUtils
 import java.awt.Color
 
-class ScrapWidget(tooltip: TooltipMakerAPI, scrapGain: Int? = 0) : LunaElement(tooltip,  24f+160f+4f, 16f) {
+class ScrapWidget(tooltip: TooltipMakerAPI, scrapGain: Float? = 0f) : LunaElement(tooltip,  24f+160f+4f, 16f) {
 
     init {
 

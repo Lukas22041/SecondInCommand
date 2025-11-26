@@ -10,7 +10,7 @@ import second_in_command.misc.levelBetween
 import second_in_command.skills.scavenging.scripts.ScrapManager
 import java.awt.Color
 
-class ScrapBar(var scrapManager: ScrapManager, tooltip: TooltipMakerAPI, width: Float, height: Float, var scrapGain: Int? = 0) : LunaElement(tooltip, width, height) {
+class ScrapBar(var scrapManager: ScrapManager, tooltip: TooltipMakerAPI, width: Float, height: Float, var scrapGain: Float? = 0f) : LunaElement(tooltip, width, height) {
 
     var background = Global.getSettings().getAndLoadSprite("graphics/secondInCommand/scavenging/ui/scrap_bar_border.png")
     var background_fill = Global.getSettings().getAndLoadSprite("graphics/secondInCommand/scavenging/ui/scrap_bar_background_fill.png")
@@ -47,14 +47,14 @@ class ScrapBar(var scrapManager: ScrapManager, tooltip: TooltipMakerAPI, width: 
     }
 
     fun updateLabel() {
-        scrapPara.text = "${scrapManager.getCurrentScrap()}% / ${scrapManager.getMaxScrap()}%"
+        scrapPara.text = "${scrapManager.getCurrentScrap().toInt()}% / ${scrapManager.getMaxScrap().toInt()}%"
         scrapPara.position.inTL(width/2-scrapPara.computeTextWidth(scrapPara.text)/2, -scrapPara.computeTextHeight(scrapPara.text))
 
-
-        if (scrapGain != 0) {
-            scrapGainPara.text = "Scavenged $scrapGain% Scrap"
+        var scrapGainInt = scrapGain!!.toInt()
+        if (scrapGain != 0f) {
+            scrapGainPara.text = "Scavenged $scrapGainInt% Scrap"
             scrapGainPara.position.inTL(width/2-scrapGainPara.computeTextWidth(scrapGainPara.text)/2, scrapGainPara.computeTextHeight(scrapGainPara.text)+3f)
-            scrapGainPara.setHighlight("$scrapGain%")
+            scrapGainPara.setHighlight("$scrapGainInt%")
         }
 
     }
@@ -85,7 +85,7 @@ class ScrapBar(var scrapManager: ScrapManager, tooltip: TooltipMakerAPI, width: 
             consumeFader.fadeIn()
         }
 
-        if (scrapManager.getScrapAboutToBeConsumed() == 0) {
+        if (scrapManager.getScrapAboutToBeConsumed() == 0f) {
             consumeFader.brightness = 1f
             consumeFader.fadeOut()
         }
@@ -129,7 +129,7 @@ class ScrapBar(var scrapManager: ScrapManager, tooltip: TooltipMakerAPI, width: 
         active_fill.alphaMult = alphaMult
         active_fill.render(x+4, y+1)
 
-        if (scrapGain != 0) {
+        if (scrapGain != 0f) {
             var gainLevel = getGainLevel()
             var gainFillWidth = Math.round(ogFillWidth*gainLevel).toFloat()
 
@@ -141,7 +141,7 @@ class ScrapBar(var scrapManager: ScrapManager, tooltip: TooltipMakerAPI, width: 
         }
 
         var toBeConsumed = scrapManager.getScrapAboutToBeConsumed()
-        if (toBeConsumed != 0) {
+        if (toBeConsumed != 0f) {
             var consumptionLevel = toBeConsumed.toFloat().levelBetween(0f, scrapManager.getCurrentScrap().toFloat())
             var consumptionFillWidth = fillWidth*consumptionLevel
             var barX = x+4+fillWidth-consumptionFillWidth
