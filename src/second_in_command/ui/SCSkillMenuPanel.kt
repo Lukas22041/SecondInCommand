@@ -208,7 +208,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
         var scrollerPanel = Global.getSettings().createCustom(width - 20, 400f, null)
         subpanel!!.addComponent(scrollerPanel)
         scrollerPanel.position.inTL(0f, 25f)
-        if (SCSettings.enable4thSlot) scrollerPanel.position.inTL(-10f, 25f)
+        if (SCSettings.playerOfficerSlots > 3) scrollerPanel.position.inTL(-10f, 25f)
 
 
 
@@ -218,7 +218,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
 
             subelement.addSpacer(23f)
 
-            addAptitudeRowParent(subelement, data.getOfficerInSlot(0), 0)
+            /*addAptitudeRowParent(subelement, data.getOfficerInSlot(0), 0)
 
             subelement.addSpacer(30f)
 
@@ -238,6 +238,23 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
                 subelement.addLunaElement(0f, 0f).advance {
                     lastAptitudeScrollerY = subelement.externalScroller.yOffset
                 }
+            }*/
+
+            for (slot in 0 until SCSettings.playerOfficerSlots) {
+                addAptitudeRowParent(subelement, data.getOfficerInSlot(slot), slot)
+                var last = slot == SCSettings.playerOfficerSlots-1
+
+                if (!last) {
+                    subelement.addSpacer(30f)
+                }
+            }
+
+            if (SCSettings.playerOfficerSlots > 3) {
+                subelement.addSpacer(23f)
+
+                subelement.addLunaElement(0f, 0f).advance {
+                    lastAptitudeScrollerY = subelement.externalScroller.yOffset
+                }
             }
 
         } else {
@@ -248,7 +265,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
         }
 
         scrollerPanel.addUIElement(subelement)
-        if (SCSettings.enable4thSlot) {
+        if (SCSettings.playerOfficerSlots > 3) {
             subelement.externalScroller.yOffset = lastAptitudeScrollerY
         }
 
@@ -287,8 +304,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
             0 -> SCSettings.progressionSlot1Level!!
             1 -> SCSettings.progressionSlot2Level!!
             2 -> SCSettings.progressionSlot3Level!!
-            3 -> SCSettings.progressionSlot4Level!!
-            else -> 0
+            else -> SCSettings.progressionSlot3Level!! + (SCSettings.progressionModeLevelCurvePast3Slots * (slotId-2))
         }
         var isLocked = officer == null && isProgressionMode && level < progressionLevel
         var officerPickerElement = SCOfficerPickerElement(officer?.person, color, subelement, 96f, 96f)

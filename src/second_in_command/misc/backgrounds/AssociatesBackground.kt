@@ -103,40 +103,46 @@ class AssociatesBackground : BaseCharacterBackground() {
 
             if (!SCUtils.isAssociatesBackgroundActive()) return
             //if (!SCSettings.enable4thSlot) return
-            var max = 3
-            if (SCSettings.enable4thSlot) max = 4
-            if (data.getAssignedOfficers().filterNotNull().size >= max) return
+            var max = SCSettings.playerOfficerSlots
+            while (data.getAssignedOfficers().filterNotNull().size < max) {
+                var aptitudes = SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }.filter { !it.tags.contains("restricted") }.toMutableList()
+                if (!SCSettings.unrestrictedAssociates!!) {
+                    aptitudes = aptitudes.filter { it.tags.contains("startingOption") }.toMutableList() //Only pick aptitudes available from the starting interaction
+                }
 
-            var aptitudes = SCSpecStore.getAptitudeSpecs().map { it.getPlugin() }.filter { !it.tags.contains("restricted") }.toMutableList()
-            if (!SCSettings.unrestrictedAssociates!!) {
-                aptitudes = aptitudes.filter { it.tags.contains("startingOption") }.toMutableList() //Only pick aptitudes available from the starting interaction
-            }
+                aptitudes = aptitudes.filter { !data.hasAptitudeInFleet(it.id) }.toMutableList()
 
-            aptitudes = aptitudes.filter { !data.hasAptitudeInFleet(it.id) }.toMutableList()
+                if (aptitudes.isEmpty()) {
+                    break //Break out of infinite loop if not enough aptitudes are found
+                }
 
-            var picks = ArrayList<SCBaseAptitudePlugin>()
+                var picks = ArrayList<SCBaseAptitudePlugin>()
 
-            for (aptitude in aptitudes) {
+                for (aptitude in aptitudes) {
 
-                var valid = true
+                    var valid = true
 
-                for (category in aptitude.categories) {
-                    for (active in data.getActiveOfficers()) {
-                        if (active.getAptitudePlugin().categories.contains(category)) {
-                            valid = false
+                    for (category in aptitude.categories) {
+                        for (active in data.getActiveOfficers()) {
+                            if (active.getAptitudePlugin().categories.contains(category)) {
+                                valid = false
+                            }
                         }
                     }
+                    if (valid) picks.add(aptitude)
                 }
-                if (valid) picks.add(aptitude)
+
+                var pick = picks.randomOrNull() ?: return
+
+                var officer = SCUtils.createRandomSCOfficer(pick.id)
+                officer.person.memoryWithoutUpdate.set("\$sc_associatesOfficer", true)
+
+                data.addOfficerToFleet(officer);
+                data.setOfficerInEmptySlotIfAvailable(officer, true)
             }
 
-            var pick = picks.randomOrNull() ?: return
 
-            var officer = SCUtils.createRandomSCOfficer(pick.id)
-            officer.person.memoryWithoutUpdate.set("\$sc_associatesOfficer", true)
 
-            data.addOfficerToFleet(officer);
-            data.setOfficerInEmptySlotIfAvailable(officer, true)
         }
     }
 

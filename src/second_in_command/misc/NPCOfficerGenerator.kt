@@ -2,13 +2,9 @@ package second_in_command.misc
 
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
-import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.util.WeightedRandomPicker
 import org.lazywizard.lazylib.MathUtils
-import org.magiclib.kotlin.getSalvageSeed
-import org.magiclib.kotlin.getSourceMarket
 import org.magiclib.kotlin.isAutomated
 import second_in_command.SCData
 import second_in_command.SCUtils
@@ -156,7 +152,7 @@ object NPCOfficerGenerator {
             15 -> 3
             else -> 3
         }
-        if (SCSettings.enable4thSlot && random.nextFloat() >= 0.15) {
+        if (SCSettings.additionalSlotForNPCFleets && random.nextFloat() >= 0.15) {
             if (aptitudeCount == 1) skillCount += 1
             if (aptitudeCount == 2) skillCount += MathUtils.getRandomNumberInRange(1,2)
             if (aptitudeCount == 3) skillCount += MathUtils.getRandomNumberInRange(2,4)

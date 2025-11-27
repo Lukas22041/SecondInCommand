@@ -13,6 +13,7 @@ import lunalib.lunaExtensions.addLunaSpriteElement
 import lunalib.lunaExtensions.addLunaTextfield
 import lunalib.lunaUI.elements.LunaSpriteElement
 import second_in_command.SCData
+import second_in_command.misc.SCSettings
 import second_in_command.misc.addNegativePara
 import second_in_command.misc.addTooltip
 import second_in_command.misc.getAndLoadSprite
@@ -737,6 +738,7 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
 
 
     fun doesOffficerMatchCategory(officer: SCOfficer) : Boolean {
+        if (SCSettings.disableCategoryRestrictions) return false
         var list = mutableListOf<SCCategorySpec>()
         var categories = officer.getAptitudePlugin().categories
         for (active in data.getAssignedOfficers()) {

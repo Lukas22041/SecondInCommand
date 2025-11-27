@@ -153,7 +153,7 @@ class SCModPlugin : BaseModPlugin() {
             AssociatesBackground.fillMissingSlot()
         }
 
-        SCUtils.getPlayerData().remove4thOfficer()
+        SCUtils.getPlayerData().disableSlotsOverTheLimit()
     }
 
     override fun onNewGame() {
