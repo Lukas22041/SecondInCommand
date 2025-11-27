@@ -127,7 +127,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
 
         var headerSubpanel = Global.getSettings().createCustom(width, height, null)
         element.addCustom(headerSubpanel, 0f)
-        headerSubpanel!!.position.inTL(20f, 285+5f+15)
+        headerSubpanel!!.position.inTL(20f, 285+5f+if (isUseCompactLayout()) 5 else 15)
 
 
         var headerElement = headerSubpanel!!.createUIElement(width, 20f, false)
@@ -193,6 +193,9 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
 
     }
 
+    fun isUseCompactLayout() : Boolean {
+        return SCSettings.enableCompactLayout && SCSettings.playerOfficerSlots > 3
+    }
 
     fun addAptitudePanel() {
 
@@ -205,18 +208,18 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
         subpanel!!.position.inTL(20f, 285+5f+15)
 
 
-        var scrollerPanel = Global.getSettings().createCustom(width - 20, 400f, null)
+        var scrollerPanel = Global.getSettings().createCustom(width - 20, if (isUseCompactLayout()) 420f else 400f, null)
         subpanel!!.addComponent(scrollerPanel)
         scrollerPanel.position.inTL(0f, 25f)
-        if (SCSettings.playerOfficerSlots > 3) scrollerPanel.position.inTL(-10f, 25f)
+        if (SCSettings.playerOfficerSlots > 3) scrollerPanel.position.inTL(-10f, if (isUseCompactLayout()) 10f else 25f)
 
 
 
-        var subelement = scrollerPanel.createUIElement(width - 20, 400f, true)
+        var subelement = scrollerPanel.createUIElement(width - 20,  if (isUseCompactLayout()) 420f else 400f, true)
 
         if (!title) {
 
-            subelement.addSpacer(23f)
+            subelement.addSpacer(if (isUseCompactLayout()) 10f else 23f)
 
             /*addAptitudeRowParent(subelement, data.getOfficerInSlot(0), 0)
 
@@ -236,7 +239,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
                 subelement.addSpacer(23f)
 
                 subelement.addLunaElement(0f, 0f).advance {
-                    lastAptitudeScrollerY = subelement.externalScroller.yOffset
+                    //lastAptitudeScrollerY = subelement.externalScroller.yOffset
                 }
             }*/
 
@@ -273,7 +276,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
     }
 
     fun addAptitudeRowParent(targetedElelement: TooltipMakerAPI, officer: SCOfficer?, slotId: Int) {
-        var subpanel = Global.getSettings().createCustom(width, 96f, null)
+        var subpanel = Global.getSettings().createCustom(width, if (isUseCompactLayout()) 74f else 96f, null)
         targetedElelement.addCustom(subpanel, 0f)
         /*var subelement = subpanel.createUIElement(width, 96f, false)
         subpanel.addUIElement(subelement)*/
@@ -307,7 +310,8 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
             else -> SCSettings.progressionSlot3Level!! + (SCSettings.progressionModeLevelCurvePast3Slots * (slotId-2))
         }
         var isLocked = officer == null && isProgressionMode && level < progressionLevel
-        var officerPickerElement = SCOfficerPickerElement(officer?.person, color, subelement, 96f, 96f)
+        var pickerElementSize = if (isUseCompactLayout()) 86f else 96f
+        var officerPickerElement = SCOfficerPickerElement(officer?.person, color, subelement, pickerElementSize, pickerElementSize)
         officerPickerElement.isProgressionLocked = isLocked
 
 
@@ -429,7 +433,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
         var background = AptitudeBackgroundElement(color, subelement)
         background.elementPanel.position.belowLeft(offsetElement.elementPanel, offset)
 
-        var officerUnderline = SkillUnderlineElement(color, 2f, subelement, 96f)
+        var officerUnderline = SkillUnderlineElement(color, 2f, subelement, officerPickerElement.width)
         officerUnderline.position.belowLeft(officerPickerElement.elementPanel, 2f)
 
         if (officer == null) {
@@ -448,13 +452,17 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
         paraElement.position.aboveLeft(officerPickerElement.elementPanel, 0f)
 
         paraElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
-        var aptitudePara = paraElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
-        aptitudePara.position.inTL(paraElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 3, paraElement.height  -aptitudePara.computeTextHeight(aptitudePara.text)-5)
 
-      /*  officerPickerElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
-        var aptitudePara = officerPickerElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
-        aptitudePara.position.inTL(officerPickerElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 1, -aptitudePara.computeTextHeight(aptitudePara.text)-5)
-*/
+        if (!isUseCompactLayout()) {
+            //var aptitudePara = paraElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
+            //aptitudePara.position.inTL(paraElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 3, paraElement.height  -aptitudePara.computeTextHeight(aptitudePara.text)-5)
+
+            officerPickerElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
+            var aptitudePara = officerPickerElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
+            aptitudePara.position.inTL(officerPickerElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 1, -aptitudePara.computeTextHeight(aptitudePara.text)-5)
+        }
+
+
         var sections = aptitudePlugin.getSections()
 
         var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())
@@ -597,7 +605,13 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
         var spRemaining = calculateRemainingSP(officer, skillElements)
 
 
-        var officerPara = subelement.addPara("${officer.person.nameString} - $spRemaining SP", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "$spRemaining")
+        var officerPara = subelement.addPara( "" + (if (isUseCompactLayout()) "${aptitudePlugin.name} - " else "") + "${officer.person.nameString} - $spRemaining SP", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "$spRemaining")
+
+        var hlColor = Misc.getHighlightColor()
+        if (spRemaining == 0) hlColor = Misc.getGrayColor()
+        officerPara.setHighlight(aptitudePlugin.name, "$spRemaining")
+        officerPara.setHighlightColors( aptitudePlugin.color, hlColor)
+
         officerPara.position.rightOfBottom(paraAnchorElement.elementPanel, 0f)
 
         paraAnchorElement.advance {
@@ -606,9 +620,9 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
             var hlColor = Misc.getHighlightColor()
             if (spRemaining == 0) hlColor = Misc.getGrayColor()
 
-            officerPara.text = "${officer.person.nameString} - $spRemaining SP"
-            officerPara.setHighlight("$spRemaining")
-            officerPara.setHighlightColor(hlColor)
+            officerPara.text = "" + (if (isUseCompactLayout()) "${aptitudePlugin.name} - " else "") + "${officer.person.nameString} - $spRemaining SP"
+            officerPara.setHighlight( aptitudePlugin.name, "$spRemaining")
+            officerPara.setHighlightColors(aptitudePlugin.color, hlColor)
         }
 
 
@@ -760,7 +774,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
 
         picker.innerElement.addSpacer(12f)
 
-        var confirmButton = ConfirmCancelButton(picker.color, picker.innerElement, 86f, 30f).apply {
+        var confirmButton = ConfirmCancelButton(picker.color, picker.innerElement, if (isUseCompactLayout()) 76f else 86f, if (isUseCompactLayout()) 25f else 30f).apply {
             addText("Confirm")
             centerText()
 
@@ -782,7 +796,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
         confirmButton.elementPanel.position.inTL(5f, 12f)
 
 
-        var cancelButton = ConfirmCancelButton(picker.color, picker.innerElement, 86f, 30f).apply {
+        var cancelButton = ConfirmCancelButton(picker.color, picker.innerElement, if (isUseCompactLayout()) 76f else 86f, if (isUseCompactLayout()) 25f else 30f).apply {
             addText("Cancel")
             centerText()
 

@@ -6,6 +6,7 @@ import lunalib.lunaSettings.LunaSettings
 import lunalib.lunaSettings.LunaSettingsListener
 import second_in_command.SCUtils
 import second_in_command.misc.backgrounds.AssociatesBackground
+import second_in_command.ui.SCSkillMenuPanel
 
 class SCSettings : LunaSettingsListener {
 
@@ -185,6 +186,8 @@ class SCSettings : LunaSettingsListener {
             }
             SCUtils.getPlayerData().disableSlotsOverTheLimit()
         }
+
+        SCSkillMenuPanel.lastAptitudeScrollerY = 0f
     }
 
 
