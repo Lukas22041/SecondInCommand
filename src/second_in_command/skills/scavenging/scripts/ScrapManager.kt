@@ -5,18 +5,21 @@ import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.StatBonus
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.input.Keyboard
+import second_in_command.SCUtils
 
 //Manager for Scavenging Scrap system.
 class ScrapManager(var fleet: CampaignFleetAPI) : EveryFrameScript {
 
     private var currentScrap: Float = 50f
-    private var maxScrap = StatBonus()
+    //private var maxScrap = StatBonus()
 
     private var scrapConsumptionThisFrame = 0f
     private var keepConsumptionForFrame = false
 
     fun getMaxScrap() : Float {
-        return maxScrap.computeEffective(100f);
+        var max = 100f
+        if (SCUtils.getFleetData(fleet).isSkillActive("sc_scavenging_scrapheap")) max += 50f
+        return max
     }
 
     fun getCurrentScrap() : Float {

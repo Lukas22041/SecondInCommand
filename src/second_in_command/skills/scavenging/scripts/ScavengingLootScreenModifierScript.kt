@@ -23,16 +23,22 @@ class ScavengingLootScreenModifierScript : EveryFrameScript {
         return true
     }
 
+    companion object {
+        var SCAVENGING_SCRAP_KEY = "\$SCAVENGING_SCRAP_KEY"
+    }
+
+
     override fun advance(amount: Float) {
 
-        var dialog = Global.getSector().campaignUI.currentInteractionDialog ?: return
-
+        var interactionDialog = Global.getSector().campaignUI.currentInteractionDialog ?: return
 
         if (SCUtils.getPlayerData().isAptitudeActive("sc_scavenging")) {
 
             //Dont continue if theres no scrap gain to display
-            var scrapGainedListener = Global.getSector().listenerManager.getListeners(ScavengingScrapLootListener::class.java).firstOrNull() ?: return
-            var scrapGained = scrapGainedListener.lastScrapGainedForLootScreen ?: return
+            //var scrapGainedListener = Global.getSector().listenerManager.getListeners(ScavengingScrapLootListener::class.java).firstOrNull() ?: return
+            //var scrapGained = scrapGainedListener.lastScrapGainedForLootScreen ?: return
+
+            var scrapGained = interactionDialog.interactionTarget?.memoryWithoutUpdate?.get(SCAVENGING_SCRAP_KEY) as Float? ?: return
 
             var state = AppDriver.getInstance().currentState
             if (state !is CampaignState) return
@@ -59,7 +65,8 @@ class ScavengingLootScreenModifierScript : EveryFrameScript {
 
                             var lastButton = leftPanel.getChildrenCopy().filter { it is ButtonAPI }.firstOrNull()
                             if (lastButton != null) {
-                                scrapGainedListener.lastScrapGainedForLootScreen = null
+                                //scrapGainedListener.lastScrapGainedForLootScreen = null
+                                interactionDialog.interactionTarget.memoryWithoutUpdate.set(SCAVENGING_SCRAP_KEY, null)
 
                                 var width = lastButton.position.width
                                 var height = 11f

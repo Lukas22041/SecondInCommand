@@ -52,6 +52,10 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
         }
 
 
+        while (activeOfficers.size < 10) {
+            activeOfficers.add(null)
+        }
+
 
        /* activeOfficers.add(null)
         activeOfficers.add(null)

@@ -51,6 +51,7 @@ class AptitudeScavenging : SCBaseAptitudePlugin() {
         return weight
     }
 
+    //Currently not intended for NPCs
     override fun getNPCFleetSpawnWeight(data: SCData, fleet: CampaignFleetAPI)  : Float {
         return 0f
     }

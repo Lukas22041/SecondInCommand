@@ -16,6 +16,7 @@ import second_in_command.scripts.*
 import second_in_command.skills.engineering.scripts.CompactStorageScript
 import second_in_command.skills.scavenging.scripts.ScavengingHotbarUIScript
 import second_in_command.skills.scavenging.scripts.ScavengingLootScreenModifierScript
+import second_in_command.skills.scavenging.scripts.ScavengingScrapLootFromBattleListener
 import second_in_command.skills.scavenging.scripts.ScavengingScrapLootListener
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.intel.SectorSeedIntel
@@ -124,6 +125,7 @@ class SCModPlugin : BaseModPlugin() {
         //Global.getSector().addTransientScript(SectorSeedAdderScript())
         Global.getSector().listenerManager.addListener(NPCFleetInflater(), true)
         Global.getSector().listenerManager.addListener(ScavengingScrapLootListener(), true)
+        Global.getSector().addTransientListener(ScavengingScrapLootFromBattleListener())
 
         Global.getSector().addTransientListener(SCCampaignEventListener())
         Global.getSector().addTransientScript(SCXPTracker())

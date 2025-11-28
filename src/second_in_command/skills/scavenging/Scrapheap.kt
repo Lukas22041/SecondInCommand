@@ -17,7 +17,7 @@ class Scrapheap : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Increases the maximum storage capacity of Scrap from 100%% to 150%%", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
