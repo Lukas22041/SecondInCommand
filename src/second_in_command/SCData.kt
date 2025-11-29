@@ -25,14 +25,14 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
     var commander = fleet.commander
 
     //Part of SCData so that all fleets support scrap, and so that scrap decay exists if the aptitude is not active.
-    var scrapManager = ScrapManager(fleet)
+    var scrapManager = ScrapManager(this, fleet)
 
     private var officers = ArrayList<SCOfficer>()
     private var activeOfficers = ArrayList<SCOfficer?>()
 
     fun readResolve() : SCData {
         if (scrapManager == null) {
-            scrapManager = ScrapManager(fleet)
+            scrapManager = ScrapManager(this, fleet)
         }
         return this
     }
@@ -269,10 +269,14 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
     fun getOfficersAssignedSlot(officer: SCOfficer) : Int? {
         if (!officer.isAssigned()) return null
 
-        if (getOfficerInSlot(0) == officer) return 0
+       /* if (getOfficerInSlot(0) == officer) return 0
         if (getOfficerInSlot(1) == officer) return 1
         if (getOfficerInSlot(2) == officer) return 2
-        if (getOfficerInSlot(3) == officer) return 3
+        if (getOfficerInSlot(3) == officer) return 3*/
+
+        for (slot in 0 until SCSettings.playerOfficerSlots) {
+            if (getOfficerInSlot(slot) == officer) return slot
+        }
 
         return null
     }

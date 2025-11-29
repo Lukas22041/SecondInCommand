@@ -17,7 +17,7 @@ class HyperspatialDrifter : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("[NOT YET IMPLEMENTED]", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
 
     }
 

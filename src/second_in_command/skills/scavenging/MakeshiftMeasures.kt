@@ -17,7 +17,7 @@ class MakeshiftMeasures : SCBaseSkillPlugin() {
 
     companion object {
         var SUSTAINED_COST_PER_DAY = 10f
-        var GO_DARK_COST_PER_DAY = 20f
+        var GO_DARK_COST_PER_DAY = 10f
     }
 
 

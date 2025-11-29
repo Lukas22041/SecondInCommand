@@ -77,8 +77,6 @@ class ScavengingHotbarUIScript : EveryFrameScript {
                 enableTransparency = true
             }*/
 
-            var data = ScrapManager(Global.getSector().playerFleet)
-
            /* var scrapIconPath = "graphics/secondInCommand/scavenging/ui/scrap.png"
             var icon = element.addLunaSpriteElement(scrapIconPath, LunaSpriteElement.ScalingTypes.STRETCH_ELEMENT, 24f, 16f)
             icon.getSprite().color = Color(77,142,80,255)

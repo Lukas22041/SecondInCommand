@@ -79,8 +79,6 @@ class ScavengingLootScreenModifierScript : EveryFrameScript {
                                 panel.addUIElement(element)
                                 element.position.inTL(0f, 0f)
 
-                                var data = ScrapManager(Global.getSector().playerFleet)
-
                                 var widget = ScrapWidget(element, scrapGained)
                                 widget.position.inTL(leftPanel.position.width/2-widget.width/2, 0f)
                             }

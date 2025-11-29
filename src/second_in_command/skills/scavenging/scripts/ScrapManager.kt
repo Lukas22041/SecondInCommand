@@ -1,14 +1,16 @@
 package second_in_command.skills.scavenging.scripts
 
 import com.fs.starfarer.api.EveryFrameScript
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.StatBonus
 import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.input.Keyboard
+import second_in_command.SCData
 import second_in_command.SCUtils
 
 //Manager for Scavenging Scrap system.
-class ScrapManager(var fleet: CampaignFleetAPI) : EveryFrameScript {
+class ScrapManager(var data: SCData, var fleet: CampaignFleetAPI) : EveryFrameScript {
 
     private var currentScrap: Float = 50f
     //private var maxScrap = StatBonus()
@@ -18,7 +20,7 @@ class ScrapManager(var fleet: CampaignFleetAPI) : EveryFrameScript {
 
     fun getMaxScrap() : Float {
         var max = 100f
-        if (SCUtils.getFleetData(fleet).isSkillActive("sc_scavenging_scrapheap")) max += 50f
+        if (data.isSkillActive("sc_scavenging_scrapheap")) max += 50f
         return max
     }
 
@@ -46,6 +48,12 @@ class ScrapManager(var fleet: CampaignFleetAPI) : EveryFrameScript {
        /* if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
             setScrapConsumptionThisFrame(30)
         }*/
+
+        //Decay scrap when inactive
+        if (!data.isAptitudeActive("sc_scavenging")) {
+            var days = Global.getSector().clock.convertToDays(amount)
+            adjustScrap(-1f * days)
+        }
 
         if (keepConsumptionForFrame) {
             keepConsumptionForFrame = false
