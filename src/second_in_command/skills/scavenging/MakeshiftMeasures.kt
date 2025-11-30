@@ -38,7 +38,7 @@ class MakeshiftMeasures : SCBaseSkillPlugin() {
         tooltip.addPara("While holding \"CTRL\" the \"Go Dark\" ability gets temporarily upgraded", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - The fleets sensor profile is reduced by 30%%", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "30%")
         tooltip.addPara("   - The fleets burn level at which it is considered \"slow-moving\" is increased by 3*", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "3")
-        tooltip.addPara("   - The fleet uses up ${GO_DARK_COST_PER_DAY.toInt()}%% of Srap per day", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${GO_DARK_COST_PER_DAY.toInt()}%")
+        tooltip.addPara("   - The fleet uses up ${GO_DARK_COST_PER_DAY.toInt()}%% of Scrap per day", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${GO_DARK_COST_PER_DAY.toInt()}%")
         tooltip.addPara("   - The ability does not work if you do not have any Scrap", 0f, Misc.getTextColor(), Misc.getHighlightColor())
 
         tooltip.addSpacer(10f)

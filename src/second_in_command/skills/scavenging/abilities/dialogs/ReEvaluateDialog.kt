@@ -36,7 +36,7 @@ class ReEvaluateDialog : InteractionDialogPlugin {
         valueMult += fpMult
 
         var d = DropData()
-        d.chances = 2
+        d.chances = 1
         d.group = "blueprints_low"
         dropRandom.add(d)
 
@@ -46,18 +46,18 @@ class ReEvaluateDialog : InteractionDialogPlugin {
         dropRandom.add(d)
 
         d = DropData()
-        d.chances =1
+        d.chances = 1
         d.group = "package_bp"
         d.valueMult = 0.1f
         dropRandom.add(d)
 
         d = DropData()
-        d.chances = 10
+        d.chances = 7
         d.group = "weapons1"
         dropRandom.add(d)
 
         d = DropData()
-        d.chances = 5
+        d.chances = 2
         d.group = "weapons2"
         dropRandom.add(d)
 

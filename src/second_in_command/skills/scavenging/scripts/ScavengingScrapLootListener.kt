@@ -34,6 +34,7 @@ class ScavengingScrapLootListener : ShowLootListener {
                "IndEvo_arsenalStation", "IndEvo_orbitalLaboratory" -> MathUtils.getRandomNumberInRange(18f, 22f)
                 Entities.DEBRIS_FIELD_SHARED -> MathUtils.getRandomNumberInRange(8f, 12f)
                 Entities.WRECK -> MathUtils.getRandomNumberInRange(4f, 6f)
+                Entities.CARGO_PODS, Entities.CARGO_POD_SPECIAL -> 0f
                 else -> MathUtils.getRandomNumberInRange(5f, 10f)
             }
 
