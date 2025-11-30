@@ -7,3 +7,5 @@ Deploy Disruptor Array,sc_disruptor_relay,DURATION,,0.2,,0.1,0.1,1,FALSE,FALSE,,
 ,,,,,,,,,,,,,,,,,,,,,,
 Craft Supplies from Scrap,sc_craft_supplies,DURATION,,0.2,,0.1,0.1,0.1,FALSE,FALSE,,ui_scavenge_on,,,,,,graphics/secondInCommand/scavenging/abilities/craft_supplies.png,second_in_command.skills.scavenging.abilities.CraftSuppliesAbility,,,1200
 Craft Fuel from Scrap,sc_craft_fuel,DURATION,,0.2,,0.1,0.1,0.1,FALSE,FALSE,,ui_scavenge_on,,,,,,graphics/secondInCommand/scavenging/abilities/craft_fuel.png,second_in_command.skills.scavenging.abilities.CraftFuelAbility,,,1201
+,,,,,,,,,,,,,,,,,,,,,,
+Re-evaluate,sc_re_evaluate,DURATION,,0.1,,0.1,0.1,0,FALSE,FALSE,,ui_scavenge_on,,,,,,graphics/secondInCommand/scavenging/reevaluate.png,second_in_command.skills.scavenging.abilities.ReEvaluateAbility,,,1201

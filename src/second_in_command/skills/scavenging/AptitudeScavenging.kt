@@ -28,10 +28,10 @@ class AptitudeScavenging : SCBaseAptitudePlugin() {
 
     override fun createSections() {
         var section1 = SCAptitudeSection(true, 0, "industry1")
-        section1.addSkill("sc_scavenging_field_recycling")
+        section1.addSkill("sc_scavenging_reevaluate")
+        //section1.addSkill("sc_scavenging_field_recycling")
         section1.addSkill("sc_scavenging_makeshift_measures")
         section1.addSkill("sc_scavenging_scrapforge_constructs")
-        section1.addSkill("sc_scavenging_reevaluate")
         section1.addSkill("sc_scavenging_immediate_action")
         section1.addSkill("sc_scavenging_explorer")
         section1.addSkill("sc_scavenging_pinpointing")

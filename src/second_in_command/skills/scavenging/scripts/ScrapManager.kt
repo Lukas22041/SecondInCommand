@@ -8,6 +8,7 @@ import org.lazywizard.lazylib.MathUtils
 import org.lwjgl.input.Keyboard
 import second_in_command.SCData
 import second_in_command.SCUtils
+import java.util.Random
 
 //Manager for Scavenging Scrap system.
 class ScrapManager(var data: SCData, var fleet: CampaignFleetAPI) : EveryFrameScript {
@@ -17,6 +18,13 @@ class ScrapManager(var data: SCData, var fleet: CampaignFleetAPI) : EveryFrameSc
 
     private var scrapConsumptionThisFrame = 0f
     private var keepConsumptionForFrames = 3
+
+    var reEvaluateRandom: Random = Random()
+
+    fun readResolve() : ScrapManager {
+        if (reEvaluateRandom == null) reEvaluateRandom = Random()
+        return this
+    }
 
     fun getMaxScrap() : Float {
         var max = 100f

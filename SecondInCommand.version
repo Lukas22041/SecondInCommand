@@ -4,9 +4,9 @@
 	"modThreadId":30407,
     "modVersion":
     {
-        "major":1,
-        "minor":7,
-        "patch":0 # Can be a number, character or string (1, 2, a, b, "-RC2", etc)
+        "major":2,
+        "minor":0,
+        "patch":0 Pre-Release-2 # Can be a number, character or string (1, 2, a, b, "-RC2", etc)
     },
 	
 	#Link towards a direct download, fetched from the online version file

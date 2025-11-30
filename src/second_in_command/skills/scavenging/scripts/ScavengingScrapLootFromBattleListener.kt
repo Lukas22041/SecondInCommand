@@ -30,12 +30,13 @@ class ScavengingScrapLootFromBattleListener : BaseCampaignEventListener(false) {
 
                 var maxFPRequired = 300f
 
-                var min = 5
-                var scaled = (30f+MathUtils.getRandomNumberInRange(2, 5)) * fpTotal.levelBetween(0f, maxFPRequired)
+                var min = 15
+                var minFP = 30f
+                var scaled = (20f+MathUtils.getRandomNumberInRange(2, 5)) * fpTotal.levelBetween(minFP, maxFPRequired)
                 var scrapGain = min+scaled
 
                 //Get already set value, might be important for fights where you did pursuit the target
-                var current = plugin.loser.memoryWithoutUpdate.getFloat(ScavengingLootScreenModifierScript.SCAVENGING_SCRAP_KEY) ?: 0f
+                var current = plugin.loser.memoryWithoutUpdate.get(ScavengingLootScreenModifierScript.SCAVENGING_SCRAP_KEY) as Float? ?: 0f
 
                 //Reduce result in that case to keep numbers more sane
                 var extraModActive = current > 20f
