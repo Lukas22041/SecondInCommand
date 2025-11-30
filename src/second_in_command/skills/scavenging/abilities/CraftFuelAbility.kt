@@ -1,0 +1,88 @@
+package second_in_command.skills.scavenging.abilities
+
+import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.impl.campaign.abilities.BaseDurationAbility
+import com.fs.starfarer.api.loading.AbilitySpecAPI
+import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
+import org.lazywizard.lazylib.MathUtils
+import second_in_command.SCUtils
+
+class CraftFuelAbility : BaseDurationAbility() {
+
+    companion object {
+        var fuelRange = 15f
+        var maximum = 500f
+    }
+
+    fun getScrapCost() : Float {
+        return 25f
+    }
+
+    fun getFuelToCraft() : Float {
+        var toCraft = 0f
+        for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
+            toCraft += member.fuelUse
+        }
+        toCraft *= fuelRange
+        toCraft = MathUtils.clamp(toCraft, 0f, maximum)
+        return toCraft
+    }
+
+    override fun activateImpl() {
+        var data = SCUtils.getFleetData(this.fleet)
+        data.scrapManager.adjustScrap(-getScrapCost())
+        this.fleet.cargo.addFuel(getFuelToCraft())
+    }
+
+    override fun isUsable(): Boolean {
+        return super.isUsable() && SCUtils.getFleetData(this.fleet).isSkillActive("sc_scavenging_field_recycling") && SCUtils.getFleetData(this.fleet).scrapManager.getCurrentScrap() >= getScrapCost()
+    }
+
+    override fun hasTooltip(): Boolean {
+        return true
+    }
+
+
+    override fun createTooltip(tooltip: TooltipMakerAPI, expanded: Boolean) {
+
+        addAbilityTooltip(tooltip, spec)
+
+        var data = SCUtils.getPlayerData()
+        var notEnoughScrap = data.scrapManager.getCurrentScrap() < getScrapCost()
+        if (notEnoughScrap) {
+            tooltip.addSpacer(10f)
+            tooltip.addPara("You do not have enough Scrap to use the ability.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+        }
+
+        data.scrapManager.setScrapConsumptionThisFrame(getScrapCost())
+    }
+
+    fun addAbilityTooltip(tooltip: TooltipMakerAPI, spec: AbilitySpecAPI) {
+        tooltip.addTitle(spec.name)
+        tooltip.addSpacer(10f)
+        tooltip.addPara("Crafts fuel based on how much the fleet requires to pass ${fuelRange.toInt()} light years of distance in hyperspace. " +
+                "The total amount of fuel is limited to ${maximum.toInt()} fuel per craft. At the current rate, this would produce ${getFuelToCraft().toInt()} units of fuel." +
+                "\n\n" +
+                "Requires ${getScrapCost().toInt()}%% Scrap to use.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "${fuelRange.toInt()}", "${maximum.toInt()}","${getFuelToCraft().toInt()}","${getScrapCost().toInt()}%")
+    }
+
+    override fun applyEffect(amount: Float, level: Float) {
+
+    }
+
+    override fun deactivateImpl() {
+
+    }
+
+    override fun cleanupImpl() {
+
+    }
+
+    /*var layers = EnumSet.of(CampaignEngineLayers.ABOVE)
+    override fun getActiveLayers(): EnumSet<CampaignEngineLayers> {
+        return layers
+    }*/
+
+
+}

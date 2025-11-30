@@ -1,5 +1,6 @@
 package second_in_command.skills.scavenging
 
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
@@ -41,6 +42,8 @@ class AnotherMansTreasure : SCBaseSkillPlugin() {
         tooltip.addSpacer(10f)
 
         tooltip.addPara("Scrap will remain within the fleets inventory even if no officer with the scavenging aptitude is active, but will then decay at a rate of 1%% per day. ", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "1%")
+
+        if (Global.getSector().playerFleet?.fleetData == null) return
 
         tooltip.addSpacer(30f)
 

@@ -117,10 +117,10 @@ class OfficerTooltipCreator(var officer: SCOfficer?, var isAtColony: Boolean, va
                 extra = "You do not have enough story points do so right now."
             }
 
-            var label = tooltip!!.addPara("You can refund all skills by pressing \"R\" while hovering over this officer. This costs 4 story points to do. Can not be done while the skill selection is being edited. $extra", 0f,
+            var label = tooltip!!.addPara("You can refund all skills by pressing \"R\" while hovering over this officer. This costs 2 story points to do. Can not be done while the skill selection is being edited. $extra", 0f,
                 Misc.getTextColor(), Misc.getHighlightColor(), "")
 
-            label.setHighlight("R", "4 story points", extra)
+            label.setHighlight("R", "2 story points", extra)
             label.setHighlightColors(Misc.getHighlightColor(), Misc.getStoryOptionColor(), Misc.getNegativeHighlightColor())
 
             tooltip.addSpacer(10f)

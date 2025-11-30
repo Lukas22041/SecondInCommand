@@ -7,9 +7,10 @@ import com.fs.starfarer.api.impl.campaign.ids.Stats
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
+import second_in_command.misc.addPara
 import second_in_command.specs.SCBaseSkillPlugin
 
-class FieldRecyling : SCBaseSkillPlugin() {
+class ReEvaluate : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
         return "fleet"
@@ -17,7 +18,8 @@ class FieldRecyling : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("[NOT YET IMPLEMENTED]", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+
 
     }
 

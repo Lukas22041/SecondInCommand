@@ -390,7 +390,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
                             var count = active.count()
 
                             var storyPoints = Global.getSector().playerPerson.stats.storyPoints
-                            if (count == 0 || storyPoints <= 3) {
+                            if (count == 0 || storyPoints <= 1) {
                                 officerPickerElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
                                 return@onInput
                             }
@@ -405,7 +405,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
 
                             officerPickerElement.playSound(Sounds.STORY_POINT_SPEND)
 
-                            Global.getSector().playerPerson.stats.storyPoints -= 4
+                            Global.getSector().playerPerson.stats.storyPoints -= 2
 
                             recreateAptitudeRow(subpanelParent, officer, slotId)
                         }

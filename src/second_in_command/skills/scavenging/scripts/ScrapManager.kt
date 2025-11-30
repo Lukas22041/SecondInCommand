@@ -12,11 +12,11 @@ import second_in_command.SCUtils
 //Manager for Scavenging Scrap system.
 class ScrapManager(var data: SCData, var fleet: CampaignFleetAPI) : EveryFrameScript {
 
-    private var currentScrap: Float = 50f
+    private var currentScrap: Float = 0f
     //private var maxScrap = StatBonus()
 
     private var scrapConsumptionThisFrame = 0f
-    private var keepConsumptionForFrame = false
+    private var keepConsumptionForFrames = 3
 
     fun getMaxScrap() : Float {
         var max = 100f
@@ -40,7 +40,7 @@ class ScrapManager(var data: SCData, var fleet: CampaignFleetAPI) : EveryFrameSc
     fun setScrapConsumptionThisFrame(consumption: Float) {
         scrapConsumptionThisFrame = consumption
         scrapConsumptionThisFrame = MathUtils.clamp(scrapConsumptionThisFrame, 0f, getCurrentScrap())
-        keepConsumptionForFrame = true
+        keepConsumptionForFrames = 3
     }
 
     override fun advance(amount: Float) {
@@ -55,8 +55,8 @@ class ScrapManager(var data: SCData, var fleet: CampaignFleetAPI) : EveryFrameSc
             adjustScrap(-1f * days)
         }
 
-        if (keepConsumptionForFrame) {
-            keepConsumptionForFrame = false
+        if (keepConsumptionForFrames != 0) {
+            keepConsumptionForFrames -= 1
         } else {
             scrapConsumptionThisFrame = 0f;
         }
