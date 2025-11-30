@@ -41,14 +41,14 @@ class ReEvaluateDialog : InteractionDialogPlugin {
         dropRandom.add(d)
 
         d = DropData()
-        d.chances =2
+        d.chances = 2
         d.group = "any_hullmod_low"
         dropRandom.add(d)
 
         d = DropData()
         d.chances =1
         d.group = "package_bp"
-        d.valueMult = 0.2f
+        d.valueMult = 0.1f
         dropRandom.add(d)
 
         d = DropData()
@@ -64,7 +64,7 @@ class ReEvaluateDialog : InteractionDialogPlugin {
         d = DropData()
         //d.chances = 100;
         d.group = "basic"
-        d.value = 10000
+        d.value = 7500
         dropValue.add(d)
 
         val result = SalvageEntity.generateSalvage(random, valueMult, 1f, overallMult, 1f, dropValue, dropRandom)
