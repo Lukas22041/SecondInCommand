@@ -36,21 +36,21 @@ class AnotherMansTreasure : SCBaseSkillPlugin() {
 
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("+50%% resources - but not rare items, such as blueprints - recovered from abandoned stations and derelicts", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+40%% resources - but not rare items, such as blueprints - recovered from abandoned stations and derelicts", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+30%% post battle salvage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("Scrap will remain within the fleets inventory even if no officer with the scavenging aptitude is active, but will then decay at a rate of 1%% per day. ", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "1%")
+        tooltip.addPara("Each scavenging officer has their own Scrap storage. Scrap will remain within the fleets inventory even if the officer with the scavenging aptitude is not active, but it will then decay at a rate of 1%% per day. ", 0f, Misc.getGrayColor(), Misc.getHighlightColor(), "1%")
 
-        if (Global.getSector().playerFleet?.fleetData == null) return
+      /*  if (Global.getSector().playerFleet?.fleetData == null) return
 
         tooltip.addSpacer(30f)
 
         var widget = ScrapWidget(tooltip)
         widget.position.setXAlignOffset(tooltip.widthSoFar/2-widget.width/2)
 
-        tooltip.addSpacer(10f)
+        tooltip.addSpacer(10f)*/
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize, id: String) {
@@ -62,12 +62,12 @@ class AnotherMansTreasure : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-        data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_NOT_RARE).modifyFlat("sc_another_mans_treasure", 0.5f, "Another Man's Treasure Skill")
+        data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_NOT_RARE).modifyFlat("sc_another_mans_treasure", 0.4f, "Another Man's Treasure Skill")
         data.fleet.stats.dynamic.getStat(Stats.BATTLE_SALVAGE_MULT_FLEET).modifyFlat("sc_another_mans_treasure", 0.3f, "Another Man's Treasure Skill")
     }
 
     override fun onActivation(data: SCData) {
-        data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_NOT_RARE).modifyFlat("sc_another_mans_treasure", 0.5f, "Another Man's Treasure Skill")
+        data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_NOT_RARE).modifyFlat("sc_another_mans_treasure", 0.4f, "Another Man's Treasure Skill")
         data.fleet.stats.dynamic.getStat(Stats.BATTLE_SALVAGE_MULT_FLEET).modifyFlat("sc_another_mans_treasure", 0.3f, "Another Man's Treasure Skill")
     }
 

@@ -13,6 +13,7 @@ import second_in_command.SCData
 import second_in_command.SCUtils
 import second_in_command.misc.ReflectionUtils
 import second_in_command.misc.getChildrenCopy
+import second_in_command.misc.getParent
 import second_in_command.ui.elements.ScrapBar
 import second_in_command.ui.elements.ScrapWidget
 import java.awt.Color
@@ -87,6 +88,15 @@ class ScavengingHotbarUIScript : EveryFrameScript {
             bar.position.rightOfMid(icon.elementPanel, 4f)*/
 
             ScrapWidget(element)
+
+            var hintsPanel = Global.getSector().campaignUI.hintPanel
+            if (hintsPanel is UIPanelAPI) {
+                var parent = hintsPanel.getParent()
+                //hintsPanel.position.aboveLeft(abilityPanel, 100f)
+                //hintsPanel.position.setYAlignOffset(190f)
+                hintsPanel.position.setYAlignOffset(135f)
+                hintsPanel.position.setXAlignOffset(480f)
+            }
         }
 
         if (panel != null) {

@@ -18,6 +18,8 @@ class MakeshiftMeasures : SCBaseSkillPlugin() {
     companion object {
         var SUSTAINED_COST_PER_DAY = 10f
         var GO_DARK_COST_PER_DAY = 10f
+
+        var IS_ACTIVE_KEY = "\$sc_makeshift_is_active"
     }
 
 
@@ -69,6 +71,8 @@ class MakeshiftMeasures : SCBaseSkillPlugin() {
             var days = Global.getSector().clock.convertToDays(amount)
             scrapManager.adjustScrap(-SUSTAINED_COST_PER_DAY * days)
             scrapManager.setScrapConsumptionThisFrame(SUSTAINED_COST_PER_DAY)
+
+            fleet.memoryWithoutUpdate.set(IS_ACTIVE_KEY, true, 0.1f)
         } else {
             fleet.stats.fleetwideMaxBurnMod.unmodify("sc_makeshift_measures")
             fleet.stats.accelerationMult.unmodify("sc_makeshift_measures")
@@ -82,10 +86,13 @@ class MakeshiftMeasures : SCBaseSkillPlugin() {
             var days = Global.getSector().clock.convertToDays(amount)
             scrapManager.adjustScrap(-GO_DARK_COST_PER_DAY * days)
             scrapManager.setScrapConsumptionThisFrame(GO_DARK_COST_PER_DAY)
+
+            fleet.memoryWithoutUpdate.set(IS_ACTIVE_KEY, true, 0.1f)
         } else {
             data.fleet.stats.detectedRangeMod.unmodify("sc_makeshift_measures")
             data.fleet.stats.dynamic.getMod(Stats.MOVE_SLOW_SPEED_BONUS_MOD).unmodify("sc_makeshift_measures")
         }
+
 
 
     }

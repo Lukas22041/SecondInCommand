@@ -49,11 +49,11 @@ class ImmediateAction : SCBaseSkillPlugin() {
             stats.armorBonus.modifyPercent(id, 10f)
             stats.hullBonus.modifyPercent(id, 10f)
 
-           /* var member = stats.fleetMember
+            var member = stats.fleetMember
             if (member != null) {
                 var maxCr = member.repairTracker.maxCR
                 member.repairTracker.cr = MathUtils.clamp(member.repairTracker.cr + 0.15f, 0f, 1f)
-            }*/
+            }
         }
     }
 
@@ -135,10 +135,10 @@ class ImmediateAction : SCBaseSkillPlugin() {
         Global.getSoundPlayer().playUISound(Sounds.STORY_POINT_SPEND, 1f, 1f)
         data.scrapManager.adjustScrap(-SCRAP_COST)
 
-        for (member in data.fleet.fleetData.membersListCopy) {
+       /* for (member in data.fleet.fleetData.membersListCopy) {
             var maxCr = member.repairTracker.maxCR
             member.repairTracker.cr = MathUtils.clamp(member.repairTracker.cr + 0.15f, 0f, 1f)
-        }
+        }*/
     }
 
     override fun onActivation(data: SCData) {

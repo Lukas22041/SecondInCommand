@@ -25,14 +25,14 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
     var commander = fleet.commander
 
     //Part of SCData so that all fleets support scrap, and so that scrap decay exists if the aptitude is not active.
-    var scrapManager = ScrapManager(this, fleet)
+    var scrapManager = ScrapManager(this)
 
     private var officers = ArrayList<SCOfficer>()
     private var activeOfficers = ArrayList<SCOfficer?>()
 
     fun readResolve() : SCData {
         if (scrapManager == null) {
-            scrapManager = ScrapManager(this, fleet)
+            scrapManager = ScrapManager(this)
         }
         return this
     }

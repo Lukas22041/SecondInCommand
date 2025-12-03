@@ -7,6 +7,7 @@ import com.fs.starfarer.api.impl.campaign.FleetEncounterContext
 import org.lazywizard.lazylib.MathUtils
 import second_in_command.SCUtils
 import second_in_command.misc.levelBetween
+import second_in_command.skills.scavenging.HyperspatialDrifter
 
 class ScavengingScrapLootFromBattleListener : BaseCampaignEventListener(false) {
 
@@ -34,6 +35,9 @@ class ScavengingScrapLootFromBattleListener : BaseCampaignEventListener(false) {
                 var minFP = 30f
                 var scaled = (20f+MathUtils.getRandomNumberInRange(2, 5)) * fpTotal.levelBetween(minFP, maxFPRequired)
                 var scrapGain = min+scaled
+                if (data.isSkillActive("sc_scavenging_hyperspatial_drifter")) {
+                    scrapGain += MathUtils.getRandomNumberInRange(HyperspatialDrifter.SCRAP_EXTRA_PER_SALVAGE_MIN, HyperspatialDrifter.SCRAP_EXTRA_PER_SALVAGE_MAX)
+                }
 
                 //Get already set value, might be important for fights where you did pursuit the target
                 var current = plugin.loser.memoryWithoutUpdate.get(ScavengingLootScreenModifierScript.SCAVENGING_SCRAP_KEY) as Float? ?: 0f

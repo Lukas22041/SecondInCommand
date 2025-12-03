@@ -52,7 +52,7 @@ class ReEvaluateDialog : InteractionDialogPlugin {
         dropRandom.add(d)
 
         d = DropData()
-        d.chances = 7
+        d.chances = 10
         d.group = "weapons1"
         dropRandom.add(d)
 

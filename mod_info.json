@@ -3,7 +3,7 @@
 	"name":"Second-in-Command", # Displayed to the player
 	"author":"Lukas04",
     "utility":"false",
-	"version":"2.0.0 Pre-Release-3",
+	"version":"2.0.0 Pre-Release-5",
 	"description":"A mod that entirely reworks the games skill system. Not compatible with other skill reworks.",
     "gameVersion": "0.98a-RC5",
   	"jars":["jars/SecondInCommand.jar"],

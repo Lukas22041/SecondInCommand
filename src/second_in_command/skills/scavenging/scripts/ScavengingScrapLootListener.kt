@@ -9,6 +9,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Entities
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import org.lazywizard.lazylib.MathUtils
 import second_in_command.SCUtils
+import second_in_command.skills.scavenging.HyperspatialDrifter
 
 class ScavengingScrapLootListener : ShowLootListener {
 
@@ -36,6 +37,10 @@ class ScavengingScrapLootListener : ShowLootListener {
                 Entities.WRECK -> MathUtils.getRandomNumberInRange(4f, 6f)
                 Entities.CARGO_PODS, Entities.CARGO_POD_SPECIAL -> 0f
                 else -> MathUtils.getRandomNumberInRange(5f, 10f)
+            }
+
+            if (data.isSkillActive("sc_scavenging_hyperspatial_drifter")) {
+                scrapGain += MathUtils.getRandomNumberInRange(HyperspatialDrifter.SCRAP_EXTRA_PER_SALVAGE_MIN, HyperspatialDrifter.SCRAP_EXTRA_PER_SALVAGE_MAX)
             }
 
             var manager = data.scrapManager
