@@ -59,7 +59,7 @@ class ScrapforgeDetectorAbility : BaseDurationAbility() {
     fun addAbilityTooltip(tooltip: TooltipMakerAPI, spec: AbilitySpecAPI) {
         tooltip.addTitle(spec.name)
         tooltip.addSpacer(10f)
-        tooltip.addPara("Deploys a small detector relay that lasts for 30 days. It periodically emits sensor bursts that scan the entire system for points of interests. " +
+        tooltip.addPara("Deploys a small detector relay that lasts for 30 days. It periodically emits sensor bursts that scan the entire system to reveal points of interests. " +
                 "It can only differentiate between fleets and non-fleets. No other information is provided. " +
                 "\n\n" +
                 "Requires ${getScrapCost().toInt()}%% Scrap to use.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "30", "${getScrapCost().toInt()}%")

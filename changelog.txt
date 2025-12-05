@@ -1,3 +1,20 @@
+Version 1.8.0
+Save Compatible
+
+- Added the "Scavenging" Logistical Aptitude
+--> A new aptitude focused on resource management with a scrappy theme.
+
+- Respeccing Executive Officers now costs 2 storypoints instead of 4.
+
+- Added the "Experimental" settings section to the Second-in-Command LunaSettings
+--> Replaced "Enable 4th slot" with a slider that goes between 3 to 10.
+--> Split-off the 4th NPC fleet officer in to a seperate config
+--> Added "Compact Mode", making the XO screen more compact if 4 or more XO slots are active.
+--> Moved the additional skillpoint config to this section.
+--> Added a config to disable category restrictions (for the player only).
+
+
+
 Version 1.7.0
 Save Compatible
 

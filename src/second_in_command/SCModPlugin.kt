@@ -100,18 +100,6 @@ class SCModPlugin : BaseModPlugin() {
     }
 
     override fun onGameLoad(newGame: Boolean) {
-        //TODO remove after playtest
-
-        var data = SCUtils.getPlayerData()
-        if (data.getOfficersInFleet().none { it.aptitudeId == "sc_scavenging" }) {
-            var officer = SCUtils.createRandomSCOfficer("sc_scavenging")
-            data.addOfficerToFleet(officer)
-            data.setOfficerInEmptySlotIfAvailable(officer)
-        }
-
-
-
-
 
         if (!Global.getSector().playerPerson.stats.hasSkill("sc_utility_skill")) {
             Global.getSector().playerPerson.stats.setSkillLevel("sc_utility_skill", 2f)

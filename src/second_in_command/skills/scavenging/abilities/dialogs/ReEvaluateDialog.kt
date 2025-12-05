@@ -20,7 +20,8 @@ class ReEvaluateDialog : InteractionDialogPlugin {
 
         var rng = random.nextFloat()
         var multStrength = 0.8f
-        if (rng >= 0.90f) multStrength = 2f
+        if (rng >= 0.98f) multStrength = 5f
+        else if (rng >= 0.90f) multStrength = 2f
         else if (rng >= 0.80f) multStrength = 1.5f
         else if (rng >= 0.60f) multStrength = 1.25f
         else if (rng >= 0.30f) multStrength = 1f

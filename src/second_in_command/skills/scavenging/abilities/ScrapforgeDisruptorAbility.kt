@@ -59,7 +59,8 @@ class ScrapforgeDisruptorAbility : BaseDurationAbility() {
     fun addAbilityTooltip(tooltip: TooltipMakerAPI, spec: AbilitySpecAPI) {
         tooltip.addTitle(spec.name)
         tooltip.addSpacer(10f)
-        tooltip.addPara("Deploys a small disruptor array that lasts for 7 days. It emits waves of signals that throw off the sensors of other fleets within the system, making them chase what is not actually there. Does not distract fleets that are already chasing you. " +
+        tooltip.addPara("Deploys a small disruptor array that lasts for 7 days. It emits waves of signals that throw off the sensors of other fleets within the system, making them chase what is not actually there. " +
+                "Does not distract fleets that are already chasing you. " +
                 "\n\n" +
                 "Requires ${getScrapCost().toInt()}%% Scrap to use.", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "7", "${getScrapCost().toInt()}%")
     }
