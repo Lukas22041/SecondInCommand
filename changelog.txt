@@ -1,3 +1,11 @@
+Version 1.8.1
+Save Compatible
+
+- The Detector Relay can no longer be activated in RAT's abyssal depths.
+- Fixed dropped cargo pods being able to give scrap in some circumstances.
+
+
+
 Version 1.8.0
 Save Compatible
 
