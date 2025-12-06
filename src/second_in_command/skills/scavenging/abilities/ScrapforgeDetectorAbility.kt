@@ -7,6 +7,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lwjgl.util.vector.Vector2f
 import second_in_command.SCUtils
+import second_in_command.misc.addPara
 import second_in_command.skills.scavenging.entities.ScrapforgeDeployable
 
 class ScrapforgeDetectorAbility : BaseDurationAbility() {
@@ -30,7 +31,10 @@ class ScrapforgeDetectorAbility : BaseDurationAbility() {
     }
 
     override fun isUsable(): Boolean {
-        return super.isUsable() && Global.getSector().playerFleet.starSystem != null && SCUtils.getFleetData(this.fleet).isSkillActive("sc_scavenging_scrapforge_constructs") && SCUtils.getFleetData(this.fleet).scrapManager.getCurrentScrap() >= getScrapCost()
+        return super.isUsable() && Global.getSector().playerFleet.starSystem != null
+                && SCUtils.getFleetData(this.fleet).isSkillActive("sc_scavenging_scrapforge_constructs")
+                && SCUtils.getFleetData(this.fleet).scrapManager.getCurrentScrap() >= getScrapCost()
+                && Global.getSector().playerFleet.starSystem?.id != "abyssal depths"
     }
 
     override fun hasTooltip(): Boolean {
@@ -51,6 +55,10 @@ class ScrapforgeDetectorAbility : BaseDurationAbility() {
         else if (notEnoughScrap) {
             tooltip.addSpacer(10f)
             tooltip.addPara("You do not have enough Scrap to use the ability.", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+        } else if (Global.getSector().playerFleet.starSystem?.id == "abyssal depths") {
+            tooltip.addSpacer(10f)
+            tooltip.addPara("The fog within the abyssal depths is to dense to use this ability. ", 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
+
         }
 
         data.scrapManager.setScrapConsumptionThisFrame(getScrapCost())
