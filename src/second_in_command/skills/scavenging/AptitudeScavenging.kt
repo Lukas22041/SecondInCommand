@@ -35,6 +35,7 @@ class AptitudeScavenging : SCBaseAptitudePlugin() {
         section1.addSkill("sc_scavenging_immediate_action")
         section1.addSkill("sc_scavenging_explorer")
         section1.addSkill("sc_scavenging_pinpointing")
+        section1.addSkill("sc_scavenging_derelict_automata")
         section1.addSkill("sc_scavenging_scrapheap")
         section1.addSkill("sc_scavenging_safe_transport")
         addSection(section1)

@@ -36,6 +36,7 @@ class AnotherMansTreasure : SCBaseSkillPlugin() {
 
         tooltip.addSpacer(10f)
 
+        tooltip.addPara("All of your ships are almost always recoverable if lost in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+40%% resources - but not rare items, such as blueprints - recovered from abandoned stations and derelicts", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+30%% post battle salvage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
@@ -62,16 +63,19 @@ class AnotherMansTreasure : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
+        data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat("sc_another_mans_treasure", 2f)
         data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_NOT_RARE).modifyFlat("sc_another_mans_treasure", 0.4f, "Another Man's Treasure Skill")
         data.fleet.stats.dynamic.getStat(Stats.BATTLE_SALVAGE_MULT_FLEET).modifyFlat("sc_another_mans_treasure", 0.3f, "Another Man's Treasure Skill")
     }
 
     override fun onActivation(data: SCData) {
+        data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat("sc_another_mans_treasure", 2f)
         data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_NOT_RARE).modifyFlat("sc_another_mans_treasure", 0.4f, "Another Man's Treasure Skill")
         data.fleet.stats.dynamic.getStat(Stats.BATTLE_SALVAGE_MULT_FLEET).modifyFlat("sc_another_mans_treasure", 0.3f, "Another Man's Treasure Skill")
     }
 
     override fun onDeactivation(data: SCData) {
+        data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).unmodify("sc_another_mans_treasure")
         data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_NOT_RARE).unmodify("sc_another_mans_treasure")
         data.fleet.stats.dynamic.getStat(Stats.BATTLE_SALVAGE_MULT_FLEET).unmodify("sc_another_mans_treasure")
     }

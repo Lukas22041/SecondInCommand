@@ -20,7 +20,7 @@ class ReEvaluateDialog : InteractionDialogPlugin {
 
         var rng = random.nextFloat()
         var multStrength = 0.8f
-        if (rng >= 0.98f) multStrength = 5f
+        if (rng >= 0.98f) multStrength = 4f
         else if (rng >= 0.90f) multStrength = 2f
         else if (rng >= 0.80f) multStrength = 1.5f
         else if (rng >= 0.60f) multStrength = 1.25f
@@ -39,10 +39,11 @@ class ReEvaluateDialog : InteractionDialogPlugin {
         var d = DropData()
         d.chances = 1
         d.group = "blueprints_low"
+        d.valueMult = 0.6f
         dropRandom.add(d)
 
         d = DropData()
-        d.chances = 2
+        d.chances = 1
         d.group = "any_hullmod_low"
         dropRandom.add(d)
 

@@ -112,6 +112,7 @@ sc_scavenging_explorer,Explorer,graphics/secondInCommand/scavenging/explorer.png
 sc_scavenging_pinpointing,Pinpointing,graphics/secondInCommand/scavenging/pinpointing.png,0,second_in_command.skills.scavenging.Pinpointing
 sc_scavenging_scrapheap,Scrapheap,graphics/secondInCommand/scavenging/scrapheap.png,0,second_in_command.skills.scavenging.Scrapheap
 sc_scavenging_safe_transport,Safe Transport,graphics/secondInCommand/scavenging/safe_transport.png,0,second_in_command.skills.scavenging.SafeTransport
+sc_scavenging_derelict_automata,Derelict Automata,graphics/secondInCommand/scavenging/derelict_automata.png,0,second_in_command.skills.scavenging.DerelictAutomata
 sc_scavenging_hyperspatial_drifter,Hyperspatial Drifter,graphics/secondInCommand/scavenging/hyperspatial_drifter.png,0,second_in_command.skills.scavenging.HyperspatialDrifter
 ,,,,
 ,,,,
