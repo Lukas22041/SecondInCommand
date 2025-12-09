@@ -1,3 +1,12 @@
+Version 1.8.2
+Save Compatible
+
+- Added the "Derelict Automata" skill to the Scavenging Aptitude.
+- "Another Man's Treasure" now gets the "ships are almost always recoverable" effect.
+- Slightly nerfed the chance for blueprints from the re-evaluate skill.
+
+
+
 Version 1.8.1
 Save Compatible
 
