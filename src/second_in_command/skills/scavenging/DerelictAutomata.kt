@@ -39,7 +39,7 @@ class DerelictAutomata : SCBaseAutoPointsSkillPlugin() {
         var maximum = manager.getMaximumDP()
         var used = manager.getUsedDP()
         tooltip.addPara("+$provided automated ship points", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("Ships with the \"Rugged Construction\" hullmod use 25%% less automated ship points.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Ships with the \"Rugged Construction\" hullmod use 25%% less automated ship points", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
         tooltip.addSpacer(10f)
 
