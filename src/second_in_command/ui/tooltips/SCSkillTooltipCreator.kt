@@ -6,7 +6,6 @@ import com.fs.starfarer.api.ui.BaseTooltipCreator
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
-import second_in_command.misc.addPara
 import second_in_command.misc.codex.CodexHandler
 import second_in_command.specs.SCBaseAptitudePlugin
 import second_in_command.specs.SCBaseSkillPlugin

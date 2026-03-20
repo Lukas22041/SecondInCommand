@@ -44,8 +44,6 @@ fun SettingsAPI.loadTextureCached(filename: String){
     }
 }
 
-fun TooltipMakerAPI.addPara(str: String) = this.addPara(str, 0f)
-
 fun TooltipMakerAPI.addNegativePara(str: String) = this.addPara(str, 0f, Misc.getNegativeHighlightColor(), Misc.getNegativeHighlightColor())
 
 fun TooltipMakerAPI.addTooltip(to: UIComponentAPI, location: TooltipLocation, width: Float, lambda: (TooltipMakerAPI) -> Unit) {

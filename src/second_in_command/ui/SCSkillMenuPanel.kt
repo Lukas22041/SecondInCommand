@@ -146,8 +146,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
             executiveButton.position.inTL(headerElement.widthSoFar/2-(executiveButton.width)-15, 1f)
 
             headerElement.addTooltip(executiveButton.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 450f) { tooltip ->
-                tooltip.addPara("Executive officers provide fleetwide skills. They can be hired at the comm directory of colonies or found in derelict ships. " +
-                        "")
+                tooltip.addPara("Executive officers provide fleetwide skills. They can be hired at the comm directory of colonies or found in derelict ships. ", 0f)
             }
 
 
@@ -156,7 +155,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
 
             headerElement.addTooltip(otherSkillsButton.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 450f) { tooltip ->
                 tooltip.addPara("Section for modded skills not managed by Second-in-Command which use the vanilla skill system. Skills displayed here can not be acquired through skill points, " +
-                        "and can only be viewed, but some mods may provide separate ways to unlock some of those skills. ")
+                        "and can only be viewed, but some mods may provide separate ways to unlock some of those skills. ", 0f)
             }
 
             executiveButton.onClick {

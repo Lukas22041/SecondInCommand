@@ -14,7 +14,6 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import lunalib.lunaExtensions.addLunaElement
 import second_in_command.SCUtils
-import second_in_command.misc.addPara
 import second_in_command.misc.addTooltip
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCOfficer

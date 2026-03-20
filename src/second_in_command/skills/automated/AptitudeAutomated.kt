@@ -8,7 +8,6 @@ import com.fs.starfarer.api.util.Misc
 import org.magiclib.kotlin.isAutomated
 import org.magiclib.kotlin.isPirateFaction
 import second_in_command.SCData
-import second_in_command.misc.addPara
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCBaseAptitudePlugin
 
@@ -26,7 +25,7 @@ class AptitudeAutomated : SCBaseAptitudePlugin() {
 
         tooltip.addSpacer(10f)
 
-        tooltip.addPara("An effective automated fleet requires careful consideration of AI Core usage, and benefits from additional automated points and combat readiness increases from other aptitudes.")
+        tooltip.addPara("An effective automated fleet requires careful consideration of AI Core usage, and benefits from additional automated points and combat readiness increases from other aptitudes.", 0f)
     }
 
     override fun getOriginSkillId(): String {

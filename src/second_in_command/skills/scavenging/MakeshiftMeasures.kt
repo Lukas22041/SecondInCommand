@@ -10,7 +10,6 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import org.lwjgl.input.Keyboard
 import second_in_command.SCData
-import second_in_command.misc.addPara
 import second_in_command.specs.SCBaseSkillPlugin
 
 class MakeshiftMeasures : SCBaseSkillPlugin() {
