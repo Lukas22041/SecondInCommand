@@ -34,7 +34,6 @@ class SurefireImpact : SCBaseSkillPlugin() {
 
         stats.missileAccelerationBonus.modifyPercent(id, 30f)
         stats.missileTurnAccelerationBonus.modifyPercent(id, 30f)
-        stats.missileTurnAccelerationBonus.modifyPercent(id, 30f)
 
         stats.missileGuidance.modifyFlat(id, 0.1f)
 
