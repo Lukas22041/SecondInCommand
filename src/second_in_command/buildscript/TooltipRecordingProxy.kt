@@ -1,6 +1,7 @@
 package second_in_command.buildscript
 
 import com.fs.starfarer.api.ui.*
+import second_in_command.misc.getChildrenCopy
 import java.awt.Color
 
 /**
@@ -128,24 +129,36 @@ class RecordingTooltipMaker(private val real: TooltipMakerAPI) : TooltipMakerAPI
 
     // --- addImage ---
 
+    /**
+     * After a void addImage call, the image element IS a discrete panel child (not buffered text),
+     * so we can grab the last child of `real` immediately to capture its position.
+     */
+    private fun getLastAddedChild(): UIComponentAPI? {
+        return try {
+            (real as UIPanelAPI).getChildrenCopy().lastOrNull()
+        } catch (_: Exception) {
+            null
+        }
+    }
+
     override fun addImage(spriteName: String, pad: Float) {
         real.addImage(spriteName, pad)
-        record("addImage", listOf(spriteName, pad), null)
+        record("addImage", listOf(spriteName, pad), getLastAddedChild())
     }
 
     override fun addImage(spriteName: String, width: Float, pad: Float) {
         real.addImage(spriteName, width, pad)
-        record("addImage", listOf(spriteName, width, pad), null)
+        record("addImage", listOf(spriteName, width, pad), getLastAddedChild())
     }
 
     override fun addImage(spriteName: String, width: Float, height: Float, pad: Float) {
         real.addImage(spriteName, width, height, pad)
-        record("addImage", listOf(spriteName, width, height, pad), null)
+        record("addImage", listOf(spriteName, width, height, pad), getLastAddedChild())
     }
 
     override fun addImages(width: Float, height: Float, pad: Float, imagePad: Float, vararg spriteNames: String) {
         real.addImages(width, height, pad, imagePad, *spriteNames)
-        record("addImages", listOf(width, height, pad, imagePad, spriteNames), null)
+        record("addImages", listOf(width, height, pad, imagePad, spriteNames), getLastAddedChild())
     }
 
     // --- Font methods (record for tracking, no child created) ---
