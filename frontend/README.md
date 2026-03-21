@@ -1,43 +1,56 @@
 # Second-in-Command Skill Browser
 
-A static React app (CDN + Babel, no build step) that renders all aptitude skill rows from `api.json` with hover tooltips — matching Starsector's dark sci-fi UI aesthetic.
+A static React app (CDN + Babel, no build step) that renders all aptitude skill rows from `api/api.json` with hover tooltips — matching Starsector's dark sci-fi UI aesthetic.
 
-## Files
+## File Layout
 
-| File | Purpose |
-|------|---------|
-| `index.html` | Entry point — loads CDN React/Babel, then `data.js` + `app.js` |
-| `app.js` | All React components (JSX, transpiled by Babel in-browser) |
-| `styles.css` | Dark sci-fi theme styles |
-| `api.json` | Exported skill data from the mod |
-| `assets/` | Skill icon PNGs referenced by `api.json` |
-| `generate_data.ps1` | Generates `data.js` for `file://` access (see below) |
-| `start_server.bat` | Starts a local HTTP server (recommended) |
+```
+frontend/
+├── Caddyfile           — Caddy config for Railway (static hosting)
+├── index.html          — Entry point
+├── styles.css          — Starsector Theme
+├── start.py            — Local dev server (Python 3)
+├── start.bat           — Windows shortcut for start.py
+├── api/
+│   ├── api.json        — Exported skill data from the mod
+│   └── assets/         — Skill icon PNGs referenced by api.json
+├── appAssets/          — Fonts, background, banner, gallery images
+└── js/
+    ├── utils.js        — React hook globals, colour helpers, path resolver
+    ├── tooltip.js      — Tooltip component tree
+    ├── ui.js           — AnchorCopy, SectionHeading
+    ├── skill.js        — SkillIcon, SectionSeparator, SkillSection
+    ├── aptitude.js     — AptitudeRow
+    ├── gallery.js      — GalleryCarousel
+    ├── sections.js     — AboutSection, LinksSection, IncompatibilitiesSection
+    ├── nav.js          — SideNav
+    └── app.js          — App root + ReactDOM mount
+```
 
 ---
 
-## How to view
+## How to view locally
 
-### Option A — HTTP server (recommended, works in all browsers)
+Requires Python 3 in `PATH`.
 
-1. Double-click **`start_server.bat`** (requires Python 3 in `PATH`).
-2. Open **http://localhost:8080** in any browser.
-
-### Option B — Direct file open (Firefox only)
-
-Firefox allows `fetch()` on `file://` URIs, so you can simply open `index.html` directly.
-
-### Option C — Generate `data.js` (Chrome / any browser via file://)
-
-Chrome blocks network requests on `file://`. Run the helper script once:
-
-```powershell
-cd "path\to\frontend"
-.\generate_data.ps1
+```
+python start.py
 ```
 
-This creates `data.js` which pre-loads the JSON as `window.SIC_DATA`.  
-Re-run after every `api.json` update.  Then open `index.html` directly in Chrome.
+Then open **http://localhost:8080** in any browser.  
+An optional `--port` flag is available: `python start.py --port 9000`.
+
+> **Note:** The app must be served over HTTP. Opening `index.html` directly
+> via `file://` will not work because browsers block `fetch()` on that scheme.
+
+---
+
+## Deploying to Railway
+
+1. Push this folder as the root of a GitHub repo.
+2. Create a new Railway project → **Deploy from GitHub repo**.
+3. Railway detects the `Caddyfile` and uses the Caddy static-site template automatically.
+4. No build command or install step is needed.
 
 ---
 
@@ -47,7 +60,6 @@ Re-run after every `api.json` update.  Then open `index.html` directly in Chrome
 - **Skill icons** — origin skill at 72 × 72 px, others at 58 × 58 px, border coloured by aptitude RGBA
 - **Hover tooltips** — follow the cursor, clamp to viewport; render all `tooltipElements` (title, label with inline highlights, spacer, imageWithText)
 - **Pick-one sections** — `canChooseMultiple: false` sections show a coloured underline bracket
-- **Section separators** — chevron arrows with required-previous-skills count
+- **Section separators** — chevron arrows between skill sections
 - **Filter panel** — toggle visibility by mod and by aptitude category
 - **`hide_in_codex` / `dont_include_in_wiki` tags** respected (those aptitudes are hidden)
-
