@@ -242,14 +242,22 @@ function SkillIcon({ skill, aptitude }) {
 // ---- Section separator (chevron + required count) -------------------------
 
 function SectionSeparator({ requiredPreviousSkills, aptitude }) {
-  const color = rgbaToCSS(aptitude.color, 0.75);
+  const { r, g, b } = aptitude.color;
+  const strokeColor = `rgba(${r},${g},${b},0.6)`;
+  const fillColor   = `rgba(${r},${g},${b},0.08)`;
   return (
     <div className="section-separator">
-      <svg className="separator-arrow-svg" viewBox="0 0 16 90" width="16" height="90" fill="none">
-        <polyline points="2,8 13,45 2,82" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <svg className="separator-arrow-svg" viewBox="0 0 14 90" width="14" height="90">
+        <polygon
+          points="0,8 8,0 14,45 8,90 0,82 5,45"
+          fill={fillColor}
+          stroke={strokeColor}
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
       </svg>
       {requiredPreviousSkills > 0 && (
-        <div className="separator-req" style={{ color }}>{requiredPreviousSkills}</div>
+        <div className="separator-req" style={{ color: strokeColor }}>{requiredPreviousSkills}</div>
       )}
     </div>
   );
@@ -259,8 +267,11 @@ function SectionSeparator({ requiredPreviousSkills, aptitude }) {
 
 function SkillSection({ section, aptitude }) {
   const { skills, canChooseMultiple } = section;
-  const underlineGradient = `linear-gradient(to right, transparent, ${rgbaToCSS(aptitude.color, 0.75)}, transparent)`;
-  const separatorGradient = `linear-gradient(to bottom, transparent, ${rgbaToCSS(aptitude.color, 0.45)}, transparent)`;
+  const { r, g, b } = aptitude.color;
+  const sepColor      = `rgba(${r},${g},${b},0.5)`;
+  const ulColor       = `rgba(${r},${g},${b},0.75)`;
+  const separatorGradient = `linear-gradient(to bottom, transparent 0%, ${sepColor} 15%, ${sepColor} 85%, transparent 100%)`;
+  const underlineGradient = `linear-gradient(to right,  transparent 0%, ${ulColor}  15%, ${ulColor}  85%, transparent 100%)`;
 
   return (
     <div className={`skill-section${canChooseMultiple ? '' : ' pick-one'}`}>
