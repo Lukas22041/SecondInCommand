@@ -3,7 +3,6 @@ package second_in_command.buildscript
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.ui.LabelAPI
 import org.apache.log4j.Level
 import second_in_command.SCData
 import second_in_command.specs.SCBaseAptitudePlugin
@@ -17,21 +16,12 @@ import java.util.*
  * Only runs when SC_DEV_BUILD environment variable is set.
  * Registered as a transient EveryFrameScript — runs once on the first frame, then removes itself.
  */
-class SCBuildScript : EveryFrameScript {
+class SCBuildScript {
 
     private val logger = Global.getLogger(SCBuildScript::class.java).apply { level = Level.ALL }
-    private var done = false
-    private var ranOnce = false
 
-    override fun isDone(): Boolean = done
-    override fun runWhilePaused(): Boolean = true
 
-    override fun advance(amount: Float) {
-        if (ranOnce) {
-            done = true
-            return
-        }
-        ranOnce = true
+   fun run() {
 
         try {
             logger.info("SC Build: Starting export...")
@@ -39,7 +29,9 @@ class SCBuildScript : EveryFrameScript {
 
             val exportData = buildExportData()
             val spritePaths = collectSpritePaths(exportData)
-            SCBuildExporter.export(exportData, spritePaths)
+            val spriteRenameMap = buildSpriteRenameMap(spritePaths)
+            val renamedData = applyRenameMap(exportData, spriteRenameMap)
+            SCBuildExporter.export(renamedData, spritePaths, spriteRenameMap)
 
             val elapsed = System.currentTimeMillis() - startTime
             logger.info("SC Build: Finished in ${elapsed}ms")
@@ -47,7 +39,6 @@ class SCBuildScript : EveryFrameScript {
             logger.error("SC Build: Export failed", e)
         }
 
-        done = true
     }
 
     private fun buildExportData(): BuildExportData {
@@ -131,22 +122,20 @@ class SCBuildScript : EveryFrameScript {
     }
 
     /**
-     * Capture plain text from an aptitude's addCodexDescription via the recording proxy.
+     * Capture tooltip elements (including highlight info) from an aptitude's addCodexDescription
+     * via the recording proxy.
      */
-    private fun buildAptitudeDescription(aptPlugin: SCBaseAptitudePlugin): String {
+    private fun buildAptitudeDescription(aptPlugin: SCBaseAptitudePlugin): List<TooltipElement> {
         return try {
             val panel = Global.getSettings().createCustom(700f, 1000f, null)
             val realTooltip = panel.createUIElement(700f, 1000f, false)
             panel.addUIElement(realTooltip)
             val recorder = RecordingTooltipMaker(realTooltip)
             aptPlugin.addCodexDescription(recorder)
-            recorder.recordedCalls
-                .filter { it.methodName == "addPara" }
-                .mapNotNull { (it.result as? LabelAPI)?.text }
-                .joinToString(" ")
+            TooltipElementParser.parse(recorder.recordedCalls, realTooltip)
         } catch (e: Exception) {
             logger.warn("SC Build: Failed to record description for aptitude '${aptPlugin.id}'", e)
-            ""
+            emptyList()
         }
     }
 
@@ -199,6 +188,9 @@ class SCBuildScript : EveryFrameScript {
         val paths = mutableSetOf<String>()
 
         for (apt in data.aptitudes) {
+            // Sprites from aptitude description elements
+            collectSpritePathsFromElements(apt.description, paths)
+
             for (section in apt.sections) {
                 for (skill in section.skills) {
                     // Skill icon
@@ -223,6 +215,87 @@ class SCBuildScript : EveryFrameScript {
                 is ImageElement -> {
                     if (element.spriteName.isNotEmpty()) paths.add(element.spriteName)
                 }
+            }
+        }
+    }
+
+    /**
+     * Build a map of spritePath → unique asset filename.
+     * If two different paths share the same bare filename they would collide in the flat assets/
+     * folder. For any such group, prefix each filename with its immediate parent directory name,
+     * e.g. "graphics/exotech/voyager.png"  → "exotech_voyager.png"
+     *      "graphics/_nightcross/voyager.png" → "_nightcross_voyager.png"
+     */
+    private fun buildSpriteRenameMap(spritePaths: Set<String>): Map<String, String> {
+        // Group paths by their bare filename
+        val byName = mutableMapOf<String, MutableList<String>>()
+        for (path in spritePaths) {
+            if (path.isEmpty()) continue
+            val name = TooltipElementParser.spriteToAssetName(path)
+            byName.getOrPut(name) { mutableListOf() }.add(path)
+        }
+
+        val result = mutableMapOf<String, String>()
+        for ((name, paths) in byName) {
+            if (paths.size == 1) {
+                result[paths[0]] = name
+            } else {
+                // Conflict — prefix each with its immediate parent directory
+                logger.info("SC Build: Duplicate asset name '$name' across ${paths.size} paths — renaming by parent dir: $paths")
+                for (path in paths) {
+                    val normalized = path.replace("\\", "/")
+                    val parts = normalized.split("/")
+                    val parentDir = if (parts.size >= 2) parts[parts.size - 2] else ""
+                    val uniqueName = if (parentDir.isNotEmpty()) "${parentDir}_$name" else name
+                    result[path] = uniqueName
+                }
+            }
+        }
+        return result
+    }
+
+    /**
+     * Walk the entire export data tree and update every assetFileName field
+     * according to the rename map so the JSON matches the files on disk.
+     */
+    private fun applyRenameMap(data: BuildExportData, renameMap: Map<String, String>): BuildExportData {
+        if (renameMap.values.toSet().size == renameMap.size) {
+            // No duplicates were found — skip the walk entirely if nothing changed
+            val anyRenamed = renameMap.any { (path, name) ->
+                TooltipElementParser.spriteToAssetName(path) != name
+            }
+            if (!anyRenamed) return data
+        }
+        return data.copy(
+            aptitudes = data.aptitudes.map { apt ->
+                apt.copy(
+                    description = remapElements(apt.description, renameMap),
+                    sections = apt.sections.map { section ->
+                        section.copy(
+                            skills = section.skills.map { skill ->
+                                skill.copy(
+                                    assetFileName = renameMap[skill.iconPath] ?: skill.assetFileName,
+                                    tooltipElements = remapElements(skill.tooltipElements, renameMap)
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+        )
+    }
+
+    private fun remapElements(elements: List<TooltipElement>, renameMap: Map<String, String>): List<TooltipElement> {
+        return elements.map { element ->
+            when (element) {
+                is ImageWithTextElement -> element.copy(
+                    assetFileName = renameMap[element.spriteName] ?: element.assetFileName,
+                    children = remapElements(element.children, renameMap)
+                )
+                is ImageElement -> element.copy(
+                    assetFileName = renameMap[element.spriteName] ?: element.assetFileName
+                )
+                else -> element
             }
         }
     }

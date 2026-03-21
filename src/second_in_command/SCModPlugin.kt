@@ -61,6 +61,8 @@ class SCModPlugin : BaseModPlugin() {
 
 
         checkForIncompatibilities()
+
+
     }
 
     fun checkForIncompatibilities() {
@@ -161,8 +163,9 @@ class SCModPlugin : BaseModPlugin() {
 
         // Dev build script — only runs when SC_DEV_BUILD env var is set
         if (System.getenv("SC_DEV_BUILD") != null) {
-            Global.getSector().addTransientScript(SCBuildScript())
+            SCBuildScript().run()
         }
+
     }
 
     override fun onNewGame() {

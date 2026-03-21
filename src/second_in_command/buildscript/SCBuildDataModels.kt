@@ -26,7 +26,7 @@ data class BuildExportData(
 data class AptitudeData(
     val id: String,
     val name: String,
-    val description: String,
+    val description: List<TooltipElement>,
     val color: ColorData,
     val categories: List<CategoryData>,
     val tags: List<String>,
@@ -39,7 +39,9 @@ data class AptitudeData(
         val obj = JSONObject()
         obj.put("id", id)
         obj.put("name", name)
-        obj.put("description", description)
+        val descArr = JSONArray()
+        for (d in description) descArr.put(d.toJSON())
+        obj.put("description", descArr)
         obj.put("color", color.toJSON())
         val catArr = JSONArray()
         for (c in categories) catArr.put(c.toJSON())

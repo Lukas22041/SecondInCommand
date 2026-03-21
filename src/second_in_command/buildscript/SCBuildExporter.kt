@@ -17,7 +17,7 @@ object SCBuildExporter {
      * Write the JSON export and copy referenced assets.
      * Output goes to: <mod_root>/build_export/
      */
-    fun export(data: BuildExportData, spritePaths: Set<String>) {
+    fun export(data: BuildExportData, spritePaths: Set<String>, spriteRenameMap: Map<String, String> = emptyMap()) {
         val modPath = Global.getSettings().modManager.getModSpec("second_in_command").path
         val exportDir = newFile(modPath, "build_export")
         val assetsDir = newFile(exportDir, "assets")
@@ -36,7 +36,8 @@ object SCBuildExporter {
         for (spritePath in spritePaths) {
             if (spritePath.isEmpty()) continue
             try {
-                val assetName = TooltipElementParser.spriteToAssetName(spritePath)
+                // Use rename map if available (handles duplicate filename collisions), else fall back
+                val assetName = spriteRenameMap[spritePath] ?: TooltipElementParser.spriteToAssetName(spritePath)
                 val destFile = newFile(assetsDir, assetName)
 
                 val sourceFile = findSpriteFile(spritePath, modPath)
