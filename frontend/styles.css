@@ -846,3 +846,47 @@ hr.section-divider {
 .lightbox-nav-prev { left: 22px; }
 .lightbox-nav-next { right: 22px; }
 
+/* ---- Side Navigation ---- */
+.side-nav {
+  position: fixed;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.side-nav-item {
+  display: block;
+  color: rgba(170, 222, 255, 0.45);
+  text-decoration: none;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  background: transparent;
+  border-left: 2px solid transparent;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.side-nav-item.sub {
+  padding-left: 18px;
+  font-size: 10px;
+}
+.side-nav-item:hover {
+  color: rgb(170, 222, 255);
+  background: rgba(170, 222, 255, 0.05);
+}
+.side-nav-item.active {
+  color: rgb(170, 222, 255);
+  background: rgba(170, 222, 255, 0.10);
+  border-left-color: rgba(170, 222, 255, 0.40);
+}
+
+/* hide on narrow viewports where it would overlap content */
+@media (max-width: 1200px) {
+  .side-nav { display: none; }
+}

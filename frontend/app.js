@@ -13,6 +13,12 @@ function rgbaToCSS(c, alphaOverride) {
   return `rgba(${c.r},${c.g},${c.b},${a.toFixed(3)})`;
 }
 
+// ---- Module-level pointer tracker ----------------------------------------
+// Browsers do not fire mouseenter/mouseover during scroll, so we track the
+// pointer position here and use it to recover hover state after scroll settles.
+let _ptrX = -1, _ptrY = -1;
+window.addEventListener('mousemove', e => { _ptrX = e.clientX; _ptrY = e.clientY; }, { passive: true });
+
 // ---- Text with inline highlight ranges ------------------------------------
 
 function HighlightedText({ text, highlightRanges, baseColor }) {
@@ -220,13 +226,25 @@ function SkillIcon({ skill, aptitude }) {
   const [hovered, setHovered] = useState(false);
   const iconRef = useRef(null);
 
-  // Hide tooltip immediately when the user scrolls (capture phase catches any scrollable ancestor)
+  // Immediately hide during scroll; recover hover if the pointer is already
+  // over this icon when the scroll settles (~150 ms of no scroll events).
   useEffect(() => {
-    if (!hovered) return;
-    const hide = () => setHovered(false);
-    window.addEventListener('scroll', hide, true);
-    return () => window.removeEventListener('scroll', hide, true);
-  }, [hovered]);
+    const el = iconRef.current;
+    if (!el) return;
+    let endTimer = null;
+    const onScroll = () => {
+      setHovered(false);
+      clearTimeout(endTimer);
+      endTimer = setTimeout(() => {
+        const r = el.getBoundingClientRect();
+        if (_ptrX >= r.left && _ptrX <= r.right && _ptrY >= r.top && _ptrY <= r.bottom) {
+          setHovered(true);
+        }
+      }, 150);
+    };
+    window.addEventListener('scroll', onScroll, true);
+    return () => { window.removeEventListener('scroll', onScroll, true); clearTimeout(endTimer); };
+  }, []); // registered once per mount; _ptrX/_ptrY are module-level refs
 
   const borderColor = rgbaToCSS(aptitude.color);
   const glowColor   = rgbaToCSS(aptitude.color, hovered ? 0.6 : 0.2);
@@ -641,6 +659,62 @@ function IncompatibilitiesSection() {
   );
 }
 
+// ---- Side Navigation -----------------------------------------------------
+
+const SIDE_NAV_SECTIONS = [
+  { id: 'about',               label: 'About the Mod'            },
+  { id: 'links',               label: 'Links'                    },
+  { id: 'incompatibilities',   label: 'Incompatibilities'         },
+  { id: 'aptitudes',           label: 'Aptitudes'                },
+  { id: 'sic-aptitudes',       label: 'SiC Aptitudes',  sub: true },
+  { id: 'cross-mod-aptitudes', label: 'Cross-Mod',      sub: true },
+];
+
+function SideNav({ showCrossMod }) {
+  const [active, setActive] = useState('about');
+
+  const sections = useMemo(
+    () => showCrossMod
+      ? SIDE_NAV_SECTIONS
+      : SIDE_NAV_SECTIONS.filter(s => s.id !== 'cross-mod-aptitudes'),
+    [showCrossMod]
+  );
+
+  useEffect(() => {
+    const ids = sections.map(s => s.id);
+    const update = () => {
+      const offset = 90;
+      let current = ids[0];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= offset) current = id;
+      }
+      setActive(current);
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+    return () => window.removeEventListener('scroll', update);
+  }, [sections]);
+
+  return (
+    <nav className="side-nav">
+      {sections.map(({ id, label, sub }) => (
+        <a
+          key={id}
+          href={`#${id}`}
+          className={`side-nav-item${sub ? ' sub' : ''}${active === id ? ' active' : ''}`}
+          onClick={e => {
+            e.preventDefault();
+            document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
+          {label}
+        </a>
+      ))}
+    </nav>
+  );
+}
+
 // ---- App (root) ----------------------------------------------------------
 
 function App() {
@@ -718,6 +792,8 @@ function App() {
 
   return (
     <div className="app">
+      <SideNav showCrossMod={thirdPartyAptitudes.length > 0} />
+
       {/* ── Banner ── */}
       <div className="page-banner">
         <img src="appAssets/Banner.png" alt="Second-in-Command" />
