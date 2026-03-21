@@ -241,14 +241,15 @@ function SkillIcon({ skill, aptitude }) {
 
 // ---- Section separator (chevron + required count) -------------------------
 
-function SectionSeparator({ requiredPreviousSkills }) {
+function SectionSeparator({ requiredPreviousSkills, aptitude }) {
+  const color = rgbaToCSS(aptitude.color, 0.75);
   return (
     <div className="section-separator">
-      <div className="separator-arrow">
-        <img src="appAssets/seperator.png" alt="" style={{ margin: '0 5px' }} />
-      </div>
+      <svg className="separator-arrow-svg" viewBox="0 0 16 90" width="16" height="90" fill="none">
+        <polyline points="2,8 13,45 2,82" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
       {requiredPreviousSkills > 0 && (
-        <div className="separator-req">{requiredPreviousSkills}</div>
+        <div className="separator-req" style={{ color }}>{requiredPreviousSkills}</div>
       )}
     </div>
   );
@@ -258,19 +259,25 @@ function SectionSeparator({ requiredPreviousSkills }) {
 
 function SkillSection({ section, aptitude }) {
   const { skills, canChooseMultiple } = section;
-  const underlineColor = rgbaToCSS(aptitude.color, 0.75);
+  const underlineGradient = `linear-gradient(to right, transparent, ${rgbaToCSS(aptitude.color, 0.75)}, transparent)`;
+  const separatorGradient = `linear-gradient(to bottom, transparent, ${rgbaToCSS(aptitude.color, 0.45)}, transparent)`;
 
   return (
     <div className={`skill-section${canChooseMultiple ? '' : ' pick-one'}`}>
       <div className="skill-section-icons">
-        {skills.map(skill => (
-          <SkillIcon key={skill.id} skill={skill} aptitude={aptitude} />
+        {skills.map((skill, i) => (
+          <Fragment key={skill.id}>
+            {i > 0 && (
+              <div className="skill-separator" style={{ background: separatorGradient }} />
+            )}
+            <SkillIcon skill={skill} aptitude={aptitude} />
+          </Fragment>
         ))}
       </div>
       {!canChooseMultiple && (
         <div
           className="pick-one-underline"
-          style={{ background: underlineColor }}
+          style={{ background: underlineGradient }}
         />
       )}
     </div>
@@ -323,7 +330,7 @@ function AptitudeRow({ aptitude }) {
         {aptitude.sections.map((section, i) => (
           <Fragment key={i}>
             {i > 0 && (
-              <SectionSeparator requiredPreviousSkills={section.requiredPreviousSkills} />
+              <SectionSeparator requiredPreviousSkills={section.requiredPreviousSkills} aptitude={aptitude} />
             )}
             <SkillSection section={section} aptitude={aptitude} />
           </Fragment>

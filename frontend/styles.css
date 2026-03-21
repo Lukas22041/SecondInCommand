@@ -231,27 +231,25 @@ body::before {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 4px;
-  min-width: 22px;
+  padding: 0 2px;
+  min-width: 20px;
   flex-shrink: 0;
-  align-self: center;
-  margin-bottom: 0;
+  align-self: stretch;
+  position: relative;
 }
-.separator-arrow {
-  line-height: 1;
-  opacity: 0.7;
-}
-.separator-arrow img {
-  height: auto;
+.separator-arrow-svg {
   display: block;
-  image-rendering: pixelated;
+  opacity: 0.85;
 }
 .separator-req {
   font-family: var(--font-ui);
   font-size: 11px;
-  color: var(--text-muted);
   margin-top: 2px;
   letter-spacing: 0;
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* ---- Skill section (group of icons in one section) ---- */
@@ -267,36 +265,30 @@ body::before {
 .skill-section-icons {
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
-  gap: 3px;
+  align-items: center;
+  gap: 0;
   padding-bottom: 4px;
 }
 
 /* Pick-one underline bracket */
 .skill-section.pick-one .skill-section-icons {
-  padding-bottom: 8px;
+  padding-bottom: 4px;
 }
 
 .pick-one-underline {
-  height: 3px;
+  height: 2px;
   width: 100%;
-  border-radius: 0;
   border: none;
   margin-top: 0;
-  position: relative;
 }
-.pick-one-underline::before,
-.pick-one-underline::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  width: 2px;
-  height: 7px;
-  background: inherit;
-  border-radius: 0;
+
+/* Vertical separator between individual skill icons */
+.skill-separator {
+  width: 1px;
+  align-self: stretch;
+  flex-shrink: 0;
+  margin: 6px 2px;
 }
-.pick-one-underline::before { left: 0; }
-.pick-one-underline::after  { right: 0; }
 
 /* ---- Skill Icon ---- */
 .skill-icon {
