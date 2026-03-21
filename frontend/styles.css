@@ -72,7 +72,7 @@ body::before {
 .app {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 16px 40px;
+  padding: 0 16px 300px;
   position: relative;
   z-index: 1;
 }
@@ -325,14 +325,39 @@ body::before {
   position: fixed;
   z-index: 10000;
   width: 700px;
-  background: rgba(0, 0, 0, 0.95);
-  border: 1px solid;
+  background-color: rgba(0, 0, 0, 0.95);
+  border: none;
   border-radius: 0;
-  padding: 10px;
+  padding: 10px 16px;
   pointer-events: none;
   font-family: var(--font-ui);
   font-size: 14px;
   line-height: 1.55;
+}
+
+/* Edge images as pseudo-elements so filter: brightness only affects them */
+.tooltip-overlay::before,
+.tooltip-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 13px;
+  background-repeat: no-repeat;
+  background-size: 13px 100%;
+  filter: brightness(1.4);
+  pointer-events: none;
+  z-index: 1;
+}
+.tooltip-overlay::before {
+  left: 0;
+  background-image: url('appAssets/left_tooltip_edge.png');
+  background-position: left center;
+}
+.tooltip-overlay::after {
+  right: 0;
+  background-image: url('appAssets/right_tooltip_edge.png');
+  background-position: right center;
 }
 
 .tooltip-title {

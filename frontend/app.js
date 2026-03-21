@@ -161,32 +161,38 @@ function TooltipRenderer({ tooltipElements }) {
   );
 }
 
-// ---- Tooltip Overlay (portal, fixed position, cursor-clamped) -------------
+// ---- Tooltip Overlay (portal, fixed position, anchored below skill icon) --
 
-function TooltipOverlay({ skill, aptitudeColor, mouseX, mouseY }) {
+function TooltipOverlay({ skill, aptitudeColor, anchorRef }) {
   const ref = useRef(null);
   const [pos, setPos] = useState({ left: -9999, top: -9999, visible: false });
 
   useLayoutEffect(() => {
-    if (!ref.current) return;
-    const OFFSET = 16;
-    const rect = ref.current.getBoundingClientRect();
+    if (!ref.current || !anchorRef.current) return;
+    const tooltipRect = ref.current.getBoundingClientRect();
+    const iconRect    = anchorRef.current.getBoundingClientRect();
     const vw = window.innerWidth;
     const vh = window.innerHeight;
 
-    let left = mouseX + OFFSET;
-    let top  = mouseY + OFFSET;
+    // Anchor top-left of tooltip to bottom-left of skill icon
+    let left = iconRect.left;
+    let top  = iconRect.bottom;
 
-    if (left + rect.width  > vw - 10) left = Math.max(10, mouseX - rect.width  - OFFSET);
-    if (top  + rect.height > vh - 10) top  = Math.max(10, vh      - rect.height - 10);
-    left = Math.max(10, left);
+    // Shift left if the tooltip would overflow the right edge of the viewport
+    if (left + tooltipRect.width > vw - 22) {
+      left = Math.max(10, vw - tooltipRect.width - 22);
+    }
+
+    // Only offset vertically when the tooltip would be cut off at the bottom
+    if (top + tooltipRect.height > vh - 10) {
+      top = Math.max(10, vh - tooltipRect.height - 10);
+    }
 
     setPos({ left, top, visible: true });
-  }, [mouseX, mouseY, skill]);
+  }, [skill]);
 
-  const borderColor = rgbaToCSS(aptitudeColor);
-  const glowColor   = rgbaToCSS(aptitudeColor, 0.25);
-  const glowColor2  = rgbaToCSS(aptitudeColor, 0.10);
+  const glowColor  = rgbaToCSS(aptitudeColor, 0.25);
+  const glowColor2 = rgbaToCSS(aptitudeColor, 0.10);
 
   return ReactDOM.createPortal(
     <div
@@ -196,7 +202,6 @@ function TooltipOverlay({ skill, aptitudeColor, mouseX, mouseY }) {
         left: pos.left,
         top:  pos.top,
         visibility: pos.visible ? 'visible' : 'hidden',
-        borderColor,
         boxShadow: `0 0 16px ${glowColor}, 0 0 4px ${glowColor2}, inset 0 0 20px rgba(0,0,0,0.6)`,
       }}
     >
@@ -213,18 +218,23 @@ function SkillIcon({ skill, aptitude }) {
   const size     = 90;
 
   const [hovered, setHovered] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const iconRef = useRef(null);
+
+  // Hide tooltip immediately when the user scrolls (capture phase catches any scrollable ancestor)
+  useEffect(() => {
+    if (!hovered) return;
+    const hide = () => setHovered(false);
+    window.addEventListener('scroll', hide, true);
+    return () => window.removeEventListener('scroll', hide, true);
+  }, [hovered]);
 
   const borderColor = rgbaToCSS(aptitude.color);
   const glowColor   = rgbaToCSS(aptitude.color, hovered ? 0.6 : 0.2);
   const glowStrong  = rgbaToCSS(aptitude.color, 0.35);
 
-  const handleMove = useCallback((e) => {
-    setMousePos({ x: e.clientX, y: e.clientY });
-  }, []);
-
   return (
     <div
+      ref={iconRef}
       className={`skill-icon${isOrigin ? ' origin' : ''}`}
       style={{
         width:  size,
@@ -236,15 +246,13 @@ function SkillIcon({ skill, aptitude }) {
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onMouseMove={handleMove}
     >
       <img src={skill.iconExportPath} alt={skill.name} />
       {hovered && (
         <TooltipOverlay
           skill={skill}
           aptitudeColor={aptitude.color}
-          mouseX={mousePos.x}
-          mouseY={mousePos.y}
+          anchorRef={iconRef}
         />
       )}
     </div>
@@ -608,15 +616,6 @@ function App() {
           </>
         )}
       </main>
-
-      {/* ── Footer ── */}
-      <footer className="app-footer">
-        <span>v{data.version}</span>
-        &nbsp;·&nbsp;
-        <span>exported {data.exportDate?.slice(0, 10)}</span>
-        &nbsp;·&nbsp;
-        <span>{total} aptitude{total !== 1 ? 's' : ''} shown</span>
-      </footer>
     </div>
   );
 }
