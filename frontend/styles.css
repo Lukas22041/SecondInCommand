@@ -43,7 +43,7 @@ body {
 body::before {
   content: '';
   pointer-events: none;
-  position: fixed; inset: 0; z-index: 9999;
+  position: fixed; inset: 0; z-index: 0;
   background:
     repeating-linear-gradient(
       0deg,
@@ -73,6 +73,8 @@ body::before {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 16px 40px;
+  position: relative;
+  z-index: 1;
 }
 
 /* ---- Header ---- */
@@ -231,25 +233,14 @@ body::before {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 2px;
-  min-width: 20px;
+  padding: 0 12px;
   flex-shrink: 0;
   align-self: stretch;
   position: relative;
 }
 .separator-arrow-svg {
   display: block;
-  opacity: 0.85;
-}
-.separator-req {
-  font-family: var(--font-ui);
-  font-size: 11px;
-  margin-top: 2px;
-  letter-spacing: 0;
-  position: absolute;
-  bottom: 6px;
-  left: 50%;
-  transform: translateX(-50%);
+  opacity: 0.65;
 }
 
 /* ---- Skill section (group of icons in one section) ---- */
@@ -267,24 +258,19 @@ body::before {
   flex-direction: row;
   align-items: center;
   gap: 0;
-  padding-bottom: 4px;
 }
 
 /* Pick-one underline bracket */
-.skill-section.pick-one .skill-section-icons {
-  padding-bottom: 4px;
-}
-
 .pick-one-underline {
   height: 3px;
   width: 100%;
   border: none;
-  margin-top: 0;
+  margin-top: 4px;
 }
 
 /* Vertical separator between individual skill icons */
 .skill-separator {
-  width: 2px;
+  width: 3px;
   align-self: stretch;
   flex-shrink: 0;
   margin: 0 5px;

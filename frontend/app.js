@@ -243,22 +243,19 @@ function SkillIcon({ skill, aptitude }) {
 
 function SectionSeparator({ requiredPreviousSkills, aptitude }) {
   const { r, g, b } = aptitude.color;
-  const strokeColor = `rgba(${r},${g},${b},0.6)`;
-  const fillColor   = `rgba(${r},${g},${b},0.08)`;
+  const strokeColor = `rgba(${r},${g},${b},0.5)`;
+  const fillColor   = `rgba(${r},${g},${b},0.06)`;
   return (
     <div className="section-separator">
-      <svg className="separator-arrow-svg" viewBox="0 0 14 90" width="14" height="90">
+      <svg className="separator-arrow-svg" viewBox="0 0 20 72" width="20" height="72">
         <polygon
-          points="0,8 8,0 14,45 8,90 0,82 5,45"
+          points="0,0 12,0 20,36 12,72 0,72"
           fill={fillColor}
           stroke={strokeColor}
-          strokeWidth="1.5"
-          strokeLinejoin="round"
+          strokeWidth="2"
+          strokeLinejoin="miter"
         />
       </svg>
-      {requiredPreviousSkills > 0 && (
-        <div className="separator-req" style={{ color: strokeColor }}>{requiredPreviousSkills}</div>
-      )}
     </div>
   );
 }
@@ -270,8 +267,8 @@ function SkillSection({ section, aptitude }) {
   const { r, g, b } = aptitude.color;
   const sepColor      = `rgba(${r},${g},${b},0.5)`;
   const ulColor       = `rgba(${r},${g},${b},0.75)`;
-  const separatorGradient = `linear-gradient(to bottom, transparent 0%, ${sepColor} 15%, ${sepColor} 85%, transparent 100%)`;
-  const underlineGradient = `linear-gradient(to right,  transparent 0%, ${ulColor}  15%, ${ulColor}  85%, transparent 100%)`;
+  const separatorGradient = `linear-gradient(to bottom, transparent 0%, ${sepColor} 70%, transparent 100%)`;
+  const underlineGradient = `linear-gradient(to right,  transparent 0%, ${ulColor}  70%, transparent 100%)`;
 
   return (
     <div className={`skill-section${canChooseMultiple ? '' : ' pick-one'}`}>
