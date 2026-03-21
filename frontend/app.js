@@ -306,7 +306,7 @@ function SkillSection({ section, aptitude }) {
 
 // ---- Aptitude Row ---------------------------------------------------------
 
-function AptitudeRow({ aptitude }) {
+function AptitudeRow({ aptitude, sharedCategoryIds }) {
   const aptColor        = rgbaToCSS(aptitude.color);
   const isSIC           = aptitude.modName === 'Second-in-Command';
 
@@ -319,11 +319,6 @@ function AptitudeRow({ aptitude }) {
       {/* Section title */}
       <div className="aptitude-title">
         <a className="aptitude-title-link" href={`#aptitude-${aptitude.id}`}>
-          {aptitude.categories && aptitude.categories.length > 0 && (
-            <span className="aptitude-category">
-              [{aptitude.categories[0].name}]
-            </span>
-          )}
           <span>{aptitude.name}</span>
         </a>
         {!isSIC && (
@@ -356,6 +351,23 @@ function AptitudeRow({ aptitude }) {
           </Fragment>
         ))}
       </div>
+
+      {/* Category notice — only shown when this category is shared by 2+ aptitudes */}
+      {aptitude.categories && aptitude.categories.length > 0 && (() => {
+        const cat = aptitude.categories[0];
+        if (!sharedCategoryIds || !sharedCategoryIds.has(cat.id)) return null;
+        const catColor = rgbaToCSS(cat.color);
+        return (
+          <div className="aptitude-category-notice">
+            <img className="aptitude-category-notice-icon" src="appAssets/16x_star_circle.webp" alt="" />
+            <span>
+              This aptitude is part of the{' '}
+              <span style={{ color: catColor }}>{cat.name}</span>
+              {' '}category. It can not be used together with other aptitudes of the same category.
+            </span>
+          </div>
+        );
+      })()}
     </div>
   );
 }
@@ -463,30 +475,41 @@ function App() {
   }, []);
 
   // ---- Derived data -------------------------------------------------------
-  const { sicAptitudes, thirdPartyAptitudes, allMods, allCategories } = useMemo(() => {
-    if (!data) return { sicAptitudes: [], thirdPartyAptitudes: [], allMods: [], allCategories: [] };
+  const { sicAptitudes, thirdPartyAptitudes, allMods, allCategories, sharedCategoryIds } = useMemo(() => {
+    if (!data) return { sicAptitudes: [], thirdPartyAptitudes: [], allMods: [], allCategories: [], sharedCategoryIds: new Set() };
 
     const raw = (data.aptitudes || []).filter(apt => {
       const tags = apt.tags || [];
       return !tags.includes('hide_in_codex') && !tags.includes('dont_include_in_wiki');
     });
 
-    const sic  = raw.filter(a => a.modName === 'Second-in-Command').sort((a, b) => a.order - b.order);
+    // Count how many aptitudes belong to each category across the whole dataset
+    const catCounts = {};
+    raw.forEach(apt => {
+      (apt.categories || []).forEach(cat => {
+        if (cat.id) catCounts[cat.id] = (catCounts[cat.id] || 0) + 1;
+      });
+    });
+
+    // Categories shared by 2+ aptitudes — only these warrant the notice and filter entry
+    const sharedIds = new Set(Object.keys(catCounts).filter(id => catCounts[id] > 1));
+
+    const sic   = raw.filter(a => a.modName === 'Second-in-Command').sort((a, b) => a.order - b.order);
     const third = raw.filter(a => a.modName !== 'Second-in-Command').sort((a, b) => a.order - b.order);
 
     const thirdMods = [...new Set(third.map(a => a.modName))];
     const mods = ['Second-in-Command', ...thirdMods];
 
-    // Collect unique categories from all aptitudes
+    // Only expose shared categories to the filter panel
     const catMap = {};
     raw.forEach(apt => {
       (apt.categories || []).forEach(cat => {
-        if (cat.id) catMap[cat.id] = cat;
+        if (cat.id && sharedIds.has(cat.id)) catMap[cat.id] = cat;
       });
     });
     const cats = Object.values(catMap);
 
-    return { sicAptitudes: sic, thirdPartyAptitudes: third, allMods: mods, allCategories: cats };
+    return { sicAptitudes: sic, thirdPartyAptitudes: third, allMods: mods, allCategories: cats, sharedCategoryIds: sharedIds };
   }, [data]);
 
   // Effective sets (null → everything)
@@ -573,7 +596,7 @@ function App() {
         )}
 
         {/* Native SIC aptitudes */}
-        {filteredSic.map(apt => <AptitudeRow key={apt.id} aptitude={apt} />)}
+        {filteredSic.map(apt => <AptitudeRow key={apt.id} aptitude={apt} sharedCategoryIds={sharedCategoryIds} />)}
 
         {/* Third-party aptitudes */}
         {filteredThird.length > 0 && (
@@ -581,7 +604,7 @@ function App() {
             <div className="third-party-divider">
               <span>Third-Party Mod Skills</span>
             </div>
-            {filteredThird.map(apt => <AptitudeRow key={apt.id} aptitude={apt} />)}
+            {filteredThird.map(apt => <AptitudeRow key={apt.id} aptitude={apt} sharedCategoryIds={sharedCategoryIds} />)}
           </>
         )}
       </main>

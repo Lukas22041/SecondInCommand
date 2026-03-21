@@ -177,11 +177,27 @@ body::before {
   color: #dde2f0;
 }
 
-.aptitude-category {
+.aptitude-category-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 9px 13px;
+  border: 1px solid var(--border-mid);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-muted);
   font-size: 12px;
-  opacity: 0.55;
-  letter-spacing: 0.1em;
-  color: var(--text-muted) !important;
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+}
+
+.aptitude-category-notice-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+  opacity: 0.7;
+  image-rendering: pixelated;
 }
 
 .aptitude-mod-badge {
