@@ -66,17 +66,28 @@ function TooltipLabel({ el }) {
       </div>
     );
   }
-  // Multi-line: apply highlights only to first line for simplicity (they span single lines in practice)
+  // Multi-line: adjust highlight indices per-line so each line gets the correct highlights
   return (
     <div className="tooltip-label" style={{ paddingTop: el.padding || 0 }}>
-      {lines.map((line, i) => (
-        <div key={i}>
-          {i === 0
-            ? <HighlightedText text={line} highlightRanges={el.highlightRanges} baseColor={baseColor} />
-            : <span style={{ color: baseColor }}>{line}</span>
-          }
-        </div>
-      ))}
+      {lines.map((line, i) => {
+        // Calculate start offset of this line in the original text
+        let offset = 0;
+        for (let j = 0; j < i; j++) offset += lines[j].length + 1; // +1 for the '\n'
+        const lineEnd = offset + line.length;
+        // Filter ranges that overlap this line and adjust to line-local indices
+        const lineRanges = (el.highlightRanges || [])
+          .filter(r => r.endIndex > offset && r.startIndex < lineEnd)
+          .map(r => ({
+            ...r,
+            startIndex: Math.max(0, r.startIndex - offset),
+            endIndex:   Math.min(line.length, r.endIndex - offset),
+          }));
+        return (
+          <div key={i}>
+            <HighlightedText text={line} highlightRanges={lineRanges} baseColor={baseColor} />
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -98,6 +109,11 @@ function TooltipImageWithText({ el }) {
       />
       <div className="tooltip-image-text">
         {children.map((child, i) => {
+          if (child.type === 'title') return (
+            <div key={i} className="tooltip-title" style={{ color: rgbaToCSS(child.color) }}>
+              {child.text}
+            </div>
+          );
           if (child.type === 'label') return <TooltipLabel key={i} el={child} />;
           if (child.type === 'spacer') {
             return <div key={i} className="tooltip-spacer" style={{ height: Math.max(2, child.height || 2) }} />;
