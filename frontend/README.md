@@ -2,11 +2,13 @@
 
 A static React app (CDN + Babel, no build step) that renders all aptitude skill rows from `api/api.json` with hover tooltips — matching Starsector's dark sci-fi UI aesthetic.
 
+For a full technical reference — API schema, component architecture, and build pipeline — see **[DOCS.md](DOCS.md)**.
+
 ## File Layout
 
 ```
 frontend/
-├── Caddyfile           — Caddy config for Railway (static hosting)
+├── _headers            — Cloudflare Pages cache rules
 ├── index.html          — Entry point
 ├── styles.css          — Starsector Theme
 ├── start.py            — Local dev server (Python 3)
@@ -45,12 +47,14 @@ An optional `--port` flag is available: `python start.py --port 9000`.
 
 ---
 
-## Deploying to Railway
+## Deploying to Cloudflare Pages
 
 1. Push this folder as the root of a GitHub repo.
-2. Create a new Railway project → **Deploy from GitHub repo**.
-3. Railway detects the `Caddyfile` and uses the Caddy static-site template automatically.
-4. No build command or install step is needed.
+2. In the [Cloudflare dashboard](https://dash.cloudflare.com/) go to **Workers & Pages → Create → Pages → Connect to Git**.
+3. Select the repo. Set **build command** to *(empty)* and **output directory** to `/`.
+4. Click **Save and Deploy** — no build step or install is needed.
+5. To use your Cloudflare domain: go to the project's **Custom Domains** tab and add it.
+   Cloudflare configures DNS automatically since your domain is already on Cloudflare.
 
 ---
 
