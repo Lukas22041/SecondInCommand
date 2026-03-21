@@ -237,7 +237,7 @@ body::before {
   flex-wrap: nowrap;
   gap: 0;
   min-height: 90px;
-  padding: 6px 8px;
+  padding: 8px 8px;
   border-left: 3px solid;
   /* background & border-left-color set inline per aptitude */
 }
