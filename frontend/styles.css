@@ -503,3 +503,346 @@ body::before {
 }
 .error { color: #d94040; }
 
+/* ---- Page Banner ---- */
+.page-banner {
+  width: 70%;
+  margin: 40px auto 0;
+  line-height: 0;
+}
+.page-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: auto;
+}
+
+/* ---- Nav links (inside app-header) ---- */
+.app-nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.app-nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border: 1px solid transparent;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.app-nav a:hover {
+  color: var(--text-base);
+  border-color: var(--border-subtle);
+  background: rgba(255,255,255,0.03);
+}
+
+/* ---- Page sections ---- */
+.page-section {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.page-section:last-child {
+  border-bottom: none;
+}
+
+.section-body {
+  padding: 0 14px;
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.section-body p {
+  color: var(--text-base);
+  font-size: 18px;
+  line-height: 1.7;
+}
+.section-body strong {
+  color: rgb(255, 210, 0);
+  font-weight: 600;
+}
+
+/* ---- Section headings ---- */
+.section-heading {
+  font-family: 'Orbitron', var(--font-ui);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(170, 222, 255);
+  padding: 0 14px 10px;
+  border-bottom: 1px solid rgba(170, 222, 255, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  scroll-margin-top: 70px;
+}
+
+.section-subheading {
+  font-family: 'Orbitron', var(--font-ui);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(170, 222, 255, 0.9);
+  padding: 18px 14px 8px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  scroll-margin-top: 70px;
+}
+
+/* ---- Share anchor (button) ---- */
+.heading-anchor {
+  font-family: var(--font-ui);
+  font-size: 0.72em;
+  color: var(--text-dim);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s;
+  flex-shrink: 0;
+  line-height: 1;
+  letter-spacing: 0.05em;
+}
+.section-heading:hover .heading-anchor,
+.section-subheading:hover .heading-anchor,
+.aptitude-title:hover .aptitude-anchor {
+  opacity: 1;
+}
+.heading-anchor:hover {
+  color: rgb(170, 222, 255);
+  opacity: 1;
+}
+.heading-anchor.copied {
+  color: #8de0b0;
+  opacity: 1;
+}
+
+/* Aptitude-row anchor (styled slightly smaller, inline with title) */
+.aptitude-anchor {
+  font-size: 11px;
+}
+.aptitude-title-text {
+  /* natural flow, badge uses margin-left: auto to stay right */
+}
+.aptitude-row {
+  scroll-margin-top: 70px;
+}
+
+/* ---- Aptitudes subsection ---- */
+.aptitudes-subsection {
+  margin-top: 4px;
+}
+
+/* ---- Gallery Carousel ---- */
+.carousel {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.carousel-track {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  width: 100%;
+}
+.carousel-multi {
+  flex: 1;
+  display: flex;
+  gap: 5px;
+  align-items: stretch;
+}
+.carousel-thumb-wrap {
+  flex: 1;
+  line-height: 0;
+  border: 1px solid var(--border-mid);
+  background: #05060a;
+  cursor: zoom-in;
+  overflow: hidden;
+  transition: border-color 0.15s, opacity 0.15s;
+}
+.carousel-thumb-wrap:hover {
+  border-color: var(--border-bright);
+  opacity: 0.88;
+}
+.carousel-thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.carousel-btn {
+  flex-shrink: 0;
+  width: 28px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-mid);
+  color: var(--text-base);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 2px;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.carousel-btn:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: var(--border-bright);
+  color: #fff;
+}
+.carousel-dots {
+  display: flex;
+  gap: 6px;
+}
+.carousel-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--text-dim);
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s;
+}
+.carousel-dot.active {
+  background: rgb(170, 222, 255);
+}
+.carousel-dot:hover:not(.active) {
+  background: var(--text-muted);
+}
+
+/* ---- Lightbox ---- */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  background: rgba(0, 0, 0, 0.90);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+.lightbox-image {
+  max-width: 90vw;
+  max-height: 88vh;
+  object-fit: contain;
+  cursor: default;
+  box-shadow: 0 0 60px rgba(0,0,0,0.9);
+}
+.lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid var(--border-mid);
+  color: var(--text-base);
+  font-size: 16px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.lightbox-close:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+
+/* ---- Links list ---- */
+.links-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.links-list a {
+  color: rgb(153, 200, 230);
+  text-decoration: none;
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  transition: color 0.15s;
+}
+.links-list a:hover {
+  color: rgb(170, 222, 255);
+  text-decoration: underline;
+}
+
+/* ---- Incompatibilities lists ---- */
+.incompat-list {
+  list-style: disc;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--text-base);
+  font-size: 18px;
+  line-height: 1.65;
+}
+.incompat-crash {
+  margin-bottom: 4px;
+}
+
+/* ---- About section divider ---- */
+hr.section-divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(170, 222, 255, 0.28) 15%, rgba(170, 222, 255, 0.28) 85%, transparent);
+  margin: 14px 0;
+}
+
+/* ---- Aptitude subsection description ---- */
+.subsection-description {
+  padding: 10px 14px 0;
+  color: var(--text-base);
+  font-size: 18px;
+  line-height: 1.65;
+}
+.subsection-description strong {
+  color: rgb(255, 210, 0);
+}
+
+/* ---- Lightbox prev/next nav ---- */
+.lightbox-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid var(--border-mid);
+  color: var(--text-base);
+  font-size: 42px;
+  line-height: 1;
+  width: 48px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 0;
+  padding: 0 0 4px;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  z-index: 1;
+}
+.lightbox-nav-btn:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: var(--border-bright);
+  color: #fff;
+}
+.lightbox-nav-prev { left: 22px; }
+.lightbox-nav-next { right: 22px; }
+

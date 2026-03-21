@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__jetbrains__get_project_modules",
+      "mcp__jetbrains__list_directory_tree",
+      "Bash(find 'C:/Program Files \\(x86\\)/Fractal Softworks/Starsector/mods/SecondInCommand/src/second_in_command/skills' -type f -name *.java)",
+      "Bash(ls -la \"C:/Program Files \\(x86\\)/Fractal Softworks/Starsector/mods/SecondInCommand/src/second_in_command/skills/\")",
+      "Bash(find \"C:/Program Files \\(x86\\)/Fractal Softworks/Starsector/mods/SecondInCommand/src/second_in_command/skills/warfare\" -type f -name \"*.java\")",
+      "Bash(find \"C:/Program Files \\(x86\\)/Fractal Softworks/Starsector/mods/SecondInCommand/src/second_in_command/skills/technology\" -type f -name \"*.java\")",
+      "Bash(find \"C:/Program Files \\(x86\\)/Fractal Softworks/Starsector/mods/SecondInCommand/src/second_in_command/skills/engineering\" -type f -name \"*.java\")",
+      "Bash(find \"C:/Program Files \\(x86\\)/Fractal Softworks/Starsector/mods/SecondInCommand/src/second_in_command/skills/management\" -type f -name \"*.java\")",
+      "Bash(ls \"C:/Program Files \\(x86\\)/Fractal Softworks/Starsector/mods/SecondInCommand/src/second_in_command/skills/warfare/\")",
+      "Bash(ls \"C:/Program Files \\(x86\\)/Fractal Softworks/Starsector/mods/SecondInCommand/src/second_in_command/skills/technology/\")",
+      "Bash(ls \"C:/Program Files \\(x86\\)/Fractal Softworks/Starsector/mods/SecondInCommand/src/second_in_command/skills/engineering/\")",
+      "mcp__jetbrains__get_file_text_by_path",
+      "Bash(ls \"C:/Program Files \\(x86\\)/Fractal Softworks/Starsector/mods/SecondInCommand/src/second_in_command/buildscript/\")",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(ls 'C:/Program Files \\(x86\\)/Fractal Softworks/Starsector/mods/SecondInCommand/build_export/assets/')"
+    ]
+  }
+}

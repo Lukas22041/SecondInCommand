@@ -318,26 +318,31 @@ function AptitudeRow({ aptitude, sharedCategoryIds }) {
   const aptColor        = rgbaToCSS(aptitude.color);
   const isSIC           = aptitude.modName === 'Second-in-Command';
 
-  // Row background: gradient from dark to aptitude color at low opacity (flat look)
   const rowBg = `linear-gradient(to right, rgba(0,0,0,0.15), rgba(${aptitude.color.r},${aptitude.color.g},${aptitude.color.b},0.14))`;
   const borderLeftColor = aptColor;
 
   return (
     <div className="aptitude-row" id={`aptitude-${aptitude.id}`}>
-      {/* Section title */}
+      {/* Section title — text is not a link; # anchor appears on hover */}
       <div className="aptitude-title">
-        <a className="aptitude-title-link" href={`#aptitude-${aptitude.id}`}>
-          <span>{aptitude.name}</span>
-        </a>
+        <span className="aptitude-title-text">{aptitude.name}</span>
+        <AnchorCopy id={`aptitude-${aptitude.id}`} extraClass="aptitude-anchor" />
         {!isSIC && (
-          <span className="aptitude-mod-badge">{aptitude.modName}</span>
+          <span
+            className="aptitude-mod-badge"
+            style={{
+              color:       rgbaToCSS(aptitude.color, 0.85),
+              borderColor: rgbaToCSS(aptitude.color, 0.35),
+              background:  rgbaToCSS(aptitude.color, 0.07),
+            }}
+          >{aptitude.modName}</span>
         )}
       </div>
 
       {/* Colored accent bar */}
       <div className="aptitude-color-bar" style={{ background: aptColor }} />
 
-      {/* Optional description (future-proofed) */}
+      {/* Optional description */}
       {aptitude.description && (
         <p className="aptitude-description">{aptitude.description}</p>
       )}
@@ -345,10 +350,7 @@ function AptitudeRow({ aptitude, sharedCategoryIds }) {
       {/* Skills */}
       <div
         className="aptitude-skills-row"
-        style={{
-          background: rowBg,
-          borderLeftColor: borderLeftColor,
-        }}
+        style={{ background: rowBg, borderLeftColor }}
       >
         {aptitude.sections.map((section, i) => (
           <Fragment key={i}>
@@ -360,7 +362,7 @@ function AptitudeRow({ aptitude, sharedCategoryIds }) {
         ))}
       </div>
 
-      {/* Category notice — only shown when this category is shared by 2+ aptitudes */}
+      {/* Category notice */}
       {aptitude.categories && aptitude.categories.length > 0 && (() => {
         const cat = aptitude.categories[0];
         if (!sharedCategoryIds || !sharedCategoryIds.has(cat.id)) return null;
@@ -380,74 +382,262 @@ function AptitudeRow({ aptitude, sharedCategoryIds }) {
   );
 }
 
-// ---- Filter Panel --------------------------------------------------------
+// ---- Share / copy-to-clipboard anchor ------------------------------------
 
-function FilterPanel({
-  allMods, allCategories,
-  activeMods, activeCategories,
-  onModToggle, onCategoryToggle, onReset,
-}) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef(null);
+function AnchorCopy({ id, extraClass = '' }) {
+  const [copied, setCopied] = useState(false);
 
-  // Close on outside click
-  useEffect(() => {
-    if (!open) return;
-    const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, [open]);
-
-  const activeCount =
-    (activeMods ? allMods.length - activeMods.size : 0) +
-    (activeCategories ? allCategories.length - activeCategories.size : 0);
+  const handleCopy = (e) => {
+    e.preventDefault();
+    const url = `${window.location.href.split('#')[0]}#${id}`;
+    const write = () => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(write).catch(write);
+    } else {
+      // fallback for file:// or older browsers
+      const ta = document.createElement('textarea');
+      ta.value = url;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (_) {}
+      document.body.removeChild(ta);
+      write();
+    }
+  };
 
   return (
-    <div className="filter-panel" ref={ref}>
-      <button className="filter-toggle-btn" onClick={() => setOpen(o => !o)}>
-        Filters{activeCount > 0 ? ` (${activeCount} active)` : ''} {open ? '▲' : '▼'}
-      </button>
+    <button
+      className={`heading-anchor${extraClass ? ' ' + extraClass : ''}${copied ? ' copied' : ''}`}
+      onClick={handleCopy}
+      title="Copy link to clipboard"
+    >
+      {copied ? 'copied!' : 'share'}
+    </button>
+  );
+}
 
-      {open && (
-        <div className="filter-dropdown">
-          {/* Mod filters */}
-          <div className="filter-section">
-            <div className="filter-section-title">Mods</div>
-            {allMods.map(mod => (
-              <label key={mod} className="filter-option">
-                <input
-                  type="checkbox"
-                  checked={activeMods.has(mod)}
-                  onChange={() => onModToggle(mod)}
+// ---- Section Heading with hoverable anchor --------------------------------
+
+function SectionHeading({ id, level = 2, children }) {
+  const Tag = `h${level}`;
+  const cls = level === 2 ? 'section-heading' : 'section-subheading';
+  return (
+    <Tag id={id} className={cls}>
+      {children}
+      <AnchorCopy id={id} />
+    </Tag>
+  );
+}
+
+// ---- Gallery Carousel -----------------------------------------------------
+
+const GALLERY_IMAGES = [
+  'appAssets/MainGallery1.png',
+  'appAssets/MainGallery2.png',
+  'appAssets/MainGallery3.png',
+  'appAssets/MainGallery4.png',
+];
+
+function GalleryCarousel() {
+  const COUNT   = GALLERY_IMAGES.length;
+  const VISIBLE = 3;
+  const [startIdx,    setStartIdx]    = useState(0);
+  const [lightboxIdx, setLightboxIdx] = useState(null);
+
+  const prev = () => setStartIdx(i => (i - 1 + COUNT) % COUNT);
+  const next = () => setStartIdx(i => (i + 1) % COUNT);
+
+  // ESC closes lightbox
+  useEffect(() => {
+    if (lightboxIdx === null) return;
+    const handler = (e) => { if (e.key === 'Escape') setLightboxIdx(null); };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [lightboxIdx]);
+
+  const visibleIndices = Array.from({ length: VISIBLE }, (_, i) => (startIdx + i) % COUNT);
+
+  return (
+    <>
+      <div className="carousel">
+        <div className="carousel-track">
+          <button className="carousel-btn" onClick={prev} aria-label="Previous">&#8249;</button>
+          <div className="carousel-multi">
+            {visibleIndices.map((imgIdx) => (
+              <div
+                key={imgIdx}
+                className="carousel-thumb-wrap"
+                onClick={() => setLightboxIdx(imgIdx)}
+                title="Click to enlarge"
+              >
+                <img
+                  src={GALLERY_IMAGES[imgIdx]}
+                  alt={`Gallery image ${imgIdx + 1}`}
+                  className="carousel-thumb"
                 />
-                <span>{mod}</span>
-              </label>
+              </div>
             ))}
           </div>
-
-          {/* Category filters */}
-          {allCategories.length > 0 && (
-            <div className="filter-section">
-              <div className="filter-section-title">Categories</div>
-              {allCategories.map(cat => (
-                <label key={cat.id} className="filter-option">
-                  <input
-                    type="checkbox"
-                    checked={activeCategories.has(cat.id)}
-                    onChange={() => onCategoryToggle(cat.id)}
-                  />
-                  <span style={{ color: rgbaToCSS(cat.color) }}>{cat.name}</span>
-                </label>
-              ))}
-            </div>
-          )}
-
-          <button className="filter-reset-btn" onClick={onReset}>
-            Reset All Filters
-          </button>
+          <button className="carousel-btn" onClick={next} aria-label="Next">&#8250;</button>
         </div>
+        <div className="carousel-dots">
+          {GALLERY_IMAGES.map((_, i) => (
+            <button
+              key={i}
+              className={`carousel-dot${i === startIdx ? ' active' : ''}`}
+              onClick={() => setStartIdx(i)}
+              aria-label={`Starting at image ${i + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {lightboxIdx !== null && ReactDOM.createPortal(
+        <div className="lightbox-overlay" onClick={() => setLightboxIdx(null)}>
+          <button
+            className="lightbox-nav-btn lightbox-nav-prev"
+            onClick={e => { e.stopPropagation(); setLightboxIdx(i => (i - 1 + COUNT) % COUNT); }}
+            aria-label="Previous image"
+          >&#8249;</button>
+          <img
+            src={GALLERY_IMAGES[lightboxIdx]}
+            alt={`Gallery image ${lightboxIdx + 1}`}
+            className="lightbox-image"
+            onClick={e => e.stopPropagation()}
+          />
+          <button
+            className="lightbox-nav-btn lightbox-nav-next"
+            onClick={e => { e.stopPropagation(); setLightboxIdx(i => (i + 1) % COUNT); }}
+            aria-label="Next image"
+          >&#8250;</button>
+          <button className="lightbox-close" onClick={() => setLightboxIdx(null)} aria-label="Close">✕</button>
+        </div>,
+        document.body
       )}
-    </div>
+    </>
+  );
+}
+
+// ---- About Section --------------------------------------------------------
+
+function AboutSection({ sicAptitudeCount, sicSkillCount }) {
+  return (
+    <section className="page-section">
+      <SectionHeading id="about" level={2}>About the Mod</SectionHeading>
+      <div className="section-body">
+        <p>
+          Second-in-Command (SiC) is a feature overhaul mod for the game Starsector.
+          It replaces the game's skill system with an alternative approach that still tries to keep it
+          relatively familiar to the original system. Its focus is to allow further specialisation and to
+          remove the issue of having to choose between fleet-wide and personal skills.
+        </p>
+        <p>
+          Overall the mod currently adds <strong>{sicAptitudeCount}</strong> aptitudes with a total
+          of <strong>{sicSkillCount}</strong> skills. Additional skills can be found through crossover
+          content. The most defining aspect of the mod is that only three of these aptitudes can be
+          active at a time.
+        </p>
+        <hr className="section-divider" />
+        <p>
+          In Vanilla, you have the Combat, <strong>Leadership</strong>, <strong>Technology</strong> and{' '}
+          <strong>Industry</strong> aptitudes. In Second-in-Command, only the Combat tree remains, and
+          the other aptitudes have been replaced with adjustable slots for Executive Officers.
+        </p>
+        <p>
+          <strong>Executive Officers (XOs)</strong> are a new, separate type of officer that you can
+          find by hiring them from the comm directory or coming across them during exploration. Executive
+          Officers always have their own aptitude. Whatever Aptitude they have decides which skills will
+          be available when they are put into one of the just mentioned slots. These officers have their
+          own experience gain and skillpoints, and as such each Aptitude has their own skillpoints to
+          allocate. They always have one skill pre-unlocked, and are able to gain 5 additional skill
+          points over level ups.
+        </p>
+        <p>
+          The player character themself now only gains a skillpoint on every second level, with some
+          effects filling in the blanks. The player's skillpoints can now only be put into the combat
+          skill tree, which has been extended with the four other combat skills from other vanilla
+          aptitudes.
+        </p>
+        <p>
+          Notably, as there are only three slots available, the player now has to make a more defined
+          choice on what aptitudes they feel is important to what they want to go for. Another large
+          change is that NPC Fleets can now also acquire skills that benefit their fleet as well,
+          balancing the playfield to some extent.
+        </p>
+        <GalleryCarousel />
+      </div>
+    </section>
+  );
+}
+
+// ---- Links Section --------------------------------------------------------
+
+function LinksSection() {
+  return (
+    <section className="page-section">
+      <SectionHeading id="links" level={2}>Links</SectionHeading>
+      <div className="section-body">
+        <ul className="links-list">
+          <li>
+            <a rel="nofollow noopener noreferrer" href="https://fractalsoftworks.com/forum/index.php?topic=30407.0" target="_blank">
+              Forum Page
+            </a>
+          </li>
+          <li>
+            <a rel="nofollow noopener noreferrer" href="https://discord.gg/wgDCgS7PF3" target="_blank">
+              Discord Server
+            </a>
+          </li>
+          <li>
+            <a rel="nofollow noopener noreferrer" href="https://github.com/Lukas22041/SecondInCommand/releases/latest/download/Second-in-Command.zip" target="_blank">
+              Latest Download
+            </a>
+          </li>
+          <li>
+            <a rel="nofollow noopener noreferrer" href="https://github.com/Lukas22041/SecondInCommand/releases" target="_blank">
+              Changelog &amp; Older Versions
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+// ---- Incompatibilities Section --------------------------------------------
+
+function IncompatibilitiesSection() {
+  return (
+    <section className="page-section">
+      <SectionHeading id="incompatibilities" level={2}>Incompatibilities</SectionHeading>
+      <div className="section-body">
+        <p>
+          Second-in-Command does heavy changes to the skill system, and due to that is{' '}
+          <span style={{ color: '#ffd200' }}>not compatible with mods that themselves influence the original system</span>.
+          <br />
+          <strong>As such using any of the following mods will result in a crash upon loading the game:</strong>
+        </p>
+        <ul className="incompat-list incompat-crash">
+          <li><span style={{ color: '#ff6400' }}>Quality Captains</span></li>
+          <li><span style={{ color: '#ff6400' }}>A New Level of Confidence</span></li>
+          <li><span style={{ color: '#ff6400' }}>Truly Automated Ships</span></li>
+          <li><span style={{ color: '#ff6400' }}>Adjustable Skill Thresholds</span></li>
+        </ul>
+        <p><strong>Other mods are generally compatible, however the following should be noted:</strong></p>
+        <ul className="incompat-list">
+          <li>Skills from mods that do not appear on the skill menu will continue to work just fine (i.e. Digital Soul, Skills from RAT).</li>
+          <li>Skills/Aptitudes from mods that would appear on the original skill menu are not visible.</li>
+          <li>Some mods that check for Vanilla Skills may be unable to have their conditions fulfilled.</li>
+          <li>Skill changes by other mods won't be applied, with the exception of changes to combat skills.</li>
+          <li>If a mod provides you with vanilla skills, aside from combat ones, they will be automatically disabled. (i.e. UNGP)</li>
+        </ul>
+      </div>
+    </section>
   );
 }
 
@@ -457,10 +647,6 @@ function App() {
   const [data,    setData]    = useState(null);
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState(null);
-
-  // Filter state: null = "all" (unset)
-  const [activeMods,       setActiveMods]       = useState(null);
-  const [activeCategories, setActiveCategories] = useState(null);
 
   // ---- Load data ----------------------------------------------------------
   useEffect(() => {
@@ -483,86 +669,39 @@ function App() {
   }, []);
 
   // ---- Derived data -------------------------------------------------------
-  const { sicAptitudes, thirdPartyAptitudes, allMods, allCategories, sharedCategoryIds } = useMemo(() => {
-    if (!data) return { sicAptitudes: [], thirdPartyAptitudes: [], allMods: [], allCategories: [], sharedCategoryIds: new Set() };
+  const { sicAptitudes, thirdPartyAptitudes, sharedCategoryIds } = useMemo(() => {
+    if (!data) return { sicAptitudes: [], thirdPartyAptitudes: [], sharedCategoryIds: new Set() };
 
     const raw = (data.aptitudes || []).filter(apt => {
       const tags = apt.tags || [];
       return !tags.includes('hide_in_codex') && !tags.includes('dont_include_in_wiki');
     });
 
-    // Count how many aptitudes belong to each category across the whole dataset
     const catCounts = {};
     raw.forEach(apt => {
       (apt.categories || []).forEach(cat => {
         if (cat.id) catCounts[cat.id] = (catCounts[cat.id] || 0) + 1;
       });
     });
-
-    // Categories shared by 2+ aptitudes — only these warrant the notice and filter entry
     const sharedIds = new Set(Object.keys(catCounts).filter(id => catCounts[id] > 1));
 
     const sic   = raw.filter(a => a.modName === 'Second-in-Command').sort((a, b) => a.order - b.order);
     const third = raw.filter(a => a.modName !== 'Second-in-Command').sort((a, b) => a.order - b.order);
 
-    const thirdMods = [...new Set(third.map(a => a.modName))];
-    const mods = ['Second-in-Command', ...thirdMods];
-
-    // Only expose shared categories to the filter panel
-    const catMap = {};
-    raw.forEach(apt => {
-      (apt.categories || []).forEach(cat => {
-        if (cat.id && sharedIds.has(cat.id)) catMap[cat.id] = cat;
-      });
-    });
-    const cats = Object.values(catMap);
-
-    return { sicAptitudes: sic, thirdPartyAptitudes: third, allMods: mods, allCategories: cats, sharedCategoryIds: sharedIds };
+    return { sicAptitudes: sic, thirdPartyAptitudes: third, sharedCategoryIds: sharedIds };
   }, [data]);
 
-  // Effective sets (null → everything)
-  const effectiveMods = useMemo(
-    () => activeMods || new Set(allMods),
-    [activeMods, allMods]
-  );
-  const effectiveCategories = useMemo(
-    () => activeCategories || new Set(allCategories.map(c => c.id)),
-    [activeCategories, allCategories]
+  const sicSkillCount = useMemo(() =>
+    sicAptitudes.reduce((total, apt) =>
+      total + apt.sections.reduce((s, sec) => s + (sec.skills || []).length, 0), 0),
+    [sicAptitudes]
   );
 
-  // ---- Filter helper ------------------------------------------------------
-  const filterApt = useCallback((apt) => {
-    if (!effectiveMods.has(apt.modName)) return false;
-    // Category filter only applied when user has made a selection
-    if (activeCategories !== null && allCategories.length > 0) {
-      const aptCats = (apt.categories || []).map(c => c.id);
-      if (aptCats.length === 0) return true; // no category = always pass
-      return aptCats.some(id => effectiveCategories.has(id));
-    }
-    return true;
-  }, [effectiveMods, effectiveCategories, activeCategories, allCategories]);
-
-  const filteredSic   = useMemo(() => sicAptitudes.filter(filterApt),   [sicAptitudes,   filterApt]);
-  const filteredThird = useMemo(() => thirdPartyAptitudes.filter(filterApt), [thirdPartyAptitudes, filterApt]);
-
-  // ---- Filter handlers ----------------------------------------------------
-  const handleModToggle = (mod) => {
-    setActiveMods(prev => {
-      const next = new Set(prev || allMods);
-      next.has(mod) ? next.delete(mod) : next.add(mod);
-      return next;
-    });
-  };
-
-  const handleCategoryToggle = (catId) => {
-    setActiveCategories(prev => {
-      const next = new Set(prev || allCategories.map(c => c.id));
-      next.has(catId) ? next.delete(catId) : next.add(catId);
-      return next;
-    });
-  };
-
-  const handleReset = () => { setActiveMods(null); setActiveCategories(null); };
+  const thirdPartySkillCount = useMemo(() =>
+    thirdPartyAptitudes.reduce((total, apt) =>
+      total + apt.sections.reduce((s, sec) => s + (sec.skills || []).length, 0), 0),
+    [thirdPartyAptitudes]
+  );
 
   // ---- Render -------------------------------------------------------------
   if (loading) return <div className="loading">Loading skill matrix…</div>;
@@ -577,45 +716,51 @@ function App() {
 
   if (!data) return null;
 
-  const total = filteredSic.length + filteredThird.length;
-
   return (
     <div className="app">
-      {/* ── Header ── */}
-      <header className="app-header">
-        <h1 className="app-title">
-          Second-in-Command &nbsp;<span>Skill Browser</span>
-        </h1>
-        <FilterPanel
-          allMods={allMods}
-          allCategories={allCategories}
-          activeMods={effectiveMods}
-          activeCategories={effectiveCategories}
-          onModToggle={handleModToggle}
-          onCategoryToggle={handleCategoryToggle}
-          onReset={handleReset}
-        />
-      </header>
+      {/* ── Banner ── */}
+      <div className="page-banner">
+        <img src="appAssets/Banner.png" alt="Second-in-Command" />
+      </div>
 
-      {/* ── Skill list ── */}
-      <main className="skill-list">
-        {filteredSic.length === 0 && filteredThird.length === 0 && (
-          <div className="loading">No aptitudes match the current filters.</div>
-        )}
 
-        {/* Native SIC aptitudes */}
-        {filteredSic.map(apt => <AptitudeRow key={apt.id} aptitude={apt} sharedCategoryIds={sharedCategoryIds} />)}
+      {/* ── Content sections ── */}
+      <AboutSection sicAptitudeCount={sicAptitudes.length} sicSkillCount={sicSkillCount} />
+      <LinksSection />
+      <IncompatibilitiesSection />
 
-        {/* Third-party aptitudes */}
-        {filteredThird.length > 0 && (
-          <>
-            <div className="third-party-divider">
-              <span>Third-Party Mod Skills</span>
+      {/* ── Aptitudes ── */}
+      <section className="page-section">
+        <SectionHeading id="aptitudes" level={2}>Aptitudes</SectionHeading>
+
+        <div className="aptitudes-subsection">
+          <SectionHeading id="sic-aptitudes" level={3}>Second-in-Command Aptitudes</SectionHeading>
+          <p className="subsection-description">Aptitudes and Skills from Second-in-Command itself.</p>
+          <div className="skill-list">
+            {sicAptitudes.map(apt => (
+              <AptitudeRow key={apt.id} aptitude={apt} sharedCategoryIds={sharedCategoryIds} />
+            ))}
+          </div>
+        </div>
+
+        {thirdPartyAptitudes.length > 0 && (
+          <div className="aptitudes-subsection">
+            <SectionHeading id="cross-mod-aptitudes" level={3}>Cross-Mod Aptitudes</SectionHeading>
+            <p className="subsection-description">
+              Aptitudes added by mods other than Second-in-Command.{' '}
+              Some of them are part of a larger mod, some are additional add-on mods that have to be
+              installed separately.{' '}
+              Currently <strong>{thirdPartyAptitudes.length}</strong> aptitudes with a total
+              of <strong>{thirdPartySkillCount}</strong> skills.
+            </p>
+            <div className="skill-list">
+              {thirdPartyAptitudes.map(apt => (
+                <AptitudeRow key={apt.id} aptitude={apt} sharedCategoryIds={sharedCategoryIds} />
+              ))}
             </div>
-            {filteredThird.map(apt => <AptitudeRow key={apt.id} aptitude={apt} sharedCategoryIds={sharedCategoryIds} />)}
-          </>
+          </div>
         )}
-      </main>
+      </section>
     </div>
   );
 }
