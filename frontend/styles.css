@@ -262,10 +262,12 @@ body::before {
 
 /* Pick-one underline bracket */
 .pick-one-underline {
+  position: absolute;
+  bottom: -5px;
+  left: 0;
   height: 3px;
   width: 100%;
   border: none;
-  margin-top: 4px;
 }
 
 /* Vertical separator between individual skill icons */

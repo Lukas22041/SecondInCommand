@@ -247,13 +247,14 @@ function SectionSeparator({ requiredPreviousSkills, aptitude }) {
   const fillColor   = `rgba(${r},${g},${b},0.06)`;
   return (
     <div className="section-separator">
-      <svg className="separator-arrow-svg" viewBox="0 0 20 72" width="20" height="72">
+      <svg className="separator-arrow-svg" viewBox="-1 0 22 72" width="22" height="72" overflow="visible">
         <polygon
           points="0,0 12,0 20,36 12,72 0,72"
-          fill={fillColor}
+          fill="none"
           stroke={strokeColor}
           strokeWidth="2"
           strokeLinejoin="miter"
+          strokeMiterlimit="10"
         />
       </svg>
     </div>
@@ -299,7 +300,7 @@ function AptitudeRow({ aptitude }) {
   const isSIC           = aptitude.modName === 'Second-in-Command';
 
   // Row background: gradient from dark to aptitude color at low opacity (flat look)
-  const rowBg = `linear-gradient(to right, rgba(0,0,0,0.15), rgba(${aptitude.color.r},${aptitude.color.g},${aptitude.color.b},0.08))`;
+  const rowBg = `linear-gradient(to right, rgba(0,0,0,0.15), rgba(${aptitude.color.r},${aptitude.color.g},${aptitude.color.b},0.14))`;
   const borderLeftColor = aptColor;
 
   return (
