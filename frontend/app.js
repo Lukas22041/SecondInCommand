@@ -111,7 +111,7 @@ function TooltipImageWithText({ el }) {
 
 // ---- Tooltip renderer (all elements) --------------------------------------
 
-function TooltipRenderer({ tooltipElements }) {
+function TooltipRenderer({ tooltipElements, requiresCount, hasPickOne }) {
   if (!tooltipElements || tooltipElements.length === 0) return null;
 
   // Sort by position.y descending (highest y = rendered first / top of tooltip)
@@ -119,39 +119,51 @@ function TooltipRenderer({ tooltipElements }) {
     (a, b) => (b.position?.y ?? 0) - (a.position?.y ?? 0)
   );
 
+  // For pick-one sections, the last element is "You can only pick one" —
+  // split it out so we can inject "Requires" immediately above it.
+  const pickOneEl = (hasPickOne && sorted.length > 0) ? sorted[sorted.length - 1] : null;
+  const mainEls   = pickOneEl ? sorted.slice(0, -1) : sorted;
+
+  const renderEl = (el, key) => {
+    switch (el.type) {
+      case 'title':
+        return (
+          <div key={key} className="tooltip-title" style={{ color: rgbaToCSS(el.color) }}>
+            {el.text}
+          </div>
+        );
+      case 'label':
+        return <TooltipLabel key={key} el={el} />;
+      case 'spacer':
+        return (
+          <div key={key} className="tooltip-spacer" style={{ height: Math.max(2, el.height || 2) }} />
+        );
+      case 'imageWithText':
+        return <TooltipImageWithText key={key} el={el} />;
+      default:
+        return null;
+    }
+  };
+
+  // Inherit the pick-one element's color so both lines match exactly.
+  const requiresColor = pickOneEl?.color ? rgbaToCSS(pickOneEl.color) : '#c85050';
+
   return (
     <div className="tooltip-content">
-      {sorted.map((el, i) => {
-        switch (el.type) {
-          case 'title':
-            return (
-              <div key={i} className="tooltip-title" style={{ color: rgbaToCSS(el.color) }}>
-                {el.text}
-              </div>
-            );
-          case 'label':
-            return <TooltipLabel key={i} el={el} />;
-          case 'spacer':
-            return (
-              <div
-                key={i}
-                className="tooltip-spacer"
-                style={{ height: Math.max(2, el.height || 2) }}
-              />
-            );
-          case 'imageWithText':
-            return <TooltipImageWithText key={i} el={el} />;
-          default:
-            return null;
-        }
-      })}
+      {mainEls.map((el, i) => renderEl(el, i))}
+      {requiresCount > 0 && (
+        <div className="tooltip-requires" style={{ color: requiresColor }}>
+          Requires at least {requiresCount} lower tier skill{requiresCount !== 1 ? 's' : ''}.
+        </div>
+      )}
+      {pickOneEl && renderEl(pickOneEl, 'pickone')}
     </div>
   );
 }
 
 // ---- Tooltip Overlay (portal, fixed position, cursor-clamped) -------------
 
-function TooltipOverlay({ skill, aptitudeColor, mouseX, mouseY }) {
+function TooltipOverlay({ skill, aptitudeColor, mouseX, mouseY, requiredPreviousSkills, canChooseMultiple }) {
   const ref = useRef(null);
   const [pos, setPos] = useState({ left: -9999, top: -9999, visible: false });
 
@@ -188,7 +200,11 @@ function TooltipOverlay({ skill, aptitudeColor, mouseX, mouseY }) {
         boxShadow: `0 0 16px ${glowColor}, 0 0 4px ${glowColor2}, inset 0 0 20px rgba(0,0,0,0.6)`,
       }}
     >
-      <TooltipRenderer tooltipElements={skill.tooltipElements} />
+      <TooltipRenderer
+        tooltipElements={skill.tooltipElements}
+        requiresCount={requiredPreviousSkills}
+        hasPickOne={canChooseMultiple === false}
+      />
     </div>,
     document.body
   );
@@ -196,7 +212,7 @@ function TooltipOverlay({ skill, aptitudeColor, mouseX, mouseY }) {
 
 // ---- Skill Icon -----------------------------------------------------------
 
-function SkillIcon({ skill, aptitude }) {
+function SkillIcon({ skill, aptitude, requiredPreviousSkills, canChooseMultiple }) {
   const isOrigin = skill.isOriginSkill;
   const size     = 90;
 
@@ -233,6 +249,8 @@ function SkillIcon({ skill, aptitude }) {
           aptitudeColor={aptitude.color}
           mouseX={mousePos.x}
           mouseY={mousePos.y}
+          requiredPreviousSkills={requiredPreviousSkills}
+          canChooseMultiple={canChooseMultiple}
         />
       )}
     </div>
@@ -264,7 +282,7 @@ function SectionSeparator({ requiredPreviousSkills, aptitude }) {
 // ---- Skill Section (one section's flat icon row) -------------------------
 
 function SkillSection({ section, aptitude }) {
-  const { skills, canChooseMultiple } = section;
+  const { skills, canChooseMultiple, requiredPreviousSkills } = section;
   const { r, g, b } = aptitude.color;
   const sepColor      = `rgba(${r},${g},${b},0.5)`;
   const ulColor       = `rgba(${r},${g},${b},0.75)`;
@@ -279,7 +297,7 @@ function SkillSection({ section, aptitude }) {
             {i > 0 && (
               <div className="skill-separator" style={{ background: separatorGradient }} />
             )}
-            <SkillIcon skill={skill} aptitude={aptitude} />
+            <SkillIcon skill={skill} aptitude={aptitude} requiredPreviousSkills={requiredPreviousSkills} canChooseMultiple={canChooseMultiple} />
           </Fragment>
         ))}
       </div>
@@ -313,7 +331,7 @@ function AptitudeRow({ aptitude }) {
               [{aptitude.categories[0].name}]
             </span>
           )}
-          <span>{aptitude.name.toUpperCase()}</span>
+          <span>{aptitude.name}</span>
         </a>
         {!isSIC && (
           <span className="aptitude-mod-badge">{aptitude.modName}</span>
