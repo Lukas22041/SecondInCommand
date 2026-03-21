@@ -1,6 +1,5 @@
 /* ============================================================
-   Second-in-Command Skill Browser — Dark Sci-Fi Theme
-   Inspired by Starsector's in-game UI aesthetic
+   Second-in-Command Skill Browser — Starsector In-Game Theme
    ============================================================ */
 
 /* ---- Reset & Base ---- */
@@ -19,9 +18,8 @@
   --text-muted:    #60697e;
   --text-dim:      #3e4455;
   --accent-sic:    #e6b502;
-  --font-ui:       'Exo 2', 'Segoe UI', sans-serif;
-  --font-mono:     'Share Tech Mono', 'Courier New', monospace;
-  --scan-line-opacity: 0.025;
+  --font-ui:       'Insignia', 'Segoe UI', sans-serif;
+  --font-mono:     'Insignia', 'Segoe UI', sans-serif;
 }
 
 html, body {
@@ -34,23 +32,38 @@ html, body {
   overflow-x: hidden;
 }
 
-/* Subtle CRT scanline overlay */
+/* Dimmed background image */
+body {
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+              url('appAssets/background.jpg') center/cover no-repeat fixed;
+  background-color: var(--bg-deep);
+}
+
+/* Faint grid overlay replacing old CRT scanlines */
 body::before {
   content: '';
   pointer-events: none;
   position: fixed; inset: 0; z-index: 9999;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0,0,0,var(--scan-line-opacity)) 2px,
-    rgba(0,0,0,var(--scan-line-opacity)) 4px
-  );
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 49px,
+      rgba(40,55,90,0.30) 49px,
+      rgba(40,55,90,0.30) 50px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 49px,
+      rgba(40,55,90,0.30) 49px,
+      rgba(40,55,90,0.30) 50px
+    );
 }
 
 .boot-msg {
   color: var(--text-muted);
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
   padding: 40px;
   font-size: 13px;
 }
@@ -72,12 +85,13 @@ body::before {
   padding: 18px 0 14px;
   border-bottom: 1px solid var(--border-subtle);
   position: sticky; top: 0; z-index: 100;
-  background: var(--bg-deep);
+  background: rgba(5, 6, 10, 0.92);
+  backdrop-filter: blur(6px);
 }
 
 .app-title {
-  font-family: var(--font-mono);
-  font-size: 1.25rem;
+  font-family: var(--font-ui);
+  font-size: 18px;
   font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -91,7 +105,7 @@ body::before {
 .app-footer {
   text-align: center;
   color: var(--text-dim);
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
   font-size: 11px;
   padding: 24px 0 8px;
   border-top: 1px solid var(--border-subtle);
@@ -113,8 +127,8 @@ body::before {
   gap: 12px;
   margin: 28px 0 8px;
   color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 11px;
+  font-family: var(--font-ui);
+  font-size: 13px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
@@ -128,41 +142,50 @@ body::before {
 
 /* ---- Aptitude Row ---- */
 .aptitude-row {
-  background: var(--bg-row);
-  border: 1px solid var(--border-subtle);
-  border-radius: 3px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
   padding: 10px 14px 12px;
-  transition: border-color 0.15s;
   overflow-x: auto;
-}
-.aptitude-row:hover {
-  border-color: var(--border-mid);
 }
 
 .aptitude-title {
   display: flex;
   align-items: baseline;
   gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  color: #c8cde0;
+  margin-bottom: 0;
   padding-bottom: 6px;
-  border-bottom: 1px solid;
-  /* border-bottom-color set inline by aptitude color */
+  border-bottom: none;
+}
+
+.aptitude-title-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex: 1;
+}
+.aptitude-title-link:hover {
+  color: #dde2f0;
 }
 
 .aptitude-category {
-  font-size: 10px;
-  opacity: 0.85;
+  font-size: 12px;
+  opacity: 0.55;
   letter-spacing: 0.1em;
+  color: var(--text-muted) !important;
 }
 
 .aptitude-mod-badge {
   margin-left: auto;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--text-muted);
   background: rgba(255,255,255,0.04);
   border: 1px solid var(--border-subtle);
@@ -172,16 +195,37 @@ body::before {
   text-transform: none;
 }
 
+/* Colored line under aptitude header */
+.aptitude-color-bar {
+  height: 2px;
+  width: 100%;
+  margin-bottom: 2px;
+  border: none;
+  border-radius: 0;
+}
+
+/* Aptitude description */
+.aptitude-description {
+  font-family: var(--font-ui);
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
 /* ---- Skills row wrapper ---- */
 .aptitude-skills-row {
   display: flex;
   align-items: flex-end;
   flex-wrap: nowrap;
   gap: 0;
-  min-height: 80px;
+  min-height: 90px;
+  padding: 6px 8px;
+  border-left: 3px solid;
+  /* background & border-left-color set inline per aptitude */
 }
 
-/* ---- Section separator (arrow chevron) ---- */
+/* ---- Section separator (arrow image) ---- */
 .section-separator {
   display: flex;
   flex-direction: column;
@@ -189,20 +233,22 @@ body::before {
   justify-content: center;
   padding: 0 4px;
   min-width: 22px;
-  color: var(--text-dim);
-  font-size: 18px;
-  line-height: 1;
   flex-shrink: 0;
   align-self: center;
-  margin-bottom: 6px;
+  margin-bottom: 0;
 }
 .separator-arrow {
   line-height: 1;
-  opacity: 0.6;
+  opacity: 0.7;
+}
+.separator-arrow img {
+  height: auto;
+  display: block;
+  image-rendering: pixelated;
 }
 .separator-req {
-  font-family: var(--font-mono);
-  font-size: 9px;
+  font-family: var(--font-ui);
+  font-size: 11px;
   color: var(--text-muted);
   margin-top: 2px;
   letter-spacing: 0;
@@ -234,13 +280,11 @@ body::before {
 .pick-one-underline {
   height: 3px;
   width: 100%;
-  border-radius: 1px;
+  border-radius: 0;
   border: none;
-  /* background-color set inline via aptitude color */
   margin-top: 0;
   position: relative;
 }
-/* left & right bracket ticks */
 .pick-one-underline::before,
 .pick-one-underline::after {
   content: '';
@@ -249,7 +293,7 @@ body::before {
   width: 2px;
   height: 7px;
   background: inherit;
-  border-radius: 1px;
+  border-radius: 0;
 }
 .pick-one-underline::before { left: 0; }
 .pick-one-underline::after  { right: 0; }
@@ -257,24 +301,20 @@ body::before {
 /* ---- Skill Icon ---- */
 .skill-icon {
   position: relative;
-  border: 1px solid;
-  border-radius: 3px;
+  width: 90px;
+  height: 90px;
+  border: 2px solid;
+  border-radius: 0;
   background: #080a10;
   cursor: default;
   overflow: hidden;
   flex-shrink: 0;
-  transition: transform 0.1s, box-shadow 0.1s;
+  transition: box-shadow 0.1s;
   image-rendering: pixelated;
 }
 
 .skill-icon:hover {
-  transform: scale(1.06);
   z-index: 10;
-}
-
-.skill-icon.origin {
-  border-width: 2px;
-  /* larger size set inline */
 }
 
 .skill-icon img {
@@ -289,36 +329,33 @@ body::before {
 .tooltip-overlay {
   position: fixed;
   z-index: 10000;
-  min-width: 340px;
-  max-width: 520px;
-  background: rgba(6, 7, 12, 0.97);
+  width: 700px;
+  background: rgba(0, 0, 0, 0.95);
   border: 1px solid;
-  border-radius: 3px;
-  padding: 12px 14px 10px;
+  border-radius: 0;
+  padding: 10px;
   pointer-events: none;
   font-family: var(--font-ui);
-  font-size: 12.5px;
+  font-size: 14px;
   line-height: 1.55;
-  backdrop-filter: blur(4px);
 }
 
 .tooltip-title {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 600;
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 400;
   letter-spacing: 0.08em;
   margin-bottom: 2px;
 }
 
 .tooltip-label {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-base);
   white-space: pre-wrap;
   word-break: break-word;
 }
 
 .tooltip-spacer {
-  /* height set inline */
   flex-shrink: 0;
 }
 
@@ -329,12 +366,12 @@ body::before {
   gap: 10px;
   background: rgba(255,255,255,0.025);
   border: 1px solid var(--border-subtle);
-  border-radius: 2px;
+  border-radius: 0;
   padding: 6px 8px;
 }
 
 .tooltip-ability-image {
-  border-radius: 2px;
+  border-radius: 0;
   border: 1px solid var(--border-mid);
   background: #080a10;
   flex-shrink: 0;
@@ -357,11 +394,11 @@ body::before {
   background: rgba(255,255,255,0.04);
   border: 1px solid var(--border-mid);
   color: var(--text-base);
-  font-family: var(--font-mono);
-  font-size: 11px;
+  font-family: var(--font-ui);
+  font-size: 13px;
   letter-spacing: 0.1em;
   padding: 5px 12px;
-  border-radius: 2px;
+  border-radius: 0;
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s;
 }
@@ -374,9 +411,9 @@ body::before {
   position: absolute;
   right: 0; top: calc(100% + 6px);
   min-width: 220px;
-  background: #0b0d16;
+  background: rgba(8, 10, 18, 0.97);
   border: 1px solid var(--border-bright);
-  border-radius: 3px;
+  border-radius: 0;
   padding: 12px 14px;
   z-index: 200;
   box-shadow: 0 8px 32px rgba(0,0,0,0.7);
@@ -386,8 +423,8 @@ body::before {
 }
 
 .filter-section-title {
-  font-family: var(--font-mono);
-  font-size: 10px;
+  font-family: var(--font-ui);
+  font-size: 12px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -400,7 +437,7 @@ body::before {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
   padding: 2px 0;
   color: var(--text-base);
@@ -415,11 +452,11 @@ body::before {
   background: transparent;
   border: 1px solid var(--border-mid);
   color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 10px;
+  font-family: var(--font-ui);
+  font-size: 12px;
   letter-spacing: 0.1em;
   padding: 4px 10px;
-  border-radius: 2px;
+  border-radius: 0;
   cursor: pointer;
   transition: color 0.15s, border-color 0.15s;
   text-transform: uppercase;
@@ -437,7 +474,7 @@ body::before {
 
 /* ---- Loading / Error ---- */
 .loading, .error {
-  font-family: var(--font-mono);
+  font-family: var(--font-ui);
   font-size: 13px;
   color: var(--text-muted);
   padding: 60px 40px;

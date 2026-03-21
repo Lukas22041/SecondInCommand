@@ -78,6 +78,10 @@ public abstract class SCBaseAptitudePlugin {
     }
 
 
+    public String getDescription() {
+        return "";
+    }
+
     public void addCodexDescription(TooltipMakerAPI tooltip) {
 
     }

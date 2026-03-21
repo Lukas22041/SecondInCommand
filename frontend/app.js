@@ -198,7 +198,7 @@ function TooltipOverlay({ skill, aptitudeColor, mouseX, mouseY }) {
 
 function SkillIcon({ skill, aptitude }) {
   const isOrigin = skill.isOriginSkill;
-  const size     = isOrigin ? 72 : 58;
+  const size     = 90;
 
   const [hovered, setHovered] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -225,7 +225,6 @@ function SkillIcon({ skill, aptitude }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onMouseMove={handleMove}
-      title={skill.name}
     >
       <img src={skill.iconExportPath} alt={skill.name} />
       {hovered && (
@@ -245,7 +244,9 @@ function SkillIcon({ skill, aptitude }) {
 function SectionSeparator({ requiredPreviousSkills }) {
   return (
     <div className="section-separator">
-      <div className="separator-arrow">›</div>
+      <div className="separator-arrow">
+        <img src="appAssets/seperator.png" alt="" style={{ margin: '0 5px' }} />
+      </div>
       {requiredPreviousSkills > 0 && (
         <div className="separator-req">{requiredPreviousSkills}</div>
       )}
@@ -280,32 +281,45 @@ function SkillSection({ section, aptitude }) {
 
 function AptitudeRow({ aptitude }) {
   const aptColor        = rgbaToCSS(aptitude.color);
-  const aptBorderBottom = rgbaToCSS(aptitude.color, 0.3);
   const isSIC           = aptitude.modName === 'Second-in-Command';
 
+  // Row background: gradient from dark to aptitude color at low opacity (flat look)
+  const rowBg = `linear-gradient(to right, rgba(0,0,0,0.15), rgba(${aptitude.color.r},${aptitude.color.g},${aptitude.color.b},0.08))`;
+  const borderLeftColor = aptColor;
+
   return (
-    <div className="aptitude-row">
+    <div className="aptitude-row" id={`aptitude-${aptitude.id}`}>
       {/* Section title */}
-      <div
-        className="aptitude-title"
-        style={{ color: aptColor, borderBottomColor: aptBorderBottom }}
-      >
-        {aptitude.categories && aptitude.categories.length > 0 && (
-          <span
-            className="aptitude-category"
-            style={{ color: rgbaToCSS(aptitude.categories[0].color) }}
-          >
-            [{aptitude.categories[0].name}]
-          </span>
-        )}
-        <span>{aptitude.name.toUpperCase()}</span>
+      <div className="aptitude-title">
+        <a className="aptitude-title-link" href={`#aptitude-${aptitude.id}`}>
+          {aptitude.categories && aptitude.categories.length > 0 && (
+            <span className="aptitude-category">
+              [{aptitude.categories[0].name}]
+            </span>
+          )}
+          <span>{aptitude.name.toUpperCase()}</span>
+        </a>
         {!isSIC && (
           <span className="aptitude-mod-badge">{aptitude.modName}</span>
         )}
       </div>
 
+      {/* Colored accent bar */}
+      <div className="aptitude-color-bar" style={{ background: aptColor }} />
+
+      {/* Optional description (future-proofed) */}
+      {aptitude.description && (
+        <p className="aptitude-description">{aptitude.description}</p>
+      )}
+
       {/* Skills */}
-      <div className="aptitude-skills-row">
+      <div
+        className="aptitude-skills-row"
+        style={{
+          background: rowBg,
+          borderLeftColor: borderLeftColor,
+        }}
+      >
         {aptitude.sections.map((section, i) => (
           <Fragment key={i}>
             {i > 0 && (

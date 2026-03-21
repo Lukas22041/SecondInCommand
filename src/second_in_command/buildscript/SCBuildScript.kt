@@ -3,8 +3,10 @@ package second_in_command.buildscript
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.impl.campaign.ids.Factions
+import com.fs.starfarer.api.ui.LabelAPI
 import org.apache.log4j.Level
 import second_in_command.SCData
+import second_in_command.specs.SCBaseAptitudePlugin
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
 import java.text.SimpleDateFormat
@@ -101,6 +103,7 @@ class SCBuildScript : EveryFrameScript {
                 aptitudes.add(AptitudeData(
                     id = aptSpec.id,
                     name = aptSpec.name,
+                    description = buildAptitudeDescription(aptPlugin),
                     color = ColorData.fromColor(aptSpec.color),
                     categories = aptSpec.categories.map {
                         CategoryData(it.id, it.name, ColorData.fromColor(it.color))
@@ -125,6 +128,26 @@ class SCBuildScript : EveryFrameScript {
             tooltipWidth = 700f,
             aptitudes = aptitudes
         )
+    }
+
+    /**
+     * Capture plain text from an aptitude's addCodexDescription via the recording proxy.
+     */
+    private fun buildAptitudeDescription(aptPlugin: SCBaseAptitudePlugin): String {
+        return try {
+            val panel = Global.getSettings().createCustom(700f, 1000f, null)
+            val realTooltip = panel.createUIElement(700f, 1000f, false)
+            panel.addUIElement(realTooltip)
+            val recorder = RecordingTooltipMaker(realTooltip)
+            aptPlugin.addCodexDescription(recorder)
+            recorder.recordedCalls
+                .filter { it.methodName == "addPara" }
+                .mapNotNull { (it.result as? LabelAPI)?.text }
+                .joinToString(" ")
+        } catch (e: Exception) {
+            logger.warn("SC Build: Failed to record description for aptitude '${aptPlugin.id}'", e)
+            ""
+        }
     }
 
     /**

@@ -10,6 +10,7 @@ window.SIC_DATA = {
         "g": 181,
         "r": 230
       },
+      "description": "Tactical is one of the more versatile aptitudes in the mod. While it does not quite stand out much on its own, you can often use it for the purpose of finishing up your build. ",
       "id": "sc_tactical",
       "modName": "Second-in-Command",
       "name": "Tactical",
@@ -1536,6 +1537,7 @@ window.SIC_DATA = {
         "g": 175,
         "r": 107
       },
+      "description": "Management is an aptitude that is almost all about officers, but also has some other utilities in store. As the maximum count of officers in Second-in-Command is always 10, and the bonuses do pretty well, it can fit in to most builds. There is a lot of synergy with Automation due to the combat-readiness gain and AI Cores counting as officers. ",
       "id": "sc_management",
       "modName": "Second-in-Command",
       "name": "Management",
@@ -3217,6 +3219,7 @@ window.SIC_DATA = {
         "g": 230,
         "r": 203
       },
+      "description": "Smallcraft is an aptitude all about frigates and destroyers. It is especially helpful for Wolfpack fleets, but can also come of use in any fleet with a lot of smaller ships. ",
       "id": "sc_smallcraft",
       "modName": "Second-in-Command",
       "name": "Smallcraft",
@@ -5339,6 +5342,7 @@ window.SIC_DATA = {
         "g": 230,
         "r": 2
       },
+      "description": "Strikecraft is the most fighter centric aptitude in the mod. It comes with some methods of improving the strength of fighters, but also some that change how you may use them.  ",
       "id": "sc_strikecraft",
       "modName": "Second-in-Command",
       "name": "Strikecraft",
@@ -7211,6 +7215,7 @@ window.SIC_DATA = {
         "g": 121,
         "r": 0
       },
+      "description": "Technical is an aptitude representing high-tech within the skill tree, however it is much more versatile than the name may suggest. It is generaly effective in improving a fleets speed, use of energy weapons, shields and the performance of phase ships. Its Makeshift Drones skill also enables the use of a few automated ships, without having to invest in to the whole Automation aptitude. ",
       "id": "sc_technology",
       "modName": "Second-in-Command",
       "name": "Technical",
@@ -9113,6 +9118,7 @@ window.SIC_DATA = {
         "g": 218,
         "r": 252
       },
+      "description": "The Exotech aptitude is added by Random Assortment of Things. It can be acquired by talking to Amelie after having finished the first mission in the Exotech questline. The aptitude hosts a mix of high tech, carrier and phase skills. ",
       "id": "rat_exotech",
       "modName": "Random Assortment of Things",
       "name": "Exotech",
@@ -10591,6 +10597,7 @@ window.SIC_DATA = {
         "g": 167,
         "r": 224
       },
+      "description": "Warfare is an aptitude most closely associated with low-tech, but it comes in use for most fleets that want to pack some extra defenses. It also comes with additional skills to improve the performance of ballistic and missile weapons. ",
       "id": "sc_warfare",
       "modName": "Second-in-Command",
       "name": "Warfare",
@@ -12027,6 +12034,7 @@ window.SIC_DATA = {
         "g": 100,
         "r": 181
       },
+      "description": "Improvisation provides the ability to make use out of d-mods. Their downside become easier to manage, and provide benefits for the fleet. It also has some skills to provide benefits to hullmods that perform larger changes to how a ship works. ",
       "id": "sc_improvisation",
       "modName": "Second-in-Command",
       "name": "Improvisation",
@@ -13660,6 +13668,7 @@ window.SIC_DATA = {
         "g": 192,
         "r": 175
       },
+      "description": "Engineering is a logistical aptitude that provides multiple tools for more efficient fleet operation, but specialises in logistical effects with more direct combat use, while also providing some skills for combat itself.",
       "id": "sc_engineering",
       "modName": "Second-in-Command",
       "name": "Engineering",
@@ -15219,6 +15228,7 @@ window.SIC_DATA = {
         "g": 0,
         "r": 164
       },
+      "description": "Starfaring is the main logistical aptitude in the mod. It has a lot of skills that used to be in the Industry Aptitude in vanilla. Compared to the other Logistical aptitude, Piracy, it focus is on providing a lot of utility and convenience. ",
       "id": "sc_starfaring",
       "modName": "Second-in-Command",
       "name": "Starfaring",
@@ -16807,6 +16817,7 @@ window.SIC_DATA = {
         "g": 142,
         "r": 77
       },
+      "description": "Scavenging is a resource-management heavy aptitude that makes use of a resource exclusive to it, Scrap. Officers with this aptitude can most commonly be found on independent worlds.",
       "id": "sc_scavenging",
       "modName": "Second-in-Command",
       "name": "Scavenging",
@@ -19507,6 +19518,7 @@ window.SIC_DATA = {
         "g": 0,
         "r": 200
       },
+      "description": "Piracy is a logistical aptitude that is more of a hybrid between providing logistical utility and some combat skills. Compared to Starfaring it excels in providing you with more resources, but has far less convenience. ",
       "id": "sc_piracy",
       "modName": "Second-in-Command",
       "name": "Piracy",
@@ -21212,6 +21224,7 @@ window.SIC_DATA = {
         "g": 166,
         "r": 0
       },
+      "description": "This aptitude provides the capability of fielding Automated ships. Automated ships have the unique benefit of being able to have AI Cores slotted in to them. AI Cores when slotted in to ships act as strong officers, which further allow you to exceed the maximum capacity of 10 officers in your fleet.   An effective automated fleet requires careful consideration of AI Core usage, and benefits from additional automated points and combat readiness increases from other aptitudes.",
       "id": "sc_automated",
       "modName": "Second-in-Command",
       "name": "Automation",
@@ -23527,6 +23540,7 @@ window.SIC_DATA = {
         "g": 0,
         "r": 255
       },
+      "description": "The Abyssal aptitude is added by Random Assortment of Things. Its officer can be found in the wreck of an abyssal droneship near a major lightsource in the abyssal depths. The aptitude at large plays like an even more aggressive alternative to the Automation aptitude. ",
       "id": "rat_abyssal",
       "modName": "Random Assortment of Things",
       "name": "Abyssal",
@@ -25269,6 +25283,7 @@ window.SIC_DATA = {
         "g": 130,
         "r": 90
       },
+      "description": "The Dustkeeper aptitude is added by the Second in Command: Dustkeeper mod. Its officer can be found at the Holdout Forgeship in the Mia's Star system.The aptitude is designed to allow for a mixed fleet of automated and human ships. Save humanity by culling threats to their existence.",
       "id": "sc_dustkeeper",
       "modName": "Second-in-Command: Dustkeeper",
       "name": "Dustkeeper",
@@ -27129,6 +27144,7 @@ window.SIC_DATA = {
         "g": 36,
         "r": 187
       },
+      "description": "The Flowerfish aptitiude is added by JaydeePiracy. It is favoured by agents of the Flowerfish Network, a secretive cabal operating in Westernesse. The aptitude is focused on officers and powerful synergistic bonuses. Flowerfish favours flexible formations and ships with versatile stat and weapon spreads to achieve maximum combat effectiveness.",
       "id": "jdp_flowerfish",
       "modName": "JaydeePiracy",
       "name": "Flowerfish",
@@ -29893,6 +29909,7 @@ window.SIC_DATA = {
         "g": 155,
         "r": 205
       },
+      "description": "The Witchcraft aptitude is added by the Secrets of the Frontiers mod. The aptitude allows Sierra to pilot multiple Concord-equipped vessels and provides several exotic boons for high-tech fleets specializing in fast-attack or strike tactics. Acquired by completing the Wayward Star quest, interacting with both Vow and Wispmother wrecks, and then starting a dialog with Sierra through the Contact in the intel screen.",
       "id": "sotf_witchcraft",
       "modName": "Secrets of the Frontier",
       "name": "Witchcraft",
@@ -32448,6 +32465,7 @@ window.SIC_DATA = {
         "g": 245,
         "r": 149
       },
+      "description": "",
       "id": "sc_christmas",
       "modName": "Second-in-Command",
       "name": "Christmas",
@@ -32705,10 +32723,13 @@ window.SIC_DATA = {
           ]
         }]
       }],
-      "tags": ["hide_in_codex"]
+      "tags": [
+        "hide_in_codex",
+        "dont_include_in_wiki"
+      ]
     }
   ],
-  "exportDate": "2026-03-20T21:46:15",
+  "exportDate": "2026-03-21T11:36:51",
   "tooltipWidth": 700,
   "version": "1.8.2"
 };
