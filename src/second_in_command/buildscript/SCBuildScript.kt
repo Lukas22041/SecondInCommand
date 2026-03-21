@@ -171,6 +171,9 @@ class SCBuildScript : EveryFrameScript {
 
         // Use SCSkillTooltipCreator to render the full tooltip (title, affects, skill content, warnings)
         val creator = SCSkillTooltipCreator(data, skillPlugin, aptPlugin, requiredSkillPoints, pickOnlyOne)
+        // sectionMeetsRequirements=false means "requirements exist and aren't met" → shows the warning label.
+        // For export we always want to show the requirement text when requiredSkillPoints > 0.
+        creator.sectionMeetsRequirements = requiredSkillPoints == 0
         creator.createTooltip(recorder, false, null)
 
         // Parse recorded calls + rendered children into elements

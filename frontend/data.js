@@ -1099,12 +1099,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 885
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 870
+                  },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 893
+                    "y": 868
                   },
                   "type": "spacer"
                 }
@@ -1224,12 +1252,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 910
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 895
+                  },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 918
+                    "y": 893
                   },
                   "type": "spacer"
                 }
@@ -1385,12 +1441,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 880
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 865
+                  },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 888
+                    "y": 863
                   },
                   "type": "spacer"
                 }
@@ -1510,12 +1594,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 910
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 895
+                  },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 918
+                    "y": 893
                   },
                   "type": "spacer"
                 }
@@ -2550,6 +2662,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 865
                   },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 850
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -2559,7 +2689,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 863
+                    "y": 848
                   },
                   "type": "spacer"
                 }
@@ -2741,6 +2871,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 880
                   },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 865
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -2750,7 +2898,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 878
+                    "y": 863
                   },
                   "type": "spacer"
                 }
@@ -2956,6 +3104,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 855
                   },
+                  "text": "Requires at least 4 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 840
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -2965,7 +3131,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 853
+                    "y": 838
                   },
                   "type": "spacer"
                 }
@@ -3188,6 +3354,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 865
                   },
+                  "text": "Requires at least 4 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 850
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -3197,7 +3381,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 863
+                    "y": 848
                   },
                   "type": "spacer"
                 }
@@ -4753,6 +4937,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 865
                   },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 850
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -4762,7 +4964,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 863
+                    "y": 848
                   },
                   "type": "spacer"
                 }
@@ -4972,6 +5174,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 865
                   },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 850
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -4981,7 +5201,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 863
+                    "y": 848
                   },
                   "type": "spacer"
                 }
@@ -5131,6 +5351,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 895
                   },
+                  "text": "Requires at least 4 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 880
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -5140,7 +5378,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 893
+                    "y": 878
                   },
                   "type": "spacer"
                 }
@@ -5302,6 +5540,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 880
                   },
+                  "text": "Requires at least 4 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 865
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -5311,7 +5567,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 878
+                    "y": 863
                   },
                   "type": "spacer"
                 }
@@ -6440,12 +6696,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 885
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 870
+                  },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 893
+                    "y": 868
                   },
                   "type": "spacer"
                 }
@@ -6583,12 +6867,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 895
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 880
+                  },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 903
+                    "y": 878
                   },
                   "type": "spacer"
                 }
@@ -7063,12 +7375,40 @@ window.SIC_DATA = {
                   "type": "spacer"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 700
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 685
+                  },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 708
+                    "y": 683
                   },
                   "type": "spacer"
                 }
@@ -7188,12 +7528,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 910
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 895
+                  },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 918
+                    "y": 893
                   },
                   "type": "spacer"
                 }
@@ -8268,12 +8636,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 910
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 895
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 918
+                    "y": 893
                   },
                   "type": "spacer"
                 }
@@ -8411,12 +8807,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 895
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 880
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 903
+                    "y": 878
                   },
                   "type": "spacer"
                 }
@@ -8518,12 +8942,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 925
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 910
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 933
+                    "y": 908
                   },
                   "type": "spacer"
                 }
@@ -8763,12 +9215,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 840
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 825
+                  },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 848
+                    "y": 823
                   },
                   "type": "spacer"
                 }
@@ -9091,12 +9571,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 760
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 745
+                  },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 768
+                    "y": 743
                   },
                   "type": "spacer"
                 }
@@ -10005,12 +10513,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 910
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 895
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 918
+                    "y": 893
                   },
                   "type": "spacer"
                 }
@@ -10158,12 +10694,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 895
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 880
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 903
+                    "y": 878
                   },
                   "type": "spacer"
                 }
@@ -10283,12 +10847,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 910
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 895
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 918
+                    "y": 893
                   },
                   "type": "spacer"
                 }
@@ -10574,12 +11166,40 @@ window.SIC_DATA = {
                 "type": "label"
               },
               {
+                "height": 10,
+                "position": {
+                  "height": 10,
+                  "width": 10,
+                  "x": 5,
+                  "y": 790
+                },
+                "type": "spacer"
+              },
+              {
+                "color": {
+                  "a": 255,
+                  "b": 0,
+                  "g": 100,
+                  "r": 255
+                },
+                "highlightRanges": [],
+                "padding": 0,
+                "position": {
+                  "height": 15,
+                  "width": 690,
+                  "x": 5,
+                  "y": 775
+                },
+                "text": "Requires at least 4 lower tier skills.",
+                "type": "label"
+              },
+              {
                 "height": 2,
                 "position": {
                   "height": 2,
                   "width": 10,
                   "x": 5,
-                  "y": 798
+                  "y": 773
                 },
                 "type": "spacer"
               }
@@ -11784,6 +12404,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 895
                   },
+                  "text": "Requires at least 4 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 880
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -11793,7 +12431,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 893
+                    "y": 878
                   },
                   "type": "spacer"
                 }
@@ -12003,6 +12641,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 865
                   },
+                  "text": "Requires at least 4 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 850
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -12012,7 +12668,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 863
+                    "y": 848
                   },
                   "type": "spacer"
                 }
@@ -13493,6 +14149,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 855
                   },
+                  "text": "Requires at least 4 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 840
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -13502,7 +14176,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 853
+                    "y": 838
                   },
                   "type": "spacer"
                 }
@@ -13628,6 +14302,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 910
                   },
+                  "text": "Requires at least 4 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 895
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -13637,7 +14329,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 908
+                    "y": 893
                   },
                   "type": "spacer"
                 }
@@ -15017,6 +15709,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 865
                   },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 850
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -15026,7 +15736,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 863
+                    "y": 848
                   },
                   "type": "spacer"
                 }
@@ -15188,6 +15898,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 880
                   },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 865
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -15197,7 +15925,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 878
+                    "y": 863
                   },
                   "type": "spacer"
                 }
@@ -16078,12 +16806,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 895
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 880
+                  },
+                  "text": "Requires at least 1 lower tier skill.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 903
+                    "y": 878
                   },
                   "type": "spacer"
                 }
@@ -16203,12 +16959,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 910
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 895
+                  },
+                  "text": "Requires at least 1 lower tier skill.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 918
+                    "y": 893
                   },
                   "type": "spacer"
                 }
@@ -16328,12 +17112,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 910
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 895
+                  },
+                  "text": "Requires at least 1 lower tier skill.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 918
+                    "y": 893
                   },
                   "type": "spacer"
                 }
@@ -16519,6 +17331,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 865
                   },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 850
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -16528,7 +17358,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 863
+                    "y": 848
                   },
                   "type": "spacer"
                 }
@@ -16777,6 +17607,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 835
                   },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 820
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -16786,7 +17634,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 833
+                    "y": 818
                   },
                   "type": "spacer"
                 }
@@ -19483,12 +20331,40 @@ window.SIC_DATA = {
                 "type": "label"
               },
               {
+                "height": 10,
+                "position": {
+                  "height": 10,
+                  "width": 10,
+                  "x": 5,
+                  "y": 870
+                },
+                "type": "spacer"
+              },
+              {
+                "color": {
+                  "a": 255,
+                  "b": 0,
+                  "g": 100,
+                  "r": 255
+                },
+                "highlightRanges": [],
+                "padding": 0,
+                "position": {
+                  "height": 15,
+                  "width": 690,
+                  "x": 5,
+                  "y": 855
+                },
+                "text": "Requires at least 3 lower tier skills.",
+                "type": "label"
+              },
+              {
                 "height": 2,
                 "position": {
                   "height": 2,
                   "width": 10,
                   "x": 5,
-                  "y": 878
+                  "y": 853
                 },
                 "type": "spacer"
               }
@@ -21035,12 +21911,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 895
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 880
+                  },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 903
+                    "y": 878
                   },
                   "type": "spacer"
                 }
@@ -21188,12 +22092,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 895
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 880
+                  },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 903
+                    "y": 878
                   },
                   "type": "spacer"
                 }
@@ -22609,12 +23541,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 885
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 870
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 893
+                    "y": 868
                   },
                   "type": "spacer"
                 }
@@ -22790,12 +23750,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 880
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 865
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 888
+                    "y": 863
                   },
                   "type": "spacer"
                 }
@@ -23118,12 +24106,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 760
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 745
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 768
+                    "y": 743
                   },
                   "type": "spacer"
                 }
@@ -23291,6 +24307,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 880
                   },
+                  "text": "Requires at least 4 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 865
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -23300,7 +24334,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 878
+                    "y": 863
                   },
                   "type": "spacer"
                 }
@@ -23500,6 +24534,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 865
                   },
+                  "text": "Requires at least 4 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 850
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -23509,7 +24561,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 863
+                    "y": 848
                   },
                   "type": "spacer"
                 }
@@ -24789,12 +25841,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 910
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 895
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 918
+                    "y": 893
                   },
                   "type": "spacer"
                 }
@@ -24968,12 +26048,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 865
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 850
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 873
+                    "y": 848
                   },
                   "type": "spacer"
                 }
@@ -25251,12 +26359,40 @@ window.SIC_DATA = {
                 "type": "label"
               },
               {
+                "height": 10,
+                "position": {
+                  "height": 10,
+                  "width": 10,
+                  "x": 5,
+                  "y": 840
+                },
+                "type": "spacer"
+              },
+              {
+                "color": {
+                  "a": 255,
+                  "b": 0,
+                  "g": 100,
+                  "r": 255
+                },
+                "highlightRanges": [],
+                "padding": 0,
+                "position": {
+                  "height": 15,
+                  "width": 690,
+                  "x": 5,
+                  "y": 825
+                },
+                "text": "Requires at least 4 lower tier skills.",
+                "type": "label"
+              },
+              {
                 "height": 2,
                 "position": {
                   "height": 2,
                   "width": 10,
                   "x": 5,
-                  "y": 848
+                  "y": 823
                 },
                 "type": "spacer"
               }
@@ -26390,12 +27526,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 855
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 840
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 863
+                    "y": 838
                   },
                   "type": "spacer"
                 }
@@ -26553,12 +27717,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 885
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 870
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 893
+                    "y": 868
                   },
                   "type": "spacer"
                 }
@@ -26726,12 +27918,40 @@ window.SIC_DATA = {
                   "type": "label"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 895
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 880
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 903
+                    "y": 878
                   },
                   "type": "spacer"
                 }
@@ -26945,6 +28165,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 840
                   },
+                  "text": "Requires at least 4 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 825
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -26954,7 +28192,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 838
+                    "y": 823
                   },
                   "type": "spacer"
                 }
@@ -27116,6 +28354,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 865
                   },
+                  "text": "Requires at least 4 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 850
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -27125,7 +28381,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 863
+                    "y": 848
                   },
                   "type": "spacer"
                 }
@@ -28337,12 +29593,40 @@ window.SIC_DATA = {
                   "type": "spacer"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 860
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 845
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 868
+                    "y": 843
                   },
                   "type": "spacer"
                 }
@@ -28649,12 +29933,40 @@ window.SIC_DATA = {
                   "type": "spacer"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 780
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 765
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 788
+                    "y": 763
                   },
                   "type": "spacer"
                 }
@@ -28853,12 +30165,40 @@ window.SIC_DATA = {
                   "type": "spacer"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 860
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 845
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 868
+                    "y": 843
                   },
                   "type": "spacer"
                 }
@@ -29285,12 +30625,40 @@ window.SIC_DATA = {
                   "type": "spacer"
                 },
                 {
+                  "height": 10,
+                  "position": {
+                    "height": 10,
+                    "width": 10,
+                    "x": 5,
+                    "y": 750
+                  },
+                  "type": "spacer"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 735
+                  },
+                  "text": "Requires at least 2 lower tier skills.",
+                  "type": "label"
+                },
+                {
                   "height": 2,
                   "position": {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 758
+                    "y": 733
                   },
                   "type": "spacer"
                 }
@@ -29580,6 +30948,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 780
                   },
+                  "text": "Requires at least 4 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 765
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -29589,7 +30975,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 778
+                    "y": 763
                   },
                   "type": "spacer"
                 }
@@ -29881,6 +31267,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 775
                   },
+                  "text": "Requires at least 4 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 760
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -29890,7 +31294,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 773
+                    "y": 758
                   },
                   "type": "spacer"
                 }
@@ -31533,6 +32937,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 825
                   },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 810
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -31542,7 +32964,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 823
+                    "y": 808
                   },
                   "type": "spacer"
                 }
@@ -31844,6 +33266,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 855
                   },
+                  "text": "Requires at least 3 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 840
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -31853,7 +33293,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 853
+                    "y": 838
                   },
                   "type": "spacer"
                 }
@@ -32151,6 +33591,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 815
                   },
+                  "text": "Requires at least 4 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 800
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -32160,7 +33618,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 813
+                    "y": 798
                   },
                   "type": "spacer"
                 }
@@ -32425,6 +33883,24 @@ window.SIC_DATA = {
                     "x": 5,
                     "y": 840
                   },
+                  "text": "Requires at least 4 lower tier skills.",
+                  "type": "label"
+                },
+                {
+                  "color": {
+                    "a": 255,
+                    "b": 0,
+                    "g": 100,
+                    "r": 255
+                  },
+                  "highlightRanges": [],
+                  "padding": 0,
+                  "position": {
+                    "height": 15,
+                    "width": 690,
+                    "x": 5,
+                    "y": 825
+                  },
                   "text": "You can only pick one skill in this section.",
                   "type": "label"
                 },
@@ -32434,7 +33910,7 @@ window.SIC_DATA = {
                     "height": 2,
                     "width": 10,
                     "x": 5,
-                    "y": 838
+                    "y": 823
                   },
                   "type": "spacer"
                 }
@@ -32729,7 +34205,7 @@ window.SIC_DATA = {
       ]
     }
   ],
-  "exportDate": "2026-03-21T11:36:51",
+  "exportDate": "2026-03-21T13:28:28",
   "tooltipWidth": 700,
   "version": "1.8.2"
 };

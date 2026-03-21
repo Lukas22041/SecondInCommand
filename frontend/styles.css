@@ -327,12 +327,6 @@ body::before {
   margin-bottom: 4px;
 }
 
-.tooltip-requires {
-  font-size: 13px;
-  color: #c85050;
-  margin-bottom: 2px;
-  white-space: pre-wrap;
-}
 
 .tooltip-label {
   font-size: 13px;
@@ -348,7 +342,7 @@ body::before {
 .tooltip-image-with-text {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
   background: rgba(255,255,255,0.025);
   border: 1px solid var(--border-subtle);
