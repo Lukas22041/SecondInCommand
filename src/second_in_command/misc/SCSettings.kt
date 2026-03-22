@@ -35,11 +35,10 @@ class SCSettings : LunaSettingsListener {
             600000f, //LV4*/
 
             0f, //LV0
-            75000f, //LV1
-            150000f, //LV2
-            450000f, //LV3
-            1350000f, //LV4
-
+            100000f, //LV1
+            200000f, //LV2
+            500000f, //LV3
+            1500000f, //LV4
             2500000f, //LV5,
 
           /*  0f, //LV0

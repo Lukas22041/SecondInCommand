@@ -18,8 +18,8 @@ object PlayerLevelEffects {
 
     fun getTooltipForLevel(level: Int) : String{
 
-        if (level == 2) return "+10%% experience gain for executive officers"
-        if (level == 4) return "+10%% experience gain for executive officers"
+        //if (level == 2) return "+10%% experience gain for executive officers"
+        //if (level == 4) return "+10%% experience gain for executive officers"
         if (level == 6) return "+10%% experience gain for executive officers"
         if (level == 8) return "+20%% experience gain for executive officers"
         if (level == 10) return "+2 maximum number of officers you're able to command"

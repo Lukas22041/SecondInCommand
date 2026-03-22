@@ -12,7 +12,7 @@ import second_in_command.misc.SCSettings
 class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
 
     companion object {
-        var inactiveXPMult = 0.33f
+        var inactiveXPMult = 0.50f
         var baseXPPerLevel = 1000f
     }
 
@@ -76,8 +76,8 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
         var player = Global.getSector().playerPerson
         var playerLevel = player.stats.level
         var levelMult = 1f
-        if (playerLevel >= 2) levelMult += 0.1f
-        if (playerLevel >= 4) levelMult += 0.1f
+        //if (playerLevel >= 2) levelMult += 0.1f
+        //if (playerLevel >= 4) levelMult += 0.1f
         if (playerLevel >= 6) levelMult += 0.1f
         if (playerLevel >= 8) levelMult += 0.2f
         mult *= levelMult
