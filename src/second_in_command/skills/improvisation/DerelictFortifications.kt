@@ -21,7 +21,7 @@ class DerelictFortifications : SCBaseSkillPlugin() {
 
         tooltip.addPara("+10 armor for damage reduction calculations only per d-mod (maximum effect at 5)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+3%% armor and hitpoints per d-mod (maximum effect at 5)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("Reduces most negative effects of d-mods by 25%%*", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Reduces most negative effects of d-mods by 20%%*", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
         tooltip.addSpacer(10f)
 
@@ -48,7 +48,7 @@ class DerelictFortifications : SCBaseSkillPlugin() {
         stats.hullBonus.modifyPercent(id, bonus)
 
 
-        stats.dynamic.getStat(Stats.DMOD_EFFECT_MULT).modifyMult(id, 0.75f)
+        stats.dynamic.getStat(Stats.DMOD_EFFECT_MULT).modifyMult(id, 0.80f)
         Preservation.reapplyDmods(variant, hullSize, stats)
         stats!!.effectiveArmorBonus.modifyFlat(id, 10f * dmods)
 

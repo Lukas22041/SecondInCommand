@@ -21,7 +21,7 @@ class PrepareForTheWorst : SCBaseSkillPlugin() {
 
         tooltip.addPara("+10%% maximum combat readiness for all ships", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+30%% hull & armor repair rate outside of combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+4%% flat increase to the combat readiness recovered per day", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+3%% flat increase to the combat readiness recovered per day", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
@@ -30,7 +30,7 @@ class PrepareForTheWorst : SCBaseSkillPlugin() {
 
         stats.maxCombatReadiness.modifyFlat(id, cr, "Prepare for the worst")
         stats.repairRatePercentPerDay.modifyPercent(id, 30f)
-        stats.baseCRRecoveryRatePercentPerDay.modifyFlat(id, 4f)
+        stats.baseCRRecoveryRatePercentPerDay.modifyFlat(id, 3f)
 
         if (data.isNPC && !variant.addAndCheckTag("sc_prepare_for_the_worst")) {
             stats.fleetMember.repairTracker.cr += cr

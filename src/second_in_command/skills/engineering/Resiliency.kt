@@ -18,7 +18,7 @@ class Resiliency : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("Reduces most negative effects of d-mods by 25%%*", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Reduces most negative effects of d-mods by 20%%*", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+30 seconds of peak performance time", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
         tooltip.addSpacer(10f)
@@ -29,7 +29,7 @@ class Resiliency : SCBaseSkillPlugin() {
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
         stats!!.peakCRDuration.modifyFlat(id, 30f)
-        stats.dynamic.getStat(Stats.DMOD_EFFECT_MULT).modifyMult(id, 0.75f)
+        stats.dynamic.getStat(Stats.DMOD_EFFECT_MULT).modifyMult(id, 0.8f)
         Preservation.reapplyDmods(variant, hullSize, stats)
     }
 

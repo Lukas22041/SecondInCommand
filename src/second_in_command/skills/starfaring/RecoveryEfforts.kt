@@ -20,13 +20,13 @@ class RecoveryEfforts : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("All of your ships are almost always recoverable if lost in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+40%% repair rate outside of combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+25%% of hull and armor damage taken repaired after combat ends, at no cost", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+30%% repair rate outside of combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+20%% of hull and armor damage taken repaired after combat ends, at no cost", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        stats!!.dynamic.getMod(Stats.INSTA_REPAIR_FRACTION).modifyFlat(id, 0.25f)
+        stats!!.dynamic.getMod(Stats.INSTA_REPAIR_FRACTION).modifyFlat(id, 0.20f)
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
@@ -35,13 +35,13 @@ class RecoveryEfforts : SCBaseSkillPlugin() {
 
     override fun advance(data: SCData, amount: Float) {
         data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat("sc_recovery_efforts", 2f)
-        data.commander.stats.repairRateMult.modifyPercent("sc_recovery_efforts", 40f)
+        data.commander.stats.repairRateMult.modifyPercent("sc_recovery_efforts", 30f)
 
     }
 
     override fun onActivation(data: SCData) {
         data.fleet.stats.dynamic.getMod(Stats.SHIP_RECOVERY_MOD).modifyFlat("sc_recovery_efforts", 2f)
-        data.commander.stats.repairRateMult.modifyPercent("sc_recovery_efforts", 40f)
+        data.commander.stats.repairRateMult.modifyPercent("sc_recovery_efforts", 30f)
 
     }
 

@@ -17,7 +17,7 @@ class AdAstra : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+2 burn speed in hyperspace", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+1 burn speed in hyperspace", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("-25%% fuel usage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("-25%% damage from hazards such as hyperspace storms and solar flares", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
@@ -34,7 +34,7 @@ class AdAstra : SCBaseSkillPlugin() {
 
     override fun advance(data: SCData, amount: Float) {
         if (data.fleet.isInHyperspace) {
-            data.fleet.stats.fleetwideMaxBurnMod.modifyFlat("sc_ad_astra",2f, "Ad Astra")
+            data.fleet.stats.fleetwideMaxBurnMod.modifyFlat("sc_ad_astra",1f, "Ad Astra")
         }
         else {
             data.fleet.stats.fleetwideMaxBurnMod.unmodifyFlat("sc_ad_astra")

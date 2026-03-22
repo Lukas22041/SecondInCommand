@@ -17,7 +17,7 @@ class ReinforcedGrid : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("-40%% overload duration", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+25%% EMP damage resistance", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+20%% EMP damage resistance", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
 
     }
@@ -25,7 +25,7 @@ class ReinforcedGrid : SCBaseSkillPlugin() {
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
         stats!!.overloadTimeMod.modifyMult(id, 0.6f)
-        stats!!.empDamageTakenMult.modifyMult(id, 0.75f)
+        stats!!.empDamageTakenMult.modifyMult(id, 0.8f)
 
     }
 

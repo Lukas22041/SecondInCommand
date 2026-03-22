@@ -22,8 +22,8 @@ class OfficerTraining : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
         return "all ships with officers"
-
     }
+
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
        /* tooltip.addPara("+2 to maximum level of officers under your command", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())

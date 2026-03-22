@@ -18,6 +18,7 @@ class Huntsman : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("+25%% damage against frigates", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% damage against destroyers", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
         tooltip.addSpacer(10f)
         tooltip.addPara("Affects: ground operations", 0f, Misc.getGrayColor(), Misc.getBasePlayerColor(), "ground operations")
@@ -38,6 +39,7 @@ class Huntsman : SCBaseSkillPlugin() {
         var stats = fighter!!.mutableStats
 
         stats.damageToFrigates.modifyPercent(id, 25f)
+        stats.damageToDestroyers.modifyPercent(id, 10f)
     }
 
     override fun advance(data: SCData, amunt: Float?) {

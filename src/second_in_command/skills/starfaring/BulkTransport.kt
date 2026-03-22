@@ -3,6 +3,8 @@ package second_in_command.skills.starfaring
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
+import com.fs.starfarer.api.impl.campaign.skills.BaseSkillEffectDescription
+import com.fs.starfarer.api.impl.campaign.skills.BulkTransport
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
@@ -16,16 +18,20 @@ class BulkTransport : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+40%% cargo capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+40%% fuel capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+40%% personnel capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-
+        tooltip.addPara("+30%% cargo capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+30%% fuel capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+30%% personnel capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Increases the burn level of all non-militarized civilian-grade ships by 2", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        stats!!.cargoMod.modifyPercent(id, 40f)
-        stats!!.fuelMod.modifyPercent(id, 40f)
-        stats!!.maxCrewMod.modifyPercent(id, 40f)
+        stats!!.cargoMod.modifyPercent(id, 30f)
+        stats!!.fuelMod.modifyPercent(id, 30f)
+        stats!!.maxCrewMod.modifyPercent(id, 30f)
+
+        if (BaseSkillEffectDescription.isCivilian(stats)) {
+            stats.getMaxBurnLevel().modifyFlat(id, 2f)
+        }
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {

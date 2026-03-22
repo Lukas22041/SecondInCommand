@@ -44,7 +44,7 @@ class Preservation : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("All of your ships are more likely to be recoverable if lost in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("Reduces most negative effects of d-mods by 25%%*", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Reduces most negative effects of d-mods by 20%%*", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
         tooltip.addSpacer(10f)
 
@@ -59,7 +59,7 @@ class Preservation : SCBaseSkillPlugin() {
         }*/
 
 
-        stats.dynamic.getStat(Stats.DMOD_EFFECT_MULT).modifyMult(id, 0.75f)
+        stats.dynamic.getStat(Stats.DMOD_EFFECT_MULT).modifyMult(id, 0.80f)
         reapplyDmods(variant, hullSize, stats)
 
     }

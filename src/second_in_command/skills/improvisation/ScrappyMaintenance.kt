@@ -20,7 +20,7 @@ class ScrappyMaintenance : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("All ships are more likely to receive d-mods after being disabled in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+3%% combat readiness per d-mod (maximum effect at 5)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+2%% combat readiness per d-mod (maximum effect at 5)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+5%% combat readiness restoration rate per d-mod (maximum effect at 5)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
@@ -40,7 +40,7 @@ class ScrappyMaintenance : SCBaseSkillPlugin() {
 
         dmods = dmods.coerceIn(0, 5)
 
-        var cr = 0.03f * dmods
+        var cr = 0.02f * dmods
         var repairRate = 5f * dmods
 
 

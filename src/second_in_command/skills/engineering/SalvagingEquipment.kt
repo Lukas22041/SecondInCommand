@@ -19,7 +19,7 @@ class SalvagingEquipment : SCBaseSkillPlugin() {
 
         tooltip.addPara("+40%% resources - but not rare items, such as blueprints - recovered from abandoned stations and derelicts", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+30%% post battle salvage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("-75%% crew lost in non-combat operations", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("-50%% crew lost in non-combat operations", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
@@ -32,13 +32,13 @@ class SalvagingEquipment : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-        data.fleet.stats.dynamic.getStat(Stats.NON_COMBAT_CREW_LOSS_MULT).modifyMult("sc_salvaging_equipment", 0.25f)
+        data.fleet.stats.dynamic.getStat(Stats.NON_COMBAT_CREW_LOSS_MULT).modifyMult("sc_salvaging_equipment", 0.50f)
         data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_NOT_RARE).modifyFlat("sc_salvaging_equipment", 0.4f, "Salvaging Equipment Skill")
         data.fleet.stats.dynamic.getStat(Stats.BATTLE_SALVAGE_MULT_FLEET).modifyFlat("sc_salvaging_equipment", 0.3f, "Salvaging Equipment Skill")
     }
 
     override fun onActivation(data: SCData) {
-        data.fleet.stats.dynamic.getStat(Stats.NON_COMBAT_CREW_LOSS_MULT).modifyMult("sc_salvaging_equipment", 0.25f)
+        data.fleet.stats.dynamic.getStat(Stats.NON_COMBAT_CREW_LOSS_MULT).modifyMult("sc_salvaging_equipment", 0.50f)
         data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_NOT_RARE).modifyFlat("sc_salvaging_equipment", 0.4f, "Salvaging Equipment Skill")
         data.fleet.stats.dynamic.getStat(Stats.BATTLE_SALVAGE_MULT_FLEET).modifyFlat("sc_salvaging_equipment", 0.3f, "Salvaging Equipment Skill")
     }

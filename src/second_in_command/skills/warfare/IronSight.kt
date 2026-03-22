@@ -18,18 +18,20 @@ class IronSight : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+10%% non-missile weapon range", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+5%% non-missile weapon range", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+25%% weapon repair speed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+25%% weapon turn rate", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
 
-        stats.energyWeaponRangeBonus.modifyPercent(id, 10f)
-        stats.ballisticWeaponRangeBonus.modifyPercent(id, 10f)
+        stats.energyWeaponRangeBonus.modifyPercent(id, 5f)
+        stats.ballisticWeaponRangeBonus.modifyPercent(id, 5f)
 
         stats.combatWeaponRepairTimeMult.modifyMult(id, 0.75f)
+        stats.weaponTurnRateBonus.modifyPercent(id, 25f)
 
     }
 

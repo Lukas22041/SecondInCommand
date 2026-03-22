@@ -16,7 +16,8 @@ class MobileDefenses : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+50%% increased damage against fighters and missiles", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+30%% increased damage against fighters and missiles", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("-20%% reduced damage.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
@@ -31,8 +32,11 @@ class MobileDefenses : SCBaseSkillPlugin() {
     override fun applyEffectsToFighterSpawnedByShip(data: SCData, fighter: ShipAPI?, ship: ShipAPI?, id: String?) {
         var stats = fighter!!.mutableStats
 
-        stats.damageToFighters.modifyPercent(id, 50f)
-        stats.damageToMissiles.modifyPercent(id, 50f)
+        stats.damageToFighters.modifyPercent(id, 30f)
+
+        stats.hullDamageTakenMult.modifyMult(id, 0.80f)
+        stats.armorDamageTakenMult.modifyMult(id, 0.80f)
+        stats.shieldDamageTakenMult.modifyMult(id, 0.80f)
     }
 
 }

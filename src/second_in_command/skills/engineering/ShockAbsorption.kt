@@ -17,14 +17,14 @@ class ShockAbsorption : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+10%% flux dissipation", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+25%% EMP damage resistance", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% flux capacity", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+20%% EMP damage resistance", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        stats!!.fluxDissipation.modifyPercent(id, 10f)
-        stats!!.empDamageTakenMult.modifyMult(id, 0.75f)
+        stats!!.fluxCapacity.modifyPercent(id, 10f)
+        stats!!.empDamageTakenMult.modifyMult(id, 0.80f)
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {

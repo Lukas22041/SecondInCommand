@@ -12,7 +12,7 @@ import second_in_command.specs.SCBaseSkillPlugin
 class MagneticShielding : SCBaseSkillPlugin() {
 
     var HAZARD_MULT = 0f
-    var EMP_DAMAGE_TAKEN_MULT = 0.75f
+    var EMP_DAMAGE_TAKEN_MULT = 0.80f
 
     override fun getAffectsString(): String {
         return "all automated ships"
@@ -21,7 +21,7 @@ class MagneticShielding : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("Prevents all damage from solar corona and similar hazards", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+25%% EMP damage resistance in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+29%% EMP damage resistance in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {

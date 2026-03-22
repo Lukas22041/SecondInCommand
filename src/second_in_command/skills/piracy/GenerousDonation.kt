@@ -18,9 +18,10 @@ class GenerousDonation : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("+60%% post-battle salvage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+50%% post-battle salvage", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+25%% to the chance that opponents drop their weapons after being destroyed", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         //tooltip.addPara("+1 to burn level at which the fleet is considered to be moving slowly*", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% resources - but not rare items, such as blueprints - recovered from abandoned stations and other derelicts", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
 
     }
@@ -35,16 +36,20 @@ class GenerousDonation : SCBaseSkillPlugin() {
     }
 
     override fun advance(data: SCData, amount: Float) {
-        data.fleet.stats.dynamic.getStat(Stats.BATTLE_SALVAGE_MULT_FLEET).modifyFlat("sc_generous_donation", 0.6f)
+        data.fleet.stats.dynamic.getStat(Stats.BATTLE_SALVAGE_MULT_FLEET).modifyFlat("sc_generous_donation", 0.5f)
         data.fleet.stats.dynamic.getMod(Stats.ENEMY_WEAPON_RECOVERY_MOD).modifyFlat("sc_generous_donation", 0.25f)
         data.fleet.stats.dynamic.getMod(Stats.ENEMY_WING_RECOVERY_MOD).modifyFlat("sc_generous_donation", 0.25f)
+        data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_NOT_RARE).modifyFlat("sc_generous_donation", 0.1f)
+
         //data.fleet.stats.dynamic.getMod(Stats.MOVE_SLOW_SPEED_BONUS_MOD).modifyFlat("sc_generous_donation", 1f, "Generous Donation")
     }
 
     override fun onActivation(data: SCData) {
-        data.fleet.stats.dynamic.getStat(Stats.BATTLE_SALVAGE_MULT_FLEET).modifyFlat("sc_generous_donation", 0.6f)
+        data.fleet.stats.dynamic.getStat(Stats.BATTLE_SALVAGE_MULT_FLEET).modifyFlat("sc_generous_donation", 0.5f)
         data.fleet.stats.dynamic.getMod(Stats.ENEMY_WEAPON_RECOVERY_MOD).modifyFlat("sc_generous_donation", 0.25f)
         data.fleet.stats.dynamic.getMod(Stats.ENEMY_WING_RECOVERY_MOD).modifyFlat("sc_generous_donation", 0.25f)
+        data.fleet.stats.dynamic.getStat(Stats.SALVAGE_VALUE_MULT_FLEET_NOT_RARE).modifyFlat("sc_generous_donation", 0.1f)
+
         //data.fleet.stats.dynamic.getMod(Stats.MOVE_SLOW_SPEED_BONUS_MOD).modifyFlat("sc_generous_donation", 1f, "Generous Donation")
     }
 
@@ -52,6 +57,7 @@ class GenerousDonation : SCBaseSkillPlugin() {
         data.fleet.stats.dynamic.getStat(Stats.BATTLE_SALVAGE_MULT_FLEET).unmodify("sc_generous_donation")
         data.fleet.stats.dynamic.getMod(Stats.ENEMY_WEAPON_RECOVERY_MOD).unmodify("sc_generous_donation")
         data.fleet.stats.dynamic.getMod(Stats.ENEMY_WING_RECOVERY_MOD).unmodify("sc_generous_donation")
+        data.fleet.stats.dynamic.getMod(Stats.SALVAGE_VALUE_MULT_FLEET_NOT_RARE).unmodify("sc_generous_donation")
         //data.fleet.stats.dynamic.getMod(Stats.MOVE_SLOW_SPEED_BONUS_MOD).unmodify("sc_generous_donation")
     }
 }
