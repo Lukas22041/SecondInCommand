@@ -17,7 +17,7 @@ class MobileDefenses : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("+30%% increased damage against fighters and missiles", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("-20%% reduced damage.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("-20%% damage taken.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
