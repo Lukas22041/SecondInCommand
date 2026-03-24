@@ -23,7 +23,7 @@ class OverwhelmingForce : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("Disabling an opponent provides the ship with increased stats for 7 seconds", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("   - The ship gains 40%% increased flux dissipation", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "40%")
+        tooltip.addPara("   - The ship gains 25%% increased flux dissipation", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "40%")
         tooltip.addPara("   - The ship gains 20%% hard flux dissipation while shields are active", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "20%")
         tooltip.addPara("   - Disabling another opponent while this effect is active resets its duration", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "resets")
 
@@ -89,7 +89,7 @@ class OverwhelmingForceAdvanceListener(var ship: ShipAPI, var duration: Float) :
     override fun advance(amount: Float) {
         var stats = ship.mutableStats
 
-        stats.fluxDissipation.modifyMult("sc_overwhelming_force", 1.5f)
+        stats.fluxDissipation.modifyMult("sc_overwhelming_force", 1.25f)
         stats.hardFluxDissipationFraction.modifyFlat("sc_overwhelming_force", 0.2f)
 
         duration -= 1 * amount
