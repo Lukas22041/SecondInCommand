@@ -17,17 +17,17 @@ id,name,iconPath,npcSpawnWeight,plugin
 #Tactical,,,,
 sc_tactical_war_room,War Room,graphics/secondInCommand/tactical/focused_fire.png,1,second_in_command.skills.tactical.WarRoom
 ,,,,
+sc_tactical_sustain_tactics,Sustain Tactics,graphics/secondInCommand/tactical/pristine_condition.png,1,second_in_command.skills.tactical.SustainTactics
 sc_tactical_strike_tactics,Strike Tactics,graphics/secondInCommand/tactical/mass_bombardment.png,1,second_in_command.skills.tactical.StrikeTactics
 sc_tactical_wing_tactics,Wing Tactics,graphics/secondInCommand/tactical/accelerated_barrels.png,1,second_in_command.skills.tactical.WingTactics
-sc_tactical_phasespace_tactics,Phasespace Tactics,graphics/secondInCommand/tactical/efficient_ordnance.png,1,second_in_command.skills.tactical.PhasespaceTactics
 sc_tactical_suppression_tactics,Suppression Tactics,graphics/secondInCommand/tactical/spotters.png,1,second_in_command.skills.tactical.SuppressionTactics
-sc_tactical_sustain_tactics,Sustain Tactics,graphics/secondInCommand/tactical/pristine_condition.png,1,second_in_command.skills.tactical.SustainTactics
-sc_tactical_doctrine_tactics,Doctrine Tactics,graphics/secondInCommand/tactical/tactical_drills.png,1,second_in_command.skills.tactical.DoctrineTactics
+sc_tactical_phasespace_tactics,Phasespace Tactics,graphics/secondInCommand/tactical/efficient_ordnance.png,1,second_in_command.skills.tactical.PhasespaceTactics
 sc_tactical_vanguard_tactics,Vanguard Tactics,graphics/secondInCommand/tactical/full_throttle.png,1,second_in_command.skills.tactical.VanguardTactics
 sc_tactical_bulwark_tactics,Bulwark Tactics,graphics/secondInCommand/tactical/defensive_protocols.png,1,second_in_command.skills.tactical.BulwarkTactics
-,,,,
 sc_tactical_anchor_tactics,Anchor Tactics,graphics/secondInCommand/tactical/superiority.png,1,second_in_command.skills.tactical.AnchorTactics
+,,,,
 sc_tactical_distribution_tactics,Distribution Tactics,graphics/secondInCommand/tactical/rapid_response.png,1,second_in_command.skills.tactical.DistributionTactics
+sc_tactical_doctrine_tactics,Doctrine Tactics,graphics/secondInCommand/tactical/tactical_drills.png,1,second_in_command.skills.tactical.DoctrineTactics
 ,,,,
 #Management,,,,
 sc_management_crew_training,Crew Training,graphics/secondInCommand/management/crew_training.png,1,second_in_command.skills.management.CrewTraining

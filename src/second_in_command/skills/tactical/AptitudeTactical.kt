@@ -28,15 +28,15 @@ class AptitudeTactical : SCBaseAptitudePlugin() {
         section1.addSkill("sc_tactical_wing_tactics")
         section1.addSkill("sc_tactical_suppression_tactics")
         section1.addSkill("sc_tactical_phasespace_tactics")
-        section1.addSkill("sc_tactical_doctrine_tactics")
         section1.addSkill("sc_tactical_vanguard_tactics")
         section1.addSkill("sc_tactical_bulwark_tactics")
+        section1.addSkill("sc_tactical_anchor_tactics")
         addSection(section1)
 
         // Capstones: pick one
         var section2 = SCAptitudeSection(true, 3, "combat2")
-        section2.addSkill("sc_tactical_anchor_tactics")
         section2.addSkill("sc_tactical_distribution_tactics")
+        section2.addSkill("sc_tactical_doctrine_tactics")
         addSection(section2)
 
 

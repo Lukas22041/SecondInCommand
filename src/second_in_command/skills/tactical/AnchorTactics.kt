@@ -10,16 +10,14 @@ import second_in_command.specs.SCBaseSkillPlugin
 class AnchorTactics : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "capitals and nearby allied ships"
+        return ""
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
-        // TODO: +20% range, +10 max speed and maneuverability,
-        //       +10% range to nearby allied ships (does not stack with other capitals,
-        //       does not affect other capitals), 90 DP threshold
+
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        // TODO: implement
+
     }
 }

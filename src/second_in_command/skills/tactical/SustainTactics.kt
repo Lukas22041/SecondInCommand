@@ -10,14 +10,14 @@ import second_in_command.specs.SCBaseSkillPlugin
 class SustainTactics : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "ships up to 120 DP"
+        return ""
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
-        // TODO: +20% fuel and supply reduction, 120 DP limit
+
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        // TODO: implement
+
     }
 }

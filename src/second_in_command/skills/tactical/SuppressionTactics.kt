@@ -10,14 +10,14 @@ import second_in_command.specs.SCBaseSkillPlugin
 class SuppressionTactics : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "all ships in the fleet"
+        return ""
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
-        // TODO: PD range, turn rate, fire rate, or flux cost bonuses
+
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        // TODO: implement
+
     }
 }

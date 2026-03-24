@@ -10,14 +10,14 @@ import second_in_command.specs.SCBaseSkillPlugin
 class BulwarkTactics : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "ships up to 90 DP"
+        return ""
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
-        // TODO: 10% armor, 20% flux capacity, +25% PPT, 90 DP limit
+
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        // TODO: implement
+
     }
 }

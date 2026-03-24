@@ -10,14 +10,14 @@ import second_in_command.specs.SCBaseSkillPlugin
 class PhasespaceTactics : SCBaseSkillPlugin() {
 
     override fun getAffectsString(): String {
-        return "phase ships up to 90 DP"
+        return ""
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
-        // TODO: +30% to slowdown threshold, +10% flux capacity, +10% phase speed, 90 DP limit
+
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        // TODO: implement
+
     }
 }

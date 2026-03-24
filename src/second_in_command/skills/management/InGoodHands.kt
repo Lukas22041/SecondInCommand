@@ -73,9 +73,7 @@ class InGoodHands : SCBaseSkillPlugin() {
     }
 
     override fun onDeactivation(data: SCData) {
-        data.commander.stats.officerNumber.unmodifyFlat(id)
-
-        data.commander.stats.officerNumber.unmodify("sc_officer_management")
+        data.commander.stats.officerNumber.unmodify(id)
 
         if (!data.isNPC) {
             CrewTraining.removeOfficersOverTheLimit()
