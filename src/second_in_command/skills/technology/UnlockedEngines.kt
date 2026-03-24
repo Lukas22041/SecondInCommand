@@ -18,7 +18,7 @@ class UnlockedEngines : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-        tooltip.addPara("Increases the ships top speed by 20/20/15/10 based on its hull size", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("Increases the ships top speed by 20/15/10/5 based on its hull size", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
 
     }
@@ -26,9 +26,9 @@ class UnlockedEngines : SCBaseSkillPlugin() {
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
         var increase = when(hullSize) {
-            ShipAPI.HullSize.CAPITAL_SHIP -> 10f
-            ShipAPI.HullSize.CRUISER -> 15f
-            ShipAPI.HullSize.DESTROYER -> 20f
+            ShipAPI.HullSize.CAPITAL_SHIP -> 5f
+            ShipAPI.HullSize.CRUISER -> 10f
+            ShipAPI.HullSize.DESTROYER -> 15f
             ShipAPI.HullSize.FRIGATE -> 20f
             else -> 0f
         }
