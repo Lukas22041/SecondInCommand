@@ -133,7 +133,7 @@ public abstract class SCBaseSkillPlugin {
         AUTOMATED_POINTS,
     }
 
-    // --- Core computation ---
+    //Threshold Data
 
     protected float computeAndCacheThresholdBonus(MutableShipStatsAPI stats,
                                                    String key, float maxBonus, ThresholdBonusType type) {
@@ -200,7 +200,7 @@ public abstract class SCBaseSkillPlugin {
         return bonus;
     }
 
-    // --- Fleet data helpers ---
+
 
     protected boolean isInCampaign() {
         return Global.getCurrentState() == GameState.CAMPAIGN &&
@@ -249,7 +249,7 @@ public abstract class SCBaseSkillPlugin {
         return null;
     }
 
-    // --- OP / points tallies ---
+
 
     protected float getPoints(FleetMemberAPI member, MutableCharacterStatsAPI stats) {
         if (USE_RECOVERY_COST) {

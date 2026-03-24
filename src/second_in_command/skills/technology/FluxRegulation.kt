@@ -8,6 +8,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
+import second_in_command.specs.SCBaseSkillPlugin.ThresholdBonusType
 
 class FluxRegulation : SCBaseSkillPlugin() {
 
@@ -57,16 +58,17 @@ class FluxRegulation : SCBaseSkillPlugin() {
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
-        var vents = stats!!.variant.numFluxVents
-        var caps = stats!!.variant.numFluxCapacitors
-        var fluxIncrease = 1f * vents
-        var capsIncrease = 10f * caps
+        val vents = stats!!.variant.numFluxVents
+        val caps = stats!!.variant.numFluxCapacitors
 
-        stats.fluxDissipation.modifyFlat(id, fluxIncrease)
-        stats.fluxCapacity.modifyFlat(id, capsIncrease)
+        stats.fluxDissipation.modifyFlat(id, 1f * vents)
+        stats.fluxCapacity.modifyFlat(id, 10f * caps)
 
-        stats!!.fluxDissipation.modifyPercent(id, 10f)
-        stats!!.fluxCapacity.modifyPercent(id, 10f)
+        val disBonus = computeAndCacheThresholdBonus(stats, id + "_dis", DISSIPATION_PERCENT, ThresholdBonusType.OP)
+        val capBonus = computeAndCacheThresholdBonus(stats, id + "_cap", CAPACITY_PERCENT, ThresholdBonusType.OP)
+
+        stats.fluxDissipation.modifyPercent(id, disBonus)
+        stats.fluxCapacity.modifyPercent(id, capBonus)
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI?, variant: ShipVariantAPI, id: String?) {
