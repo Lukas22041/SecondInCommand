@@ -16,25 +16,26 @@ class AptitudeTactical : SCBaseAptitudePlugin() {
     }
 
     override fun getOriginSkillId(): String {
-        return "sc_tactical_focused_fire"
+        return "sc_tactical_war_room"
     }
 
     override fun createSections() {
 
         var section1 = SCAptitudeSection(true, 0, "combat1")
-        section1.addSkill("sc_tactical_spotters")
-        section1.addSkill("sc_tactical_rapid_response")
-        section1.addSkill("sc_tactical_pristine_condition")
-        section1.addSkill("sc_tactical_tactical_drills")
-        section1.addSkill("sc_tactical_efficient_ordnance")
-        //section1.addSkill("sc_tactical_superiority")
+        section1.addSkill("sc_tactical_vanguard_tactics")
+        section1.addSkill("sc_tactical_bulwark_tactics")
+        section1.addSkill("sc_tactical_strike_tactics")
+        section1.addSkill("sc_tactical_wing_tactics")
+        section1.addSkill("sc_tactical_phasespace_tactics")
+        section1.addSkill("sc_tactical_suppression_tactics")
+        section1.addSkill("sc_tactical_sustain_tactics")
+        section1.addSkill("sc_tactical_doctrine_tactics")
         addSection(section1)
 
+        // Capstones: pick one
         var section2 = SCAptitudeSection(true, 3, "combat2")
-        section2.addSkill("sc_tactical_full_throttle")
-        section2.addSkill("sc_tactical_accelerated_barrels")
-        section2.addSkill("sc_tactical_mass_bombardment")
-        section2.addSkill("sc_tactical_defensive_protocols")
+        section2.addSkill("sc_tactical_anchor_tactics")
+        section2.addSkill("sc_tactical_distribution_tactics")
         addSection(section2)
 
 
