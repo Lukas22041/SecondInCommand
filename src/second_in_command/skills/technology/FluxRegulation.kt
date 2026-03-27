@@ -8,7 +8,6 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.specs.SCBaseSkillPlugin
-import second_in_command.specs.SCBaseSkillPlugin.ThresholdBonusType
 
 class FluxRegulation : SCBaseSkillPlugin() {
 
@@ -64,8 +63,8 @@ class FluxRegulation : SCBaseSkillPlugin() {
         stats.fluxDissipation.modifyFlat(id, 1f * vents)
         stats.fluxCapacity.modifyFlat(id, 10f * caps)
 
-        val disBonus = computeAndCacheThresholdBonus(stats, id + "_dis", DISSIPATION_PERCENT, ThresholdBonusType.OP)
-        val capBonus = computeAndCacheThresholdBonus(stats, id + "_cap", CAPACITY_PERCENT, ThresholdBonusType.OP)
+        val disBonus = computeAndCacheThresholdBonus(stats, id + "_dis", DISSIPATION_PERCENT, ThresholdBonusType.DP)
+        val capBonus = computeAndCacheThresholdBonus(stats, id + "_cap", CAPACITY_PERCENT, ThresholdBonusType.DP)
 
         stats.fluxDissipation.modifyPercent(id, disBonus)
         stats.fluxCapacity.modifyPercent(id, capBonus)

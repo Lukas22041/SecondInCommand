@@ -123,14 +123,13 @@ public abstract class SCBaseSkillPlugin {
     private final static float MILITARIZED_OP_THRESHOLD = 5f;
 
     public enum ThresholdBonusType {
-        OP,
-        OP_LOW,
+        DP,
+        DP_LOW,
         OP_ALL,
         OP_ALL_LOW,
         MILITARIZED_OP,
-        PHASE_OP,
+        PHASE_DP,
         FIGHTER_BAYS,
-        AUTOMATED_POINTS,
     }
 
     //Threshold Data
@@ -156,10 +155,10 @@ public abstract class SCBaseSkillPlugin {
         if (type == ThresholdBonusType.FIGHTER_BAYS) {
             currValue = getNumFighterBays(data);
             threshold = FIGHTER_BAYS_THRESHOLD;
-        } else if (type == ThresholdBonusType.OP) {
+        } else if (type == ThresholdBonusType.DP) {
             currValue = getTotalCombatOP(data, cStats);
             threshold = OP_THRESHOLD;
-        } else if (type == ThresholdBonusType.OP_LOW) {
+        } else if (type == ThresholdBonusType.DP_LOW) {
             currValue = getTotalCombatOP(data, cStats);
             threshold = OP_LOW_THRESHOLD;
         } else if (type == ThresholdBonusType.OP_ALL_LOW) {
@@ -171,7 +170,7 @@ public abstract class SCBaseSkillPlugin {
         } else if (type == ThresholdBonusType.MILITARIZED_OP) {
             currValue = getMilitarizedOP(data, cStats);
             threshold = MILITARIZED_OP_THRESHOLD;
-        } else if (type == ThresholdBonusType.PHASE_OP) {
+        } else if (type == ThresholdBonusType.PHASE_DP) {
             currValue = getPhaseOP(data, cStats);
             threshold = PHASE_OP_THRESHOLD;
         } /*else if (type == ThresholdBonusType.AUTOMATED_POINTS) {

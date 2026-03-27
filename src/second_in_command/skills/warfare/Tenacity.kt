@@ -19,7 +19,7 @@ class Tenacity : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("+50 armor for damage reduction calculations only", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+10% hull ", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+10%% hull ", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 
