@@ -689,18 +689,13 @@ public class SCThresholds {
     public static void addMissileWeaponOPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data, float threshold) {
         Color tc = Misc.getTextColor();
         Color hc = Misc.getHighlightColor();
-        String indent = BaseIntelPlugin.BULLET;
-        if (isInCampaign()) {
-            float pts = getMissileWeaponPoints(data);
-            info.addPara(indent + "Maximum at %s or less missile weapon points in fleet (small=2, medium=4, large=8), your fleet's total is %s",
-                    0f, tc, hc,
-                    "" + (int) threshold,
-                    "" + (int) Math.round(pts));
-        } else {
-            info.addPara(indent + "Maximum at %s or less missile weapon points in fleet (small=2, medium=4, large=8)",
-                    0f, tc, hc,
-                    "" + (int) threshold);
-        }
+
+        float pts = getMissileWeaponPoints(data);
+        info.addPara("   - Each missiles weapon counts as 2/4/8 points, based on weapon size", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "2/4/8");
+        info.addPara("   - Maximum at %s or less missile weapon points in fleet, your fleet's total is %s",
+                0f, tc, hc,
+                "" + (int) threshold,
+                "" + (int) Math.round(pts));
     }
 
     public static void addPDWeaponOPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data) {
@@ -710,17 +705,12 @@ public class SCThresholds {
     public static void addPDWeaponOPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data, float threshold) {
         Color tc = Misc.getTextColor();
         Color hc = Misc.getHighlightColor();
-        String indent = BaseIntelPlugin.BULLET;
-        if (isInCampaign()) {
-            float pts = getPDWeaponPoints(data);
-            info.addPara(indent + "Maximum at %s or less point-defense weapon points in fleet (small=2, medium=4, large=8), your fleet's total is %s",
-                    0f, tc, hc,
-                    "" + (int) threshold,
-                    "" + (int) Math.round(pts));
-        } else {
-            info.addPara(indent + "Maximum at %s or less point-defense weapon points in fleet (small=2, medium=4, large=8)",
-                    0f, tc, hc,
-                    "" + (int) threshold);
-        }
+
+        float pts = getMissileWeaponPoints(data);
+        info.addPara("   - Each point-defense weapon counts as 2/4/8 points, based on weapon size", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "2/4/8");
+        info.addPara("   - Maximum at %s or less point-defemse weapon points in fleet, your fleet's total is %s",
+                0f, tc, hc,
+                "" + (int) threshold,
+                "" + (int) Math.round(pts));
     }
 }

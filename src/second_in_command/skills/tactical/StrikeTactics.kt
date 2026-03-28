@@ -5,6 +5,7 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
 import com.fs.starfarer.api.impl.campaign.skills.BaseSkillEffectDescription
 import com.fs.starfarer.api.ui.TooltipMakerAPI
+import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.misc.SCThresholds
 import second_in_command.skills.tactical.scripts.StrikeTacticsScript
@@ -20,19 +21,31 @@ class StrikeTactics : SCBaseSkillPlugin() {
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
-        var points = SCThresholds.getMissileWeaponPoints(data.fleet.fleetData)
+        val hc = Misc.getHighlightColor()
+        val tc = Misc.getTextColor()
+
+        tooltip.addPara("Periodically restores %s, or at least 1, of missiles to all missile weapons on combat ships",
+            0f, hc, hc, "20%")
+
+        val missilePoints = SCThresholds.getMissileWeaponPoints(data.fleet.fleetData)
+        val regenTime = (baseRegenTime * Math.max(missilePoints, thresholdLimit.toFloat()) / thresholdLimit.toFloat()).toInt()
+
+        tooltip.addPara("   - Reload interval: %s seconds (minimum: %s, increases above threshold)",
+            0f, tc, hc,
+            "" + regenTime,
+            "" + baseRegenTime)
+
+        SCThresholds.addMissileWeaponOPThresholdInfo(tooltip, data.fleet.fleetData)
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        if (BaseSkillEffectDescription.isCivilian(stats)) {
-
-        }
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI, variant: ShipVariantAPI?, id: String) {
-        if (BaseSkillEffectDescription.isCivilian(ship.mutableStats)) {
-            var regenTime = 0f
-            ship.addListener(StrikeTacticsScript(ship, regenTime))
-        }
+        if (BaseSkillEffectDescription.isCivilian(ship.mutableStats)) return
+
+        val missilePoints = SCThresholds.getMissileWeaponPoints(data.fleet.fleetData)
+        val regenTime = baseRegenTime * Math.max(missilePoints, thresholdLimit.toFloat()) / thresholdLimit.toFloat()
+        ship.addListener(StrikeTacticsScript(ship, regenTime))
     }
 }
