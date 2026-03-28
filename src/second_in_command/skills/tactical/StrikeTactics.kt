@@ -44,15 +44,17 @@ class StrikeTactics : SCBaseSkillPlugin() {
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
-        val speedBonus: Float = SCThresholds.getThresholdBasedRoundedBonus(maxMissileSpeed, SCThresholds.getMissileWeaponPoints(data.fleet.fleetData), SCThresholds.MISSILE_WEAPON_OP_THRESHOLD)
-        stats!!.missileMaxSpeedBonus.modifyPercent(id, speedBonus)
-        stats.missileMaxTurnRateBonus.modifyPercent(id, speedBonus)
-        stats.missileMaxTurnRateBonus.modifyPercent(id, speedBonus)
+        if (!SCThresholds.isCivilian(stats)) {
+            val speedBonus: Float = SCThresholds.getThresholdBasedRoundedBonus(maxMissileSpeed, SCThresholds.getMissileWeaponPoints(data.fleet.fleetData), SCThresholds.MISSILE_WEAPON_OP_THRESHOLD)
+            stats!!.missileMaxSpeedBonus.modifyPercent(id, speedBonus)
+            stats.missileMaxTurnRateBonus.modifyPercent(id, speedBonus)
+            stats.missileMaxTurnRateBonus.modifyPercent(id, speedBonus)
+        }
 
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI, variant: ShipVariantAPI?, id: String) {
-        if (BaseSkillEffectDescription.isCivilian(ship.mutableStats)) return
+        if (SCThresholds.isCivilian(ship.mutableStats)) return
 
         val missilePoints = SCThresholds.getMissileWeaponPoints(data.fleet.fleetData)
         val regenTime = baseRegenTime * Math.max(missilePoints, thresholdLimit.toFloat()) / thresholdLimit.toFloat()

@@ -34,7 +34,7 @@ class AptitudeTactical : SCBaseAptitudePlugin() {
         addSection(section1)
 
         // Capstones: pick one
-        var section2 = SCAptitudeSection(true, 4, "combat2")
+        var section2 = SCAptitudeSection(false, 4, "combat2")
         section2.addSkill("sc_tactical_distribution_tactics")
         section2.addSkill("sc_tactical_doctrine_tactics")
         addSection(section2)

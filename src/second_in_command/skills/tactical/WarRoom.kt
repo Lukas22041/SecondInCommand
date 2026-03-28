@@ -21,7 +21,7 @@ class WarRoom : SCBaseSkillPlugin() {
         val baseOfficers = Global.getSector().getPlayerStats().getOfficerNumber().getBaseValue().toInt()
 
         tooltip.addPara("Tactical is build around \"Tactics\"\n" +
-                "Tactics are skills which come with strong effects, but diminishing returns for separate categories.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+                "Tactics are skills which come with strong effects, but diminishing returns past their thresholds.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
         tooltip.addSpacer(10f)
 

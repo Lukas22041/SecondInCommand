@@ -40,14 +40,16 @@ public class SCThresholds {
     // Threshold constants
     // -------------------------------------------------------------------------
 
-    public static final float FIGHTER_BAYS_THRESHOLD = 8f;
+    public static final float FIGHTER_BAYS_THRESHOLD = 12f;
     public static final float OP_THRESHOLD = 240f;
-    public static final float OP_LOW_THRESHOLD = 120f;
     public static final float OP_ALL_LOW_THRESHOLD = 120f;
     public static final float OP_ALL_THRESHOLD = 240f;
     public static final float PHASE_OP_THRESHOLD = 40f;
     public static final float MILITARIZED_OP_THRESHOLD = 5f;
+
     // Tactical aptitude thresholds
+
+    public static final float DP_LOW_THRESHOLD = 120f;
     public static final float FIGHTER_BAYS_COMBAT_THRESHOLD = 90f;
     public static final float FRIGATE_DESTROYER_DP_THRESHOLD = 90f;
     public static final float CRUISER_DP_THRESHOLD = 90f;
@@ -106,7 +108,7 @@ public class SCThresholds {
             threshold = OP_THRESHOLD;
         } else if (type == ThresholdBonusType.DP_LOW) {
             currValue = getTotalCombatOP(data, cStats);
-            threshold = OP_LOW_THRESHOLD;
+            threshold = DP_LOW_THRESHOLD;
         } else if (type == ThresholdBonusType.OP_ALL_LOW) {
             currValue = getTotalOP(data, cStats);
             threshold = OP_ALL_LOW_THRESHOLD;
