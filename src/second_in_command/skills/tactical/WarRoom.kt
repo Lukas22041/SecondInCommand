@@ -20,6 +20,11 @@ class WarRoom : SCBaseSkillPlugin() {
 
         val baseOfficers = Global.getSector().getPlayerStats().getOfficerNumber().getBaseValue().toInt()
 
+        tooltip.addPara("Tactical is build around \"Tactics\"\n" +
+                "Tactics are skills which come with strong effects, but diminishing returns for separate categories.", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+
+        tooltip.addSpacer(10f)
+
         tooltip.addPara("+ ${NUM_OFFICER_BONUS.toInt()} to maximum number of ship officers* you're able to command", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("   - If this executive officer is unassigned, any officer over the limit will also be unassigned", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "5%")
 

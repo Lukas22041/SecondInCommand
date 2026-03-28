@@ -15,6 +15,7 @@ class StrikeTactics : SCBaseSkillPlugin() {
 
     var thresholdLimit = 90
     var baseRegenTime = 60 //Seconds, increases if you are over the threshold, 60s at threshold or above, 120s at twice over threshold, and so forth
+    var maxMissileSpeed = 20f
 
     override fun getAffectsString(): String {
         return "all combat ships, including carriers and militarized civilian ships"
@@ -24,6 +25,9 @@ class StrikeTactics : SCBaseSkillPlugin() {
         val hc = Misc.getHighlightColor()
         val tc = Misc.getTextColor()
 
+        val speedBonus: Float = SCThresholds.getThresholdBasedRoundedBonus(maxMissileSpeed, SCThresholds.getMissileWeaponPoints(data.fleet.fleetData), SCThresholds.MISSILE_WEAPON_OP_THRESHOLD)
+
+        tooltip.addPara("+${speedBonus.toInt()}%% missile speed (maximum: ${maxMissileSpeed.toInt()}%%)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("Periodically restores %s, or at least 1, of missiles to all missile weapons on combat ships",
             0f, hc, hc, "20%")
 
@@ -39,6 +43,12 @@ class StrikeTactics : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
+
+        val speedBonus: Float = SCThresholds.getThresholdBasedRoundedBonus(maxMissileSpeed, SCThresholds.getMissileWeaponPoints(data.fleet.fleetData), SCThresholds.MISSILE_WEAPON_OP_THRESHOLD)
+        stats!!.missileMaxSpeedBonus.modifyPercent(id, speedBonus)
+        stats.missileMaxTurnRateBonus.modifyPercent(id, speedBonus)
+        stats.missileMaxTurnRateBonus.modifyPercent(id, speedBonus)
+
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI, variant: ShipVariantAPI?, id: String) {
