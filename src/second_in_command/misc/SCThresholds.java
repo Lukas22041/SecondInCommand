@@ -40,7 +40,7 @@ public class SCThresholds {
     // Threshold constants
     // -------------------------------------------------------------------------
 
-    public static final float FIGHTER_BAYS_THRESHOLD = 12f;
+    public static final float FIGHTER_BAYS_THRESHOLD = 8f;
     public static final float OP_THRESHOLD = 240f;
     public static final float OP_ALL_LOW_THRESHOLD = 120f;
     public static final float OP_ALL_THRESHOLD = 240f;
@@ -50,7 +50,7 @@ public class SCThresholds {
     // Tactical aptitude thresholds
 
     public static final float DP_LOW_THRESHOLD = 120f;
-    public static final float FIGHTER_BAYS_COMBAT_THRESHOLD = 90f;
+    public static final float FIGHTER_BAYS_COMBAT_THRESHOLD = 12f;
     public static final float FRIGATE_DESTROYER_DP_THRESHOLD = 90f;
     public static final float CRUISER_DP_THRESHOLD = 90f;
     public static final float CAPITAL_DP_THRESHOLD = 90f;
@@ -64,14 +64,13 @@ public class SCThresholds {
     public enum ThresholdBonusType {
 
         DP, //Flux regulation
-
+        FIGHTER_BAYS,
         OP_ALL,
         OP_ALL_LOW,
         MILITARIZED_OP,
         PHASE_DP,
         // Tactical aptitude threshold types (civilian ships excluded from all)
         DP_LOW,
-        FIGHTER_BAYS,
         FIGHTER_BAYS_COMBAT,
         FRIGATE_DESTROYER_DP,
         CRUISER_DP,
@@ -612,14 +611,10 @@ public class SCThresholds {
         if (isInCampaign()) {
             int bays = Math.round(getNumFighterBaysCombat(data));
             String baysStr = bays == 1 ? "fighter bay" : "fighter bays";
-            info.addPara(indent + "Maximum at %s or less combat fighter bays in fleet, your fleet has %s " + baysStr,
+            info.addPara(indent + "Maximum at %s or less used combat fighter bays in fleet, your fleet uses %s " + baysStr,
                     0f, tc, hc,
                     "" + (int) threshold,
                     "" + bays);
-        } else {
-            info.addPara(indent + "Maximum at %s or less combat fighter bays in fleet",
-                    0f, tc, hc,
-                    "" + (int) threshold);
         }
     }
 

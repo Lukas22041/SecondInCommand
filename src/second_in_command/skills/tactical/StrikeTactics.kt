@@ -27,7 +27,7 @@ class StrikeTactics : SCBaseSkillPlugin() {
 
         val speedBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_speed", maxMissileSpeed, SCThresholds.ThresholdBonusType.MISSILE_WEAPON_OP)
 
-        tooltip.addPara("+${speedBonus.toInt()}%% missile speed (maximum: ${maxMissileSpeed.toInt()}%%)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+${speedBonus.toInt()}%% missile speed (maximum: +${maxMissileSpeed.toInt()}%%)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("Periodically restores %s, or at least 1, of missiles to all missile weapons on combat ships",
             0f, hc, hc, "20%")
 
