@@ -7,6 +7,7 @@ import com.fs.starfarer.api.impl.campaign.skills.FluxRegulation
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
+import second_in_command.misc.SCThresholds
 import second_in_command.specs.SCBaseSkillPlugin
 
 class FluxRegulation : SCBaseSkillPlugin() {
@@ -27,9 +28,9 @@ class FluxRegulation : SCBaseSkillPlugin() {
         tooltip.addPara("   +1 extra flux dissipation per vent on the ship", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "+1")
 
         val fleet = data.fleet.fleetData
-        val fleetData = getFleetData(null)
-        val disBonus: Float = getThresholdBasedRoundedBonus(DISSIPATION_PERCENT, getTotalCombatOP(fleet, data.fleet.commander.stats), 240f)
-        val capBonus: Float = getThresholdBasedRoundedBonus(CAPACITY_PERCENT, getTotalCombatOP(fleet, data.fleet.commander.stats), 240f)
+        val fleetData = SCThresholds.getFleetData(null)
+        val disBonus: Float = SCThresholds.getThresholdBasedRoundedBonus(DISSIPATION_PERCENT, SCThresholds.getTotalCombatOP(fleet, data.fleet.commander.stats), SCThresholds.OP_THRESHOLD)
+        val capBonus: Float = SCThresholds.getThresholdBasedRoundedBonus(CAPACITY_PERCENT, SCThresholds.getTotalCombatOP(fleet, data.fleet.commander.stats), SCThresholds.OP_THRESHOLD)
 
         val opad = 10f
         val c = Misc.getBasePlayerColor()
@@ -52,7 +53,7 @@ class FluxRegulation : SCBaseSkillPlugin() {
             hc,
             "" + capBonus.toInt() + "%",
             "" + FluxRegulation.CAPACITY_PERCENT.toInt() + "%")
-        addOPThresholdInfo(tooltip, fleetData, data.fleet.commander.stats)
+        SCThresholds.addOPThresholdInfo(tooltip, fleetData, data.fleet.commander.stats)
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
@@ -63,8 +64,8 @@ class FluxRegulation : SCBaseSkillPlugin() {
         stats.fluxDissipation.modifyFlat(id, 1f * vents)
         stats.fluxCapacity.modifyFlat(id, 10f * caps)
 
-        val disBonus = computeAndCacheThresholdBonus(stats, id + "_dis", DISSIPATION_PERCENT, ThresholdBonusType.DP)
-        val capBonus = computeAndCacheThresholdBonus(stats, id + "_cap", CAPACITY_PERCENT, ThresholdBonusType.DP)
+        val disBonus = SCThresholds.computeAndCacheThresholdBonus(stats, id + "_dis", DISSIPATION_PERCENT, SCThresholds.ThresholdBonusType.DP)
+        val capBonus = SCThresholds.computeAndCacheThresholdBonus(stats, id + "_cap", CAPACITY_PERCENT, SCThresholds.ThresholdBonusType.DP)
 
         stats.fluxDissipation.modifyPercent(id, disBonus)
         stats.fluxCapacity.modifyPercent(id, capBonus)
