@@ -62,14 +62,16 @@ public class SCThresholds {
     // -------------------------------------------------------------------------
 
     public enum ThresholdBonusType {
-        DP,
-        DP_LOW,
+
+        DP, //Flux regulation
+
         OP_ALL,
         OP_ALL_LOW,
         MILITARIZED_OP,
         PHASE_DP,
-        FIGHTER_BAYS,
         // Tactical aptitude threshold types (civilian ships excluded from all)
+        DP_LOW,
+        FIGHTER_BAYS,
         FIGHTER_BAYS_COMBAT,
         FRIGATE_DESTROYER_DP,
         CRUISER_DP,

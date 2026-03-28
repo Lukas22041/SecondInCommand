@@ -25,7 +25,7 @@ class StrikeTactics : SCBaseSkillPlugin() {
         val hc = Misc.getHighlightColor()
         val tc = Misc.getTextColor()
 
-        val speedBonus: Float = SCThresholds.getThresholdBasedRoundedBonus(maxMissileSpeed, SCThresholds.getMissileWeaponPoints(data.fleet.fleetData), SCThresholds.MISSILE_WEAPON_OP_THRESHOLD)
+        val speedBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_speed", maxMissileSpeed, SCThresholds.ThresholdBonusType.MISSILE_WEAPON_OP)
 
         tooltip.addPara("+${speedBonus.toInt()}%% missile speed (maximum: ${maxMissileSpeed.toInt()}%%)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("Periodically restores %s, or at least 1, of missiles to all missile weapons on combat ships",
@@ -45,7 +45,7 @@ class StrikeTactics : SCBaseSkillPlugin() {
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
 
         if (!SCThresholds.isCivilian(stats)) {
-            val speedBonus: Float = SCThresholds.getThresholdBasedRoundedBonus(maxMissileSpeed, SCThresholds.getMissileWeaponPoints(data.fleet.fleetData), SCThresholds.MISSILE_WEAPON_OP_THRESHOLD)
+            val speedBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_speed", maxMissileSpeed, SCThresholds.ThresholdBonusType.MISSILE_WEAPON_OP)
             stats!!.missileMaxSpeedBonus.modifyPercent(id, speedBonus)
             stats.missileMaxTurnRateBonus.modifyPercent(id, speedBonus)
             stats.missileMaxTurnRateBonus.modifyPercent(id, speedBonus)
