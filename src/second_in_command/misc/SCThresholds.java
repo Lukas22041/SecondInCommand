@@ -41,10 +41,9 @@ public class SCThresholds {
     // -------------------------------------------------------------------------
 
     public static final float FIGHTER_BAYS_THRESHOLD = 8f;
-    public static final float OP_THRESHOLD = 240f;
+    public static final float OP_THRESHOLD = 240f; //Flux reg
     public static final float OP_ALL_LOW_THRESHOLD = 120f;
     public static final float OP_ALL_THRESHOLD = 240f;
-    public static final float PHASE_OP_THRESHOLD = 40f;
     public static final float MILITARIZED_OP_THRESHOLD = 5f;
 
     // Tactical aptitude thresholds
@@ -56,6 +55,8 @@ public class SCThresholds {
     public static final float CAPITAL_DP_THRESHOLD = 90f;
     public static final float MISSILE_WEAPON_OP_THRESHOLD = 90f;
     public static final float PD_WEAPON_OP_THRESHOLD = 90f;
+    public static final float PHASE_OP_THRESHOLD = 90f;
+
 
     // -------------------------------------------------------------------------
     // Threshold type enum
@@ -68,8 +69,8 @@ public class SCThresholds {
         OP_ALL,
         OP_ALL_LOW,
         MILITARIZED_OP,
-        PHASE_DP,
         // Tactical aptitude threshold types (civilian ships excluded from all)
+        PHASE_DP,
         DP_LOW,
         FIGHTER_BAYS_COMBAT,
         FRIGATE_DESTROYER_DP,
