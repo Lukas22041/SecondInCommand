@@ -24,7 +24,7 @@ import second_in_command.ui.tooltips.OfficerTooltipCreator
 
 class SCSkillMenuPanel(var parent: UIPanelAPI,
                        var data: SCData,
-                       var title: Boolean/* var seedTextElement: LabelAPI, var seedElement: UIComponentAPI, var copyButton: UIComponentAPI*/) {
+                       var title: Boolean) {
 
 
     lateinit var panel: CustomPanelAPI

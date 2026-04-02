@@ -26,6 +26,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
 
     var skillPoints = Global.getSector().playerPerson.stats.points
     var startSkillPoints = Global.getSector().playerPerson.stats.points
+    var storyPointsDisplay = Global.getSector().playerPerson.stats.storyPoints
 
     fun init() {
 
@@ -50,7 +51,12 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         subelement.position.inTL(300f, 0f)
 
 
-        var acquiredSkillsIds = Global.getSector().playerPerson.stats.skillsCopy.filter { it.level >= 2 }.map { it.skill.id }
+        var acquiredSkillsIds = Global.getSector().playerPerson.stats.skillsCopy.filter { it.level >= 1 }.map { it.skill.id }
+        var eliteSkillIds = Global.getSector().playerPerson.stats.skillsCopy.filter { it.level >= 2 }.map { it.skill.id }.toHashSet()
+        var preEliteState = HashMap<String, Boolean>()
+        for (skillId in acquiredSkillsIds) {
+            preEliteState[skillId] = eliteSkillIds.contains(skillId)
+        }
 
         var player = Global.getSector().playerPerson
         var color = Global.getSettings().getSkillSpec("aptitude_combat").governingAptitudeColor
@@ -101,8 +107,15 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
                     maxSkillPoints += plugin.getPointsAtLevel(i)
                 }
 
-                tooltip!!.addPara("This section of skills are the players own set of in-combat skills. You can use your own skill points to acquire them in any order. All player skills are elite by default.", 0f,
-                    Misc.getTextColor(), Misc.getHighlightColor(), "skill points", "in any order", "elite")
+                tooltip!!.addPara("This section of skills are the players own set of in-combat skills. You can use your own skill points to acquire them in any order.", 0f,
+                    Misc.getTextColor(), Misc.getHighlightColor(), "skill points", "in any order")
+
+                tooltip.addSpacer(10f)
+
+                var eliteLabel = tooltip!!.addPara("You can make an acquired skill elite by clicking on it, which costs a story point. Right-click or click again to remove elite and refund the story point.", 0f,
+                    Misc.getTextColor(), Misc.getStoryOptionColor(), "")
+                eliteLabel.setHighlight("elite", "story point", "Right-click")
+                eliteLabel.setHighlightColors(Misc.getStoryOptionColor(), Misc.getStoryOptionColor(), Misc.getHighlightColor())
 
                 tooltip.addSpacer(10f)
 
@@ -171,6 +184,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
             }
 
             var skillElement = SkillWidgetElement(skill, "combat", activated, !preacquired, preacquired, skillSpec.spriteName, "combat2", color, subelement, 72f, 72f)
+            skillElement.isElite = eliteSkillIds.contains(skill)
             skillElement.elementPanel.position.rightOfTop(previous, 16f)
             previous = skillElement.elementPanel
             skillElements.add(skillElement)
@@ -184,8 +198,10 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
             var skillTooltip = VanillaSkillTooltip.addToTooltip(subelement, player, skillSpec, getSkillPointCost(skill))
 
             skillElement.advance {
-                if (skillElement.activated) {
+                if (skillElement.activated && skillElement.isElite) {
                     skillTooltip.level = 2f
+                } else if (skillElement.activated) {
+                    skillTooltip.level = 1f
                 } else {
                     skillTooltip.level = 0f
                 }
@@ -216,8 +232,75 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         for (skillElement in skillElements) {
 
             skillElement.onClick {
+                // Right-click: remove elite
+                if (it.isRMBEvent) {
+                    if (skillElement.activated && skillElement.isElite) {
+                        skillElement.isElite = false
+                        skillElement.playSound("ui_char_decrease_skill")
+
+                        // If preAcquired and not in edit mode, apply immediately
+                        if (skillElement.preAcquired && !aptitudeIconElement.isInEditMode) {
+                            Global.getSector().playerPerson.stats.setSkillLevel(skillElement.id, 1f)
+                            Global.getSector().playerPerson.stats.storyPoints += 1
+                            if (Global.getSector().playerFleet?.fleetData != null) {
+                                Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
+                            }
+                            recreatePlayerPanel(subpanel)
+                        }
+                    } else if (skillElement.activated && !skillElement.preAcquired && aptitudeIconElement.isInEditMode) {
+                        // Deselect a skill that was picked during this edit session
+                        skillElement.activated = false
+                        skillElement.playSound("ui_char_decrease_skill")
+
+                        val points = getCurrentSkillPointsUsed(skillElements)
+                        if (points == 0) {
+                            exitEditMode(subpanel)
+                        }
+                    }
+                    return@onClick
+                }
+
+                // Left-click on acquired/activated skill: toggle elite
+                if (skillElement.activated) {
+                    if (!skillElement.isElite) {
+                        // Check story points availability
+                        var availableSP = Global.getSector().playerPerson.stats.storyPoints - getPendingEliteCost(skillElements, preEliteState)
+                        if (availableSP > 0) {
+                            skillElement.isElite = true
+                            skillElement.playSound(Sounds.STORY_POINT_SPEND)
+
+                            // If preAcquired and not in edit mode, apply immediately
+                            if (skillElement.preAcquired && !aptitudeIconElement.isInEditMode) {
+                                Global.getSector().playerPerson.stats.setSkillLevel(skillElement.id, 2f)
+                                Global.getSector().playerPerson.stats.storyPoints -= 1
+                                if (Global.getSector().playerFleet?.fleetData != null) {
+                                    Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
+                                }
+                                recreatePlayerPanel(subpanel)
+                            }
+                        } else {
+                            skillElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
+                        }
+                    } else {
+                        // Already elite, remove it
+                        skillElement.isElite = false
+                        skillElement.playSound("ui_char_decrease_skill")
+
+                        if (skillElement.preAcquired && !aptitudeIconElement.isInEditMode) {
+                            Global.getSector().playerPerson.stats.setSkillLevel(skillElement.id, 1f)
+                            Global.getSector().playerPerson.stats.storyPoints += 1
+                            if (Global.getSector().playerFleet?.fleetData != null) {
+                                Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
+                            }
+                            recreatePlayerPanel(subpanel)
+                        }
+                    }
+                    return@onClick
+                }
+
+                // Left-click on unacquired skill: toggle activation (existing behavior)
                 if (!skillElement.preAcquired && skillElement.canChangeState) {
-                    enterEditMode(subpanel, aptitudeIconElement, skillElements)
+                    enterEditMode(subpanel, aptitudeIconElement, skillElements, preEliteState)
 
                     if (!skillElement.activated) {
                         skillElement.playSound(skillElement.soundId)
@@ -251,6 +334,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
 
         aptitudeIconElement.advance {
             skillPoints = startSkillPoints - getCurrentSkillPointsUsed(skillElements)
+            storyPointsDisplay = Global.getSector().playerPerson.stats.storyPoints - getPendingEliteCost(skillElements, preEliteState)
         }
 
         aptitudeIconElement.onInput {events ->
@@ -282,13 +366,17 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         }
 
         var combinedPoints = 0f
+        var eliteCount = 0
         for (skillElement in active) {
             combinedPoints += getSkillPointCost(skillElement.id)
+            if (skillElement.isElite) eliteCount += 1
             Global.getSector().playerPerson.stats.setSkillLevel(skillElement.id, 0f)
         }
 
         Global.getSector().playerPerson.stats.points += combinedPoints.toInt()
+        // Cost 1 SP for reset, but refund elite SPs
         Global.getSector().playerPerson.stats.storyPoints -= 1
+        Global.getSector().playerPerson.stats.storyPoints += eliteCount
 
         Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
 
@@ -297,7 +385,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         recreatePlayerPanel(subpanel)
     }
 
-    fun enterEditMode(subpanel: CustomPanelAPI, aptitudeIcon: CombatSkillWidgetElement, skillElements: ArrayList<SkillWidgetElement>) {
+    fun enterEditMode(subpanel: CustomPanelAPI, aptitudeIcon: CombatSkillWidgetElement, skillElements: ArrayList<SkillWidgetElement>, preEliteState: Map<String, Boolean>) {
         if (aptitudeIcon.isInEditMode) return
         aptitudeIcon.isInEditMode = true
 
@@ -309,7 +397,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
 
             onClick {
                 playSound(Sounds.STORY_POINT_SPEND)
-                saveSkillDataToCharacter(skillElements)
+                saveSkillDataToCharacter(skillElements, preEliteState)
                 exitEditMode(subpanel)
 
                 if (Global.getSector().playerFleet?.fleetData != null) {
@@ -336,17 +424,33 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         recreatePlayerPanel(subpanel)
     }
 
-    fun saveSkillDataToCharacter(skillElements: ArrayList<SkillWidgetElement>) {
-        var activeSkills = skillElements.filter { it.activated }.map { it.id }
+    fun saveSkillDataToCharacter(skillElements: ArrayList<SkillWidgetElement>, preEliteState: Map<String, Boolean>) {
+        var activeSkills = skillElements.filter { it.activated }
 
         var spCost = getCurrentSkillPointsUsed(skillElements)
         var stats = Global.getSector().playerPerson.stats
 
-        for (active in activeSkills) {
-            stats.setSkillLevel(active, 2f)
+        for (skillElement in activeSkills) {
+            var level = if (skillElement.isElite) 2f else 1f
+            stats.setSkillLevel(skillElement.id, level)
         }
 
         stats.points -= spCost
+
+        // Deduct/refund story points for elite changes
+        var eliteSPCost = getPendingEliteCost(skillElements, preEliteState)
+        stats.storyPoints -= eliteSPCost
+    }
+
+    fun getPendingEliteCost(skillElements: List<SkillWidgetElement>, preEliteState: Map<String, Boolean>) : Int {
+        var cost = 0
+        for (element in skillElements) {
+            if (!element.activated) continue
+            var wasElite = preEliteState[element.id] ?: false
+            if (element.isElite && !wasElite) cost += 1
+            if (!element.isElite && wasElite) cost -= 1
+        }
+        return cost
     }
 
     fun getSkillPointCost(skillId: String) : Int {
@@ -369,6 +473,7 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
 
         skillPoints = Global.getSector().playerPerson.stats.points
         startSkillPoints = Global.getSector().playerPerson.stats.points
+        storyPointsDisplay = Global.getSector().playerPerson.stats.storyPoints
 
         subpanel.clearChildren()
 
@@ -463,6 +568,10 @@ class SCPlayerPanel(var menu: SCSkillMenuPanel, var data: SCData)  {
         //Storypoints
         var storyBox = StoryPointsBox(subelement, 100f, 50f)
         storyBox.elementPanel.position.belowLeft(placeholder.elementPanel, 10f)
+
+        storyBox.advance {
+            storyBox.points = storyPointsDisplay
+        }
 
         subelement.addTooltipTo(object : BaseTooltipCreator() {
             override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean, tooltipParam: Any?) {
