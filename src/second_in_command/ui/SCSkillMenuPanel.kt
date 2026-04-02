@@ -18,11 +18,9 @@ import second_in_command.SCUtils
 import second_in_command.misc.*
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCOfficer
-import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.*
 import second_in_command.ui.panels.AssosciatesManagePanelPlugin
 import second_in_command.ui.tooltips.OfficerTooltipCreator
-import second_in_command.ui.tooltips.SCSkillTooltipCreator
 
 class SCSkillMenuPanel(var parent: UIPanelAPI,
                        var data: SCData,
@@ -294,11 +292,7 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
         var subelement = subpanel.createUIElement(width, 96f, false)
         subpanel.addUIElement(subelement)
 
-        var color = Misc.getDarkPlayerColor()
-
-        if (officer != null) {
-            color = officer.getAptitudePlugin().getColor()
-        }
+        var color = if (officer != null) officer.getAptitudePlugin().getColor() else Misc.getDarkPlayerColor()
 
         var isProgressionMode = SCSettings.progressionMode
         var level = Global.getSector().playerPerson.stats.level
@@ -310,105 +304,120 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
         }
         var isLocked = officer == null && isProgressionMode && level < progressionLevel
         var pickerElementSize = if (isUseCompactLayout()) 86f else 96f
-        var officerPickerElement = SCOfficerPickerElement(officer?.person, color, subelement, pickerElementSize, pickerElementSize)
-        officerPickerElement.isProgressionLocked = isLocked
-
 
         var menu = this
-        officerPickerElement.onClick {
-            if (officerPickerElement.isInEditMode) {
-                //officerPickerElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
-                return@onClick
+
+        // ── Empty / null-officer slot ───────────────────────────────────────────────────
+        if (officer == null) {
+            var officerPickerElement = SCOfficerPickerElement(null, color, subelement, pickerElementSize, pickerElementSize)
+            officerPickerElement.isProgressionLocked = isLocked
+
+            officerPickerElement.onClick {
+                if (officerPickerElement.isInEditMode) return@onClick
+                if (it.isRMBEvent) return@onClick
+                if (isLocked) {
+                    officerPickerElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
+                    return@onClick
+                }
+                var pickerMenu = SCOfficerPickerMenuPanel(menu, officerPickerElement, subpanelParent, slotId, data, isAtColony)
+                pickerMenu.init()
+                officerPickerElement.playClickSound()
             }
 
-            /*if (!docked && officer?.getAptitudePlugin()?.getRequiresDock() == true) {
-                officerPickerElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
-                return@onClick
-            }*/
+            officerPickerElement.onHoverEnter {
+                if (!officerPickerElement.isInEditMode) officerPickerElement.playScrollSound()
+            }
 
-            if (SCUtils.isAssociatesBackgroundActive() && officer != null) {
-                openResrictedOfficerManagementPanel(panel, subpanelParent, officer!!)
-                officerPickerElement.playClickSound()
+            if (!isLocked) {
+                subelement.addTooltipTo(OfficerTooltipCreator(null, isAtColony, false), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
+            } else {
+                subelement.addTooltip(officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 350f) { tooltip ->
+                    tooltip.addPara("This slot is locked until the player has reached level $progressionLevel and can not be used until then.", 0f,
+                        Misc.getTextColor(), Misc.getHighlightColor(), "$progressionLevel")
+                }
+            }
+
+            var offsetElement = subelement.addLunaElement(0f, 0f)
+            offsetElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, -1f)
+            var background = AptitudeBackgroundElement(color, subelement)
+            background.elementPanel.position.belowLeft(offsetElement.elementPanel, 10f)
+            var officerUnderline = SkillUnderlineElement(color, 2f, subelement, officerPickerElement.width)
+            officerUnderline.position.belowLeft(officerPickerElement.elementPanel, 2f)
+            return
+        }
+
+        // ── Officer present ─────────────────────────────────────────────────────────────
+        val row = OfficerAptitudeRowElement(
+            officer = officer,
+            data = data,
+            parentElement = subelement,
+            officerSize = pickerElementSize,
+            openedFromPicker = false,
+            showCategory = false,
+            showNameLabel = !isUseCompactLayout(),
+            allowSkillStateChange = true,
+            addLeadingSpacer = false
+        )
+
+        row.officerPickerElement.isProgressionLocked = isLocked
+
+        row.officerPickerElement.onClick {
+            if (row.officerPickerElement.isInEditMode) return@onClick
+
+            if (SCUtils.isAssociatesBackgroundActive()) {
+                openResrictedOfficerManagementPanel(panel, subpanelParent, officer)
+                row.officerPickerElement.playClickSound()
                 return@onClick
             }
 
             if (it.isRMBEvent) {
-
                 if (data.getOfficerInSlot(slotId) != null) {
-                    officerPickerElement.playSound("ui_char_decrease_skill", 1f, 1f)
-
-                    var officerInSlot = data.getOfficerInSlot(slotId)
+                    row.officerPickerElement.playSound("ui_char_decrease_skill", 1f, 1f)
                     data.setOfficerInSlot(slotId, null)
-                    /* if (officerInSlot != null) {
-                         var skills = officerInSlot.getActiveSkillPlugins()
-
-                         if (Global.getSector().playerFleet?.fleetData != null) {
-                             for (skill in skills) {
-                                 skill.onDeactivation(data)
-                             }
-                             Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
-                         }
-                     }*/
-
-                    //data.setOfficerInSlot(slotId, null)
-
                     checkToApplyCRPenalty()
                     recreateAptitudeRow(subpanelParent, null, slotId)
                 }
-
                 return@onClick
             }
 
-            //Dont allow editing a locked slot
             if (isLocked) {
-                officerPickerElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
+                row.officerPickerElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
                 return@onClick
             }
 
-            var pickerMenu = SCOfficerPickerMenuPanel(menu, officerPickerElement, subpanelParent, slotId, data, isAtColony)
+            var pickerMenu = SCOfficerPickerMenuPanel(menu, row.officerPickerElement, subpanelParent, slotId, data, isAtColony)
             pickerMenu.init()
-            officerPickerElement.playClickSound()
+            row.officerPickerElement.playClickSound()
         }
 
-        officerPickerElement.onHoverEnter {
-            if (!officerPickerElement.isInEditMode) {
-                officerPickerElement.playScrollSound()
-            }
+        row.officerPickerElement.onHoverEnter {
+            if (!row.officerPickerElement.isInEditMode) row.officerPickerElement.playScrollSound()
         }
 
-        officerPickerElement.onInput { events ->
-            if (officerPickerElement.isHovering && officer != null) {
+        row.officerPickerElement.onInput { events ->
+            if (row.officerPickerElement.isHovering) {
                 for (event in events!!) {
                     if (event.isConsumed) continue
                     if (event.isKeyDownEvent && event.eventValue == Keyboard.KEY_R) {
                         event.consume()
-
-                        if (!officerPickerElement.isInEditMode) {
-
+                        if (!row.officerPickerElement.isInEditMode) {
                             var active = officer.getActiveSkillPlugins().filter { it != officer.getAptitudePlugin().originSkillPlugin }
                             var count = active.count()
-
                             var storyPoints = Global.getSector().playerPerson.stats.storyPoints
                             if (count == 0 || storyPoints <= 1) {
-                                officerPickerElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
+                                row.officerPickerElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
                                 return@onInput
                             }
-
                             for (skill in active) {
                                 officer.skillPoints += 1
                                 skill.onDeactivation(data)
                             }
-
                             officer.activeSkillIDs = mutableSetOf()
                             Global.getSector().playerFleet.fleetData.membersListCopy.forEach { it.updateStats() }
-
-                            officerPickerElement.playSound(Sounds.STORY_POINT_SPEND)
-
+                            row.officerPickerElement.playSound(Sounds.STORY_POINT_SPEND)
                             Global.getSector().playerPerson.stats.storyPoints -= 2
-
                             recreateAptitudeRow(subpanelParent, officer, slotId)
                         }
-
                         break
                     }
                 }
@@ -416,217 +425,57 @@ class SCSkillMenuPanel(var parent: UIPanelAPI,
         }
 
         if (!isLocked) {
-            subelement.addTooltipTo(OfficerTooltipCreator(officer, isAtColony, false), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
+            subelement.addTooltipTo(OfficerTooltipCreator(officer, isAtColony, false), row.officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
         } else {
-            subelement.addTooltip(officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 350f) { tooltip ->
-                tooltip.addPara("This slot is locked until the player has reached level $progressionLevel and can not be used until then.", 0f
-                ,Misc.getTextColor(), Misc.getHighlightColor(), "$progressionLevel")
+            subelement.addTooltip(row.officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 350f) { tooltip ->
+                tooltip.addPara("This slot is locked until the player has reached level $progressionLevel and can not be used until then.", 0f,
+                    Misc.getTextColor(), Misc.getHighlightColor(), "$progressionLevel")
             }
         }
 
-        var offset = 10f
-        var offsetElement = subelement.addLunaElement(0f, 0f)
-        offsetElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, -1f)
+        // Skill click handler – enters edit mode
+        val aptitudePlugin = officer.getAptitudePlugin()
+        row.skillBar.onSkillClick = { skillElement ->
+            recalculateSectionRequirements(officer, row.skillBar.sections, row.skillBar.skillElements)
 
+            if (skillElement.canChangeState && !skillElement.preAcquired) {
+                enterEditMode(subpanelParent, officer, row.officerPickerElement, row.skillBar.skillElements, slotId)
+                if (!skillElement.activated) skillElement.playSound(skillElement.soundId)
+                else skillElement.playSound("ui_char_decrease_skill")
+                skillElement.activated = !skillElement.activated
+            } else {
+                skillElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
+            }
 
-        var background = AptitudeBackgroundElement(color, subelement)
-        background.elementPanel.position.belowLeft(offsetElement.elementPanel, offset)
+            recalculateSectionRequirements(officer, row.skillBar.sections, row.skillBar.skillElements)
 
-        var officerUnderline = SkillUnderlineElement(color, 2f, subelement, officerPickerElement.width)
-        officerUnderline.position.belowLeft(officerPickerElement.elementPanel, 2f)
-
-        if (officer == null) {
-            return
-        }
-
-
-        var aptitudePlugin = officer.getAptitudePlugin()
-        /*aptitudePlugin.clearSections()
-        aptitudePlugin.createSections()*/
-
-        var paraElement = subelement.addLunaElement(100f, 20f).apply {
-            renderBorder = false
-            renderBackground = false
-        }
-        paraElement.position.aboveLeft(officerPickerElement.elementPanel, 0f)
-
-        paraElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
-
-        if (!isUseCompactLayout()) {
-            var aptitudePara = paraElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
-            aptitudePara.position.inTL(paraElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 3, paraElement.height  -aptitudePara.computeTextHeight(aptitudePara.text)-5)
-
-           // officerPickerElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
-          //  var aptitudePara = officerPickerElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
-          //  aptitudePara.position.inTL(officerPickerElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 1, -aptitudePara.computeTextHeight(aptitudePara.text)-5)
-        }
-
-
-        var sections = aptitudePlugin.getSections()
-
-        var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())
-        var originSkillElement = SkillWidgetElement(originSkill!!.id, aptitudePlugin.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), subelement, 72f, 72f)
-        subelement.addTooltipTo(SCSkillTooltipCreator(data, originSkill.getPlugin(), aptitudePlugin, 0, false), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
-        //originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
-        originSkillElement.elementPanel.position.rightOfMid(background.elementPanel, 20f)
-
-
-        originSkillElement.onClick {
-            originSkillElement.playClickSound()
-        }
-
-        var originGap = SkillGapElement(aptitudePlugin.getColor(), subelement)
-        originGap.elementPanel.position.rightOfTop(originSkillElement.elementPanel, 0f)
-        originGap.renderArrow = true
-
-        var previousSections = ArrayList<SCAptitudeSection>()
-        var skillElements = ArrayList<SkillWidgetElement>()
-        var previous: CustomPanelAPI = originGap.elementPanel
-        for (section in sections) {
-
-            var isLastSection = sections.last() == section
-            var canOnlyChooseOne = !section.canChooseMultiple
-
-            var firstSkillThisSection: SkillWidgetElement? = null
-            var usedWidth = 0f
-
-            section.previousUISections.addAll(previousSections)
-            previousSections.add(section)
-
-            var skills = section.getSkills()
-            for (skill in skills) {
-                var skillSpec = SCSpecStore.getSkillSpec(skill)
-                var skillPlugin = skillSpec!!.getPlugin()
-
-                var isFirst = skills.first() == skill
-                var isLast = skills.last() == skill
-
-                var preacquired = false
-                var activated = false
-                if (officer.activeSkillIDs.contains(skill)) {
-                    preacquired = true
-                    activated = true
-                }
-
-                var skillElement = SkillWidgetElement(skill, aptitudePlugin.id, activated, !preacquired, preacquired, skillPlugin!!.getIconPath(), section.soundId, aptitudePlugin.getColor(), subelement, 72f, 72f)
-                skillElements.add(skillElement)
-                section.activeSkillsInUI.add(skillElement)
-                usedWidth += 72f
-
-                var tooltip = SCSkillTooltipCreator(data, skillPlugin, aptitudePlugin, section.requiredPreviousSkills, !section.canChooseMultiple)
-                subelement.addTooltipTo(tooltip, skillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
-                section.tooltips.add(tooltip)
-
-                if (firstSkillThisSection == null) {
-                    firstSkillThisSection = skillElement
-                }
-
-                if (isFirst) {
-                    skillElement.elementPanel.position.rightOfTop(previous, 0f)
-                } else {
-                    skillElement.elementPanel.position.rightOfTop(previous, 3f)
-                    usedWidth += 3f
-                }
-
-
-
-                if (!isLast) {
-                    var seperator = SkillSeperatorElement(aptitudePlugin.getColor(), subelement)
-                    seperator.elementPanel.position.rightOfTop(skillElement.elementPanel, 3f)
-                    previous = seperator.elementPanel
-                    usedWidth += 3f
-                }
-                else if (!isLastSection) {
-                    var gap = SkillGapElement(aptitudePlugin.getColor(), subelement)
-                    gap.elementPanel.position.rightOfTop(skillElement.elementPanel, 0f)
-                    previous = gap.elementPanel
-
-                    var nextIndex = sections.indexOf(section) + 1
-                    var nextSection = sections.getOrNull(nextIndex)
-                    if (nextSection != null) {
-                        nextSection.uiGap = gap
-                    }
-
-                }
-
-                if (canOnlyChooseOne) {
-                    var underline = SkillUnderlineElement(color, 2f, subelement, usedWidth)
-                    underline.position.belowLeft(firstSkillThisSection.elementPanel, 2f)
-                }
-
-
+            if (officer.activeSkillIDs.count() == row.skillBar.sections.sumOf { it.activeSkillsInUI.count { it.activated } }) {
+                exitEditMode(subpanelParent, officer, row.officerPickerElement, slotId)
             }
         }
 
+        // Initial section requirements pass
+        recalculateSectionRequirements(officer, row.skillBar.sections, row.skillBar.skillElements)
 
-        for (section in sections) {
-            recalculateSectionRequirements(officer, sections, skillElements)
-        }
-
-        /*var count = getActiveSkillCount(skillElements)
-        recalculateSectionRequirements(count, sections)*/
-
-        for (skillElement in skillElements) {
-            skillElement.onClick {
-
-                var section = getSkillsSection(skillElement.id, sections)
-                recalculateSectionRequirements(officer, sections, skillElements)
-
-                if (skillElement.canChangeState && !skillElement.preAcquired) {
-
-                    enterEditMode(subpanelParent, officer, officerPickerElement, skillElements, slotId)
-
-                    if (!skillElement.activated) {
-                        skillElement.playSound(skillElement.soundId)
-                    }
-                    else {
-                        skillElement.playSound("ui_char_decrease_skill")
-                    }
-
-                    skillElement.activated = !skillElement.activated
-                } else {
-                    skillElement.playSound("ui_char_can_not_increase_skill_or_aptitude", 1f, 1f)
-                }
-
-                recalculateSectionRequirements(officer, sections, skillElements)
-
-                if (officer.activeSkillIDs.count() == sections.sumOf { it.activeSkillsInUI.count { it.activated } }) {
-                   /* officerPickerElement.isInEditMode = false
-                    officerPickerElement.innerElement.clearChildren()*/
-                    exitEditMode(subpanelParent, officer, officerPickerElement, slotId)
-                }
-            }
-        }
-
-        var paraAnchorElement = subelement.addLunaElement(0f, 0f)
-        paraAnchorElement.position.aboveLeft(originSkillElement.elementPanel, 6f)
-
-        var spRemaining = calculateRemainingSP(officer, skillElements)
-
-
-        var officerPara = subelement.addPara( "" + (if (isUseCompactLayout()) "${aptitudePlugin.name} - " else "") + "${officer.person.nameString} - $spRemaining SP", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "$spRemaining")
-
-        var hlColor = Misc.getHighlightColor()
-        if (spRemaining == 0) hlColor = Misc.getGrayColor()
+        // SP counter para
+        var spRemaining = row.skillBar.calculateRemainingSP()
+        val officerPara = subelement.addPara(
+            (if (isUseCompactLayout()) "${aptitudePlugin.name} - " else "") + "${officer.person.nameString} - $spRemaining SP",
+            0f, Misc.getTextColor(), Misc.getHighlightColor(), "$spRemaining"
+        )
+        var hlColor = if (spRemaining == 0) Misc.getGrayColor() else Misc.getHighlightColor()
         officerPara.setHighlight(aptitudePlugin.name, "$spRemaining")
-        officerPara.setHighlightColors( aptitudePlugin.color, hlColor)
+        officerPara.setHighlightColors(aptitudePlugin.color, hlColor)
+        officerPara.position.rightOfBottom(row.spParaAnchor.elementPanel, 0f)
 
-        officerPara.position.rightOfBottom(paraAnchorElement.elementPanel, 0f)
-
-        paraAnchorElement.advance {
-            spRemaining = calculateRemainingSP(officer, skillElements)
-
-            var hlColor = Misc.getHighlightColor()
-            if (spRemaining == 0) hlColor = Misc.getGrayColor()
-
-            officerPara.text = "" + (if (isUseCompactLayout()) "${aptitudePlugin.name} - " else "") + "${officer.person.nameString} - $spRemaining SP"
-            officerPara.setHighlight( aptitudePlugin.name, "$spRemaining")
+        row.spParaAnchor.advance {
+            spRemaining = row.skillBar.calculateRemainingSP()
+            var hlColor = if (spRemaining == 0) Misc.getGrayColor() else Misc.getHighlightColor()
+            officerPara.text = (if (isUseCompactLayout()) "${aptitudePlugin.name} - " else "") + "${officer.person.nameString} - $spRemaining SP"
+            officerPara.setHighlight(aptitudePlugin.name, "$spRemaining")
             officerPara.setHighlightColors(aptitudePlugin.color, hlColor)
         }
 
-
-      /*  var spPara = subelement.addPara("- $spRemaining", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "$spRemaining")
-        spPara.position.rightOfBottom(paraAnchorElement.elementPanel, 120f)*/
 
     }
 

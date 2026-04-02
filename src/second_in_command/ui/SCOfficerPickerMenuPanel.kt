@@ -26,7 +26,6 @@ import second_in_command.ui.panels.BackgroundPanelPlugin
 import second_in_command.ui.panels.ManagePanelPlugin
 import second_in_command.ui.tooltips.OfficerTooltipCreator
 import second_in_command.ui.tooltips.SCSkillTooltipCreator
-import java.awt.Color
 
 class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerElement: SCOfficerPickerElement, var subpanelParent: CustomPanelAPI, var slotId: Int, var data: SCData, var isAtColony: Boolean) {
 
@@ -179,7 +178,6 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
                 borderColor = aptitudePlugin.getColor()
             }
 
-
             officerElement.advance {
                 if (officer == selectedOfficer) {
                     officerElement.backgroundAlpha = 0.15f
@@ -195,234 +193,44 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
                 }
             }
 
-
-
             officerElement.onClick { selectOfficer(officer) }
 
-
             var inner = officerElement.innerElement
-            inner.addSpacer(24f)
 
-            var officerPickerElement = SCOfficerPickerElement(officer.person, aptitudePlugin.getColor(), inner, 96f, 96f)
-            officerPickerElement.onClick { selectOfficer(officer) }
+            val row = OfficerAptitudeRowElement(
+                officer = officer,
+                data = data,
+                parentElement = inner,
+                officerSize = 96f,
+                openedFromPicker = true,
+                showCategory = true,
+                showNameLabel = true
+            )
 
-            var paraElement = inner.addLunaElement(100f, 20f).apply {
-                renderBorder = false
-                renderBackground = false
-            }
-            paraElement.elementPanel.position.aboveMid(officerPickerElement.elementPanel, 0f)
+            row.officerPickerElement.onClick { selectOfficer(officer) }
+            row.skillBar.originSkillElement.onClick { selectOfficer(officer) }
+            row.skillBar.onSkillClick = { _ -> selectOfficer(officer) }
+            row.categoryBackground?.onClick { selectOfficer(officer) }
 
-            paraElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
-            var aptitudePara = paraElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
-            aptitudePara.position.inTL(paraElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 1, paraElement.height  -aptitudePara.computeTextHeight(aptitudePara.text)-5)
-
-
-           /* officerPickerElement.innerElement.setParaFont("graphics/fonts/victor14.fnt")
-            var aptitudePara = officerPickerElement.innerElement.addPara(aptitudePlugin.getName(), 0f, aptitudePlugin.getColor(), aptitudePlugin.getColor())
-            aptitudePara.position.inTL(officerPickerElement.width / 2 - aptitudePara.computeTextWidth(aptitudePara.text) / 2 - 1, -aptitudePara.computeTextHeight(aptitudePara.text)-5)
-
-            */
-
-            scrollerElement.addTooltipTo(OfficerTooltipCreator(officer, isAtColony, true), officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
-
-            var offset = 10f
-            var offsetElement = inner.addLunaElement(0f, 0f)
-            offsetElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, -1f)
-
-            var background = AptitudeBackgroundElement(aptitudePlugin.getColor(), inner, true)
-            //background.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, -1f)
-            background.elementPanel.position.belowLeft(offsetElement.elementPanel, offset)
-
-            var officerUnderline = SkillUnderlineElement(aptitudePlugin.getColor(), 2f, inner, 96f)
-            officerUnderline.position.belowLeft(officerPickerElement.elementPanel, 2f)
-
-            /*aptitudePlugin.clearSections()
-            aptitudePlugin.createSections()*/
-            var sections = aptitudePlugin.getSections()
-
-            var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())
-            var originSkillElement = SkillWidgetElement(originSkill!!.id, aptitudePlugin.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), inner, 72f, 72f)
-            inner.addTooltipTo(SCSkillTooltipCreator(data, originSkill.getPlugin(), aptitudePlugin, 0, false), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
-            //originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
-            originSkillElement.elementPanel.position.rightOfMid(background.elementPanel, 20f)
-
-            originSkillElement.onClick { selectOfficer(officer) }
-
-
-            var originGap = SkillGapElement(aptitudePlugin.getColor(), inner)
-            originGap.elementPanel.position.rightOfTop(originSkillElement.elementPanel, 0f)
-            originGap.renderArrow = true
-
-            var previousSections = ArrayList<SCAptitudeSection>()
-            var skillElements = ArrayList<SkillWidgetElement>()
-            var previous: CustomPanelAPI = originGap.elementPanel
-            for (section in sections) {
-
-                var isLastSection = sections.last() == section
-                var canOnlyChooseOne = !section.canChooseMultiple
-
-                var firstSkillThisSection: SkillWidgetElement? = null
-                var usedWidth = 0f
-
-                section.previousUISections.addAll(previousSections)
-                previousSections.add(section)
-
-                var skills = section.getSkills()
-                for (skill in skills) {
-                    var skillSpec = SCSpecStore.getSkillSpec(skill)
-                    var skillPlugin = skillSpec!!.getPlugin()
-
-                    var isFirst = skills.first() == skill
-                    var isLast = skills.last() == skill
-
-                    var preacquired = false
-                    var activated = false
-                    if (officer.activeSkillIDs.contains(skill)) {
-                        preacquired = true
-                        activated = true
-                    }
-
-                    var skillElement = SkillWidgetElement(skill, aptitudePlugin.id, activated, false, preacquired, skillPlugin!!.getIconPath(), section.soundId, aptitudePlugin.getColor(), inner, 72f, 72f)
-                    skillElement.onClick { selectOfficer(officer) }
-                    skillElements.add(skillElement)
-                    section.activeSkillsInUI.add(skillElement)
-                    usedWidth += 72f
-
-                    var tooltip = SCSkillTooltipCreator(data, skillPlugin, aptitudePlugin, section.requiredPreviousSkills, !section.canChooseMultiple)
-                    inner.addTooltipTo(tooltip, skillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
-                    section.tooltips.add(tooltip)
-
-                    if (firstSkillThisSection == null) {
-                        firstSkillThisSection = skillElement
-                    }
-
-                    if (isFirst) {
-                        skillElement.elementPanel.position.rightOfTop(previous, 0f)
-                    } else {
-                        skillElement.elementPanel.position.rightOfTop(previous, 3f)
-                        usedWidth += 3f
-                    }
-
-
-
-                    if (!isLast) {
-                        var seperator = SkillSeperatorElement(aptitudePlugin.getColor(), inner)
-                        seperator.elementPanel.position.rightOfTop(skillElement.elementPanel, 3f)
-                        previous = seperator.elementPanel
-                        usedWidth += 3f
-                    }
-                    else if (!isLastSection) {
-                        var gap = SkillGapElement(aptitudePlugin.getColor(), inner)
-                        gap.elementPanel.position.rightOfTop(skillElement.elementPanel, 0f)
-                        previous = gap.elementPanel
-
-                        var nextIndex = sections.indexOf(section) + 1
-                        var nextSection = sections.getOrNull(nextIndex)
-                        if (nextSection != null) {
-                            nextSection.uiGap = gap
-                        }
-
-                    }
-
-                    if (canOnlyChooseOne) {
-                        var underline = SkillUnderlineElement(aptitudePlugin.getColor(), 2f, inner, usedWidth)
-                        underline.position.belowLeft(firstSkillThisSection.elementPanel, 2f)
-                    }
-
-
-                }
-            }
-
-            //Category Section
-
-            if (categories.isNotEmpty()) {
-               /* var categoryHelp = HelpIconElement(aptitudePlugin.color, inner, 24f, 24f)
-                categoryHelp.elementPanel.position.belowLeft(officerPickerElement.elementPanel, 8f)*/
-
-                var anchor = inner.addLunaElement(20f, 20f).apply {
-                    renderBackground = false
-                    renderBorder = false
-                }
-                anchor.elementPanel.position.belowLeft(officerPickerElement.elementPanel, 8f)
-
-                var categoryNames = ArrayList<String>()
-                var categoryColors = ArrayList<Color>()
-                var categoryText = ""
-
-                for (category in categories) {
-                    categoryNames.add(category.name)
-                    categoryColors.add(Misc.getTextColor())
-
-                    categoryText += "${category.name}, "
-                }
-
-                categoryText = categoryText.trim()
-                categoryText = categoryText.trim { it == ',' }
-
-                var extraS = "y"
-                if (categories.size >= 2) extraS = "ies"
-
-                var label = inner.addPara("Categor$extraS: $categoryText", 0f, Misc.getGrayColor(), Misc.getHighlightColor())
-                //label.position.rightOfMid(categoryHelp.elementPanel, 5f)
-                label.position.rightOfMid(anchor.elementPanel, -16f)
-
-                label.setHighlight("Categor$extraS:",*categoryNames.toTypedArray())
-                label.setHighlightColors(aptitudePlugin.color, *categoryColors.toTypedArray())
-
-                var length = label.computeTextWidth(label.text)
-
-                var categoryBackground = inner.addLunaElement(length + 8 + 4, 24f).apply {
-                    enableTransparency = true
-                    renderBackground = false
-                    renderBorder = false
-                  /*  backgroundAlpha = 0.025f
-                    borderAlpha = 0.4f
-                    backgroundColor = aptitudePlugin.color
-                    borderColor = aptitudePlugin.color*/
-                }
-
-                categoryBackground.elementPanel.position.rightOfMid(anchor.elementPanel, -16f - 4)
-
-                categoryBackground.onClick { selectOfficer(officer) }
-
-                inner.addTooltip(categoryBackground.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW, 250f) { tooltip ->
-                    tooltip.addPara("Some aptitudes are part of a category. You can not assign multiple officers of the same category at the same time.", 0f,
-                        Misc.getTextColor(), Misc.getHighlightColor(), "category", "can not assign two officers of the same category at the same time")
-                }
-
-           /*     var categoryHelp = HelpIconElement(Misc.getBasePlayerColor(), inner, 20f, 20f)
-                categoryHelp.elementPanel.position.rightOfMid(anchor.elementPanel, length - 20f + 4)*/
-            }
-
-
-
-
+            scrollerElement.addTooltipTo(OfficerTooltipCreator(officer, isAtColony, true), row.officerPickerElement.elementPanel, TooltipMakerAPI.TooltipLocation.RIGHT)
 
             //Top Para
-            var paraAnchorElement = inner.addLunaElement(0f, 0f)
-            paraAnchorElement.position.aboveLeft(originSkillElement.elementPanel, 6f)
-
-            var spRemaining = menu.calculateRemainingSP(officer, skillElements)
-            var spHighlight = Misc.getHighlightColor()
-            if (spRemaining <= 0) spHighlight = Misc.getGrayColor()
+            val spRemaining = menu.calculateRemainingSP(officer, row.skillBar.skillElements)
+            val spHighlight = if (spRemaining <= 0) Misc.getGrayColor() else Misc.getHighlightColor()
 
             var officerParaTextExtra = ""
             var minusText = ""
-
             if (officerAlreadySlotted(officer)) officerParaTextExtra = "This officer is already assigned."
             else if (doesOffficerMatchExistingAptitude(officer)) officerParaTextExtra = "Can't assign multiple officers of the same aptitude."
             else if (doesOffficerMatchCategory(officer)) officerParaTextExtra = "Can't assign multiple officers that are part of the same category."
-
             if (officerParaTextExtra != "") minusText = "-"
 
-            var officerPara = inner.addPara("${officer.person.nameString} - $spRemaining SP $minusText $officerParaTextExtra", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "$spRemaining")
-            officerPara.position.rightOfBottom(paraAnchorElement.elementPanel, 0f)
-
+            val officerPara = inner.addPara("${officer.person.nameString} - $spRemaining SP $minusText $officerParaTextExtra", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "$spRemaining")
+            officerPara.position.rightOfBottom(row.spParaAnchor.elementPanel, 0f)
             officerPara.setHighlight("$spRemaining", officerParaTextExtra)
             officerPara.setHighlightColors(spHighlight, Misc.getNegativeHighlightColor())
 
-            calculateSectionRequirements(officer, sections, skillElements)
-
+            row.skillBar.recalculateInitialSectionRequirements()
 
         }
 
@@ -775,3 +583,5 @@ class SCOfficerPickerMenuPanel(var menu: SCSkillMenuPanel, var originalPickerEle
     }
 
 }
+
+

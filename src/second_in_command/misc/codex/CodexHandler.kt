@@ -16,11 +16,9 @@ import lunalib.lunaExtensions.addLunaSpriteElement
 import lunalib.lunaUI.elements.LunaSpriteElement
 import second_in_command.SCData
 import second_in_command.misc.getAndLoadSprite
-import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCAptitudeSpec
 import second_in_command.specs.SCSpecStore
 import second_in_command.ui.elements.*
-import second_in_command.ui.tooltips.SCSkillTooltipCreator
 import kotlin.math.max
 import kotlin.math.min
 
@@ -242,113 +240,17 @@ class AptitudeEntry(var aptitudeSpec: SCAptitudeSpec, id: String, title: String,
 
 
         var aptitudePlugin = aptitudeSpec.getPlugin()
-        /*aptitudePlugin.clearSections()
-        aptitudePlugin.createSections()*/
 
-        var color = aptitudePlugin.color
-
-
-        var background = AptitudeBackgroundElement(color, subelement)
-        background.elementPanel.position.inTL(0f, subpanel.position.height / 2)
-
-
-        var sections = aptitudePlugin.getSections()
-
-        var originSkill = SCSpecStore.getSkillSpec(aptitudePlugin.getOriginSkillId())
-        var originSkillElement = SkillWidgetElement(originSkill!!.id, aptitudePlugin.id, true, false, true, originSkill!!.iconPath, "leadership1", aptitudePlugin.getColor(), subelement, 64f, 64f)
-        subelement.addTooltipTo(SCSkillTooltipCreator(data, originSkill.getPlugin(), aptitudePlugin, 0, false), originSkillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
-        //originSkillElement.elementPanel.position.rightOfMid(officerPickerElement.elementPanel, 20f)
-        originSkillElement.elementPanel.position.rightOfMid(background.elementPanel, 20f)
-
-
-        originSkillElement.onClick {
-            originSkillElement.playClickSound()
-        }
-
-        var originGap = SkillGapElement(aptitudePlugin.getColor(), subelement, heightOffset = 64f)
-        originGap.elementPanel.position.rightOfTop(originSkillElement.elementPanel, 0f)
-        originGap.renderArrow = true
-
-        var previousSections = ArrayList<SCAptitudeSection>()
-        var skillElements = ArrayList<SkillWidgetElement>()
-        var previous: CustomPanelAPI = originGap.elementPanel
-        for (section in sections) {
-
-            var isLastSection = sections.last() == section
-            var canOnlyChooseOne = !section.canChooseMultiple
-
-            var firstSkillThisSection: SkillWidgetElement? = null
-            var usedWidth = 0f
-
-            section.previousUISections.addAll(previousSections)
-            previousSections.add(section)
-
-            var skills = section.getSkills()
-            for (skill in skills) {
-                var skillSpec = SCSpecStore.getSkillSpec(skill)
-                var skillPlugin = skillSpec!!.getPlugin()
-
-                var isFirst = skills.first() == skill
-                var isLast = skills.last() == skill
-
-                var skillElement = SkillWidgetElement(skill, aptitudePlugin.id, true, true, true, skillPlugin!!.getIconPath(), section.soundId, aptitudePlugin.getColor(), subelement, 64f, 64f)
-                skillElements.add(skillElement)
-                section.activeSkillsInUI.add(skillElement)
-                usedWidth += 64f
-
-                var tooltip = SCSkillTooltipCreator(data, skillPlugin, aptitudePlugin, section.requiredPreviousSkills, !section.canChooseMultiple)
-                subelement.addTooltipTo(tooltip, skillElement.elementPanel, TooltipMakerAPI.TooltipLocation.BELOW)
-                section.tooltips.add(tooltip)
-
-                if (firstSkillThisSection == null) {
-                    firstSkillThisSection = skillElement
-                }
-
-                if (isFirst) {
-                    skillElement.elementPanel.position.rightOfTop(previous, 0f)
-                } else {
-                    skillElement.elementPanel.position.rightOfTop(previous, 3f)
-                    usedWidth += 3f
-                }
-
-
-
-                if (!isLast) {
-                    var seperator = SkillSeperatorElement(aptitudePlugin.getColor(), subelement, heightOverride = 64f)
-                    seperator.elementPanel.position.rightOfTop(skillElement.elementPanel, 3f)
-                    previous = seperator.elementPanel
-                    usedWidth += 3f
-                }
-                else if (!isLastSection) {
-                    var gap = SkillGapElement(aptitudePlugin.getColor(), subelement, heightOffset = 64f)
-                    gap.renderArrow = true
-                    gap.elementPanel.position.rightOfTop(skillElement.elementPanel, 0f)
-                    previous = gap.elementPanel
-
-                    var nextIndex = sections.indexOf(section) + 1
-                    var nextSection = sections.getOrNull(nextIndex)
-                    if (nextSection != null) {
-                        nextSection.uiGap = gap
-                    }
-
-                }
-
-                if (canOnlyChooseOne) {
-                    var underline = SkillUnderlineElement(color, 2f, subelement, usedWidth)
-                    underline.position.belowLeft(firstSkillThisSection.elementPanel, 2f)
-                }
-
-
+        val skillBar = AptitudeSkillBarElement(
+            aptitudePlugin = aptitudePlugin,
+            data = data,
+            officer = null,
+            parentElement = subelement,
+            skillSize = 64f,
+            backgroundPositioner = { bg ->
+                bg.elementPanel.position.inTL(0f, subpanel.position.height / 2)
             }
-        }
-
-        for (section in sections) {
-            for (info in section.tooltips) {
-                if (section.requiredPreviousSkills >= 1) {
-                    info.sectionMeetsRequirements = false
-                }
-            }
-        }
+        )
 
         tooltip.addSpacer(16f)
 
