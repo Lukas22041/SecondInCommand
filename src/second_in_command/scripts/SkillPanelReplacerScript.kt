@@ -14,6 +14,8 @@ import second_in_command.misc.ReflectionUtils
 import second_in_command.misc.getChildrenCopy
 import second_in_command.misc.getParent
 import second_in_command.ui.SCSkillMenuPanel
+import second_in_command.ui.tutorial.TutorialOverlayPlugin
+import second_in_command.ui.tutorial.TutorialStep
 
 class SkillPanelReplacerScript : EveryFrameScript {
 
@@ -67,6 +69,29 @@ class SkillPanelReplacerScript : EveryFrameScript {
         var scData = SCUtils.getPlayerData()
         var skillPanel = SCSkillMenuPanel(parent, scData, false,/* seedTextElement as LabelAPI, seedElement as UIComponentAPI, copyButton as UIComponentAPI*/)
         skillPanel.init()
+
+        // ── First-time tutorial overlay ───────────────────────────────────────
+        if (!SCUtils.getSectorData().hasSeenTutorial) {
+            val steps = TutorialStep.buildDefaultSteps(
+                isCompact   = skillPanel.isUseCompactLayout(),
+                panelWidth  = skillPanel.width,
+                panelHeight = skillPanel.height
+            )
+            val plugin  = TutorialOverlayPlugin(parent, steps, skillPanel.width, skillPanel.height)
+            val overlay = Global.getSettings().createCustom(skillPanel.width, skillPanel.height, plugin)
+            plugin.panel = overlay
+            parent.addComponent(overlay)
+            overlay.position.inTL(0f, 0f)
+            // When a demo step changes game state it calls this to refresh the skill panel
+            // and re-raise the overlay so it still renders on top.
+            plugin.onRefreshPanel = {
+                skillPanel.recreatePanel()
+                parent.removeComponent(overlay)
+                parent.addComponent(overlay)
+                overlay.position.inTL(0f, 0f)
+            }
+            plugin.rebuildTextBox()
+        }
     }
 
 }
