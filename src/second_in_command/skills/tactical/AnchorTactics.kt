@@ -1,6 +1,7 @@
 package second_in_command.skills.tactical
 
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
@@ -72,6 +73,12 @@ class AnchorTactics : SCBaseSkillPlugin() {
             val auraBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_aura", auraRangeBonus, SCThresholds.ThresholdBonusType.CAPITAL_DP)
             ship.addListener(AnchorTacticsAuraScript(ship, auraBonus))
         }
+    }
+
+    override fun getNPCSpawnWeight(fleet: CampaignFleetAPI): Float {
+        val dp = SCThresholds.getCapitalDP(fleet.fleetData, fleet.commander.stats)
+        val multiplier = (dp / SCThresholds.CAPITAL_DP_THRESHOLD).coerceIn(0f, 1f)
+        return super.getNPCSpawnWeight(fleet) * multiplier
     }
 }
 

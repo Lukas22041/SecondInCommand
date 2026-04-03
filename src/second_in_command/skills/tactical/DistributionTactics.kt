@@ -22,7 +22,7 @@ class DistributionTactics : SCBaseSkillPlugin() {
         val tc = Misc.getTextColor()
         val distributionColor = java.awt.Color(200, 140, 50)
 
-        tooltip.addPara("Activates all non-acquired tactics skills, but at only %s of their maximum threshold values.",
+        tooltip.addPara("Activates all non-acquired tactics skills, but at only %s of their maximum threshold values",
             0f, hc, hc, "50%")
 
         val distributedIds = data.getDistributionActivatedSkillIds()
@@ -48,20 +48,35 @@ class DistributionTactics : SCBaseSkillPlugin() {
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        for (plugin in getDistributedPlugins(data)) {
-            plugin.applyEffectsBeforeShipCreation(data, stats, variant, hullSize, "${id}_dist_${plugin.getId()}")
+        SCThresholds.setDistributionMode(true)
+        try {
+            for (plugin in getDistributedPlugins(data)) {
+                plugin.applyEffectsBeforeShipCreation(data, stats, variant, hullSize, "${id}_dist_${plugin.getId()}")
+            }
+        } finally {
+            SCThresholds.setDistributionMode(false)
         }
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI, variant: ShipVariantAPI?, id: String) {
-        for (plugin in getDistributedPlugins(data)) {
-            plugin.applyEffectsAfterShipCreation(data, ship, variant, "${id}_dist_${plugin.getId()}")
+        SCThresholds.setDistributionMode(true)
+        try {
+            for (plugin in getDistributedPlugins(data)) {
+                plugin.applyEffectsAfterShipCreation(data, ship, variant, "${id}_dist_${plugin.getId()}")
+            }
+        } finally {
+            SCThresholds.setDistributionMode(false)
         }
     }
 
     override fun applyEffectsToFighterSpawnedByShip(data: SCData, fighter: ShipAPI, ship: ShipAPI, id: String) {
-        for (plugin in getDistributedPlugins(data)) {
-            plugin.applyEffectsToFighterSpawnedByShip(data, fighter, ship, "${id}_dist_${plugin.getId()}")
+        SCThresholds.setDistributionMode(true)
+        try {
+            for (plugin in getDistributedPlugins(data)) {
+                plugin.applyEffectsToFighterSpawnedByShip(data, fighter, ship, "${id}_dist_${plugin.getId()}")
+            }
+        } finally {
+            SCThresholds.setDistributionMode(false)
         }
     }
 

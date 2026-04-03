@@ -1,5 +1,6 @@
 package second_in_command.skills.tactical
 
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
@@ -47,5 +48,11 @@ class WingTactics : SCBaseSkillPlugin() {
 
         val armorBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_armor", maxArmorBonus, SCThresholds.ThresholdBonusType.FIGHTER_BAYS_COMBAT)
         fighter.mutableStats.effectiveArmorBonus.modifyFlat(id, armorBonus)
+    }
+
+    override fun getNPCSpawnWeight(fleet: CampaignFleetAPI): Float {
+        val bays = SCThresholds.getNumFighterBaysCombat(fleet.fleetData)
+        val multiplier = (bays / SCThresholds.FIGHTER_BAYS_COMBAT_THRESHOLD).coerceIn(0f, 1f)
+        return super.getNPCSpawnWeight(fleet) * multiplier
     }
 }

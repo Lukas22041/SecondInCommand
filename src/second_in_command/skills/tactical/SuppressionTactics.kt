@@ -1,5 +1,6 @@
 package second_in_command.skills.tactical
 
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
@@ -47,5 +48,11 @@ class SuppressionTactics : SCBaseSkillPlugin() {
             stats.beamPDWeaponRangeBonus.modifyFlat(id, pdRangeBonus)
             stats.nonBeamPDWeaponRangeBonus.modifyPercent(id, pdTurnBonus)
         }
+    }
+
+    override fun getNPCSpawnWeight(fleet: CampaignFleetAPI): Float {
+        val points = SCThresholds.getPDWeaponPoints(fleet.fleetData)
+        val multiplier = (points / SCThresholds.PD_WEAPON_OP_THRESHOLD).coerceIn(0f, 1f)
+        return super.getNPCSpawnWeight(fleet) * multiplier
     }
 }

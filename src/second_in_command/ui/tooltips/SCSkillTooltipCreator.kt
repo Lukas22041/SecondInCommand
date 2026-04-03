@@ -6,6 +6,7 @@ import com.fs.starfarer.api.ui.BaseTooltipCreator
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
+import second_in_command.misc.SCThresholds
 import second_in_command.misc.codex.CodexHandler
 import second_in_command.specs.SCBaseAptitudePlugin
 import second_in_command.specs.SCBaseSkillPlugin
@@ -39,7 +40,14 @@ class SCSkillTooltipCreator(var data: SCData, var skill: SCBaseSkillPlugin, var 
         tooltip.addPara("Affects: $affectsString", 0f, Misc.getGrayColor(), Misc.getBasePlayerColor(), affectsString)
         tooltip.addSpacer(10f)
 
-        skill.addTooltip(data, tooltip)
+        if (isDistributionActivated) {
+            SCThresholds.setDistributionMode(true)
+        }
+        try {
+            skill.addTooltip(data, tooltip)
+        } finally {
+            SCThresholds.setDistributionMode(false)
+        }
 
         if (isDistributionActivated) {
             tooltip.addSpacer(10f)

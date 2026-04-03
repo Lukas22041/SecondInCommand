@@ -96,14 +96,16 @@ public class SCThresholds {
     }
 
     // -------------------------------------------------------------------------
-    // Tactical threshold modifier (Doctrine / Distribution Tactics)
+    // Tactical threshold modifier (Doctrine Tactics)
     // -------------------------------------------------------------------------
 
     /**
      * Returns the threshold multiplier for tactical skills based on whichever capstone is active:
      *   Doctrine Tactics   → 1.33f  (thresholds are 33% larger)
-     *   Distribution Tactics → 0.5f  (thresholds are halved)
      *   Neither           → 1.0f
+     *
+     * Distribution Tactics no longer modifies the global threshold; its 0.5x penalty
+     * is applied only to the distributed (non-acquired) skills via {@link #setDistributionMode}.
      */
     public static float getTacticalThresholdMultiplier(FleetDataAPI data) {
         if (data == null) return 1.0f;
@@ -112,11 +114,25 @@ public class SCThresholds {
             if (fleet == null) return 1.0f;
             SCData scData = SCUtils.getFleetData(fleet);
             if (scData.isSkillActive("sc_tactical_doctrine_tactics")) return 1.3333333333f;
-            if (scData.isSkillActive("sc_tactical_distribution_tactics")) return 0.5f;
         } catch (Exception e) {
             // safety fallback – never crash threshold math
         }
         return 1.0f;
+    }
+
+    // -------------------------------------------------------------------------
+    // Distribution mode flag (set by DistributionTactics during delegated calls)
+    // -------------------------------------------------------------------------
+
+    private static boolean distributionModeActive = false;
+
+    /** Set to true before calling distributed skill plugins, false after. */
+    public static void setDistributionMode(boolean active) {
+        distributionModeActive = active;
+    }
+
+    public static boolean isDistributionMode() {
+        return distributionModeActive;
     }
 
     /**
@@ -125,6 +141,9 @@ public class SCThresholds {
      */
     public static float getEffectiveTacticalThreshold(ThresholdBonusType type, FleetDataAPI data) {
         float mult = getTacticalThresholdMultiplier(data);
+        if (distributionModeActive) {
+            mult *= 0.5f;
+        }
         switch (type) {
             case DP_LOW:              return DP_LOW_THRESHOLD              * mult;
             case FIGHTER_BAYS_COMBAT: return FIGHTER_BAYS_COMBAT_THRESHOLD  * mult;
@@ -204,7 +223,7 @@ public class SCThresholds {
             threshold = AUTOMATED_POINTS_THRESHOLD;
         }*/
 
-        // Apply Doctrine/Distribution Tactics multiplier for all tactical threshold types
+        // Apply Doctrine Tactics multiplier for all tactical threshold types
         boolean isTacticalType = type == ThresholdBonusType.DP_LOW
                 || type == ThresholdBonusType.FIGHTER_BAYS_COMBAT
                 || type == ThresholdBonusType.FRIGATE_DESTROYER_DP
@@ -215,6 +234,10 @@ public class SCThresholds {
                 || type == ThresholdBonusType.PHASE_DP;
         if (isTacticalType) {
             threshold *= getTacticalThresholdMultiplier(data);
+            // Distribution Tactics: halve thresholds only for distributed (non-acquired) skills
+            if (distributionModeActive) {
+                threshold *= 0.5f;
+            }
         }
 
         bonus = getThresholdBasedRoundedBonus(maxBonus, currValue, threshold);

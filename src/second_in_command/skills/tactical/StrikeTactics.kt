@@ -1,5 +1,6 @@
 package second_in_command.skills.tactical
 
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
@@ -61,5 +62,11 @@ class StrikeTactics : SCBaseSkillPlugin() {
         val effectiveThreshold = SCThresholds.getEffectiveTacticalThreshold(SCThresholds.ThresholdBonusType.MISSILE_WEAPON_OP, data.fleet.fleetData)
         val regenTime = baseRegenTime * Math.max(missilePoints, effectiveThreshold) / effectiveThreshold
         ship.addListener(StrikeTacticsScript(ship, regenTime))
+    }
+
+    override fun getNPCSpawnWeight(fleet: CampaignFleetAPI): Float {
+        val points = SCThresholds.getMissileWeaponPoints(fleet.fleetData)
+        val multiplier = (points / SCThresholds.MISSILE_WEAPON_OP_THRESHOLD).coerceIn(0f, 1f)
+        return super.getNPCSpawnWeight(fleet) * multiplier
     }
 }

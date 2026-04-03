@@ -1,5 +1,6 @@
 package second_in_command.skills.tactical
 
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
@@ -42,5 +43,11 @@ class BulwarkTactics : SCBaseSkillPlugin() {
         stats!!.armorBonus.modifyPercent(id, armorBonus)
         stats.fluxCapacity.modifyPercent(id, fluxCapBonus)
         stats.peakCRDuration.modifyPercent(id, pptBonus)
+    }
+
+    override fun getNPCSpawnWeight(fleet: CampaignFleetAPI): Float {
+        val dp = SCThresholds.getCruiserDP(fleet.fleetData, fleet.commander.stats)
+        val multiplier = (dp / SCThresholds.CRUISER_DP_THRESHOLD).coerceIn(0f, 1f)
+        return super.getNPCSpawnWeight(fleet) * multiplier
     }
 }

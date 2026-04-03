@@ -1,5 +1,6 @@
 package second_in_command.skills.tactical
 
+import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.combat.ShipVariantAPI
@@ -44,5 +45,11 @@ class VanguardTactics : SCBaseSkillPlugin() {
         stats.turnAcceleration.modifyPercent(id, maneuverBonus)
         stats.acceleration.modifyPercent(id, maneuverBonus)
         stats.ventRateMult.modifyPercent(id, ventBonus)
+    }
+
+    override fun getNPCSpawnWeight(fleet: CampaignFleetAPI): Float {
+        val dp = SCThresholds.getFrigateDestroyerDP(fleet.fleetData, fleet.commander.stats)
+        val multiplier = (dp / SCThresholds.FRIGATE_DESTROYER_DP_THRESHOLD).coerceIn(0f, 1f)
+        return super.getNPCSpawnWeight(fleet) * multiplier
     }
 }

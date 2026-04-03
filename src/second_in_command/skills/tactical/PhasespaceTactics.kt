@@ -9,7 +9,6 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
 import second_in_command.SCData
 import second_in_command.misc.SCThresholds
-import second_in_command.misc.baseOrModSpec
 import second_in_command.specs.SCBaseSkillPlugin
 
 class PhasespaceTactics : SCBaseSkillPlugin() {
@@ -53,7 +52,8 @@ class PhasespaceTactics : SCBaseSkillPlugin() {
     }
 
     override fun getNPCSpawnWeight(fleet: CampaignFleetAPI): Float {
-        if (fleet.fleetData.membersListCopy.any { it.baseOrModSpec().isPhase }) return super.getNPCSpawnWeight(fleet)
-        return 0f
+        val dp = SCThresholds.getPhaseOP(fleet.fleetData, fleet.commander.stats)
+        val multiplier = (dp / SCThresholds.PHASE_OP_THRESHOLD).coerceIn(0f, 1f)
+        return super.getNPCSpawnWeight(fleet) * multiplier
     }
 }
