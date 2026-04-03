@@ -14,6 +14,7 @@ class SCSkillTooltipCreator(var data: SCData, var skill: SCBaseSkillPlugin, var 
 
 
     var sectionMeetsRequirements = true
+    var isDistributionActivated = false
 
     override fun isTooltipExpandable(tooltipParam: Any?): Boolean {
         //return skill.spec.modname != "SecondInCommand"
@@ -39,6 +40,12 @@ class SCSkillTooltipCreator(var data: SCData, var skill: SCBaseSkillPlugin, var 
         tooltip.addSpacer(10f)
 
         skill.addTooltip(data, tooltip)
+
+        if (isDistributionActivated) {
+            tooltip.addSpacer(10f)
+            val distributionColor = java.awt.Color(200, 140, 50)
+            tooltip.addPara("Activated through Distribution Tactics at reduced thresholds.", 0f, distributionColor, distributionColor)
+        }
 
         var elite = false
         if (elite) {

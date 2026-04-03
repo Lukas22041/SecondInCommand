@@ -26,6 +26,7 @@ class SkillWidgetElement(var id: String, var aptitudeId: String, var activated: 
     var time = 0f
 
     var isElite = false
+    var isDistributionActivated = false
 
     companion object {
         var shader = 0
@@ -118,7 +119,9 @@ class SkillWidgetElement(var id: String, var aptitudeId: String, var activated: 
         sprite.alphaMult = alphaMult
 
         //Contrast Mode
-        if (SCSettings.highConstrastIcons!!) {
+        if (isDistributionActivated) {
+            sprite.color = Color(200, 140, 50)
+        } else if (SCSettings.highConstrastIcons!!) {
             if (!canChangeState && !activated) {
                 sprite.color = Color(40, 40, 40)
             }
@@ -166,17 +169,18 @@ class SkillWidgetElement(var id: String, var aptitudeId: String, var activated: 
         }
 
 
-        if (activated) {
+        if (activated || isDistributionActivated) {
+            val borderColor = if (isDistributionActivated) Color(180, 120, 40) else color
 
             activeBorder.setNormalBlend()
-            activeBorder.color = color
+            activeBorder.color = borderColor
             activeBorder.setSize(width, height)
             activeBorder.alphaMult = alphaMult
             activeBorder.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
 
 
             activeBorder.setAdditiveBlend()
-            activeBorder.color = color
+            activeBorder.color = borderColor
             activeBorder.setSize(width, height)
             activeBorder.alphaMult = alphaMult * 0.2f
             activeBorder.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())

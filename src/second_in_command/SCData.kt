@@ -10,6 +10,7 @@ import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
 import second_in_command.misc.NPCOfficerGenerator
 import second_in_command.misc.SCSettings
+import second_in_command.misc.SCThresholds
 import second_in_command.misc.codex.CodexHandler
 import second_in_command.skills.PlayerLevelEffects
 import second_in_command.skills.scavenging.scripts.ScrapManager
@@ -264,6 +265,22 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
 
     fun isAptitudeActive(aptitudeId: String) : Boolean {
         return getAssignedOfficers().any { it?.aptitudeId == aptitudeId }
+    }
+
+    fun getOfficerForAptitude(aptitudeId: String) : SCOfficer? {
+        return getAssignedOfficers().firstOrNull { it?.aptitudeId == aptitudeId }
+    }
+
+    /**
+     * Returns the set of section-1 tactical skill IDs that are NOT manually acquired
+     * but should be applied by Distribution Tactics. Returns empty set if Distribution
+     * Tactics is not active.
+     */
+    fun getDistributionActivatedSkillIds() : Set<String> {
+        if (!isSkillActive("sc_tactical_distribution_tactics")) return emptySet()
+        val officer = getOfficerForAptitude("sc_tactical") ?: return emptySet()
+        val allSection1 = SCThresholds.TACTICAL_SECTION1_SKILL_IDS.toSet()
+        return allSection1.filter { !officer.activeSkillIDs.contains(it) }.toSet()
     }
 
     fun getOfficersAssignedSlot(officer: SCOfficer) : Int? {

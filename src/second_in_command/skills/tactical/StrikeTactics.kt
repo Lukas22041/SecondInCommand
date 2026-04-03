@@ -32,7 +32,8 @@ class StrikeTactics : SCBaseSkillPlugin() {
             0f, hc, hc, "20%")
 
         val missilePoints = SCThresholds.getMissileWeaponPoints(data.fleet.fleetData)
-        val regenTime = (baseRegenTime * Math.max(missilePoints, thresholdLimit.toFloat()) / thresholdLimit.toFloat()).toInt()
+        val effectiveThreshold = SCThresholds.getEffectiveTacticalThreshold(SCThresholds.ThresholdBonusType.MISSILE_WEAPON_OP, data.fleet.fleetData)
+        val regenTime = (baseRegenTime * Math.max(missilePoints, effectiveThreshold) / effectiveThreshold).toInt()
 
         tooltip.addPara("   - Reload interval: %s seconds (minimum: %s, increases above threshold)",
             0f, tc, hc,
@@ -57,7 +58,8 @@ class StrikeTactics : SCBaseSkillPlugin() {
         if (SCThresholds.isCivilian(ship.mutableStats)) return
 
         val missilePoints = SCThresholds.getMissileWeaponPoints(data.fleet.fleetData)
-        val regenTime = baseRegenTime * Math.max(missilePoints, thresholdLimit.toFloat()) / thresholdLimit.toFloat()
+        val effectiveThreshold = SCThresholds.getEffectiveTacticalThreshold(SCThresholds.ThresholdBonusType.MISSILE_WEAPON_OP, data.fleet.fleetData)
+        val regenTime = baseRegenTime * Math.max(missilePoints, effectiveThreshold) / effectiveThreshold
         ship.addListener(StrikeTacticsScript(ship, regenTime))
     }
 }

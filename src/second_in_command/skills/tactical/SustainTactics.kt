@@ -22,16 +22,13 @@ class SustainTactics : SCBaseSkillPlugin() {
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
-
-
         val usagePercent = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_usage", usageReductionMax, SCThresholds.ThresholdBonusType.DP_LOW)
         val dmodPercent = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_dmod", dmodReductionMax, SCThresholds.ThresholdBonusType.DP_LOW)
 
         tooltip.addPara("Ships destroyed in combat have a ${dmodPercent.toInt()}%% chance to avoid d-mods (maximum: ${dmodReductionMax.toInt()}%%)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("-${usagePercent.toInt()}%% supply usage (maximum: -${usageReductionMax.toInt()}%%)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("-${usagePercent.toInt()}%% fuel usage (maximum: -${usageReductionMax.toInt()}%%)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        SCThresholds.addOPThresholdInfo(tooltip, data.fleet.fleetData, data.fleet.commander.stats, 120f)
-
+        SCThresholds.addOPThresholdInfo(tooltip, data.fleet.fleetData, data.fleet.commander.stats, SCThresholds.getEffectiveTacticalThreshold(SCThresholds.ThresholdBonusType.DP_LOW, data.fleet.fleetData))
 
     }
 

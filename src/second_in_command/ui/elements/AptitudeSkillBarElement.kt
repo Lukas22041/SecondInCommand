@@ -3,6 +3,7 @@ package second_in_command.ui.elements
 import com.fs.starfarer.api.ui.CustomPanelAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import second_in_command.SCData
+import second_in_command.misc.SCThresholds
 import second_in_command.specs.SCAptitudeSection
 import second_in_command.specs.SCBaseAptitudePlugin
 import second_in_command.specs.SCOfficer
@@ -151,6 +152,25 @@ class AptitudeSkillBarElement(
 
                 skillElement.onClick {
                     onSkillClick?.invoke(skillElement)
+                }
+            }
+        }
+
+        // Mark distribution-activated skills (skills activated by Distribution Tactics at 50% threshold)
+        // Only set the visual flag — do NOT set activated/preAcquired so they don't consume skill points.
+        if (!isCodexMode && officer != null && aptitudePlugin.id == "sc_tactical") {
+            val distributedIds = data.getDistributionActivatedSkillIds()
+            for (skillElement in skillElements) {
+                if (distributedIds.contains(skillElement.id) && !skillElement.preAcquired) {
+                    skillElement.isDistributionActivated = true
+                }
+            }
+            // Also mark the corresponding tooltips
+            for (section in sections) {
+                for (tooltip in section.tooltips) {
+                    if (distributedIds.contains(tooltip.skill.getId())) {
+                        tooltip.isDistributionActivated = true
+                    }
                 }
             }
         }

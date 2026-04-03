@@ -3,8 +3,11 @@ package second_in_command.misc;
 import com.fs.starfarer.api.GameState;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.AICoreOfficerPlugin;
+import com.fs.starfarer.api.campaign.CampaignFleetAPI;
 import com.fs.starfarer.api.campaign.FleetDataAPI;
 import com.fs.starfarer.api.characters.MutableCharacterStatsAPI;
+import second_in_command.SCData;
+import second_in_command.SCUtils;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.combat.MutableShipStatsAPI;
 import com.fs.starfarer.api.combat.ShipAPI;
@@ -57,6 +60,18 @@ public class SCThresholds {
     public static final float PD_WEAPON_OP_THRESHOLD = 90f;
     public static final float PHASE_OP_THRESHOLD = 90f;
 
+    /** All section-1 tactical skill IDs (the skills affected by Distribution/Doctrine Tactics). */
+    public static final String[] TACTICAL_SECTION1_SKILL_IDS = {
+            "sc_tactical_sustain_tactics",
+            "sc_tactical_strike_tactics",
+            "sc_tactical_wing_tactics",
+            "sc_tactical_suppression_tactics",
+            "sc_tactical_phasespace_tactics",
+            "sc_tactical_vanguard_tactics",
+            "sc_tactical_bulwark_tactics",
+            "sc_tactical_anchor_tactics",
+    };
+
 
     // -------------------------------------------------------------------------
     // Threshold type enum
@@ -78,6 +93,49 @@ public class SCThresholds {
         CAPITAL_DP,
         MISSILE_WEAPON_OP,
         PD_WEAPON_OP,
+    }
+
+    // -------------------------------------------------------------------------
+    // Tactical threshold modifier (Doctrine / Distribution Tactics)
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns the threshold multiplier for tactical skills based on whichever capstone is active:
+     *   Doctrine Tactics   → 1.33f  (thresholds are 33% larger)
+     *   Distribution Tactics → 0.5f  (thresholds are halved)
+     *   Neither           → 1.0f
+     */
+    public static float getTacticalThresholdMultiplier(FleetDataAPI data) {
+        if (data == null) return 1.0f;
+        try {
+            CampaignFleetAPI fleet = data.getFleet();
+            if (fleet == null) return 1.0f;
+            SCData scData = SCUtils.getFleetData(fleet);
+            if (scData.isSkillActive("sc_tactical_doctrine_tactics")) return 1.3333333333f;
+            if (scData.isSkillActive("sc_tactical_distribution_tactics")) return 0.5f;
+        } catch (Exception e) {
+            // safety fallback – never crash threshold math
+        }
+        return 1.0f;
+    }
+
+    /**
+     * Returns the effective (multiplier-adjusted) threshold for a given tactical type.
+     * Use this in tooltip methods so displayed numbers stay in sync with the actual computation.
+     */
+    public static float getEffectiveTacticalThreshold(ThresholdBonusType type, FleetDataAPI data) {
+        float mult = getTacticalThresholdMultiplier(data);
+        switch (type) {
+            case DP_LOW:              return DP_LOW_THRESHOLD              * mult;
+            case FIGHTER_BAYS_COMBAT: return FIGHTER_BAYS_COMBAT_THRESHOLD  * mult;
+            case FRIGATE_DESTROYER_DP:return FRIGATE_DESTROYER_DP_THRESHOLD * mult;
+            case CRUISER_DP:          return CRUISER_DP_THRESHOLD           * mult;
+            case CAPITAL_DP:          return CAPITAL_DP_THRESHOLD           * mult;
+            case MISSILE_WEAPON_OP:   return MISSILE_WEAPON_OP_THRESHOLD    * mult;
+            case PD_WEAPON_OP:        return PD_WEAPON_OP_THRESHOLD         * mult;
+            case PHASE_DP:            return PHASE_OP_THRESHOLD             * mult;
+            default:                  return 1.0f;
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -145,6 +203,19 @@ public class SCThresholds {
             currValue = getAutomatedPoints(data, cStats);
             threshold = AUTOMATED_POINTS_THRESHOLD;
         }*/
+
+        // Apply Doctrine/Distribution Tactics multiplier for all tactical threshold types
+        boolean isTacticalType = type == ThresholdBonusType.DP_LOW
+                || type == ThresholdBonusType.FIGHTER_BAYS_COMBAT
+                || type == ThresholdBonusType.FRIGATE_DESTROYER_DP
+                || type == ThresholdBonusType.CRUISER_DP
+                || type == ThresholdBonusType.CAPITAL_DP
+                || type == ThresholdBonusType.MISSILE_WEAPON_OP
+                || type == ThresholdBonusType.PD_WEAPON_OP
+                || type == ThresholdBonusType.PHASE_DP;
+        if (isTacticalType) {
+            threshold *= getTacticalThresholdMultiplier(data);
+        }
 
         bonus = getThresholdBasedRoundedBonus(maxBonus, currValue, threshold);
         data.getCacheClearedOnSync().put(key, bonus);
@@ -538,6 +609,10 @@ public class SCThresholds {
     }
 
     public static void addPhaseOPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data, MutableCharacterStatsAPI cStats) {
+        addPhaseOPThresholdInfo(info, data, cStats, getEffectiveTacticalThreshold(ThresholdBonusType.PHASE_DP, data));
+    }
+
+    public static void addPhaseOPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data, MutableCharacterStatsAPI cStats, float threshold) {
         Color tc = Misc.getTextColor();
         Color hc = Misc.getHighlightColor();
         String indent = BaseIntelPlugin.BULLET;
@@ -546,12 +621,12 @@ public class SCThresholds {
                 float op = getPhaseOP(data, cStats);
                 info.addPara(indent + "Maximum at %s or less total combat phase ship " + RECOVERY_COST + ", your fleet's total is %s",
                         0f, tc, hc,
-                        "" + (int) PHASE_OP_THRESHOLD,
+                        "" + (int) threshold,
                         "" + (int) Math.round(op));
             } else {
                 info.addPara(indent + "Maximum at %s or less total combat phase ship " + RECOVERY_COST + " for fleet",
                         0f, tc, hc,
-                        "" + (int) PHASE_OP_THRESHOLD);
+                        "" + (int) threshold);
             }
             return;
         }
@@ -560,12 +635,12 @@ public class SCThresholds {
             String opStr = op == 1 ? "point" : "points";
             info.addPara(indent + "Maximum at %s or less total combat phase ship ordnance points in fleet, your fleet has %s " + opStr,
                     0f, tc, hc,
-                    "" + (int) PHASE_OP_THRESHOLD,
+                    "" + (int) threshold,
                     "" + (int) Math.round(op));
         } else {
             info.addPara(indent + "Maximum at %s or less total combat phase ship ordnance points in fleet",
                     0f, tc, hc,
-                    "" + (int) PHASE_OP_THRESHOLD);
+                    "" + (int) threshold);
         }
     }
 
@@ -602,7 +677,7 @@ public class SCThresholds {
     }
 
     public static void addFighterBaysCombatThresholdInfo(TooltipMakerAPI info, FleetDataAPI data) {
-        addFighterBaysCombatThresholdInfo(info, data, FIGHTER_BAYS_COMBAT_THRESHOLD);
+        addFighterBaysCombatThresholdInfo(info, data, getEffectiveTacticalThreshold(ThresholdBonusType.FIGHTER_BAYS_COMBAT, data));
     }
 
     public static void addFighterBaysCombatThresholdInfo(TooltipMakerAPI info, FleetDataAPI data, float threshold) {
@@ -620,7 +695,7 @@ public class SCThresholds {
     }
 
     public static void addFrigateDestroyerDPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data, MutableCharacterStatsAPI cStats) {
-        addFrigateDestroyerDPThresholdInfo(info, data, cStats, FRIGATE_DESTROYER_DP_THRESHOLD);
+        addFrigateDestroyerDPThresholdInfo(info, data, cStats, getEffectiveTacticalThreshold(ThresholdBonusType.FRIGATE_DESTROYER_DP, data));
     }
 
     public static void addFrigateDestroyerDPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data, MutableCharacterStatsAPI cStats, float threshold) {
@@ -641,7 +716,7 @@ public class SCThresholds {
     }
 
     public static void addCruiserDPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data, MutableCharacterStatsAPI cStats) {
-        addCruiserDPThresholdInfo(info, data, cStats, CRUISER_DP_THRESHOLD);
+        addCruiserDPThresholdInfo(info, data, cStats, getEffectiveTacticalThreshold(ThresholdBonusType.CRUISER_DP, data));
     }
 
     public static void addCruiserDPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data, MutableCharacterStatsAPI cStats, float threshold) {
@@ -662,7 +737,7 @@ public class SCThresholds {
     }
 
     public static void addCapitalDPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data, MutableCharacterStatsAPI cStats) {
-        addCapitalDPThresholdInfo(info, data, cStats, CAPITAL_DP_THRESHOLD);
+        addCapitalDPThresholdInfo(info, data, cStats, getEffectiveTacticalThreshold(ThresholdBonusType.CAPITAL_DP, data));
     }
 
     public static void addCapitalDPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data, MutableCharacterStatsAPI cStats, float threshold) {
@@ -677,7 +752,7 @@ public class SCThresholds {
     }
 
     public static void addMissileWeaponOPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data) {
-        addMissileWeaponOPThresholdInfo(info, data, MISSILE_WEAPON_OP_THRESHOLD);
+        addMissileWeaponOPThresholdInfo(info, data, getEffectiveTacticalThreshold(ThresholdBonusType.MISSILE_WEAPON_OP, data));
     }
 
     public static void addMissileWeaponOPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data, float threshold) {
@@ -693,14 +768,14 @@ public class SCThresholds {
     }
 
     public static void addPDWeaponOPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data) {
-        addPDWeaponOPThresholdInfo(info, data, PD_WEAPON_OP_THRESHOLD);
+        addPDWeaponOPThresholdInfo(info, data, getEffectiveTacticalThreshold(ThresholdBonusType.PD_WEAPON_OP, data));
     }
 
     public static void addPDWeaponOPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data, float threshold) {
         Color tc = Misc.getTextColor();
         Color hc = Misc.getHighlightColor();
 
-        float pts = getMissileWeaponPoints(data);
+        float pts = getPDWeaponPoints(data);
         info.addPara("   - Each point-defense weapon counts as 2/4/8 points, based on weapon size", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "2/4/8");
         info.addPara("   - Maximum at %s or less point-defemse weapon points in fleet, your fleet's total is %s",
                 0f, tc, hc,
