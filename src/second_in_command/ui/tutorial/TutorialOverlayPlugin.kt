@@ -98,6 +98,10 @@ class TutorialOverlayPlugin(
 
         val screenW = Global.getSettings().screenWidth.toFloat()
         val screenH = Global.getSettings().screenHeight.toFloat()
+        // UI scale factor: the shader's focusRect / fadeRadius uniforms compare against
+        // gl_FragCoord (always in physical pixels), so GL drawing coords must be
+        // multiplied by uiScale to convert to pixel space for those uniforms.
+        val uiScale = Global.getSettings().screenScaleMult
 
         // Convert focus rect from UI space (origin top-left) to GL space (origin bottom-left).
         // When darkenFull there is no spotlight — the whole screen is uniformly darkened.
@@ -125,28 +129,32 @@ class TutorialOverlayPlugin(
             GL11.glRectf(0f, 0f, screenW, screenH)
         } else if (spotlightShader != 0) {
             // ── Smooth vignette cutout via shader ─────────────────────────────
+            // gl_FragCoord is always in actual screen pixels, so focusRect and fadeRadius
+            // must be scaled from GL drawing units to pixels via uiScale.
             GL20.glUseProgram(spotlightShader)
-            GL20.glUniform2f(GL20.glGetUniformLocation(spotlightShader, "screenSize"), screenW, screenH)
-            GL20.glUniform4f(GL20.glGetUniformLocation(spotlightShader, "focusRect"),  glFX, glFY, glFW, glFH)
-            GL20.glUniform1f(GL20.glGetUniformLocation(spotlightShader, "fadeRadius"),  35f)
+            GL20.glUniform2f(GL20.glGetUniformLocation(spotlightShader, "screenSize"), screenW * uiScale, screenH * uiScale)
+            GL20.glUniform4f(GL20.glGetUniformLocation(spotlightShader, "focusRect"),
+                glFX * uiScale, glFY * uiScale, glFW * uiScale, glFH * uiScale)
+            GL20.glUniform1f(GL20.glGetUniformLocation(spotlightShader, "fadeRadius"),  35f * uiScale)
             GL20.glUniform1f(GL20.glGetUniformLocation(spotlightShader, "darkenAlpha"), 0.78f * alphaMult)
 
-            // Full-screen quad (screen-space coords, Y up from bottom)
+            // Full-screen quad — drawn large enough to cover the entire screen;
+            // the viewport clips any excess.
             GL11.glBegin(GL11.GL_QUADS)
-            GL11.glVertex2f(0f,     0f)
+            GL11.glVertex2f(0f,      0f)
             GL11.glVertex2f(screenW, 0f)
             GL11.glVertex2f(screenW, screenH)
-            GL11.glVertex2f(0f,     screenH)
+            GL11.glVertex2f(0f,      screenH)
             GL11.glEnd()
 
             GL20.glUseProgram(0)
         } else {
             // ── Fallback: 4 opaque rectangles surrounding the focus area ──────
             GL11.glColor4f(0f, 0f, 0f, 0.78f * alphaMult)
-            GL11.glRectf(0f,        0f,         screenW, glFY)             // below
+            GL11.glRectf(0f,        0f,          screenW, glFY)             // below
             GL11.glRectf(0f,        glFY + glFH, screenW, screenH)         // above
-            GL11.glRectf(0f,        glFY,        glFX,    glFY + glFH)     // left
-            GL11.glRectf(glFX+glFW, glFY,        screenW, glFY + glFH)     // right
+            GL11.glRectf(0f,        glFY,         glFX,    glFY + glFH)     // left
+            GL11.glRectf(glFX+glFW, glFY,         screenW, glFY + glFH)     // right
         }
 
         // ── Pulsing border around focus rect ─────────────────────────────────

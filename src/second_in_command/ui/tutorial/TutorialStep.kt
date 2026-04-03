@@ -259,7 +259,7 @@ class TutorialStep(
                     addSpacer(10f)
                     addPara(
                         "Executive Officers (XOs) are the main feature of the mod. They replace " +
-                        "the Leadership, Technology, and Industry aptitudes from vanilla.",
+                        "the Leadership, Technology and Industry aptitudes from vanilla.",
                         0f, Misc.getTextColor(), Misc.getHighlightColor(),
                         "Leadership", "Technology", "Industry"
                     )
@@ -307,7 +307,7 @@ class TutorialStep(
                     addSectionHeading("Selecting Skills", Alignment.MID, 0f)
                     addSpacer(10f)
                     addPara(
-                        "Every Executive Officer levels up separately and independently from another. With each " +
+                        "Every Executive Officer levels up separately from the player and each other. With each " +
                         "level-up they gain a skill point, up to a maximum of 5.",
                         0f, Misc.getTextColor(), Misc.getHighlightColor(), "5"
                     )
@@ -319,7 +319,7 @@ class TutorialStep(
                     addSpacer(10f)
                     addPara(
                         "Some aptitudes belong to a Category and cannot be used alongside other " +
-                        "aptitudes of the same category. The Engineering aptitude, that is shown here as an example, is part of " +
+                        "aptitudes of the same category. The Engineering aptitude, which is shown here as an example, is part of " +
                         "the Logistical category.",
                         0f, Misc.getTextColor(), Misc.getHighlightColor(),
                         "Engineering", "Logistical"
