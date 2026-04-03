@@ -9,6 +9,7 @@ import com.fs.starfarer.api.ui.UIComponentAPI
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.campaign.CampaignState
 import com.fs.state.AppDriver
+import lunalib.lunaUtil.LunaCommons
 import second_in_command.SCUtils
 import second_in_command.misc.ReflectionUtils
 import second_in_command.misc.getChildrenCopy
@@ -70,8 +71,10 @@ class SkillPanelReplacerScript : EveryFrameScript {
         var skillPanel = SCSkillMenuPanel(parent, scData, false,/* seedTextElement as LabelAPI, seedElement as UIComponentAPI, copyButton as UIComponentAPI*/)
         skillPanel.init()
 
+        var tutorialKey = "hasSeenTutorial"
+
         // ── First-time tutorial overlay ───────────────────────────────────────
-        if (!SCUtils.getSectorData().hasSeenTutorial) {
+        if (LunaCommons.get("second_in_command", tutorialKey) != true) {
             val steps = TutorialStep.buildDefaultSteps(
                 isCompact   = skillPanel.isUseCompactLayout(),
                 panelWidth  = skillPanel.width,
@@ -91,6 +94,8 @@ class SkillPanelReplacerScript : EveryFrameScript {
                 overlay.position.inTL(0f, 0f)
             }
             plugin.rebuildTextBox()
+
+            LunaCommons.set("second_in_command", tutorialKey, true)
         }
     }
 

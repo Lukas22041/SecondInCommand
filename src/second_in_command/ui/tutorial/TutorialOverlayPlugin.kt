@@ -418,7 +418,6 @@ class TutorialOverlayPlugin(
         currentStep++
         if (currentStep >= steps.size) {
             onRefreshPanel?.invoke()
-            SCUtils.getSectorData().hasSeenTutorial = true
             parentPanel.removeComponent(panel)
         } else {
             rebuildTextBox()
@@ -438,7 +437,6 @@ class TutorialOverlayPlugin(
     fun completeTutorial() {
         leaveCurrentStep()
         onRefreshPanel?.invoke()
-        SCUtils.getSectorData().hasSeenTutorial = true
         parentPanel.removeComponent(panel)
     }
 

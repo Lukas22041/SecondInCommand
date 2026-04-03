@@ -16,6 +16,4 @@ class SCSectorData {
 
     var hoveredOverOfficerPickerHelp = false
 
-    /** Persisted per-save flag: true once the player has completed or skipped the skill-screen tutorial. */
-    var hasSeenTutorial = false
 }
