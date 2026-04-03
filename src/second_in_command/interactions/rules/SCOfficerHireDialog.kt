@@ -84,8 +84,12 @@ class SCOfficerHireDialogDelegate(var original: InteractionDialogPlugin, var per
 
             var scOfficer = SCOfficer(person, aptitudeId)
 
-
             SCUtils.showSkillOverview(dialog, scOfficer)
+
+            if (aptitudePlugin.categories.any { it.name == "Logistical" }) {
+                dialog.textPanel.addPara("This executive officers aptitude is part of the \"Logistical\" category, " +
+                        "as such it can't be used at the same time as another logistical aptitude.", Misc.getTextColor(), Misc.getHighlightColor(), "Logistical")
+            }
 
             dialog.textPanel.addPara("\"This is only an overview of what my kind of talent is capable of. At the start only the first skill will be active, but " +
                     "generally i will be able field the potential of 6 of those skills after i integrated myself in to your fleets workflow.",
