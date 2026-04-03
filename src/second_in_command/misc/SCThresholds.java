@@ -669,17 +669,11 @@ public class SCThresholds {
         Color tc = Misc.getTextColor();
         Color hc = Misc.getHighlightColor();
         String indent = BaseIntelPlugin.BULLET;
-        if (isInCampaign()) {
-            float dp = getCapitalDP(data, cStats);
-            info.addPara(indent + "Maximum at %s or less total capital ship " + RECOVERY_COST + ", your fleet's total is %s",
-                    0f, tc, hc,
-                    "" + (int) threshold,
-                    "" + (int) Math.round(dp));
-        } else {
-            info.addPara(indent + "Maximum at %s or less total capital ship " + RECOVERY_COST + " for fleet",
-                    0f, tc, hc,
-                    "" + (int) threshold);
-        }
+        float dp = getCapitalDP(data, cStats);
+        info.addPara("   - Maximum at %s or less total capital ship " + RECOVERY_COST + ", your fleet's total is %s",
+                0f, tc, hc,
+                "" + (int) threshold,
+                "" + (int) Math.round(dp));
     }
 
     public static void addMissileWeaponOPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data) {
