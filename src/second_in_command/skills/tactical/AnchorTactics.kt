@@ -23,7 +23,7 @@ class AnchorTactics : SCBaseSkillPlugin() {
     val auraRangeBonus = 10f
 
     override fun getAffectsString(): String {
-        return "all non-civilian capitals"
+        return "all combat capitals"
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {

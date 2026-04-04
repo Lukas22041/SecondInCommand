@@ -23,6 +23,7 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 
 import java.awt.Color;
+import java.util.List;
 
 /**
  * Static utility class for fleet threshold calculations and threshold-based bonus scaling.
@@ -52,7 +53,7 @@ public class SCThresholds {
     // Tactical aptitude thresholds
 
     public static final float DP_LOW_THRESHOLD = 120f;
-    public static final float FIGHTER_BAYS_COMBAT_THRESHOLD = 12f;
+    public static final float FIGHTER_BAYS_COMBAT_THRESHOLD = 9f;
     public static final float FRIGATE_DESTROYER_DP_THRESHOLD = 90f;
     public static final float CRUISER_DP_THRESHOLD = 90f;
     public static final float CAPITAL_DP_THRESHOLD = 90f;
@@ -88,6 +89,7 @@ public class SCThresholds {
         PHASE_DP,
         DP_LOW,
         FIGHTER_BAYS_COMBAT,
+        FIGHTER_BAYS_COMBAT_FILLED,
         FRIGATE_DESTROYER_DP,
         CRUISER_DP,
         CAPITAL_DP,
@@ -146,7 +148,8 @@ public class SCThresholds {
         }
         switch (type) {
             case DP_LOW:              return DP_LOW_THRESHOLD              * mult;
-            case FIGHTER_BAYS_COMBAT: return FIGHTER_BAYS_COMBAT_THRESHOLD  * mult;
+            case FIGHTER_BAYS_COMBAT:        return FIGHTER_BAYS_COMBAT_THRESHOLD  * mult;
+            case FIGHTER_BAYS_COMBAT_FILLED: return FIGHTER_BAYS_COMBAT_THRESHOLD  * mult;
             case FRIGATE_DESTROYER_DP:return FRIGATE_DESTROYER_DP_THRESHOLD * mult;
             case CRUISER_DP:          return CRUISER_DP_THRESHOLD           * mult;
             case CAPITAL_DP:          return CAPITAL_DP_THRESHOLD           * mult;
@@ -203,6 +206,9 @@ public class SCThresholds {
         } else if (type == ThresholdBonusType.FIGHTER_BAYS_COMBAT) {
             currValue = getNumFighterBaysCombat(data);
             threshold = FIGHTER_BAYS_COMBAT_THRESHOLD;
+        } else if (type == ThresholdBonusType.FIGHTER_BAYS_COMBAT_FILLED) {
+            currValue = getNumFighterBaysCombatFilled(data);
+            threshold = FIGHTER_BAYS_COMBAT_THRESHOLD;
         } else if (type == ThresholdBonusType.FRIGATE_DESTROYER_DP) {
             currValue = getFrigateDestroyerDP(data, cStats);
             threshold = FRIGATE_DESTROYER_DP_THRESHOLD;
@@ -226,6 +232,7 @@ public class SCThresholds {
         // Apply Doctrine Tactics multiplier for all tactical threshold types
         boolean isTacticalType = type == ThresholdBonusType.DP_LOW
                 || type == ThresholdBonusType.FIGHTER_BAYS_COMBAT
+                || type == ThresholdBonusType.FIGHTER_BAYS_COMBAT_FILLED
                 || type == ThresholdBonusType.FRIGATE_DESTROYER_DP
                 || type == ThresholdBonusType.CRUISER_DP
                 || type == ThresholdBonusType.CAPITAL_DP
@@ -397,6 +404,43 @@ public class SCThresholds {
             bays += getNumBaysIncludingModules(curr);
         }
         return bays;
+    }
+
+    /**
+     * Fighter bays count, excluding civilian ships and ships without at least
+     * one non-built-in fighter bay filled with a wing.
+     */
+    public static float getNumFighterBaysCombatFilled(FleetDataAPI data) {
+        if (data == null) return 0f;
+        float bays = 0;
+        for (FleetMemberAPI curr : data.getMembersListCopy()) {
+            if (curr.isMothballed()) continue;
+            if (isCivilian(curr)) continue;
+            if (!hasNonBuiltInFilledFighterBay(curr)) continue;
+            bays += getNumBaysIncludingModules(curr);
+        }
+        return bays;
+    }
+
+    /** Returns true if the member has at least one non-built-in fighter bay filled with a wing. */
+    public static boolean hasNonBuiltInFilledFighterBay(FleetMemberAPI member) {
+        if (member == null) return false;
+        return hasNonBuiltInFilledFighterBay(member.getVariant());
+    }
+
+    public static boolean hasNonBuiltInFilledFighterBay(MutableShipStatsAPI stats) {
+        if (stats == null) return false;
+        return hasNonBuiltInFilledFighterBay(stats.getVariant());
+    }
+
+    public static boolean hasNonBuiltInFilledFighterBay(ShipVariantAPI variant) {
+        if (variant == null) return false;
+        List<String> nonBuiltInWings = variant.getNonBuiltInWings();
+        if (nonBuiltInWings == null) return false;
+        for (String wingId : nonBuiltInWings) {
+            if (wingId != null && !wingId.isEmpty()) return true;
+        }
+        return false;
     }
 
     /** Total deployment point cost of non-civilian frigates and destroyers. */
@@ -707,14 +751,32 @@ public class SCThresholds {
         Color tc = Misc.getTextColor();
         Color hc = Misc.getHighlightColor();
         String indent = BaseIntelPlugin.BULLET;
-        if (isInCampaign()) {
-            int bays = Math.round(getNumFighterBaysCombat(data));
-            String baysStr = bays == 1 ? "fighter bay" : "fighter bays";
-            info.addPara(indent + "Maximum at %s or less used combat fighter bays in fleet, your fleet uses %s " + baysStr,
-                    0f, tc, hc,
-                    "" + (int) threshold,
-                    "" + bays);
-        }
+
+        int bays = Math.round(getNumFighterBaysCombat(data));
+        String baysStr = bays == 1 ? "fighter bay" : "fighter bays";
+        info.addPara(indent + "Maximum at %s or less used combat fighter bays in fleet, your fleet uses %s " + baysStr,
+                0f, tc, hc,
+                "" + (int) threshold,
+                "" + bays);
+    }
+
+    public static void addFighterBaysCombatFilledThresholdInfo(TooltipMakerAPI info, FleetDataAPI data) {
+        addFighterBaysCombatFilledThresholdInfo(info, data, getEffectiveTacticalThreshold(ThresholdBonusType.FIGHTER_BAYS_COMBAT_FILLED, data));
+    }
+
+    public static void addFighterBaysCombatFilledThresholdInfo(TooltipMakerAPI info, FleetDataAPI data, float threshold) {
+        Color tc = Misc.getTextColor();
+        Color hc = Misc.getHighlightColor();
+        String indent = BaseIntelPlugin.BULLET;
+
+        int bays = Math.round(getNumFighterBaysCombatFilled(data));
+        String baysStr = bays == 1 ? "fighter bay" : "fighter bays";
+        info.addPara("   - Maximum at %s or less used combat fighter bays in fleet, your fleet uses %s " + baysStr,
+                0f, tc, hc,
+                "" + (int) threshold,
+                "" + bays);
+
+        info.addPara("   - Only ships with at least 1 non built-in fighter bay are affected and counted for usage", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "1 non built-in fighter");
     }
 
     public static void addFrigateDestroyerDPThresholdInfo(TooltipMakerAPI info, FleetDataAPI data, MutableCharacterStatsAPI cStats) {

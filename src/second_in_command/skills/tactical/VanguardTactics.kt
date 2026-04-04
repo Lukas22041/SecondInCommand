@@ -17,7 +17,7 @@ class VanguardTactics : SCBaseSkillPlugin() {
     var maxVentBonus = 30f
 
     override fun getAffectsString(): String {
-        return "all non-civilian frigates and destroyers"
+        return "all combat frigates and destroyers"
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {

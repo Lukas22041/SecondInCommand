@@ -10,8 +10,8 @@ import second_in_command.specs.SCBaseAptitudePlugin
 class AptitudeTactical : SCBaseAptitudePlugin() {
 
     override fun addCodexDescription(tooltip: TooltipMakerAPI) {
-        tooltip.addPara("Tactical is one of the more versatile aptitudes in the mod. " +
-                "While it does not quite stand out much on its own, you can often use it for the purpose of finishing up your build. ",
+        tooltip.addPara("Tactical is an aptitude that assists in building more diverse fleets. " +
+                "It has multiple tactics skills, which are skills with strong but diminishing effects.",
             0f, Misc.getTextColor(), Misc.getHighlightColor(), "Tactical", "")
     }
 

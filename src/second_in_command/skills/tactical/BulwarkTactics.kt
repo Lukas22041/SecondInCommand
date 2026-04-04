@@ -17,7 +17,7 @@ class BulwarkTactics : SCBaseSkillPlugin() {
     var maxPptBonus = 25f
 
     override fun getAffectsString(): String {
-        return "all non-civilian cruisers"
+        return "all combat cruisers"
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {

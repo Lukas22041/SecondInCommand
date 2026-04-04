@@ -37,10 +37,10 @@ class SustainTactics : SCBaseSkillPlugin() {
             val usagePercent = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_usage", usageReductionMax, SCThresholds.ThresholdBonusType.DP_LOW)
             val dmodPercent = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_dmod", dmodReductionMax, SCThresholds.ThresholdBonusType.DP_LOW)
 
-            stats.suppliesPerMonth.modifyMult(id, 1f-usagePercent)
-            stats.fuelUseMod.modifyMult(id, 1f-usagePercent)
+            stats.suppliesPerMonth.modifyMult(id, 1f-usagePercent/100f)
+            stats.fuelUseMod.modifyMult(id, 1f-usagePercent/100f)
 
-            stats!!.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, 1f-dmodPercent)
+            stats!!.dynamic.getMod(Stats.DMOD_ACQUIRE_PROB_MOD).modifyMult(id, 1f-dmodPercent/100)
 
         }
     }

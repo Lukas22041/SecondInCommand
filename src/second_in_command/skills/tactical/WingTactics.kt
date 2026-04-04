@@ -21,21 +21,21 @@ class WingTactics : SCBaseSkillPlugin() {
     }
 
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
-        val replaceBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_replace", maxReplaceRate, SCThresholds.ThresholdBonusType.FIGHTER_BAYS_COMBAT)
-        val rangeBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_range", maxEngagementRange, SCThresholds.ThresholdBonusType.FIGHTER_BAYS_COMBAT)
-        val armorBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_armor", maxArmorBonus, SCThresholds.ThresholdBonusType.FIGHTER_BAYS_COMBAT)
+        val replaceBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_replace", maxReplaceRate, SCThresholds.ThresholdBonusType.FIGHTER_BAYS_COMBAT_FILLED)
+        val rangeBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_range", maxEngagementRange, SCThresholds.ThresholdBonusType.FIGHTER_BAYS_COMBAT_FILLED)
+        val armorBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_armor", maxArmorBonus, SCThresholds.ThresholdBonusType.FIGHTER_BAYS_COMBAT_FILLED)
 
         tooltip.addPara("+${replaceBonus.toInt()}%% fighter replace rate (maximum: +${maxReplaceRate.toInt()}%%)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+${rangeBonus.toInt()}%% fighter engagement range (maximum: +${maxEngagementRange.toInt()}%%)", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
         tooltip.addPara("+${armorBonus.toInt()} effective armor to fighters (maximum: +${maxArmorBonus.toInt()})", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
-        SCThresholds.addFighterBaysCombatThresholdInfo(tooltip, data.fleet.fleetData)
+        SCThresholds.addFighterBaysCombatFilledThresholdInfo(tooltip, data.fleet.fleetData)
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
-        if (!SCThresholds.isCivilian(stats) && SCThresholds.hasFighterBays(stats)) {
-            val replaceBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_replace", maxReplaceRate, SCThresholds.ThresholdBonusType.FIGHTER_BAYS_COMBAT)
-            val rangeBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_range", maxEngagementRange, SCThresholds.ThresholdBonusType.FIGHTER_BAYS_COMBAT)
+        if (!SCThresholds.isCivilian(stats) && SCThresholds.hasNonBuiltInFilledFighterBay(stats)) {
+            val replaceBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_replace", maxReplaceRate, SCThresholds.ThresholdBonusType.FIGHTER_BAYS_COMBAT_FILLED)
+            val rangeBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_range", maxEngagementRange, SCThresholds.ThresholdBonusType.FIGHTER_BAYS_COMBAT_FILLED)
 
             stats!!.fighterRefitTimeMult.modifyMult(id, 1f - replaceBonus / 100f)
             stats.fighterWingRange.modifyPercent(id, rangeBonus)
@@ -45,13 +45,14 @@ class WingTactics : SCBaseSkillPlugin() {
     override fun applyEffectsToFighterSpawnedByShip(data: SCData, fighter: ShipAPI, ship: ShipAPI, id: String) {
 
         if (SCThresholds.isCivilian(ship.mutableStats)) return
+        if (!SCThresholds.hasNonBuiltInFilledFighterBay(ship.variant)) return
 
-        val armorBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_armor", maxArmorBonus, SCThresholds.ThresholdBonusType.FIGHTER_BAYS_COMBAT)
+        val armorBonus = SCThresholds.computeAndCacheThresholdBonus(data.fleet.fleetData, data.commander.stats, id + "_armor", maxArmorBonus, SCThresholds.ThresholdBonusType.FIGHTER_BAYS_COMBAT_FILLED)
         fighter.mutableStats.effectiveArmorBonus.modifyFlat(id, armorBonus)
     }
 
     override fun getNPCSpawnWeight(fleet: CampaignFleetAPI): Float {
-        val bays = SCThresholds.getNumFighterBaysCombat(fleet.fleetData)
+        val bays = SCThresholds.getNumFighterBaysCombatFilled(fleet.fleetData)
         val multiplier = (bays / SCThresholds.FIGHTER_BAYS_COMBAT_THRESHOLD).coerceIn(0f, 1f)
         return super.getNPCSpawnWeight(fleet) * multiplier
     }

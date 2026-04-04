@@ -10,7 +10,7 @@ import second_in_command.specs.SCBaseSkillPlugin
 
 class WarRoom : SCBaseSkillPlugin() {
 
-    val NUM_OFFICER_BONUS = 1f
+    val NUM_OFFICER_BONUS = 2f
 
     override fun getAffectsString(): String {
         return "fleet"

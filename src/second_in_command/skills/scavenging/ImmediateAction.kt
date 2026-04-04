@@ -49,16 +49,25 @@ class ImmediateAction : SCBaseSkillPlugin() {
             stats.armorBonus.modifyPercent(id, 10f)
             stats.hullBonus.modifyPercent(id, 10f)
 
-            var member = stats.fleetMember
+            /*var member = stats.fleetMember
             if (member != null) {
                 var maxCr = member.repairTracker.maxCR
                 member.repairTracker.cr = MathUtils.clamp(member.repairTracker.cr + 0.15f, 0f, 1f)
-            }
+            }*/
+
         }
     }
 
     override fun applyEffectsAfterShipCreation(data: SCData, ship: ShipAPI, variant: ShipVariantAPI, id: String) {
 
+    }
+
+    override fun advanceInCombat(data: SCData?, ship: ShipAPI?, amount: Float?) {
+
+        if (ship!!.customData.get("immediate_action_applied") != true && data!!.fleet.memoryWithoutUpdate.get("\$sc_immediate_action") == true) {
+            ship.setCustomData("immediate_action_applied", true)
+            ship.currentCR = MathUtils.clamp(ship.currentCR + 0.15f, 0f, 1f)
+        }
     }
 
     override fun advance(data: SCData, amount: Float) {

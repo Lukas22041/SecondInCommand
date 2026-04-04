@@ -37,7 +37,7 @@ class ContinuousRepairs : SCBaseSkillPlugin() {
         tooltip.addPara("   - Defeated capital ships provide twice as much towards this score", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "capital ships", "twice")
         tooltip.addPara("   - This effect can trigger multiple times from the same battle", 0f, Misc.getTextColor(), Misc.getHighlightColor())
         tooltip.addPara("   - This count is being kept track of between battles", 0f, Misc.getTextColor(), Misc.getHighlightColor())
-        tooltip.addPara("   - Ignores ships with the Rugged Construction hullmod", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "Rugged Construction")
+        tooltip.addPara("   - Ignores mothballed ships and ships with the Rugged Construction hullmod", 0f, Misc.getTextColor(), Misc.getHighlightColor(), "mothballed","Rugged Construction")
 
     }
 
@@ -149,7 +149,8 @@ class ContinuousRepairsListener() : BaseCampaignEventListener(false) {
 
                 var picks = WeightedRandomPicker<FleetMemberAPI>()
                 for (member in Global.getSector().playerFleet.fleetData.membersListCopy) {
-                    if (member.variant.hasDMods() && !member.variant.hasHullMod("rugged") && !member.baseOrModSpec().hasTag(Tags.HULL_UNRESTORABLE) && !member.variant.hasTag(Tags.VARIANT_UNRESTORABLE)) {
+                    if (member.variant.hasDMods() && !member.variant.hasHullMod("rugged")
+                        && !member.baseOrModSpec().hasTag(Tags.HULL_UNRESTORABLE) && !member.variant.hasTag(Tags.VARIANT_UNRESTORABLE) && !member.isMothballed) {
                         picks.add(member)
                     }
                 }
