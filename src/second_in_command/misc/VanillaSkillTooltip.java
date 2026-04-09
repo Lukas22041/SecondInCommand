@@ -12,7 +12,6 @@ import com.fs.starfarer.api.ui.UIComponentAPI;
 import com.fs.starfarer.api.util.Misc;
 
 import java.awt.*;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -155,7 +154,7 @@ public class VanillaSkillTooltip extends BaseTooltipCreator {
         }
 
         for (HullModSpecAPI hullmodSpec: hullmodSpecs) {
-            tooltip.addPara("Hull mod: " + hullmodSpec.getDisplayName() + " - " + ReflectionUtils.invoke("getShortDesc", hullmodSpec, new Array[]{}, null, null) , 0f,
+            tooltip.addPara("Hull mod: " + hullmodSpec.getDisplayName() + " - " + ReflectionUtils.invoke("getShortDesc", hullmodSpec, new Object[0], null, null) , 0f,
                     Misc.getTextColor(), Misc.getHighlightColor(), hullmodSpec.getDisplayName());
         }
 

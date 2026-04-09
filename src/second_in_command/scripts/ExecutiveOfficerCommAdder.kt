@@ -48,9 +48,9 @@ class ExecutiveOfficerCommAdder : EconomyTickListener {
         //var chance = 0.8f
         var chance = when(SCSettings.commRarity)  {
             SCSettings.CommRarity.None -> 0f
-            SCSettings.CommRarity.Rare -> 0.35f
-            SCSettings.CommRarity.Normal -> 0.8f
-            SCSettings.CommRarity.Common -> 0.9f
+            SCSettings.CommRarity.Rare -> 0.40f
+            SCSettings.CommRarity.Normal -> 0.85f
+            SCSettings.CommRarity.Common -> 1f
         }
         for (market in markets) {
             if (market == null || market.isHidden) continue
@@ -58,9 +58,11 @@ class ExecutiveOfficerCommAdder : EconomyTickListener {
             if (Random().nextFloat() >= chance) continue
 
             var count = 1
-            if (Random().nextFloat() >= 0.55f && SCSettings.commRarity != SCSettings.CommRarity.Rare) count += 1
-            if (Random().nextFloat() >= 0.75f && SCSettings.commRarity == SCSettings.CommRarity.Rare) count += 1
-            if (Random().nextFloat() >= 0.6f && SCSettings.commRarity == SCSettings.CommRarity.Common) count += 1
+            if (Random().nextFloat() >= 0.45f && SCSettings.commRarity != SCSettings.CommRarity.Rare) count += 1
+            if (Random().nextFloat() >= 0.70f && SCSettings.commRarity == SCSettings.CommRarity.Rare) count += 1
+
+            //3rd XO for common.
+            if (Random().nextFloat() >= 0.5f && SCSettings.commRarity == SCSettings.CommRarity.Common) count += 1
 
             var alreadyPicked = ArrayList<String>()
 

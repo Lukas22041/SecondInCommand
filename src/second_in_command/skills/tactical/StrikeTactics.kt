@@ -42,6 +42,7 @@ class StrikeTactics : SCBaseSkillPlugin() {
             "" + baseRegenTime)
 
         SCThresholds.addMissileWeaponOPThresholdInfo(tooltip, data.fleet.fleetData)
+        tooltip.addPara("   - The amount of restored missiles is based on the non-stat increased maximum missile count", 0f, Misc.getTextColor(), Misc.getHighlightColor())
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
