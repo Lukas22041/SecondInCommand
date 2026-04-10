@@ -1,3 +1,63 @@
+Version 2.0.0
+NOT SAVE COMPATIBLE
+
+- Reworked the "Tactical" Aptitude.
+--> It now works around "Tactics" skills, skills that have strong effects for categories of ships, but have diminishing returns.
+
+- Added a short tutorial that appears for people that have never played the mod before, will open for everyone once with this patch.
+
+- Elite skills now cost story points again, but you can remove a story point at any time to retrieve it and disable the elite effect.
+
+- Required experience for the first 3 levels of an executive officer has been increased.
+- Additional XO XP gain from Player Levelup effects has been reduced by 20%
+- Inactive XOs XP gain has been increased from 33% to 50%
+
+
+Skill Adjustments: 
+
+- All Dmod effect reductions: 25% -> 20% (Resilience, Redistribution, Shock Absorption, MagneticShielding).
+- All EMP damage reductions: 25% -> 20% (Reinforced Grid, Preservation, Derelict Fortification).
+- Crew Training & Scrappy maintenance: 15% CR -> 10% CR.
+- Low Profile: Effect now at maximum at 120DP of frigates/destroyers.
+- Mobile Defenses: Reduced damage dealt from 50% to 30%, added -20% damage taken.
+- Huntsman: Added +10% damage against destroyers.
+- Flux Regulation: Returned to vanillas deminishing returns at 240DP.
+- In Good Hands: Maximum DP reduction from 15% to 10%, now adds increases max officer count by 2.
+- Electronic Warfare: Reduced capture range bonus from 300 to 100.
+- Iron Sight: Reduced range bonus to 5%, added increased turret turn speed by 25%.
+- Tenacity: Reduced effective armor boost from 75 to 50, added 10% hull boost.
+- Shock Absorbition: 10% flux dissipation changed to 10% flux capacity.
+- Unlocked Engines: Changed from 20/20/15/10 -> 20/15/10/5 max speed.
+- Overwhelming Force: Decreased flux dissipation from 40% to 25%.
+
+
+Logistical Aptitude Skills
+
+- All Crew lost in non-combat stats: 75% -> 50% (Salvaging, Salvaging Equipment)
+- Fuel Optimisations: Fuel reduction 20% -> 15%
+- Reliable Engineering: Supply reduction from 25% to 20%
+- Prepare for the Worst: Flat CR recovery per day 4% -> 3%
+- Add Astra: Reduced burn speed in hyperspace from 2 -> 1.
+- Bulk Transport: Reduced from 40% to 30%, re-added vanillas increase for of 2 burn speed for non militarised civilian ships.
+- Recovery Efforts: Reduced Repair rate from 40% to 30%. reduced instant repair after combat from 25% to 20%
+- Makeshift Equipment: Supply reduction decreased from 25% to 20%
+- Expedition: Reduced fuel usage reduction from 20% to 15%
+- Generous Donation: Reduced post-battle salvage 60% to 50%, added 10% non-battle salvage
+- Privateering: Increased pay from 600 -> 800.
+- Another Mans Treasure: Reduced Scrap from Debri fields from 10% -> 5%
+
+
+Other: 
+
+- When hiring a logistical officer, it now mentions its logistical category in the dialog.
+- Continious Repairs no longer restores dmods on mothballed ships.
+- Fixed Immediate action behaving weirdly in the fleet menu, now only applies to the in-combat scene.
+- Fixed an accidental use of "java/sql/Array" which crashes on some setups.
+
+
+
+
+
 Version 1.8.2
 Save Compatible
 

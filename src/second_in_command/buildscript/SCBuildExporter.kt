@@ -2,6 +2,7 @@ package second_in_command.buildscript
 
 import com.fs.starfarer.api.Global
 import org.apache.log4j.Level
+import org.json.JSONObject
 import second_in_command.misc.ReflectionUtils
 
 object SCBuildExporter {
@@ -25,9 +26,34 @@ object SCBuildExporter {
         ReflectionUtils.invoke("mkdirs", exportDir)
         ReflectionUtils.invoke("mkdirs", assetsDir)
 
-        // Write JSON
+        // Write JSON — preserving any aptitude entries from the existing file that
+        // were not produced in this run (e.g. because their mod wasn't loaded).
         val jsonFile = newFile(exportDir, "api.json")
-        val jsonString = data.toJSON().toString(2)
+        val newJson = data.toJSON()
+        val newAptitudeIds = data.aptitudes.map { it.id }.toSet()
+
+        if (fileExists(jsonFile)) {
+            try {
+                val existingText = String(readBytes(jsonFile), Charsets.UTF_8)
+                val existingJson = JSONObject(existingText)
+                val existingAptitudes = existingJson.optJSONArray("aptitudes")
+                if (existingAptitudes != null) {
+                    val newAptitudesArr = newJson.getJSONArray("aptitudes")
+                    for (i in 0 until existingAptitudes.length()) {
+                        val existingApt = existingAptitudes.getJSONObject(i)
+                        val existingId = existingApt.optString("id", "")
+                        if (existingId.isNotEmpty() && existingId !in newAptitudeIds) {
+                            newAptitudesArr.put(existingApt)
+                            logger.info("SC Build: Preserved existing aptitude entry '$existingId' (not present at runtime)")
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                logger.warn("SC Build: Could not read existing api.json for merge — overwriting: ${e.message}")
+            }
+        }
+
+        val jsonString = newJson.toString(2)
         writeBytes(jsonFile, jsonString.toByteArray(Charsets.UTF_8))
         logger.info("SC Build: Wrote api.json (${jsonString.length} chars)")
 
@@ -78,6 +104,16 @@ object SCBuildExporter {
             ReflectionUtils.invoke("write", fos, bytes)
         } finally {
             ReflectionUtils.invoke("close", fos)
+        }
+    }
+
+    /** Read all bytes from a file via reflection */
+    private fun readBytes(file: Any): ByteArray {
+        val fis = ReflectionUtils.instantiate(fisClass, file)!!
+        try {
+            return ReflectionUtils.invoke("readAllBytes", fis) as ByteArray
+        } finally {
+            ReflectionUtils.invoke("close", fis)
         }
     }
 
