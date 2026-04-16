@@ -6,7 +6,7 @@ void main() {
     vec2 uv = gl_TexCoord[0].xy;
 
     // Sample the border sprite alpha as a mask so the glow follows its rounded corners exactly
-    float borderMask = texture(tex, uv).a;
+    float borderMask = texture2D(tex, uv).a;
 
     vec3 gold = vec3(1.0, 0.65, 0.05);
 

@@ -51,7 +51,7 @@ object CodexHandler {
         "field_repairs",
         "containment_procedures",
         "makeshift_equipment",
-        "industrial_planning",
+        //"industrial_planning", Still exists as admin skill, should display
         "derelict_contingent",
         "hull_restoration",
     )

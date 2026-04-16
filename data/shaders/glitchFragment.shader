@@ -24,7 +24,7 @@ void main() {
  	vec2 uv = texCoord;
 
 
-  	vec4 color = texture(tex, uv);
+  	vec4 color = texture2D(tex, uv);
  
   	color.r = texture(tex, uv + vec2(offset(64.0, uv) * 0.03, 0.0)).r;
   	color.g = texture(tex, uv + vec2(offset(64.0, uv) * 0.03 * 0.0, 0.0)).g;

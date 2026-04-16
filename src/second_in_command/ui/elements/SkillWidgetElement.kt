@@ -202,22 +202,24 @@ class SkillWidgetElement(var id: String, var aptitudeId: String, var activated: 
             inactiveBorder.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
         }
 
-        if (isElite && activated && eliteShader != 0) {
-            // Shader samples the activeBorder sprite's alpha as a shape mask, so the
-            // glow follows its rounded corners exactly and applies the diagonal gradient.
-            GL20.glUseProgram(eliteShader)
-            GL20.glUniform1f(GL20.glGetUniformLocation(eliteShader, "alphaMult"), alphaMult)
+        if (isElite && activated) {
+            if (eliteShader != 0) {
+                // Shader samples the activeBorder sprite's alpha as a shape mask, so the
+                // glow follows its rounded corners exactly and applies the diagonal gradient.
+                GL20.glUseProgram(eliteShader)
+                GL20.glUniform1f(GL20.glGetUniformLocation(eliteShader, "alphaMult"), alphaMult)
 
-            GL11.glEnable(GL11.GL_BLEND)
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE)  // additive glow
+                GL11.glEnable(GL11.GL_BLEND)
+                GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE)  // additive glow
 
-            GL13.glActiveTexture(GL13.GL_TEXTURE0)
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D, activeBorder.textureId)
+                GL13.glActiveTexture(GL13.GL_TEXTURE0)
+                GL11.glBindTexture(GL11.GL_TEXTURE_2D, activeBorder.textureId)
 
-            activeBorder.setSize(width, height)
-            activeBorder.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
+                activeBorder.setSize(width, height)
+                activeBorder.renderAtCenter(x + (width / 2).toInt(), y + (height / 2).toInt())
 
-            GL20.glUseProgram(0)
+                GL20.glUseProgram(0)
+            }
 
             // Stars badge on top at correct icon size
             eliteStars.setNormalBlend()

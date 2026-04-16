@@ -35,7 +35,7 @@ class StrikeTacticsScript(var ship: ShipAPI, var maxRegenTime: Float) : Advancea
             if (w.type != WeaponAPI.WeaponType.MISSILE) continue
             if (w.usesAmmo() && w.ammo < w.maxAmmo) {
                 val restore = Math.max(1, (w.spec.maxAmmo * 0.20f).toInt())
-                w.ammo = (w.ammo + restore).coerceAtMost(w.spec.maxAmmo)
+                w.ammo = (w.ammo + restore).coerceAtMost(w.maxAmmo)
             }
         }
     }
