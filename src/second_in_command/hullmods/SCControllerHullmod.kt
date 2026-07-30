@@ -1,5 +1,6 @@
 package second_in_command.hullmods
 
+import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
 import com.fs.starfarer.api.combat.BaseHullMod
@@ -19,7 +20,7 @@ import second_in_command.skills.PlayerLevelEffects
 
 class SCControllerHullmod : BaseHullMod() {
     companion object {
-        //val log: Logger? = Global.getLogger(SCControllerHullmod::class.java)
+        val log: Logger? = Global.getLogger(SCControllerHullmod::class.java)
         var secOverrideKey = "SiC_SkillsOverrider";
         var noSkillTagHullmodID = "sc_no_skill";
         fun getFleetData(ship: ShipAPI?) : SCData? {
@@ -119,7 +120,6 @@ class SCControllerHullmod : BaseHullMod() {
     }
 
     override fun applyEffectsAfterShipCreation(ship: ShipAPI?, id: String?) {
-
         //if (!Global.getCombatEngine().hasPluginOfClass(SiCMidCombatAdder::class.java)){
         //Dmod overlay
         if (SCSettings.reducedDmodOverlay) {
@@ -154,11 +154,12 @@ class SCControllerHullmod : BaseHullMod() {
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         var member = stats?.fleetMember ?: return
         var fleet = member.fleetData?.fleet ?: return
-
-        if (!Global.getCombatEngine().listenerManager.hasListener(SicMidCombatAdder2::class.java)){
+        if (/*Global.getCurrentState() == GameState.COMBAT && */!Global.getCombatEngine().listenerManager.hasListenerOfClass(SicMidCombatAdder2::class.java)){
+            log?.info("ADDING THE LISTINER")
             Global.getCombatEngine().listenerManager.addListener(SicMidCombatAdder2())
+        }else {
+            log?.info("NOT ADDING THE LISTINER")
         }
-
         if (fleet != Global.getSector().playerFleet && Global.getSector().playerFleet?.fleetData?.membersListCopy?.contains(member) == true) {
             //Fix for battles where you join an ally, as those set the members fleet to theirs.
             fleet = Global.getSector().playerFleet
