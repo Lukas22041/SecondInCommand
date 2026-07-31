@@ -20,7 +20,7 @@ import second_in_command.skills.PlayerLevelEffects
 
 class SCControllerHullmod : BaseHullMod() {
     companion object {
-        val log: Logger? = Global.getLogger(SCControllerHullmod::class.java)
+        //val log: Logger? = Global.getLogger(SCControllerHullmod::class.java)
         var secOverrideKey = "SiC_SkillsOverrider";
         var noSkillTagHullmodID = "sc_no_skill";
         fun getFleetData(ship: ShipAPI?) : SCData? {
@@ -155,10 +155,7 @@ class SCControllerHullmod : BaseHullMod() {
         var member = stats?.fleetMember ?: return
         var fleet = member.fleetData?.fleet ?: return
         if (/*Global.getCurrentState() == GameState.COMBAT && */!Global.getCombatEngine().listenerManager.hasListenerOfClass(SicMidCombatAdder2::class.java)){
-            log?.info("ADDING THE LISTINER")
             Global.getCombatEngine().listenerManager.addListener(SicMidCombatAdder2())
-        }else {
-            log?.info("NOT ADDING THE LISTINER")
         }
         if (fleet != Global.getSector().playerFleet && Global.getSector().playerFleet?.fleetData?.membersListCopy?.contains(member) == true) {
             //Fix for battles where you join an ally, as those set the members fleet to theirs.
@@ -192,6 +189,7 @@ class SCControllerHullmod : BaseHullMod() {
         }*/
 
         //var fleetData = fleet.fleetData ?: return //Have to do this, as during deserialisation fleetData can be null, causing save corruptions
+        //fighter?.addTag(noSkillTagHullmodID);//This would have marked fighters as spawned, but it looks like its unrequired, and the spawn listiner does not read fighters.
         var data = getFleetData(ship) ?: return;//SCUtils.getFleetData(fleet)
 
         var skills = data.getAllActiveSkillsPlugins();//SCUtils.getFleetData(fleet).getAllActiveSkillsPlugins()
