@@ -25,6 +25,7 @@
       <root url="jar://D:/Downloads/Programming/StarsectorModding/CompileReferences/ShipMasterySystem.jar!/" />
       <root url="jar://$PROJECT_DIR$/../../starsector-core/starfarer.api.jar!/" />
       <root url="jar://$PROJECT_DIR$/../../starsector-core/starfarer_obf.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../PatchLib/jars/PatchLibAPI.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="https://fractalsoftworks.com/starfarer.api/" />

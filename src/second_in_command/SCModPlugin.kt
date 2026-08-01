@@ -114,7 +114,6 @@ class SCModPlugin : BaseModPlugin() {
             Global.getSector().listenerManager.addListener(ExecutiveOfficerCommAdder(), false)
         }
 
-        Global.getSector().addTransientScript(SkillPanelReplacerScript())
         Global.getSector().addTransientScript(ControllerHullmodAdderScript())
         Global.getSector().addTransientScript(SCNeuralJunctionScript())
         Global.getSector().addTransientScript(VanillaSkillsDisabler())

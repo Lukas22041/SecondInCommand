@@ -25,6 +25,10 @@
 			"id": "shaderLib",
 			"name": "GraphicsLib",
 		},
+		{
+			"id": "patchlib",
+			"name": "! PatchLib !",
+		},
     ],
 	"replace":[
 		"data/characters/skills/automated_ships.skill",
