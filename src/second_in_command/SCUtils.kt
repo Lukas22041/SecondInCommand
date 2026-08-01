@@ -23,6 +23,8 @@ object SCUtils {
     var MOD_ID = "second_in_command"
     var FLEET_DATA_KEY = "\$sc_stored_data"
     var SECTOR_DATA_KEY = "\$sc_sector_data"
+    var secOverrideKey = "SiC_SkillsOverrider";
+    var noSkillTagHullmodID = "sc_no_skill";
 
     @JvmStatic
     fun getSectorData() : SCSectorData {
@@ -138,25 +140,6 @@ object SCUtils {
         var person = faction.createRandomPerson(random)
         var officer = SCOfficer(person, aptitudeId)
         return officer
-    }
-
-
-    @JvmStatic
-    fun levelSCOfficer(officer: SCOfficer, level : Int){
-        ///increases the amount of skill points a SCOfficer uses by the inputted amount
-    }
-    @JvmStatic
-    fun createRandomSCOfficer(data: SCData, fleet : CampaignFleetAPI){
-        ///creates a SC officer of a random, acceptable, attribute
-    }
-    fun createRandomSCOfficer(data: SCData, fleet : CampaignFleetAPI, level: Int){
-        ///creates a SC officer of a random, acceptable, attribute, at the target level
-    }
-    fun createRandomSCOfficer(data: SCData, fleet : CampaignFleetAPI, faction: FactionAPI){
-        ///creates a SC officer of a random, acceptable, attribute. The person will be generated from the target faction.
-    }
-    fun createRandomSCOfficer(data: SCData, fleet : CampaignFleetAPI, faction: FactionAPI, level: Int){
-        ///creates a SC officer of a random, acceptable, attribute, at the target level. The person will be generated from the target faction.
     }
 
     /*@JvmStatic

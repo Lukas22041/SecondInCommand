@@ -3,6 +3,7 @@ package second_in_command.hullmods
 import com.fs.starfarer.api.GameState
 import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.CampaignFleetAPI
+import com.fs.starfarer.api.campaign.CoreUITabId
 import com.fs.starfarer.api.combat.BaseHullMod
 import com.fs.starfarer.api.combat.MutableShipStatsAPI
 import com.fs.starfarer.api.combat.ShipAPI
@@ -10,24 +11,20 @@ import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.impl.campaign.DModManager
 import com.fs.starfarer.api.loading.VariantSource
 import com.fs.starfarer.api.util.Misc
-import org.apache.log4j.Logger
 import second_in_command.SCData
 import second_in_command.SCUtils
+import second_in_command.SCUtils.noSkillTagHullmodID
+import second_in_command.SCUtils.secOverrideKey
 import second_in_command.misc.SCSettings
+import second_in_command.misc.fixVariant
 import second_in_command.scripts.AutomatedShipsManager
-import second_in_command.scripts.SicMidCombatAdder2
+import second_in_command.scripts.SicMidCombatAdder
 import second_in_command.skills.PlayerLevelEffects
 
 class SCControllerHullmod : BaseHullMod() {
     companion object {
-        //val log: Logger? = Global.getLogger(SCControllerHullmod::class.java)
-        var secOverrideKey = "SiC_SkillsOverrider";
-        var noSkillTagHullmodID = "sc_no_skill";
         fun getFleetData(ship: ShipAPI?) : SCData? {
-            //log?.info("attempting to get fleet data for "+ship?.name+", id: "+ship?.id)
-            //log?.info("has custom data: "+ship?.customData?.contains(secOverrideKey));
             if (ship?.customData?.contains(secOverrideKey) == true) return ship.customData.get(secOverrideKey) as SCData;
-            //log?.info("has fleet member: "+(ship?.mutableStats?.fleetMember?.fleetData?.fleet != null));
 
 
             var member = ship?.fleetMember;
@@ -40,28 +37,25 @@ class SCControllerHullmod : BaseHullMod() {
                 }
                 if (fleet != null && fleet.fleetData != null) return SCUtils.getFleetData(fleet)
             }
-            //log?.info("has nothing. ship name: "+ship?.name)
+            //if you ever want to add
+
             return null;
         }
         fun addHullmodAfterShipCreation(ship: ShipAPI?,  data: SCData?){
-            //log?.info("seeing if I can add ship of; name: "+ship?.name+" id: "+ship?.id);
             if (ship == null || ship.fleetMember == null || ship.fleetMember.variant == null) return//for command shuttle
             //ship.getFleetMember().setCustomData(NANO_THIEF_SIC_HULLMOD_FLEET_KEY,fleet);
-            //log?.info("adding ship; name: "+ship?.name+" id: "+ship?.id);
             if (ship?.variant?.hasHullMod("sc_skill_controller") == false){
-                //log?.info("-adding hullmod...")
-                val OVERWRITER = ship.variant //Global.getSettings().getVariant("Abyssal_XO_ReclaimCore_Blank").clone();
-                OVERWRITER.source = VariantSource.REFIT
+                ship.fleetMember.fixVariant()
+                val OVERWRITER = ship.variant
+                //OVERWRITER.source = VariantSource.REFIT
                 //OVERWRITER.setWingId(0,skills.stats.OF_fighterToBuild);
                 OVERWRITER.addMod("sc_skill_controller")
-                //ship.getVariant().getHullMods();
 
                 ship.fleetMember.setVariant(OVERWRITER, false, true) //setVariant(OVERWRITER,false,true);
             }
             ship?.setCustomData(secOverrideKey,data);
 
-            var id = "sc_skill_controller_";
-            //log?.info("-running skills (before)");
+            var id = Global.getSettings().getHullModSpec("sc_skill_controller").id;
             for (skill in data!!.getAllActiveSkillsPlugins()) {
                 skill.applyEffectsBeforeShipCreation(
                     data,
@@ -71,7 +65,6 @@ class SCControllerHullmod : BaseHullMod() {
                     "${id}_${skill.id}"
                 )
             }
-            //log?.info("-running skills (after)");
             for (skill in data.getAllActiveSkillsPlugins()) {
                 skill.applyEffectsAfterShipCreation(
                     data,
@@ -89,7 +82,7 @@ class SCControllerHullmod : BaseHullMod() {
             var playerfleet = Global.getSector().playerFleet ?: return
             if (playerfleet.fleetData?.membersListCopy == null) return
             for (member in playerfleet.fleetData.membersListCopy) {
-                if (!member.variant.hasHullMod("sc_skill_controller") && !member.variant.hasHullMod(noSkillTagHullmodID) && !member.hullSpec.hasTag(noSkillTagHullmodID)) {
+                if (!member.variant.hasHullMod("sc_skill_controller") && !member.variant.hasHullMod(noSkillTagHullmodID) && !member.variant.hasTag(noSkillTagHullmodID) && !member.hullSpec.hasTag(noSkillTagHullmodID)) {
                     if (member.variant.source != VariantSource.REFIT) {
                         var variant = member.variant.clone();
                         variant.originalVariant = null;
@@ -99,12 +92,6 @@ class SCControllerHullmod : BaseHullMod() {
                     }
 
                     member.variant.addPermaMod("sc_skill_controller")
-                    //addChilds(member.variant);
-                    /*var moduleSlots = member.variant.moduleSlots
-                    for (slot in moduleSlots) {
-                        var module = member.variant.getModuleVariant(slot)
-                        module.addMod("sc_skill_controller")
-                    }*/
                 }
             }
         }
@@ -154,8 +141,8 @@ class SCControllerHullmod : BaseHullMod() {
     override fun applyEffectsBeforeShipCreation(hullSize: ShipAPI.HullSize?, stats: MutableShipStatsAPI?, id: String?) {
         var member = stats?.fleetMember ?: return
         var fleet = member.fleetData?.fleet ?: return
-        if (/*Global.getCurrentState() == GameState.COMBAT && */!Global.getCombatEngine().listenerManager.hasListenerOfClass(SicMidCombatAdder2::class.java)){
-            Global.getCombatEngine().listenerManager.addListener(SicMidCombatAdder2())
+        if (!Global.getCombatEngine().listenerManager.hasListenerOfClass(SicMidCombatAdder::class.java)){
+            Global.getCombatEngine().listenerManager.addListener(SicMidCombatAdder())
         }
         if (fleet != Global.getSector().playerFleet && Global.getSector().playerFleet?.fleetData?.membersListCopy?.contains(member) == true) {
             //Fix for battles where you join an ally, as those set the members fleet to theirs.
