@@ -13,7 +13,6 @@ import second_in_command.misc.codex.CodexHandler
 import second_in_command.misc.snippets.AddAllOfficersSnippet
 import second_in_command.misc.snippets.AddXPToOfficersSnippet
 import second_in_command.scripts.*
-import second_in_command.skills.engineering.scripts.CompactStorageScript
 import second_in_command.skills.scavenging.scripts.ScavengingHotbarUIScript
 import second_in_command.skills.scavenging.scripts.ScavengingLootScreenModifierScript
 import second_in_command.skills.scavenging.scripts.ScavengingScrapLootFromBattleListener
@@ -122,10 +121,6 @@ class SCModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(ScavengingHotbarUIScript())
         Global.getSector().addTransientScript(ScavengingLootScreenModifierScript())
 
-        var compactStorageListener = CompactStorageScript()
-        Global.getSector().addTransientScript(compactStorageListener)
-        Global.getSector().listenerManager.addListener(compactStorageListener, true)
-        //Global.getSector().addTransientScript(SectorSeedAdderScript())
         Global.getSector().listenerManager.addListener(NPCFleetInflater(), true)
         Global.getSector().listenerManager.addListener(ScavengingScrapLootListener(), true)
         Global.getSector().addTransientListener(ScavengingScrapLootFromBattleListener())
