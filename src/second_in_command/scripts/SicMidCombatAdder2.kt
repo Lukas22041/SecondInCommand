@@ -29,7 +29,7 @@ class SicMidCombatAdder2 : FleetMemberDeploymentListener{
                 //log?.info("     is ready...: "+a.hullSpec.hullId);
                 var data: SCData? = SCControllerHullmod.getFleetData(a);
                 if (data == null) continue
-                //map.put(a.originalOwner,data);
+                map.put(a.originalOwner,data);
                 if (a.fleetCommander != null) map2.put(a.fleetCommander.id,data);
                 addModules(a,data);
                 //log?.info("Setting 'SicMidCombatAdder' perset data of ship, force, owner: "+a.id+", "+a.originalOwner+", "+a.fleetCommander.id)
