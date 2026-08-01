@@ -118,7 +118,7 @@ class SCModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(SCNeuralJunctionScript())
         Global.getSector().addTransientScript(VanillaSkillsDisabler())
         Global.getSector().addTransientScript(AutomatedShipsManager())
-        Global.getSector().addTransientScript(CommDirectoryRecolorScript())
+        //Global.getSector().addTransientScript(CommDirectoryRecolorScript())
         Global.getSector().addTransientScript(ScavengingHotbarUIScript())
         Global.getSector().addTransientScript(ScavengingLootScreenModifierScript())
 
