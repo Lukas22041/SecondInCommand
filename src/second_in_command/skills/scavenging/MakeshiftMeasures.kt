@@ -63,35 +63,36 @@ class MakeshiftMeasures : SCBaseSkillPlugin() {
         var goDark = fleet.getAbility(Abilities.GO_DARK)
         var scrapManager = data.scrapManager
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && sustainedBurn != null && sustainedBurn.isActive && scrapManager.getCurrentScrap() > 0f) {
-            fleet.stats.fleetwideMaxBurnMod.modifyFlat("sc_makeshift_measures", 3f, "Makeshift Measures Skill")
-            fleet.stats.accelerationMult.modifyMult("sc_makeshift_measures", 2f, "Makeshift Measures Skill")
+        if (!Global.getSector().isPaused) {
+            if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && sustainedBurn != null && sustainedBurn.isActive && scrapManager.getCurrentScrap() > 0f) {
+                fleet.stats.fleetwideMaxBurnMod.modifyFlat("sc_makeshift_measures", 3f, "Makeshift Measures Skill")
+                fleet.stats.accelerationMult.modifyMult("sc_makeshift_measures", 2f, "Makeshift Measures Skill")
 
-            var days = Global.getSector().clock.convertToDays(amount)
-            scrapManager.adjustScrap(-SUSTAINED_COST_PER_DAY * days)
-            scrapManager.setScrapConsumptionThisFrame(SUSTAINED_COST_PER_DAY)
+                var days = Global.getSector().clock.convertToDays(amount)
+                scrapManager.adjustScrap(-SUSTAINED_COST_PER_DAY * days)
+                scrapManager.setScrapConsumptionThisFrame(SUSTAINED_COST_PER_DAY)
 
-            fleet.memoryWithoutUpdate.set(IS_ACTIVE_KEY, true, 0.1f)
-        } else {
-            fleet.stats.fleetwideMaxBurnMod.unmodify("sc_makeshift_measures")
-            fleet.stats.accelerationMult.unmodify("sc_makeshift_measures")
+                fleet.memoryWithoutUpdate.set(IS_ACTIVE_KEY, true, 0.1f)
+            } else {
+                fleet.stats.fleetwideMaxBurnMod.unmodify("sc_makeshift_measures")
+                fleet.stats.accelerationMult.unmodify("sc_makeshift_measures")
+            }
+
+            if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && goDark != null && goDark.isActive && scrapManager.getCurrentScrap() > 0f) {
+
+                data.fleet.stats.detectedRangeMod.modifyMult("sc_makeshift_measures", 0.70f, "Makeshift Measures Skill")
+                data.fleet.stats.dynamic.getMod(Stats.MOVE_SLOW_SPEED_BONUS_MOD).modifyFlat("sc_makeshift_measures", 3f, "Makeshift Measures Skill")
+
+                var days = Global.getSector().clock.convertToDays(amount)
+                scrapManager.adjustScrap(-GO_DARK_COST_PER_DAY * days)
+                scrapManager.setScrapConsumptionThisFrame(GO_DARK_COST_PER_DAY)
+
+                fleet.memoryWithoutUpdate.set(IS_ACTIVE_KEY, true, 0.1f)
+            } else {
+                data.fleet.stats.detectedRangeMod.unmodify("sc_makeshift_measures")
+                data.fleet.stats.dynamic.getMod(Stats.MOVE_SLOW_SPEED_BONUS_MOD).unmodify("sc_makeshift_measures")
+            }
         }
-
-        if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && goDark != null && goDark.isActive && scrapManager.getCurrentScrap() > 0f) {
-
-            data.fleet.stats.detectedRangeMod.modifyMult("sc_makeshift_measures", 0.70f, "Makeshift Measures Skill")
-            data.fleet.stats.dynamic.getMod(Stats.MOVE_SLOW_SPEED_BONUS_MOD).modifyFlat("sc_makeshift_measures", 3f, "Makeshift Measures Skill")
-
-            var days = Global.getSector().clock.convertToDays(amount)
-            scrapManager.adjustScrap(-GO_DARK_COST_PER_DAY * days)
-            scrapManager.setScrapConsumptionThisFrame(GO_DARK_COST_PER_DAY)
-
-            fleet.memoryWithoutUpdate.set(IS_ACTIVE_KEY, true, 0.1f)
-        } else {
-            data.fleet.stats.detectedRangeMod.unmodify("sc_makeshift_measures")
-            data.fleet.stats.dynamic.getMod(Stats.MOVE_SLOW_SPEED_BONUS_MOD).unmodify("sc_makeshift_measures")
-        }
-
 
 
     }

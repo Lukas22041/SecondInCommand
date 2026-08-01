@@ -17,7 +17,6 @@
       <root url="jar://$PROJECT_DIR$/../MagicLib/jars/MagicLib-Kotlin.jar!/" />
       <root url="jar://$PROJECT_DIR$/../MagicLib/jars/MagicLib.jar!/" />
       <root url="jar://$PROJECT_DIR$/../LunaLib/jars/LunaLib.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../LunaLib/jars/LunaLib-Kotlin.jar!/" />
       <root url="jar://$PROJECT_DIR$/../LazyLib/jars/LazyLib.jar!/" />
       <root url="jar://$PROJECT_DIR$/../LazyLib/jars/LazyLib-Kotlin.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Console Commands/jars/lw_Console.jar!/" />

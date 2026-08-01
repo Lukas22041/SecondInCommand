@@ -21,7 +21,7 @@ class MagneticShielding : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("Prevents all damage from solar corona and similar hazards", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("+29%% EMP damage resistance in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("+20%% EMP damage resistance in combat", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
     }
 
     override fun applyEffectsBeforeShipCreation(data: SCData, stats: MutableShipStatsAPI?, variant: ShipVariantAPI, hullSize: ShipAPI.HullSize?, id: String?) {
