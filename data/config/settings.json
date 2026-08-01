@@ -39,5 +39,6 @@
 			"seb":"graphics/secondInCommand/special/christmas/seb.png",
 			"kanta":"graphics/secondInCommand/special/christmas/kanta.png",
 		}
- 	}
+ 	},
+ 	"sc_applyToModules": false
  }

@@ -3,7 +3,7 @@ package second_in_command.scripts
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.Global
 import second_in_command.SCUtils
-import shipmastery.util.MathUtils
+//import shipmastery.util.MathUtils
 
 class SCXPTracker : EveryFrameScript {
 

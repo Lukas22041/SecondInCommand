@@ -42,7 +42,7 @@ class AddExecutiveCommand : BaseCommandWithSuggestion {
                 officers.add(officer)
             }
         } else {
-            var aptitude = aptitudes.find { it.name.lowercase() == args || it.id.lowercase() == args }
+            var aptitude = aptitudes.find { it.name.lowercase() == args.lowercase() || it.id.lowercase() == args.lowercase() }
             if (aptitude != null && !aptitude.tags.contains("restricted")) {
                 var officer = SCUtils.createRandomSCOfficer(aptitude.id)
                 officers.add(officer)

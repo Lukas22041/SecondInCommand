@@ -140,6 +140,25 @@ object SCUtils {
         return officer
     }
 
+
+    @JvmStatic
+    fun levelSCOfficer(officer: SCOfficer, level : Int){
+        ///increases the amount of skill points a SCOfficer uses by the inputted amount
+    }
+    @JvmStatic
+    fun createRandomSCOfficer(data: SCData, fleet : CampaignFleetAPI){
+        ///creates a SC officer of a random, acceptable, attribute
+    }
+    fun createRandomSCOfficer(data: SCData, fleet : CampaignFleetAPI, level: Int){
+        ///creates a SC officer of a random, acceptable, attribute, at the target level
+    }
+    fun createRandomSCOfficer(data: SCData, fleet : CampaignFleetAPI, faction: FactionAPI){
+        ///creates a SC officer of a random, acceptable, attribute. The person will be generated from the target faction.
+    }
+    fun createRandomSCOfficer(data: SCData, fleet : CampaignFleetAPI, faction: FactionAPI, level: Int){
+        ///creates a SC officer of a random, acceptable, attribute, at the target level. The person will be generated from the target faction.
+    }
+
     /*@JvmStatic
     fun isSkillActive(skillId: String) : Boolean {
         return getPlayerData().isSkillActive(skillId)
