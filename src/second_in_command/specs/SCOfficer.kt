@@ -59,8 +59,7 @@ class SCOfficer(var person: PersonAPI, var aptitudeId: String) {
 
         var list = mutableListOf<SCBaseSkillPlugin>()
         list.add(getAptitudePlugin().getOriginSkillPlugin())
-        list.addAll(getSkillSpecs().filter { activeSkillIDs.contains(it.id) }.map { it.getPlugin() })
-
+        list.addAll(getSkillSpecs().map { it.getPlugin() })
 
         return list
     }

@@ -253,10 +253,16 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
         return ArrayList(activeOfficers)
     }
 
+    private fun getAssignedOfficersNonCopy() : ArrayList<SCOfficer?> {
+        if (activeOfficers == null) {
+            return ArrayList()
+        }
+        return activeOfficers
+    }
 
 
     fun getAllActiveSkillsPlugins() : List<SCBaseSkillPlugin> {
-        return getAssignedOfficers().filter { it != null }.flatMap { it!!.getActiveSkillPlugins() }
+        return getAssignedOfficersNonCopy().filterNotNull().flatMap { it!!.getActiveSkillPlugins() }
     }
 
     fun isSkillActive(skillId: String) : Boolean {
@@ -327,7 +333,6 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
         if (!fleet.hasScriptOfClass(ScrapManager::class.java)) {
             fleet.addScript(scrapManager)
         }
-
 
         for (skill in getAllActiveSkillsPlugins()) {
             skill.advance(this, amount)
