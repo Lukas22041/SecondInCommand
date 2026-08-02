@@ -266,7 +266,12 @@ class SCData(var fleet: CampaignFleetAPI) : EveryFrameScript, FleetEventListener
     }
 
     fun isSkillActive(skillId: String) : Boolean {
-        return getAssignedOfficers().filter { it != null }.flatMap { it!!.getActiveSkillPlugins().map { it.getId() } }.contains(skillId)
+        for (officer in getAssignedOfficersNonCopy()) {
+            if (officer == null) continue
+            if (officer.activeSkillIDs.contains(skillId)) return true
+            if (officer.getAptitudePlugin().originSkillId == skillId) return true
+        }
+        return false;
     }
 
     fun isAptitudeActive(aptitudeId: String) : Boolean {

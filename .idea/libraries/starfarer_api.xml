@@ -40,6 +40,7 @@
       <root url="jar://$PROJECT_DIR$/../LazyLib/jars/LazyLib-Kotlin.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Console Commands/jars/lw_Console.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Console Commands/jars/lw_Console.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../PatchLib/jars/PatchLibAPI.jar!/" />
     </SOURCES>
   </library>
 </component>
