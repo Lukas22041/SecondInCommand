@@ -53,7 +53,7 @@ public class SCThresholds {
     // Tactical aptitude thresholds
 
     public static final float DP_LOW_THRESHOLD = 120f;
-    public static final float FIGHTER_BAYS_COMBAT_THRESHOLD = 8f;
+    public static final float FIGHTER_BAYS_COMBAT_THRESHOLD = 9f;
     public static final float FRIGATE_DESTROYER_DP_THRESHOLD = 75f;
     public static final float CRUISER_DP_THRESHOLD = 75f;
     public static final float CAPITAL_DP_THRESHOLD = 75f;
@@ -137,27 +137,41 @@ public class SCThresholds {
         return distributionModeActive;
     }
 
+    public static boolean isTacticalType(ThresholdBonusType type) {
+        return type == ThresholdBonusType.DP_LOW
+                || type == ThresholdBonusType.FIGHTER_BAYS_COMBAT
+                || type == ThresholdBonusType.FIGHTER_BAYS_COMBAT_FILLED
+                || type == ThresholdBonusType.FRIGATE_DESTROYER_DP
+                || type == ThresholdBonusType.CRUISER_DP
+                || type == ThresholdBonusType.CAPITAL_DP
+                || type == ThresholdBonusType.MISSILE_WEAPON_OP
+                || type == ThresholdBonusType.PD_WEAPON_OP
+                || type == ThresholdBonusType.PHASE_DP;
+    }
+
     /**
      * Returns the effective (multiplier-adjusted) threshold for a given tactical type.
      * Use this in tooltip methods so displayed numbers stay in sync with the actual computation.
      */
     public static float getEffectiveTacticalThreshold(ThresholdBonusType type, FleetDataAPI data) {
-        float mult = getTacticalThresholdMultiplier(data);
+        float mult = SCSettings.getTacticsMult() * getTacticalThresholdMultiplier(data);
         if (distributionModeActive) {
             mult *= 0.5f;
         }
+        float base;
         switch (type) {
-            case DP_LOW:              return DP_LOW_THRESHOLD              * mult;
-            case FIGHTER_BAYS_COMBAT:        return FIGHTER_BAYS_COMBAT_THRESHOLD  * mult;
-            case FIGHTER_BAYS_COMBAT_FILLED: return FIGHTER_BAYS_COMBAT_THRESHOLD  * mult;
-            case FRIGATE_DESTROYER_DP:return FRIGATE_DESTROYER_DP_THRESHOLD * mult;
-            case CRUISER_DP:          return CRUISER_DP_THRESHOLD           * mult;
-            case CAPITAL_DP:          return CAPITAL_DP_THRESHOLD           * mult;
-            case MISSILE_WEAPON_OP:   return MISSILE_WEAPON_OP_THRESHOLD    * mult;
-            case PD_WEAPON_OP:        return PD_WEAPON_OP_THRESHOLD         * mult;
-            case PHASE_DP:            return PHASE_OP_THRESHOLD             * mult;
-            default:                  return 1.0f;
+            case DP_LOW:                     base = DP_LOW_THRESHOLD;               break;
+            case FIGHTER_BAYS_COMBAT:        base = FIGHTER_BAYS_COMBAT_THRESHOLD;  break;
+            case FIGHTER_BAYS_COMBAT_FILLED: base = FIGHTER_BAYS_COMBAT_THRESHOLD;  break;
+            case FRIGATE_DESTROYER_DP:       base = FRIGATE_DESTROYER_DP_THRESHOLD; break;
+            case CRUISER_DP:                 base = CRUISER_DP_THRESHOLD;           break;
+            case CAPITAL_DP:                 base = CAPITAL_DP_THRESHOLD;           break;
+            case MISSILE_WEAPON_OP:          base = MISSILE_WEAPON_OP_THRESHOLD;    break;
+            case PD_WEAPON_OP:               base = PD_WEAPON_OP_THRESHOLD;         break;
+            case PHASE_DP:                   base = PHASE_OP_THRESHOLD;             break;
+            default:                         return 1.0f;
         }
+        return Math.max(1f, Math.round(base * mult));
     }
 
     // -------------------------------------------------------------------------
@@ -229,22 +243,9 @@ public class SCThresholds {
             threshold = AUTOMATED_POINTS_THRESHOLD;
         }*/
 
-        // Apply Doctrine Tactics multiplier for all tactical threshold types
-        boolean isTacticalType = type == ThresholdBonusType.DP_LOW
-                || type == ThresholdBonusType.FIGHTER_BAYS_COMBAT
-                || type == ThresholdBonusType.FIGHTER_BAYS_COMBAT_FILLED
-                || type == ThresholdBonusType.FRIGATE_DESTROYER_DP
-                || type == ThresholdBonusType.CRUISER_DP
-                || type == ThresholdBonusType.CAPITAL_DP
-                || type == ThresholdBonusType.MISSILE_WEAPON_OP
-                || type == ThresholdBonusType.PD_WEAPON_OP
-                || type == ThresholdBonusType.PHASE_DP;
-        if (isTacticalType) {
-            threshold *= getTacticalThresholdMultiplier(data);
-            // Distribution Tactics: halve thresholds only for distributed (non-acquired) skills
-            if (distributionModeActive) {
-                threshold *= 0.5f;
-            }
+        // Tactical types: apply settings mult, Doctrine Tactics and Distribution Tactics, rounded
+        if (isTacticalType(type)) {
+            threshold = getEffectiveTacticalThreshold(type, data);
         }
 
         bonus = getThresholdBasedRoundedBonus(maxBonus, currValue, threshold);

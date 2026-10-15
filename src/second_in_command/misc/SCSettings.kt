@@ -89,6 +89,9 @@ class SCSettings : LunaSettingsListener {
         @JvmStatic
         var autoPointsMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_autoPointsMult")!!
 
+        @JvmStatic
+        var tacticsMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_tacticsMult")!!
+
 
 
 
@@ -163,6 +166,7 @@ class SCSettings : LunaSettingsListener {
         playerMaxLevel = LunaSettings.getInt(SCUtils.MOD_ID, "sc_playerMaxLevel")
 
         autoPointsMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_autoPointsMult")!!
+        tacticsMult = LunaSettings.getFloat(SCUtils.MOD_ID, "sc_tacticsMult")!!
 
         highConstrastIcons = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_highContrast")
         unrestrictedAssociates = LunaSettings.getBoolean(SCUtils.MOD_ID, "sc_unrestrictedAssociates")

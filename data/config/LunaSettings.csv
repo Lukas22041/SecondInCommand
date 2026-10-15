@@ -25,6 +25,7 @@ sc_fleetDifficulty,Difficulty,Radio,Normal,"Easy,Normal,Hard","Difficulty select
 ,,,,,,,,
 sc_skillsHeader,Skills,Header,Skills,,,,,
 sc_autoPointsMult,Automated Points Multiplier,Double,1,,"Change how many Automated Ship Points are provided by skills. Automated ships and their benefits are designed with the restriction, so keep in mind that any increases may make automated ships superior than all non-automated ships in most  contexts.",0.5,3,
+sc_tacticsMult,Tactics Threshold Multiplier,Double,1,,Multiplies the thresholds of all tactics skills from the Tactical aptitude. The thresholds are rounded to the nearest whole number.,0.5,3,
 ,,,,,,,,
 ,,,,,,,,
 sc_miscChanges,Misc,Header,Misc,,,,,
