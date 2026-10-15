@@ -17,10 +17,10 @@ import second_in_command.specs.SCSpecStore
 
 /** Patch the visual element that displays people in the comm directory, identified by the fact that it is located in
  * "com.fs.starfarer.ui.newui" and has a "CommDirectoryEntry" field */
-@Patch(target = ClassMatch(targetPackage = "com.fs.starfarer.ui.newui", fieldMatches = [FieldMatch(type = CommDirectoryEntry::class)]))
+@Patch(target = ClassMatch(packageName = "com.fs.starfarer.ui.newui", fieldMatches = [FieldMatch(type = CommDirectoryEntry::class)]))
 object SCCommDirectoryRecolorPatch {
 
-    var query = FieldQuery.create().fieldType(CommDirectoryEntry::class.java).build();
+    var query = FieldQuery.create().type(CommDirectoryEntry::class.java).build();
 
     @JvmStatic
     @After(target = MethodMatch(methodName = "sizeChanged"))

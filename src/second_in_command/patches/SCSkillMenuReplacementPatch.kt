@@ -19,7 +19,7 @@ import second_in_command.ui.tutorial.TutorialStep
  * Patches the "showPanelAsDialog" method in the core ui class, which is called when the skill menu is being attached.
  * Same method is called for other panels too, so it checks if the attached panel has the method "canReassign", which only the skill menu has.
  * */
-@Patch(target = ClassMatch(targetPackage = "com.fs.starfarer.ui.newui", subtype = CoreUIAPI::class))
+@Patch(target = ClassMatch(packageName = "com.fs.starfarer.ui.newui", subtype = CoreUIAPI::class))
 object SCSkillMenuReplacementPatch {
 
     var panelQuery = MethodQuery.create().methodName("canReassign").build();
