@@ -18,7 +18,7 @@ class EmergencyOrder : SCBaseSkillPlugin() {
     override fun addTooltip(data: SCData, tooltip: TooltipMakerAPI) {
 
         tooltip.addPara("The \"Transverse Jump\" and \"Emergency Burn\" ability no longer reduce the fleets combat readiness", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
-        tooltip.addPara("-20%% damage from hazards such as hyperspace storms and solar flares", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
+        tooltip.addPara("-30%% damage from hazards such as hyperspace storms and solar flares", 0f, Misc.getHighlightColor(), Misc.getHighlightColor())
 
     }
 

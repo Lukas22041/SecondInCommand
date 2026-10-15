@@ -53,13 +53,13 @@ public class SCThresholds {
     // Tactical aptitude thresholds
 
     public static final float DP_LOW_THRESHOLD = 120f;
-    public static final float FIGHTER_BAYS_COMBAT_THRESHOLD = 9f;
-    public static final float FRIGATE_DESTROYER_DP_THRESHOLD = 90f;
-    public static final float CRUISER_DP_THRESHOLD = 90f;
-    public static final float CAPITAL_DP_THRESHOLD = 90f;
-    public static final float MISSILE_WEAPON_OP_THRESHOLD = 90f;
-    public static final float PD_WEAPON_OP_THRESHOLD = 90f;
-    public static final float PHASE_OP_THRESHOLD = 90f;
+    public static final float FIGHTER_BAYS_COMBAT_THRESHOLD = 8f;
+    public static final float FRIGATE_DESTROYER_DP_THRESHOLD = 75f;
+    public static final float CRUISER_DP_THRESHOLD = 75f;
+    public static final float CAPITAL_DP_THRESHOLD = 75f;
+    public static final float MISSILE_WEAPON_OP_THRESHOLD = 75f;
+    public static final float PD_WEAPON_OP_THRESHOLD = 75f;
+    public static final float PHASE_OP_THRESHOLD = 75f;
 
     /** All section-1 tactical skill IDs (the skills affected by Distribution/Doctrine Tactics). */
     public static final String[] TACTICAL_SECTION1_SKILL_IDS = {
