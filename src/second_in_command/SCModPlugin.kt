@@ -13,7 +13,6 @@ import second_in_command.misc.codex.CodexHandler
 import second_in_command.misc.snippets.AddAllOfficersSnippet
 import second_in_command.misc.snippets.AddXPToOfficersSnippet
 import second_in_command.scripts.*
-import second_in_command.skills.scavenging.scripts.ScavengingHotbarUIScript
 import second_in_command.skills.scavenging.scripts.ScavengingLootScreenModifierScript
 import second_in_command.skills.scavenging.scripts.ScavengingScrapLootFromBattleListener
 import second_in_command.skills.scavenging.scripts.ScavengingScrapLootListener
@@ -118,7 +117,6 @@ class SCModPlugin : BaseModPlugin() {
         Global.getSector().addTransientScript(VanillaSkillsDisabler())
         Global.getSector().addTransientScript(AutomatedShipsManager())
         //Global.getSector().addTransientScript(CommDirectoryRecolorScript())
-        Global.getSector().addTransientScript(ScavengingHotbarUIScript())
         Global.getSector().addTransientScript(ScavengingLootScreenModifierScript())
 
         Global.getSector().listenerManager.addListener(NPCFleetInflater(), true)
