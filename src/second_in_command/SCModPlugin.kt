@@ -113,6 +113,7 @@ class SCModPlugin : BaseModPlugin() {
         }
 
         Global.getSector().addTransientScript(ControllerHullmodAdderScript())
+        Global.getSector().addTransientScript(SCNeuralJunctionScript())
         Global.getSector().addTransientScript(VanillaSkillsDisabler())
         Global.getSector().addTransientScript(AutomatedShipsManager())
         //Global.getSector().addTransientScript(CommDirectoryRecolorScript())
@@ -125,6 +126,7 @@ class SCModPlugin : BaseModPlugin() {
         Global.getSector().addTransientListener(SCCampaignEventListener())
         Global.getSector().addTransientScript(SCXPTracker())
 
+        Global.getSector().registerPlugin(SCCampaignPlugin())
 
         //Add Abilities that no longer have a skill
         if (SCSettings.spawnWithTransverse && !Global.getSector().characterData.abilities.contains(Abilities.TRANSVERSE_JUMP)) {
