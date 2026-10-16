@@ -11,7 +11,7 @@ import patchlib.api.patch.RedirectMethodCall
 /** Skips the skill panel appearing during new game creation, by setting the skill point check to 0, as the game skips the
  * screen if the player has no skill points. Avoids having to do a more janky work around of removing the players actual skill point */
 @Patch(target = ClassMatch(type = TitleScreenState::class))
-object NewGameSkillPanelSkipPatch {
+object SCNewGameSkillPanelSkipPatch {
 
     @JvmStatic
     @RedirectMethodCall(
