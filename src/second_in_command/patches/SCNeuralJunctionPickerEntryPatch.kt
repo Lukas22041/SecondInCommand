@@ -1,5 +1,6 @@
 package second_in_command.patches
 
+import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.fleet.FleetMemberAPI
 import com.fs.starfarer.api.ui.UIPanelAPI
 import com.fs.starfarer.api.util.Misc
@@ -11,7 +12,6 @@ import patchlib.api.match.MethodMatch
 import patchlib.api.patch.Patch
 import patchlib.api.patch.RedirectMethodCall
 import patchlib.api.query.MethodQuery
-import second_in_command.SCUtils
 
 /** Patches the entries of the captain picker in "com.fs.starfarer.coreui", identifies as the class that has the "CaptainPickerDialog" field.
  * Required for neural junction to correctly prevent unequipping unremovable AI cores by clicking on the player,
@@ -28,12 +28,11 @@ object SCNeuralJunctionPickerEntryPatch {
         call = MethodMatch(methodName = "setFlagship", parameterTypes = [FleetMemberAPI::class])
     )
     fun redirectSetFlagship(context: MethodCallContext) {
-        val member = context.getCallArg(0) as FleetMemberAPI?
-        val core = member?.captain
-        val fleet = member?.fleetData?.fleet
+        val member = context.getCallArg(0) as FleetMemberAPI
+        val core = member.captain
 
-        if (core == null || fleet == null || !fleet.isPlayerFleet || !core.isAICore || !Misc.isAutomated(member)
-            || !SCUtils.getPlayerData().isSkillActive("sc_automated_neural_junction")) {
+        //Only the player replacing an AI core needs handling, which only Neural Junction makes possible
+        if (!core.isAICore) {
             context.call()
             return
         }
@@ -44,7 +43,7 @@ object SCNeuralJunctionPickerEntryPatch {
             return
         }
 
-        fleet.cargo.addCommodity(core.aiCoreId, 1f)
+        Global.getSector().playerFleet.cargo.addCommodity(core.aiCoreId, 1f)
         context.call()
     }
 }
