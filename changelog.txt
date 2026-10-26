@@ -1,3 +1,25 @@
+Version 2.1.0
+Save Compatible with 2.0.0+
+
+- Added "PatchLib" as a hard dependency.
+- Added multiple performance improvements.
+- Added a lunalib config for adjusting a multiplier for tactical aptitude point/fighter scaling.
+- Nerfed all Tactical DP skills from 90DP to 75DP
+- Reverted the nerf to "Flux regulation", now uncapped again.
+- Reverted the nerf to "Crew Training", bringing it back to 15% CR.
+- Reverted the nerf to "Reliable Engineering, changing it back to 25% supply consumption reduction.
+- Removed the 5% range buff on "Iron Sight" but increased the weapon turn rate buff to 40%
+- Fixed an issue that made "Makeshift Measures" consume resources while the game was paused/in menus
+- Fixed "Magnetic Shielding" mentioning a 29% EMP resistance despite being 20%.
+- Fixed "Emergency Order" claiming its hazard damage reduction was 20% despite being 30%.
+- Fixed an issue that made the elite border & stars invisible in some setups.
+- Fixed Industrial Planning being hidden in the codex despite still being available.
+- Fixed Strike Tactics only being able to restore missiles up to the spec maximum and not the increased one
+- Fixed an issue that made "Limit breaker" apply its buff multiple times to some SoTF characters.
+- Replaced the skill menu skipping logic in the new game creation with code that is less likely to eat a skillpoint.
+
+
+
 Version 2.0.0
 NOT SAVE COMPATIBLE
 

@@ -68,10 +68,10 @@ class LimitBreaker : SCBaseSkillPlugin() {
                 .filter { (it.captain != null && !it.captain.isDefault) && it.captain.isAICore }.toMutableList() //Also filter out flagship, just to be save for some unique bounties
 
             //Filter out certain unique characters
-            membersWithAICores.filter { !Global.getSector().importantPeople.containsPerson(it.captain) }
+            membersWithAICores = membersWithAICores.filter { !Global.getSector().importantPeople.containsPerson(it.captain) }.toMutableList()
 
             //Do not increase the level multiple times
-            membersWithAICores.filter { !it.captain.hasTag("sc_limit_breaker_update") }
+            membersWithAICores = membersWithAICores.filter { !it.captain.hasTag("sc_limit_breaker_update") }.toMutableList()
 
             val plugin = Global.getSettings().getPlugin("officerLevelUp") as OfficerLevelupPlugin
             for (member in membersWithAICores) {
