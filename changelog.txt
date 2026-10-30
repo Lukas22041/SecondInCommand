@@ -1,3 +1,11 @@
+Version 2.1.1
+Save Compatible with 2.0.0+
+
+- Reworked "Compact Storage" to a more simpler cargo and fuel buff due to a performance issue.
+-> May rework it in to a more interesting effect again later on.
+
+
+
 Version 2.1.0
 Save Compatible with 2.0.0+
 

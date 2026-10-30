@@ -9,10 +9,15 @@ import patchlib.api.match.MethodMatch
 import patchlib.api.patch.After
 import patchlib.api.patch.Patch
 
+//Removed for now due to performance issues.
+
+/*
 @Patch(target = ClassMatch(CargoItemStack::class))
 object SCCargoItemStackPatch {
 
-    /** Mult & percent only, flat mods wont work well with this */
+    */
+/** Mult & percent only, flat mods wont work well with this *//*
+
     val WEAPON_STORAGE_MOD_KEY = "sic_weapon_storage_mod";
 
     @JvmStatic
@@ -44,4 +49,4 @@ object SCCargoItemStackPatch {
         return Math.max(0f, bonus.computeEffective(base))
     }
 
-}
+}*/
